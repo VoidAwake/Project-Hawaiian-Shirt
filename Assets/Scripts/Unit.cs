@@ -10,15 +10,9 @@ public class Unit : UnitPhysics
     [SerializeField] float tweenRate;
     [SerializeField] float runMultiplier;
 
-    Vector2 move = new Vector2(); // for directional input
-    bool controlsEnabled = true;
-    bool isRunning = false;
-
-    // Update is called once per frame
-    protected override void Update()
-    {
-        
-    }
+    protected Vector2 move = new Vector2(); // for directional input
+    protected bool controlsEnabled = true;
+    protected bool isRunning = false;
 
     protected override void SetTargetVelocity()
     {
