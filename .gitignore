@@ -79,3 +79,6 @@ crashlytics-build.properties
 
 # JetBrains Rider IDE
 /.idea
+
+# Visual Studio
+/.vsconfig
