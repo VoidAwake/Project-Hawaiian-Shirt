@@ -52,14 +52,11 @@ namespace Hawaiian.Utilities
             if (input.devices[0].description.deviceClass != "Keyboard")
             {
                 Debug.Log(rotation);
-                if (rotation.x > 0)
-                    transform.rotation = Quaternion.Euler(new Vector3(rotation.x,0,rotation.y * 100));
-                else
-                {
+               
                     var joystickAngle = Mathf.Atan2(rotation.y, rotation.x) * Mathf.Rad2Deg;
                     this.transform.rotation = Quaternion.Euler(new Vector3(0,0,joystickAngle));
 
-                }
+                
                     //transform.Rotate(new Vector3(0,0,1) * rotation.x*.2f);
                 return; 
             }
