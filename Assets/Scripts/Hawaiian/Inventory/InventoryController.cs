@@ -35,7 +35,6 @@ namespace Hawaiian.Inventory
 
         private void OnTriggerEnter2D(Collider2D col)
         {
-            Debug.Log("boom boom powww");
             if (col.gameObject.tag == "Item")
             {
                 if (_inv.PickUp(col.gameObject.GetComponent<tempItem>().item))

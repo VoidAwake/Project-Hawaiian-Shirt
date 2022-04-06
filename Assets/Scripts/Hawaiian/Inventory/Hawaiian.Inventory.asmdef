@@ -5,7 +5,8 @@
         "UniTask",
         "Unity.Mathematics",
         "Hawaiian.Utilities",
-        "Hawaiian.UI"
+        "Hawaiian.UI",
+        "Hawaiian.Unit"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

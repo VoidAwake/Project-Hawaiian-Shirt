@@ -1,30 +1,33 @@
+using System;
 using UnityEngine;
 
 namespace Hawaiian.Unit
 {
-    public class Unit : UnitPhysics, IUnit
+    public class Unit : UnitPhysics
     {
 
         [Header("Unit Stats")]
-        private float _health;
+        [SerializeField]internal float _maxHealth;
 
+        internal float _health;
 
-        #region Properties
     
-        public float MaxHealth => _health;
-
-        #endregion
-    
-
+        public float Health => _health;
+        
         // Movement variables
         [Header("Movement Speed")]
-        [SerializeField] float maxSpeed;
-        [SerializeField] float tweenRate;
-        [SerializeField] float runMultiplier;
+        [SerializeField] internal float maxSpeed;
+        [SerializeField] internal float tweenRate;
+        [SerializeField] internal float runMultiplier;
 
         protected Vector2 move = new Vector2(); // for directional input
         protected bool controlsEnabled = true;
         protected bool isRunning = false;
+
+        protected void Start()
+        {
+            _health = _maxHealth;
+        }
 
         protected override void SetTargetVelocity()
         {
@@ -35,20 +38,6 @@ namespace Hawaiian.Unit
 
    
 
-        public void OnDeath()
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public void Use()
-        {
-            throw new System.NotImplementedException();
-        }
-
-
-        public void TakeDamage()
-        {
-            throw new System.NotImplementedException();
-        }
+     
     }
 }

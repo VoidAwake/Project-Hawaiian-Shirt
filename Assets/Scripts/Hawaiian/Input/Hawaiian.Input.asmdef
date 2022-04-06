@@ -1,9 +1,8 @@
 {
-    "name": "Hawaiian.Utilities",
+    "name": "Hawaiian.Input",
     "rootNamespace": "",
     "references": [
-        "Hawaiian.Input",
-        "Unity.InputSystem"
+        "GUID:75469ad4d38634e559750d17036d5f7c"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
