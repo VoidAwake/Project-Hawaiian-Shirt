@@ -6,17 +6,10 @@ using UnityEngine;
 public class Item : ScriptableObject
 {
     // Start is called before the first frame update
-    [SerializeField] private List<Item> Inv;
+    public string itemName;
+    public float itemDamage;
+    public Sprite itemSprite;
+    public float maxStack;
 
-
-    /*public void Dropped(Vector2 pos)
-    {
-        
-    }
-
-    public void Picked()
-    {
-        
-    }
-    */
+    
 }

@@ -1,30 +1,41 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
+[CreateAssetMenu]
 public class Inventory : ScriptableObject
 {
     // Start is called before the first frame update
-
-    [SerializeField] private static int invSize = 3;
-    [SerializeField] private Item[] inv = new Item[invSize];
-
-
-    public void PickUp(Item item)
+    
+    //[SerializeField] private ScriptableInt invSize;
+    //[SerializeField] private int invSize;
+    [SerializeField] public Item[] inv;
+    public UnityEvent itemchange = new ();
+    
+    public Inventory()
+    {
+        inv = new Item[3];
+    }
+    public bool PickUp(Item item)
     {
         /*if(inv.Count < invSize)
         {
             
         }*/
 
-        for (int i = 0; i < invSize-1; i++)
+        for (int i = 0; i < inv.Length; i++)
         {
             if (inv[i] == null)
             {
                 inv[i] = item;
                 //item.Picked();??Delete item in player script as there is no reference to ingame item referring to scriptable object obtainable here
+                itemchange.Invoke();
+                return true;
             }
         }
+
+        return false;
     }
 
 
@@ -32,5 +43,12 @@ public class Inventory : ScriptableObject
     {
         //Manager.drop(inv[invPos]);
         inv[invPos] = null;
+        itemchange.Invoke();
     }
+
+    /*public void OnUse(int invPos)
+    {
+        
+    }*/
+    
 }
