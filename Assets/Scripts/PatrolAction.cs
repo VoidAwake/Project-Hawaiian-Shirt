@@ -5,20 +5,20 @@ using UnityEngine;
 [CreateAssetMenu (menuName = "PluggableAI/Actions/Patrol")]
 public class PatrolAction : Action
 {
-    public override void Act(EnemyBSM bsm)
+    public override void Act(EnemyFSM fsm)
     {
-        Patrol(bsm);
+        Patrol(fsm);
     }
 
-    private void Patrol(EnemyBSM bsm)
+    private void Patrol(EnemyFSM fsm)
     {
-        bsm.currentDestination = bsm.waypointList[bsm.nextWaypoint].transform.position;
-        if (Vector2.Distance(bsm.transform.position, bsm.currentDestination) < 1.0f)
+        fsm.currentDestination = fsm.waypointList[fsm.nextWaypoint].transform.position;
+        if (Vector2.Distance(fsm.transform.position, fsm.currentDestination) < 1.0f)
         {
-            bsm.nextWaypoint = (bsm.nextWaypoint + 1) % bsm.waypointList.Count;
-            bsm.currentDestination = bsm.waypointList[bsm.nextWaypoint].transform.position;
+            fsm.nextWaypoint = (fsm.nextWaypoint + 1) % fsm.waypointList.Count;
+            fsm.currentDestination = fsm.waypointList[fsm.nextWaypoint].transform.position;
         }
-        bsm.OnMove(bsm.currentDestination);
+        fsm.OnMove(fsm.currentDestination);
     }
 
    

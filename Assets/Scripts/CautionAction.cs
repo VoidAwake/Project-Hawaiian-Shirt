@@ -7,12 +7,12 @@ public class CautionAction : Action
 {
     
     // Start is called before the first frame update
-    public override void Act(EnemyBSM bsm)
+    public override void Act(EnemyFSM fsm)
     {
-        Caution(bsm);
+        Caution(fsm);
     }
 
-    private void Caution(EnemyBSM bsm)
+    private void Caution(EnemyFSM fsm)
     {
         
     }

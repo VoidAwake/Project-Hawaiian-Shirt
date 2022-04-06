@@ -7,12 +7,12 @@ public class ChaseAction : Action
 {
     
     // Start is called before the first frame update
-    public override void Act(EnemyBSM bsm)
+    public override void Act(EnemyFSM fsm)
     {
-        Chase(bsm);
+        Chase(fsm);
     }
 
-    private void Chase(EnemyBSM bsm)
+    private void Chase(EnemyFSM fsm)
     {
         
     }
