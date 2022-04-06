@@ -1,23 +1,24 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Dynamic;
 using UnityEngine;
+using UnityEngine.Serialization;
+using UnityEngine.UI;
 
 public class InventoryController : MonoBehaviour
 {
-    // Start is called before the first frame update
     [SerializeField] private GameObject UI;
-    [SerializeField] private Canvas canvas;
+    [FormerlySerializedAs("canvas")] [SerializeField] private Transform uiParent;
     private GameObject reference;
     private Inventory _inv;
     [SerializeField] private bool addinv;
     [SerializeField] private Item item;
     //[SerializeField] private int invSize;
-    void Awake()
+    
+    private void Awake()
     {
+        // TODO: Temp fix to get canvas reference. Will come back to this when we start looking at a UI system.
+        if (uiParent == null) uiParent = FindObjectOfType<Canvas>().transform.GetChild(0);
+        
         _inv = ScriptableObject.CreateInstance<Inventory>();
-        reference = Instantiate(UI,canvas.transform);
+        reference = Instantiate(UI, uiParent);
         reference.GetComponent<InventoryUI>().inv = _inv;
         addinv = false;
     }
@@ -42,7 +43,4 @@ public class InventoryController : MonoBehaviour
             }
         }
     }
-
-    // Update is called once per frame
-
 }
