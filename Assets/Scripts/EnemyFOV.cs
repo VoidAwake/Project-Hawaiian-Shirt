@@ -7,6 +7,11 @@ public class EnemyFOV : MonoBehaviour
     public float viewRadius;[Range(0, 360)] //how far forward the fov is
     public float viewAngle; //how wide the fov is
 
+<<<<<<< Updated upstream
+=======
+    public float meshResolution;
+
+>>>>>>> Stashed changes
     public List<Transform> visibleTargets = new List<Transform>();
     public Vector3 DirFromAngle(float angle)
     {
@@ -42,4 +47,14 @@ public class EnemyFOV : MonoBehaviour
             }
         }
     }
+<<<<<<< Updated upstream
+=======
+
+    void DrawFOV()
+    {
+        int sections = Mathf.RoundToInt(viewAngle * meshResolution);
+        float sectionAngleSize = viewAngle / sections;
+
+    }
+>>>>>>> Stashed changes
 }
