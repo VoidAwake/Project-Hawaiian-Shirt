@@ -48,12 +48,20 @@ public class EnemyFOV : MonoBehaviour
         }
     }
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 =======
 
     void DrawFOV()
     {
         int sections = Mathf.RoundToInt(viewAngle * meshResolution);
         float sectionAngleSize = viewAngle / sections;
+
+    }
+>>>>>>> Stashed changes
+=======
+
+    void DrawFOV()
+    {
 
     }
 >>>>>>> Stashed changes

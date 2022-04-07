@@ -366,7 +366,7 @@ GameObject:
   m_Component:
   - component: {fileID: 758233570}
   m_Layer: 6
-  m_Name: Waypoints
+  m_Name: Patrol Route
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

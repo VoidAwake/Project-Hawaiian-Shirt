@@ -10,6 +10,8 @@ public class EnemyFSM : MonoBehaviour
 
     public Rigidbody2D enemy;
     public UnitPhysics unit;
+    public Input controls;
+    public EnemyFOV fov;
 
     [SerializeField] public Vector2 currentDestination;
 
@@ -24,6 +26,7 @@ public class EnemyFSM : MonoBehaviour
     void Awake()
     {
         enemy = GetComponent<Rigidbody2D>();
+        controls = GetComponent<Input>();
         unit = GetComponent<Unit>();
     }
 
