@@ -68,7 +68,6 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents:
-    - {fileID: 6886565524097403768, guid: 32cfed746529f4f4d9e044e3e5b89433, type: 3}
     - {fileID: 6886565524097403770, guid: 32cfed746529f4f4d9e044e3e5b89433, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 32cfed746529f4f4d9e044e3e5b89433, type: 3}
 --- !u!1 &2044996132595983832 stripped
@@ -104,16 +103,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 2044996132595983832}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a0d006bb40c6cc14997fa68fbcf38225, type: 3}
+  m_Script: {fileID: 11500000, guid: 3cbde404bd26c2a4e80d707222285901, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _initialState: {fileID: 0}
   currentState: {fileID: 11400000, guid: 7063c87d8a7493e40b87367db5d0d48f, type: 2}
   remainState: {fileID: 0}
   stateTimeElapsed: 0
   enemy: {fileID: 0}
+  unit: {fileID: 0}
   currentDestination: {x: 0, y: 0}
   nextWaypoint: 1
-  waypointList:
-  - {fileID: 0}
-  - {fileID: 0}
+  waypointList: []
