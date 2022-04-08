@@ -398,7 +398,7 @@ namespace Hawaiian.Input
                 {
                     ""name"": """",
                     ""id"": ""0a8f0a0b-6860-4d14-af61-538c544b3b62"",
-                    ""path"": ""<Keyboard>/k"",
+                    ""path"": ""<Keyboard>/space"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard1"",
