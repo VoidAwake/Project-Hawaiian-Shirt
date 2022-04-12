@@ -9,11 +9,12 @@ namespace UI.Core
     [RequireComponent(typeof(CanvasGroup))]
     public abstract class Dialogue : MonoBehaviour
     {
+        [SerializeField] protected UIManager manager;
+        
         internal readonly UnityEvent promoted = new UnityEvent();
         internal readonly UnityEvent demoted = new UnityEvent();
         internal readonly UnityEvent closed = new UnityEvent();
         
-        protected UIManager manager;
         protected CanvasGroup canvasGroup;
         
         
@@ -21,7 +22,6 @@ namespace UI.Core
 
         private void Awake()
         {
-            manager = UIManager.Instance;
             canvasGroup = GetComponent<CanvasGroup>();
             
             OnAwake();

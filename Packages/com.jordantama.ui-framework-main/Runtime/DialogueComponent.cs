@@ -8,7 +8,7 @@ namespace UI.Core
     /// <typeparam name="T">The <see cref="Core.Dialogue"/> type this UIComponent is a part of.</typeparam>
     public abstract class DialogueComponent<T> : MonoBehaviour where T : Dialogue
     {
-        protected UIManager Manager;
+        [SerializeField] protected UIManager Manager;
         protected T Dialogue;
         
         
@@ -16,7 +16,6 @@ namespace UI.Core
         
         private void Awake()
         {
-            Manager = UIManager.Instance;
             OnComponentAwake();
         }
 
