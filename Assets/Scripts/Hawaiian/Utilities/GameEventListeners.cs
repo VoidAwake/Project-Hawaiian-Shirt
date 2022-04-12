@@ -5,7 +5,6 @@ namespace Hawaiian.Utilities
 {
    public class GameEventListeners : MonoBehaviour
    {
-
       public GameEvent Event;
       public UnityEvent Response;
 
@@ -14,8 +13,5 @@ namespace Hawaiian.Utilities
       private void OnDisable() => Event.UnregisterListener(this);
       
       public void OnEventRaised() => Response.Invoke(); 
-      
-    
-
    }
 }

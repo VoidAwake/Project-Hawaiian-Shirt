@@ -1,0 +1,12 @@
+{
+  "name": "com.jordantama.ui-framework",
+  "version": "1.0.0",
+  "displayName": "UI Framework",
+  "author": {
+    "name": "Jordan Hamlin",
+    "email": "Jordan.T.Hamlin@gmail.com",
+    "url": "https://jtama.itch.io"
+  },
+  "description": "This package provides a flexible UI framework.",
+  "type": "library"
+}
