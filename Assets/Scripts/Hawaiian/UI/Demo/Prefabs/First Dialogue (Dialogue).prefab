@@ -28,6 +28,7 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 125418471042958713}
   m_RootOrder: 0
@@ -162,6 +163,7 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 125418471425452920}
   - {fileID: 125418471042958713}
@@ -239,6 +241,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 125418471474830006}
   m_Father: {fileID: 0}
@@ -268,6 +271,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e39b0964bed4956b6836ac8c48d41dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  manager: {fileID: 11400000, guid: b205461929d08b7439e72030dc234753, type: 2}
 --- !u!1 &125418471042958712
 GameObject:
   m_ObjectHideFlags: 0
@@ -298,6 +302,7 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 125418470230635098}
   m_Father: {fileID: 125418470677881546}
@@ -402,6 +407,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aed5339664cb40d19232d0c1db39ec84, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  manager: {fileID: 11400000, guid: b205461929d08b7439e72030dc234753, type: 2}
   dialoguePrefab: {fileID: 125418471039773796, guid: 3df856957ea0d9d4d9cc502e4ca9fbb0, type: 3}
   button: {fileID: 125418471042958718}
 --- !u!1 &125418471425452923
@@ -432,6 +438,7 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 125418470677881546}
   m_RootOrder: 0
@@ -567,6 +574,7 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0, y: 0, z: 0}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 125418470677881546}
   m_Father: {fileID: 125418471039773803}

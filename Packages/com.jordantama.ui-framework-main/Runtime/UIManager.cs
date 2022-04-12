@@ -10,6 +10,7 @@ namespace UI.Core
     /// A singleton manager responsible for controlling the <see cref="Dialogue"/> 'stack'.
     /// </summary>
     [Serializable]
+    [CreateAssetMenu(order = 0, menuName = "Hawaiian/Managers/UIManager", fileName = "NewUIManager")]
     public class UIManager : ScriptableObject
     {
         internal readonly UnityEvent<Dialogue> DialogueAdded = new UnityEvent<Dialogue>();
