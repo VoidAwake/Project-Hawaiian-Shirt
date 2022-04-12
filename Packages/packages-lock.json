@@ -1,5 +1,11 @@
 {
   "dependencies": {
+    "com.jordantama.ui-framework": {
+      "version": "file:com.jordantama.ui-framework-main",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {}
+    },
     "com.unity.2d.animation": {
       "version": "7.0.2",
       "depth": 1,
