@@ -2,7 +2,7 @@
 using UI.Core;
 using UnityEngine;
 
-namespace UI.Demo.Scripts.Second
+namespace Hawaiian.UI.Demo.Scripts.Second
 {
     public class TextToggle : DialogueComponent<SecondDialogue>
     {

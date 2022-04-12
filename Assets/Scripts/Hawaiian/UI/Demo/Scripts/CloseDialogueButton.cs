@@ -1,11 +1,8 @@
-﻿using Audio.Commands;
-using Commands;
-using Managers;
-using UI.Core;
+﻿using UI.Core;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace UI.Demo.Scripts
+namespace Hawaiian.UI.Demo.Scripts
 {
     public class CloseDialogueButton : DialogueComponent<Dialogue>
     {
@@ -18,10 +15,6 @@ namespace UI.Demo.Scripts
 
         private void OnClick()
         {
-            CommandManager commandManager = ManagerLocator.Get<CommandManager>();
-            commandManager.ExecuteCommand(new PostSound("Stop_Credits_Theme"));
-            commandManager.ExecuteCommand(new PostSound("Play_Opening_Theme"));
-            
             manager.Pop();
         }
     }

@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace UI.Demo.Scripts.Second
+namespace Hawaiian.UI.Demo.Scripts.Second
 {
     public class ToggleButton : DialogueComponent<SecondDialogue>
     {

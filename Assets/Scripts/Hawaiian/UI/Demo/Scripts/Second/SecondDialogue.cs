@@ -1,11 +1,12 @@
 ﻿using UI.Core;
 using UnityEngine;
+using UnityEngine.Events;
 
-namespace UI.Demo.Scripts.Second
+namespace Hawaiian.UI.Demo.Scripts.Second
 {
     public class SecondDialogue : Dialogue
     {
-        internal readonly Event<bool> toggle = new Event<bool>();
+        internal readonly UnityEvent<bool> toggle = new UnityEvent<bool>();
         
         
         protected override void OnClose() => Debug.Log("Dialogue two closed...");

@@ -8,8 +8,8 @@ namespace UI.Core
     /// <typeparam name="T">The <see cref="Core.Dialogue"/> type this UIComponent is a part of.</typeparam>
     public abstract class DialogueComponent<T> : MonoBehaviour where T : Dialogue
     {
-        [SerializeField] protected UIManager Manager;
-        protected T Dialogue;
+        [SerializeField] protected UIManager manager;
+        protected T dialogue;
         
         
         #region MonoBehaviour
@@ -21,12 +21,12 @@ namespace UI.Core
 
         private void OnEnable()
         {
-            Dialogue = Manager.GetDialogue<T>();
+            dialogue = manager.GetDialogue<T>();
             
-            if (Dialogue)
+            if (dialogue)
                 Subscribe();
             else
-                Manager.DialogueAdded.AddListener(OnDialogueAdded);
+                manager.DialogueAdded.AddListener(OnDialogueAdded);
             
             OnComponentEnabled();
         }
@@ -36,7 +36,7 @@ namespace UI.Core
             OnComponentDisabled();
             Unsubscribe();
             
-            Dialogue = null;
+            dialogue = null;
         }
 
         private void Start()
@@ -54,8 +54,8 @@ namespace UI.Core
             if (!(addedDialogue is T compatible))
                 return;
 
-            Manager.DialogueAdded.RemoveListener(OnDialogueAdded);
-            Dialogue = compatible;
+            manager.DialogueAdded.RemoveListener(OnDialogueAdded);
+            dialogue = compatible;
 
             Subscribe();
         }

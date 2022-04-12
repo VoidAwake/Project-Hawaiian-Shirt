@@ -1,7 +1,7 @@
 ﻿using UI.Core;
 using UnityEngine;
 
-namespace UI.Demo.Scripts.First
+namespace Hawaiian.UI.Demo.Scripts.First
 {
     public class FirstDialogue : Dialogue
     {
