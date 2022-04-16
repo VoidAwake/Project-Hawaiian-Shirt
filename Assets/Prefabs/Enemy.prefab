@@ -75,46 +75,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 6886565524097403648, guid: 32cfed746529f4f4d9e044e3e5b89433, type: 3}
   m_PrefabInstance: {fileID: 4895615097980415704}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &-5999145063920281749
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2044996132595983832}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 081e11e370e54df4e97dd6807d7bc3d7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  gravity: {x: 0, y: -9.8}
-  minimumDistance: 0.001
-  collisionBuffer: 0.01
-  isBoundByCamera: 0
-  maxSpeed: 0
-  tweenRate: 0
-  runMultiplier: 0
---- !u!114 &167374080983641883
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2044996132595983832}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3cbde404bd26c2a4e80d707222285901, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  currentState: {fileID: 11400000, guid: 7063c87d8a7493e40b87367db5d0d48f, type: 2}
-  remainState: {fileID: 0}
-  stateTimeElapsed: 0
-  enemy: {fileID: 0}
-  unit: {fileID: 0}
-  fov: {fileID: 0}
-  currentDestination: {x: 0, y: 0}
-  nextWaypoint: 1
-  waypointList: []
 --- !u!60 &6415960965013333497
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -125,7 +85,7 @@ PolygonCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -144,3 +104,44 @@ PolygonCollider2D:
       - {x: -0.5, y: -0.5}
       - {x: 0.5, y: -0.5}
       - {x: 2.0041678, y: 4.0005693}
+--- !u!114 &167374080983641883
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2044996132595983832}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3cbde404bd26c2a4e80d707222285901, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentState: {fileID: 11400000, guid: 7063c87d8a7493e40b87367db5d0d48f, type: 2}
+  remainState: {fileID: 0}
+  stateTimeElapsed: 0
+  enemy: {fileID: 0}
+  unit: {fileID: 0}
+  controls: {fileID: 0}
+  fov: {fileID: 0}
+  currentDestination: {x: 0, y: 0}
+  nextWaypoint: 1
+  waypointList: []
+--- !u!114 &3157975998947384140
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2044996132595983832}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7436e27665767764584f0d7765eeb219, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gravity: {x: 0, y: 0}
+  minimumDistance: 0.001
+  collisionBuffer: 0.01
+  isBoundByCamera: 0
+  maxSpeed: 0
+  tweenRate: 0
+  runMultiplier: 0

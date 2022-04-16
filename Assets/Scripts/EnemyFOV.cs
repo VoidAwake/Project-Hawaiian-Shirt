@@ -6,6 +6,7 @@ public class EnemyFOV : MonoBehaviour
 {
     public float viewRadius;[Range(0, 360)] //how far forward the fov is
     public float viewAngle; //how wide the fov is
+    public float viewDistance;
     public float meshResolution;
 
     public List<Transform> visibleTargets = new List<Transform>();
@@ -62,9 +63,9 @@ public class EnemyFOV : MonoBehaviour
     ViewCastInfo ViewCast(float globalAngle)
     {
         Vector2 dir = DirFromAngle(globalAngle, true);
-        RaycastHit2D hit;
+        RaycastHit2D hit = new();
 
-        if(Physics2D.Raycast(transform.position, dir, viewRadius))
+        if (Physics2D.Raycast(transform.position, dir, viewDistance))
         {
             return new ViewCastInfo(true, hit.point, hit.distance, globalAngle);
         }
