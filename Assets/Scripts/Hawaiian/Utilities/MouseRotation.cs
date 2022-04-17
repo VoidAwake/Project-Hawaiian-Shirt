@@ -49,7 +49,7 @@ namespace Hawaiian.Utilities
             // mouse.y -= screenPoint.y;
             // var angle = Mathf.Atan2(mouse.y, mouse.x) * Mathf.Rad2Deg;
 
-            if (input.devices[0].description.deviceClass != "Keyboard")
+            if (input.currentControlScheme == "Gamepad")
             {
                 Debug.Log(rotation);
                

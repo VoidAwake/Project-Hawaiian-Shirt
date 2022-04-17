@@ -1,0 +1,16 @@
+{
+    "name": "Hawaiian.AI",
+    "rootNamespace": "",
+    "references": [
+        "GUID:cb17085e1b276974588e0c127f77aa24"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

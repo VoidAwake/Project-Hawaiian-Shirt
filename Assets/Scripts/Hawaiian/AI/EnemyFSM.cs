@@ -39,7 +39,8 @@ public class EnemyFSM : MonoBehaviour
 
     }
 
-    public void OnMove(Vector2 value) {
-        
+    public void OnMove(Vector2 value)
+    {
+        Vector3.Lerp(transform.position, value,0.5f);
     }
 }
