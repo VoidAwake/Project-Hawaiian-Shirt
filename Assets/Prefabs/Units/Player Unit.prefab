@@ -1,0 +1,149 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &6074339651911699560
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 6924075283435537384, guid: fe93fd4b04ca3d340865789a7d27cade, type: 3}
+      propertyPath: m_Name
+      value: Player Unit
+      objectReference: {fileID: 0}
+    - target: {fileID: 8133316330003078027, guid: fe93fd4b04ca3d340865789a7d27cade, type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8133316330003078027, guid: fe93fd4b04ca3d340865789a7d27cade, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8133316330003078027, guid: fe93fd4b04ca3d340865789a7d27cade, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8133316330003078027, guid: fe93fd4b04ca3d340865789a7d27cade, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8133316330003078027, guid: fe93fd4b04ca3d340865789a7d27cade, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8133316330003078027, guid: fe93fd4b04ca3d340865789a7d27cade, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8133316330003078027, guid: fe93fd4b04ca3d340865789a7d27cade, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8133316330003078027, guid: fe93fd4b04ca3d340865789a7d27cade, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8133316330003078027, guid: fe93fd4b04ca3d340865789a7d27cade, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8133316330003078027, guid: fe93fd4b04ca3d340865789a7d27cade, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8133316330003078027, guid: fe93fd4b04ca3d340865789a7d27cade, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 1993500985619104882, guid: fe93fd4b04ca3d340865789a7d27cade, type: 3}
+  m_SourcePrefab: {fileID: 100100000, guid: fe93fd4b04ca3d340865789a7d27cade, type: 3}
+--- !u!1 &3772646986385756032 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6924075283435537384, guid: fe93fd4b04ca3d340865789a7d27cade, type: 3}
+  m_PrefabInstance: {fileID: 6074339651911699560}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &6432945937749252037
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3772646986385756032}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Actions: {fileID: -944628639613478452, guid: 1fbf3dcea99b03942b04fac4b66d2c19, type: 3}
+  m_NotificationBehavior: 0
+  m_UIInputModule: {fileID: 0}
+  m_DeviceLostEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_DeviceRegainedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ControlsChangedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ActionEvents:
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 04dea6c0-e35f-4372-bcc9-0445bc0c4b0c
+    m_ActionName: Player/Move[/Keyboard/w,/Keyboard/s,/Keyboard/a,/Keyboard/d,/XInputControllerWindows/dpad/up,/XInputControllerWindows/dpad/down,/XInputControllerWindows/dpad/left,/XInputControllerWindows/dpad/right,/XInputControllerWindows/leftStick,/Keyboard/upArrow,/Keyboard/downArrow,/Keyboard/leftArrow,/Keyboard/rightArrow]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: eb5fc80f-30ab-4fa0-820b-d1b30b590205
+    m_ActionName: Player/ActionA[/Keyboard/r,/XInputControllerWindows/buttonEast,/Keyboard/numpad1,/Keyboard/period,/XInputControllerWindows/buttonNorth]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: c9d8cb36-0efd-4faa-a1fa-08fa3a086fb5
+    m_ActionName: Player/ActionB[/Keyboard/t,/XInputControllerWindows/buttonSouth,/Keyboard/numpad2,/Keyboard/comma,/XInputControllerWindows/buttonWest]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 6313d96c-bf06-4f98-afeb-950ceebcde40
+    m_ActionName: Lobby Player/Ready[/Keyboard/r,/XInputControllerWindows/buttonEast,/Keyboard/numpad1,/Keyboard/period,/XInputControllerWindows/buttonNorth]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: a4e85f39-9e16-49f8-82a5-9809a8c2eee7
+    m_ActionName: Lobby Player/Left[/Keyboard/leftArrow,/Keyboard/a,/XInputControllerWindows/dpad/left,/XInputControllerWindows/leftStick/left]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: e02bc53f-7606-4d85-9d2e-036af7dd8d66
+    m_ActionName: Lobby Player/Right[/Keyboard/rightArrow,/Keyboard/d,/XInputControllerWindows/dpad/right,/XInputControllerWindows/leftStick/right]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 300f2ece-fe16-40b7-b6d8-b2d6231cdbcc
+    m_ActionName: Lobby Player/AddBot[/Keyboard/t,/Keyboard/numpad2,/Keyboard/comma,/XInputControllerWindows/rightTrigger]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: f99a9359-81ed-484c-8e86-6a2f4fcdb5b2
+    m_ActionName: Lobby Player/RemoveBot[/XInputControllerWindows/leftTrigger,/Keyboard/y]
+  m_NeverAutoSwitchControlSchemes: 0
+  m_DefaultControlScheme: 
+  m_DefaultActionMap: Player
+  m_SplitScreenIndex: -1
+  m_Camera: {fileID: 0}
+--- !u!114 &5588978955059791629
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3772646986385756032}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f30bb729de375d14bbde70ab49fda8d7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gravity: {x: 0, y: 0}
+  minimumDistance: 0.001
+  collisionBuffer: 0.01
+  isBoundByCamera: 0
+  _maxHealth: 20
+  maxSpeed: 5.5
+  tweenRate: 15
+  runMultiplier: 1.75
+  _damageReference: {fileID: 1546100782826642891, guid: 6916ca4131234a941b3eb78d5ca707fe, type: 3}
+  firePoint: {fileID: 0}
