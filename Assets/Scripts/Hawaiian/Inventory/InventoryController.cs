@@ -11,6 +11,8 @@ namespace Hawaiian.Inventory
         private Inventory _inv;
         [SerializeField] private bool addinv;
         [SerializeField] private Item item;
+        private bool noDoubleDipping;
+        
         //[SerializeField] private int invSize;
     
         private void Awake()
@@ -22,24 +24,29 @@ namespace Hawaiian.Inventory
             reference = Instantiate(UI, uiParent);
             reference.GetComponent<InventoryUI>().inv = _inv;
             addinv = false;
+            noDoubleDipping = true;
         }
 
         private void Update()
         {
+            noDoubleDipping = true;
             if (addinv)
             {
                 _inv.PickUp(item);
                 addinv = !addinv;
+                
             }
         }
 
         private void OnTriggerEnter2D(Collider2D col)
         {
-            if (col.gameObject.tag == "Item")
+            if (col.gameObject.tag == "Item" && noDoubleDipping)
             {
-                if (_inv.PickUp(col.gameObject.GetComponent<tempItem>().item))
+                noDoubleDipping = false;
+                if(_inv.PickUp(col.gameObject.GetComponent<tempItem>().item))
                 {
                     Destroy(col.gameObject);
+                    Debug.Log("Hit");
                 }
             }
         }
