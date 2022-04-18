@@ -1,3 +1,4 @@
+using Codice.Client.Common.GameUI;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -5,13 +6,18 @@ namespace Hawaiian.Inventory
 {
     public class InventoryController : MonoBehaviour
     {
-        [SerializeField] private GameObject UI;
+        [SerializeField] private GameObject ui;
         [FormerlySerializedAs("canvas")] [SerializeField] private Transform uiParent;
         private GameObject reference;
         private Inventory _inv;
         [SerializeField] private bool addinv;
         [SerializeField] private Item item;
+        [SerializeField] private GameObject highlight;
+
+        [SerializeField] private SpriteRenderer handheld;
         private bool noDoubleDipping;
+        
+        
         
         //[SerializeField] private int invSize;
     
@@ -21,7 +27,7 @@ namespace Hawaiian.Inventory
             if (uiParent == null) uiParent = FindObjectOfType<Canvas>().transform.GetChild(0);
         
             _inv = ScriptableObject.CreateInstance<Inventory>();
-            reference = Instantiate(UI, uiParent);
+            reference = Instantiate(ui, uiParent);
             reference.GetComponent<InventoryUI>().inv = _inv;
             addinv = false;
             noDoubleDipping = true;
