@@ -120,7 +120,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ffa29e2b75b18864fbad8d07ab6af2bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _damage: 5
+  _damage: 0
   _speed: 0
   OnTakeDamage: {fileID: 11400000, guid: 36d2877f5e90d4a4c968de30d42c3b82, type: 2}
 --- !u!61 &5973478539246383931
