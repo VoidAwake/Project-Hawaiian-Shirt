@@ -711,8 +711,10 @@ MonoBehaviour:
   _offset: 0
   _damageIndicatorOffset: 0
   _firePoint: {fileID: 0}
+  _cursor: {fileID: 0}
   minOffset: 0
   maxOffset: 0
+  _projectileReference: {fileID: 0}
 --- !u!114 &377541587
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2446,8 +2448,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _player: {fileID: 1128645655}
-  _radius: 15
-  _offset: 5
+  _baseRadius: 1.1
+  _maxRadius: 5
+  _input: {fileID: 2015151980}
 --- !u!1 &1904790637
 GameObject:
   m_ObjectHideFlags: 0
@@ -2492,6 +2495,17 @@ Rigidbody2D:
   m_CorrespondingSourceObject: {fileID: 6074339650475639761, guid: cbb41f2b105532c4a878d6f54f9e31bd, type: 3}
   m_PrefabInstance: {fileID: 1340102975467982771}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &2015151980 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6432945937749252037, guid: cbb41f2b105532c4a878d6f54f9e31bd, type: 3}
+  m_PrefabInstance: {fileID: 1340102975467982771}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2048975573
 GameObject:
   m_ObjectHideFlags: 0
@@ -3321,6 +3335,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5588978955059791629, guid: cbb41f2b105532c4a878d6f54f9e31bd, type: 3}
+      propertyPath: _cursor
+      value: 
+      objectReference: {fileID: 1824766554}
+    - target: {fileID: 5588978955059791629, guid: cbb41f2b105532c4a878d6f54f9e31bd, type: 3}
       propertyPath: _offset
       value: 1.1
       objectReference: {fileID: 0}
@@ -3336,6 +3354,10 @@ PrefabInstance:
       propertyPath: _firePoint
       value: 
       objectReference: {fileID: 1138886539}
+    - target: {fileID: 5588978955059791629, guid: cbb41f2b105532c4a878d6f54f9e31bd, type: 3}
+      propertyPath: _projectileReference
+      value: 
+      objectReference: {fileID: 8484802503941745754, guid: 6ccdae3489326844c9b49b012c477987, type: 3}
     - target: {fileID: 5588978955059791629, guid: cbb41f2b105532c4a878d6f54f9e31bd, type: 3}
       propertyPath: _damageIndicatorOffset
       value: -90
