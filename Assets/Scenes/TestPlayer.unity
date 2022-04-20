@@ -2095,6 +2095,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 232356, guid: 32cfed746529f4f4d9e044e3e5b89433, type: 3}
+      propertyPath: addinv
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 232356, guid: 32cfed746529f4f4d9e044e3e5b89433, type: 3}
       propertyPath: canvas
       value: 
       objectReference: {fileID: 1182283262}
@@ -2102,6 +2106,10 @@ PrefabInstance:
       propertyPath: uiParent
       value: 
       objectReference: {fileID: 1182283265}
+    - target: {fileID: 1388012318111893188, guid: 32cfed746529f4f4d9e044e3e5b89433, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.67
+      objectReference: {fileID: 0}
     - target: {fileID: 6886565524097403648, guid: 32cfed746529f4f4d9e044e3e5b89433, type: 3}
       propertyPath: m_Name
       value: Player

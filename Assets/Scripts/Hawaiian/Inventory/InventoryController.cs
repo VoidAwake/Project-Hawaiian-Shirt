@@ -1,5 +1,9 @@
+using System;
+using Hawaiian.Input;
+using UnityEngine.InputSystem;
 using System.Collections;
 using Codice.Client.Common.GameUI;
+using Hawaiian.UI;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -15,12 +19,12 @@ namespace Hawaiian.Inventory
         [SerializeField] private bool addinv;
         [SerializeField] private Item item;
         [SerializeField] private GameObject highlight;
+        //[SerializeField] private Sprite hand;
         private GameObject highRef;
         public InventoryUI tempRef;
         [SerializeField] private SpriteRenderer handheld;
         private bool noDoubleDipping;
-        
-        
+        private PlayerAction play;
         
         //[SerializeField] private int invSize;
     
@@ -39,6 +43,12 @@ namespace Hawaiian.Inventory
             //IFuckingHateThis();
             //yield WaitForSeconds(0);
             //SelectionUpdate();
+            play = new PlayerAction();
+        }
+
+        private void OnEnable()
+        {
+            play.Enable();
         }
 
         private void Update()
@@ -49,7 +59,21 @@ namespace Hawaiian.Inventory
                 SelectionUpdate();
                 addinv = false;
             }
-            
+
+            //float x = play.Player.InventoryParse.ReadValue<float>();
+            //Debug.Log(x);
+            //bool a = play.Player.InvLeft.triggered;
+            if (play.Player.InvParse.triggered)
+            {
+                Parse((int) play.Player.InvParse.ReadValue<float>());
+            }
+
+
+        }
+
+        private void OnDisable()
+        {
+            play.Disable();
         }
 
         private void OnTriggerEnter2D(Collider2D col)
@@ -61,6 +85,7 @@ namespace Hawaiian.Inventory
                 {
                     Destroy(col.gameObject);
                     Debug.Log("Hit");
+                    SelectionUpdate();
                 }
             }
         }
@@ -84,6 +109,14 @@ namespace Hawaiian.Inventory
         public void SelectionUpdate()
         {
             highRef.transform.position = tempRef.invSlots[invPosition].transform.position;
+            if (_inv.inv[invPosition] != null)
+            {
+                handheld.sprite = _inv.inv[invPosition].itemSprite;
+            }
+            else
+            {
+                handheld.sprite = null;
+            }
         }
     }
 }

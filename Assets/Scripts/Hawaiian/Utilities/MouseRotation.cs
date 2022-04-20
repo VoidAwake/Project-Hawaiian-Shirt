@@ -1,5 +1,4 @@
-﻿
-using Hawaiian.Input;
+﻿using Hawaiian.Input;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
