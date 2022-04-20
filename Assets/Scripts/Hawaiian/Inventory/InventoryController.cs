@@ -1,3 +1,4 @@
+using System.Collections;
 using Codice.Client.Common.GameUI;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -10,10 +11,12 @@ namespace Hawaiian.Inventory
         [FormerlySerializedAs("canvas")] [SerializeField] private Transform uiParent;
         private GameObject reference;
         private Inventory _inv;
+        [SerializeField] private int invPosition = 0;
         [SerializeField] private bool addinv;
         [SerializeField] private Item item;
         [SerializeField] private GameObject highlight;
-
+        private GameObject highRef;
+        public InventoryUI tempRef;
         [SerializeField] private SpriteRenderer handheld;
         private bool noDoubleDipping;
         
@@ -28,9 +31,14 @@ namespace Hawaiian.Inventory
         
             _inv = ScriptableObject.CreateInstance<Inventory>();
             reference = Instantiate(ui, uiParent);
+            tempRef = reference.GetComponent<InventoryUI>();
             reference.GetComponent<InventoryUI>().inv = _inv;
-            addinv = false;
+            //addinv = true;
             noDoubleDipping = true;
+            highRef = Instantiate(highlight, uiParent);
+            //IFuckingHateThis();
+            //yield WaitForSeconds(0);
+            //SelectionUpdate();
         }
 
         private void Update()
@@ -38,10 +46,10 @@ namespace Hawaiian.Inventory
             noDoubleDipping = true;
             if (addinv)
             {
-                _inv.PickUp(item);
-                addinv = !addinv;
-                
+                SelectionUpdate();
+                addinv = false;
             }
+            
         }
 
         private void OnTriggerEnter2D(Collider2D col)
@@ -55,6 +63,27 @@ namespace Hawaiian.Inventory
                     Debug.Log("Hit");
                 }
             }
+        }
+
+        private void Parse(int i)
+        {
+            invPosition += i;
+            if (invPosition > _inv.inv.Length - 1)
+            {
+                invPosition = 0;
+            }
+
+            if (invPosition < 0)
+            {
+                invPosition = _inv.inv.Length - 1;
+            }
+            SelectionUpdate();
+            
+        }
+
+        public void SelectionUpdate()
+        {
+            highRef.transform.position = tempRef.invSlots[invPosition].transform.position;
         }
     }
 }

@@ -370,11 +370,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 66c6441a83f4ea347a2e1d720ada3f61, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  UI: {fileID: 5056236730594589646, guid: 78879c192efd6f842b0a01570510afec, type: 3}
+  ui: {fileID: 5056236730594589646, guid: 78879c192efd6f842b0a01570510afec, type: 3}
   uiParent: {fileID: 0}
   addinv: 0
   item: {fileID: 0}
-  highlight: {fileID: 0}
+  highlight: {fileID: 4022233725905291594, guid: b4aa552f66eb60b4bacb8329fc1fb102, type: 3}
+  tempRef: {fileID: 0}
+  handheld: {fileID: 0}
 --- !u!61 &435319529
 BoxCollider2D:
   m_ObjectHideFlags: 0
