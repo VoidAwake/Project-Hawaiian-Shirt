@@ -75,6 +75,24 @@ namespace Hawaiian.Input
                     ""initialStateCheck"": true
                 },
                 {
+                    ""name"": ""InvLeft"",
+                    ""type"": ""Button"",
+                    ""id"": ""b8f84ea5-8090-4a62-a950-0358aad2d429"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""InvParse"",
+                    ""type"": ""Button"",
+                    ""id"": ""eb9009d9-a746-47f5-8024-38a635c96257"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
                     ""name"": ""HoldAttack"",
                     ""type"": ""Button"",
                     ""id"": ""fd863b22-3bee-4bcf-8169-3e0861cb5fe0"",
@@ -428,6 +446,50 @@ namespace Hawaiian.Input
                 },
                 {
                     ""name"": """",
+                    ""id"": ""af31af3f-2fd1-476d-af1a-4b7d59203667"",
+                    ""path"": ""<Keyboard>/q"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""InvLeft"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""1D Axis"",
+                    ""id"": ""e7b6dd70-e94e-4bec-93eb-879c849639e4"",
+                    ""path"": ""1DAxis"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""InvParse"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""negative"",
+                    ""id"": ""6e2ea6a2-79bb-4913-9050-2bd489e43bfb"",
+                    ""path"": ""<Keyboard>/q"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""InvParse"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""positive"",
+                    ""id"": ""a2607abf-ca51-41a8-a85f-fefdb3db30e3"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""InvParse"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
                     ""id"": ""e14e3f7b-6902-49ce-8bfe-c83bb7251bcc"",
                     ""path"": ""<Keyboard>/space"",
                     ""interactions"": """",
@@ -767,6 +829,8 @@ namespace Hawaiian.Input
             m_Player_ActionB = m_Player.FindAction("ActionB", throwIfNotFound: true);
             m_Player_Attack = m_Player.FindAction("Attack", throwIfNotFound: true);
             m_Player_Rotate = m_Player.FindAction("Rotate", throwIfNotFound: true);
+            m_Player_InvLeft = m_Player.FindAction("InvLeft", throwIfNotFound: true);
+            m_Player_InvParse = m_Player.FindAction("InvParse", throwIfNotFound: true);
             m_Player_HoldAttack = m_Player.FindAction("HoldAttack", throwIfNotFound: true);
             // Lobby Player
             m_LobbyPlayer = asset.FindActionMap("Lobby Player", throwIfNotFound: true);
@@ -839,6 +903,8 @@ namespace Hawaiian.Input
         private readonly InputAction m_Player_ActionB;
         private readonly InputAction m_Player_Attack;
         private readonly InputAction m_Player_Rotate;
+        private readonly InputAction m_Player_InvLeft;
+        private readonly InputAction m_Player_InvParse;
         private readonly InputAction m_Player_HoldAttack;
         public struct PlayerActions
         {
@@ -849,6 +915,8 @@ namespace Hawaiian.Input
             public InputAction @ActionB => m_Wrapper.m_Player_ActionB;
             public InputAction @Attack => m_Wrapper.m_Player_Attack;
             public InputAction @Rotate => m_Wrapper.m_Player_Rotate;
+            public InputAction @InvLeft => m_Wrapper.m_Player_InvLeft;
+            public InputAction @InvParse => m_Wrapper.m_Player_InvParse;
             public InputAction @HoldAttack => m_Wrapper.m_Player_HoldAttack;
             public InputActionMap Get() { return m_Wrapper.m_Player; }
             public void Enable() { Get().Enable(); }
@@ -874,6 +942,12 @@ namespace Hawaiian.Input
                     @Rotate.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnRotate;
                     @Rotate.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnRotate;
                     @Rotate.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnRotate;
+                    @InvLeft.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnInvLeft;
+                    @InvLeft.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnInvLeft;
+                    @InvLeft.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnInvLeft;
+                    @InvParse.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnInvParse;
+                    @InvParse.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnInvParse;
+                    @InvParse.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnInvParse;
                     @HoldAttack.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnHoldAttack;
                     @HoldAttack.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnHoldAttack;
                     @HoldAttack.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnHoldAttack;
@@ -896,6 +970,12 @@ namespace Hawaiian.Input
                     @Rotate.started += instance.OnRotate;
                     @Rotate.performed += instance.OnRotate;
                     @Rotate.canceled += instance.OnRotate;
+                    @InvLeft.started += instance.OnInvLeft;
+                    @InvLeft.performed += instance.OnInvLeft;
+                    @InvLeft.canceled += instance.OnInvLeft;
+                    @InvParse.started += instance.OnInvParse;
+                    @InvParse.performed += instance.OnInvParse;
+                    @InvParse.canceled += instance.OnInvParse;
                     @HoldAttack.started += instance.OnHoldAttack;
                     @HoldAttack.performed += instance.OnHoldAttack;
                     @HoldAttack.canceled += instance.OnHoldAttack;
@@ -1002,6 +1082,8 @@ namespace Hawaiian.Input
             void OnActionB(InputAction.CallbackContext context);
             void OnAttack(InputAction.CallbackContext context);
             void OnRotate(InputAction.CallbackContext context);
+            void OnInvLeft(InputAction.CallbackContext context);
+            void OnInvParse(InputAction.CallbackContext context);
             void OnHoldAttack(InputAction.CallbackContext context);
         }
         public interface ILobbyPlayerActions

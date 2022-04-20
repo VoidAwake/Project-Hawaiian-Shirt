@@ -11,7 +11,7 @@ namespace Hawaiian.Inventory
         // Start is called before the first frame update
         [SerializeField] public Inventory inv;
         [SerializeField] private ScriptableInt size;
-        private List<GameObject> invSlots = new ();
+        public List<GameObject> invSlots = new ();
         [SerializeField] GameObject slot;
     
     
