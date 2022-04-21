@@ -1,29 +1,25 @@
 ﻿using System.Collections.Generic;
+using Hawaiian.Utilities;
 using UnityEngine;
 
 namespace Hawaiian.Interactables
 {
     public class TargetHighlighter : MonoBehaviour
     {
-        [SerializeField] private Interactor interactor;
+        [SerializeField] private GameEvent positionalEventCallerEnabled;
+        [SerializeField] private GameEvent positionalEventCallerDisabled;
         [SerializeField] private GameObject highlighterPrefab;
 
-        private Dictionary<Interactable, Highlighter> highlighters = new();
+        private Dictionary<GameEventListener, Highlighter> highlighters = new();
 
-        private void Awake()
-        {
-            interactor.targetAdded.AddListener(OnTargetAdded);
-            interactor.targetRemoved.AddListener(OnTargetRemoved);
-        }
-
-        private void OnTargetAdded(Interactable target)
+        public void OnTargetAdded(GameEventListener target)
         {
             var highlighterObject = Instantiate(highlighterPrefab, target.transform);
                 
             highlighters.Add(target, highlighterObject.GetComponent<Highlighter>());
         }
 
-        private void OnTargetRemoved(Interactable target)
+        public void OnTargetRemoved(GameEventListener target)
         {
             Destroy(highlighters[target].gameObject);
 
