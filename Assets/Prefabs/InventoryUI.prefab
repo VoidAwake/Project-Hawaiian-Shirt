@@ -78,4 +78,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   inv: {fileID: 0}
   size: {fileID: 11400000, guid: d1df78077398a98448d92b549af3857f, type: 2}
+  invSlots: []
   slot: {fileID: 4972408665111766016, guid: 2deb14ca7c6fb6347be69b40751f9cdf, type: 3}
+  InventoryGenerated: {fileID: 11400000, guid: c16739aa95b51a1439bb9ff2af861662, type: 2}

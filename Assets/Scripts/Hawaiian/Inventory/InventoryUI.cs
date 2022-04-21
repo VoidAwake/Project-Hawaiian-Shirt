@@ -13,8 +13,9 @@ namespace Hawaiian.Inventory
         [SerializeField] private ScriptableInt size;
         public List<GameObject> invSlots = new ();
         [SerializeField] GameObject slot;
-    
-    
+
+        [SerializeField] private GameEvent InventoryGenerated;
+        
 
         private void Start()
         {
@@ -24,7 +25,7 @@ namespace Hawaiian.Inventory
                 //Instantiate this gamer inventory ui
                 if (inv.inv[i] != null)
                 {
-                    invSlots[i].GetComponent<SlotUI>().UpdateSprite(inv.inv[i].itemSprite);
+                    invSlots[i].GetComponent<SlotUI>().UpdateSprite(inv.inv[i].ItemSprite);
                 }
                 else
                 {
@@ -33,6 +34,7 @@ namespace Hawaiian.Inventory
             }
         
             inv.itemchange.AddListener(UpdateInv);
+            InventoryGenerated.Raise();
         }
 
         private void UpdateInv()
@@ -43,7 +45,7 @@ namespace Hawaiian.Inventory
                 //invSlots[i].refer to inv
                 if (inv.inv[i] != null)
                 {
-                    invSlots[i].GetComponent<SlotUI>().UpdateSprite(inv.inv[i].itemSprite);
+                    invSlots[i].GetComponent<SlotUI>().UpdateSprite(inv.inv[i].ItemSprite);
                 }
                 else
                 {

@@ -112,17 +112,10 @@ namespace Hawaiian.Unit
         
         public void OnAttack(InputValue value)
         {
-            
             //NEEDS TO BE A CHECK IF USING PROJECTILES TO ALLOW FOR ON HOLD ACTIONS AND IGNORE THIS
             #region Ranged Attack
 
-//            Debug.Log(value);
-
-
-
-
             #endregion
-
 
             #region MeleeAttack
 
@@ -163,7 +156,6 @@ namespace Hawaiian.Unit
             //  _attackFlag = !_attackFlag;
 
             #endregion
-
         }
 
         public Vector3 GetPosition() =>  transform.position;

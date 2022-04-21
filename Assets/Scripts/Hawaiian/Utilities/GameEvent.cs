@@ -1,9 +1,10 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
 namespace Hawaiian.Utilities
 {
-    [CreateAssetMenu(order = 0, menuName = "Hawaiian/Events/GameEvent",fileName = "NewGameEvent")]
+    [CreateAssetMenu(order = 0, menuName = "Hawaiian/Events/GameEvent",fileName = "NewGameEvent")][Serializable]
     public class GameEvent : ScriptableObject
     {
 
@@ -12,7 +13,7 @@ namespace Hawaiian.Utilities
         public virtual void Raise()
         {
             for (int i = _listeners.Count - 1; i >= 0; i--)
-                _listeners[i].OnEventRaised();
+                _listeners[i].OnEventRaised(this);
         
         }
         

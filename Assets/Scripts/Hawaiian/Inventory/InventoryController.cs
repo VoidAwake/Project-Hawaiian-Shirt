@@ -4,6 +4,7 @@ using UnityEngine.InputSystem;
 using System.Collections;
 using Codice.Client.Common.GameUI;
 using Hawaiian.UI;
+using Hawaiian.Utilities;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -11,23 +12,27 @@ namespace Hawaiian.Inventory
 {
     public class InventoryController : MonoBehaviour
     {
-        [SerializeField] private GameObject ui;
         [FormerlySerializedAs("canvas")] [SerializeField] private Transform uiParent;
-        private GameObject reference;
-        private Inventory _inv;
-        [SerializeField] private int invPosition = 0;
-        [SerializeField] private bool addinv;
+        [SerializeField] private GameObject ui;
         [SerializeField] private Item item;
         [SerializeField] private GameObject highlight;
-        //[SerializeField] private Sprite hand;
-        private GameObject highRef;
-        public InventoryUI tempRef;
         [SerializeField] private SpriteRenderer handheld;
-        private bool noDoubleDipping;
-        private PlayerAction play;
+        [SerializeField] private int invPosition = 0;
+        [SerializeField] private bool addinv;
+        [SerializeField] private GameEventListeners _listener;
+        [SerializeField] private Item[] _baseItems;
         
+        private GameObject reference;
+        private Inventory _inv;
+        private GameObject highRef;
+        private PlayerAction play;
+        private bool noDoubleDipping;
+
+        public InventoryUI tempRef;
+
         //[SerializeField] private int invSize;
-    
+        //[SerializeField] private Sprite hand;
+
         private void Awake()
         {
             // TODO: Temp fix to get canvas reference. Will come back to this when we start looking at a UI system.
@@ -44,6 +49,19 @@ namespace Hawaiian.Inventory
             //yield WaitForSeconds(0);
             //SelectionUpdate();
             play = new PlayerAction();
+           // SelectionUpdate();
+        }
+
+        public void InitialiseHighlight()
+        {
+            highRef.transform.position = tempRef.invSlots[invPosition].transform.position;
+            
+
+        }
+
+        private void Start()
+        {
+
         }
 
         private void OnEnable()
@@ -111,7 +129,7 @@ namespace Hawaiian.Inventory
             highRef.transform.position = tempRef.invSlots[invPosition].transform.position;
             if (_inv.inv[invPosition] != null)
             {
-                handheld.sprite = _inv.inv[invPosition].itemSprite;
+                handheld.sprite = _inv.inv[invPosition].ItemSprite;
             }
             else
             {

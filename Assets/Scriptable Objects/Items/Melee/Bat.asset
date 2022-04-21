@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b80aed388cd62a5479b406e914eb6b8d, type: 3}
-  m_Name: BombDefault
+  m_Name: Bat
   m_EditorClassIdentifier: 
-  itemName: Bomb
-  itemDamage: 10
-  itemSprite: {fileID: 21300000, guid: 773fa4ebe39ae724c84e0f6637926eaf, type: 3}
-  maxStack: 3
+  itemName: 
+  itemDamage: 0
+  itemSprite: {fileID: 0}
+  maxStack: 0
