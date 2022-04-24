@@ -34,9 +34,13 @@ namespace Hawaiian.Input
             }
         }
 
-        public float MaxRadius => _maxRadius;
-        
-        
+        public float MaxRadius
+        {
+            get => _maxRadius;
+            set => _maxRadius = value;
+        }
+
+
         private void Awake()
         {
             action = new PlayerAction();

@@ -1,3 +1,5 @@
+using UnityEngine;
+
 namespace Hawaiian.Inventory
 {
     public interface IItem

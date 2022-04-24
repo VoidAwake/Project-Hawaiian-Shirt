@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Hawaiian.Unit
 {
-    public class Projectiles : MonoBehaviour
+    public class Projectile : MonoBehaviour
     {
         [SerializeField] private float _speed;
         [SerializeField] private bool _canStickOnWalls;
@@ -23,6 +23,14 @@ namespace Hawaiian.Unit
             _targetLocation = target;
         }
         
+        public void Initialise(Vector3 target, float speed = 5, float damage = 5,bool canStickOnWalls = false)
+        {
+            _targetLocation = target;
+            _speed = speed;
+            _damage = damage;
+            _canStickOnWalls = canStickOnWalls;
+        }
+        
 
         private void Update()
         {
@@ -38,7 +46,7 @@ namespace Hawaiian.Unit
 
         private void OnCollisionEnter2D(Collision2D other)
         {
-            if (!other.gameObject.GetComponent<Unit>() || !other.gameObject.GetComponent<Projectiles>())
+            if (!other.gameObject.GetComponent<Unit>() || !other.gameObject.GetComponent<Projectile>())
             {
                 Destroy(this.gameObject);
             }

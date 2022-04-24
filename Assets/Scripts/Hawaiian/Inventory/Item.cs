@@ -1,3 +1,4 @@
+using Hawaiian.Utilities;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -17,8 +18,6 @@ namespace Hawaiian.Inventory
     [CreateAssetMenu]
     public class Item : ScriptableObject, IItem
     {
-        
-        
         [Header("Item Type")]
         public ItemType Type;
 
@@ -27,6 +26,10 @@ namespace Hawaiian.Inventory
         [HideInInspector] public Sprite DroppedItemSprite;
         [HideInInspector] public string ItemName;
         [HideInInspector] public int MaxStack;
+        
+        [HideInInspector] public GameObject DroppedItemBase;
+        [HideInInspector] public GameObject ProjectileInstance;
+
         
         [HideInInspector] public float ItemDamage;
 
