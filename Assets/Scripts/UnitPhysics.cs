@@ -27,7 +27,7 @@ public class UnitPhysics : MonoBehaviour
     // Update is called once per frame
     protected virtual void Update()
     {
-        SetTargetVelocity();
+        SetTargetVelocity(); 
     }
 
     protected virtual void FixedUpdate()

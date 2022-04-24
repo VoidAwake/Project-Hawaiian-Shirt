@@ -12,8 +12,7 @@ public class LookDecision : Decision
 
     public bool Look(EnemyFSM fsm)
     {
-        RaycastHit2D hit;
-        if (fsm.fov)
+        if (fsm)
         {
             return true;
         }

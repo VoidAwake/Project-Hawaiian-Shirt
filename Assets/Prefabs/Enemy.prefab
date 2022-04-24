@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 343484380682822114}
   - component: {fileID: 773512349449736286}
   - component: {fileID: 7506615711996646673}
+  - component: {fileID: 8034444487953650240}
   m_Layer: 0
   m_Name: FOV
   m_TagString: Untagged
@@ -52,6 +53,7 @@ MonoBehaviour:
   meshResolution: 1
   edgeItr: 4
   edgeDst: 4
+  maskCutaway: 0.1
   targetMask:
     serializedVersion: 2
     m_Bits: 0
@@ -111,6 +113,35 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!60 &8034444487953650240
+PolygonCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3837106225297113474}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1, y: 1}
+    newSize: {x: 1, y: 1}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Points:
+    m_Paths:
+    - - {x: -2.0026324, y: 3.9997525}
+      - {x: -0.5, y: -0.5}
+      - {x: 0.5, y: -0.5}
+      - {x: 2.0041678, y: 4.0005693}
 --- !u!1001 &4895615097980415704
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -181,6 +212,7 @@ PrefabInstance:
     m_RemovedComponents:
     - {fileID: 6886565524097403770, guid: 32cfed746529f4f4d9e044e3e5b89433, type: 3}
     - {fileID: 2388499579700266161, guid: 32cfed746529f4f4d9e044e3e5b89433, type: 3}
+    - {fileID: 6886565524097403768, guid: 32cfed746529f4f4d9e044e3e5b89433, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 32cfed746529f4f4d9e044e3e5b89433, type: 3}
 --- !u!4 &2044996132595983779 stripped
 Transform:
@@ -192,35 +224,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 6886565524097403648, guid: 32cfed746529f4f4d9e044e3e5b89433, type: 3}
   m_PrefabInstance: {fileID: 4895615097980415704}
   m_PrefabAsset: {fileID: 0}
---- !u!60 &6415960965013333497
-PolygonCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2044996132595983832}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 1}
-    newSize: {x: 1, y: 1}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  m_Points:
-    m_Paths:
-    - - {x: -2.0026324, y: 3.9997525}
-      - {x: -0.5, y: -0.5}
-      - {x: 0.5, y: -0.5}
-      - {x: 2.0041678, y: 4.0005693}
 --- !u!114 &167374080983641883
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -238,7 +241,7 @@ MonoBehaviour:
   stateTimeElapsed: 0
   enemy: {fileID: 0}
   controls: {fileID: 0}
-  fov: {fileID: 0}
+  unitEnemy: {fileID: 0}
   currentDestination: {x: 0, y: 0}
   nextWaypoint: 1
   waypointList: []
@@ -258,6 +261,6 @@ MonoBehaviour:
   minimumDistance: 0.001
   collisionBuffer: 0.01
   isBoundByCamera: 0
-  maxSpeed: 0
-  tweenRate: 0
-  runMultiplier: 0
+  maxSpeed: 2
+  tweenRate: 12.5
+  runMultiplier: 1.75

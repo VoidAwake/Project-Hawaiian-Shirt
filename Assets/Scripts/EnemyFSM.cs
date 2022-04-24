@@ -11,8 +11,10 @@ public class EnemyFSM : MonoBehaviour
 
     public Rigidbody2D enemy;
     public PlayerInput controls;
-    public EnemyFOV fov;
-    public PolygonCollider2D viewCone;
+    //public EnemyFOV fov;
+    //public PolygonCollider2D viewCone;
+
+    public UnitEnemy unitEnemy;
 
     [SerializeField] public Vector2 currentDestination;
 
@@ -28,7 +30,9 @@ public class EnemyFSM : MonoBehaviour
     {
         enemy = GetComponent<Rigidbody2D>();
         controls = GetComponent<PlayerInput>();
-        viewCone = GetComponent<PolygonCollider2D>();
+        //viewCone = GetComponentInChildren<PolygonCollider2D>();
+        //viewCone.CreateMesh(true, true);
+        unitEnemy = GetComponent<UnitEnemy>();
     }
 
     // Update is called once per frame
