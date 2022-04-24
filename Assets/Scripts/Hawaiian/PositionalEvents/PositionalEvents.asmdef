@@ -1,13 +1,8 @@
 {
-    "name": "Hawaiian.Inventory",
+    "name": "PositionalEvents",
     "rootNamespace": "",
     "references": [
-        "UniTask",
-        "Unity.Mathematics",
-        "Hawaiian.Utilities",
-        "Hawaiian.UI",
-        "Hawaiian.Unit",
-        "PositionalEvents"
+        "GUID:f83e7e11d13fd144b8df64840a369b66"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

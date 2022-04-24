@@ -73,6 +73,15 @@ namespace Hawaiian.Input
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""PickUp"",
+                    ""type"": ""Button"",
+                    ""id"": ""5fe6fcd5-b353-4fd6-825a-dbe46fb29b06"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -416,6 +425,28 @@ namespace Hawaiian.Input
                     ""action"": ""Rotate"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""e53eb43a-7dde-462e-981f-181c34c78e25"",
+                    ""path"": ""<Keyboard>/f"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard1"",
+                    ""action"": ""PickUp"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""5b844866-dd44-49a2-ae31-08381ee9076f"",
+                    ""path"": ""<Gamepad>/buttonNorth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""PickUp"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -725,6 +756,7 @@ namespace Hawaiian.Input
             m_Player_ActionB = m_Player.FindAction("ActionB", throwIfNotFound: true);
             m_Player_Attack = m_Player.FindAction("Attack", throwIfNotFound: true);
             m_Player_Rotate = m_Player.FindAction("Rotate", throwIfNotFound: true);
+            m_Player_PickUp = m_Player.FindAction("PickUp", throwIfNotFound: true);
             // Lobby Player
             m_LobbyPlayer = asset.FindActionMap("Lobby Player", throwIfNotFound: true);
             m_LobbyPlayer_Ready = m_LobbyPlayer.FindAction("Ready", throwIfNotFound: true);
@@ -796,6 +828,7 @@ namespace Hawaiian.Input
         private readonly InputAction m_Player_ActionB;
         private readonly InputAction m_Player_Attack;
         private readonly InputAction m_Player_Rotate;
+        private readonly InputAction m_Player_PickUp;
         public struct PlayerActions
         {
             private @PlayerAction m_Wrapper;
@@ -805,6 +838,7 @@ namespace Hawaiian.Input
             public InputAction @ActionB => m_Wrapper.m_Player_ActionB;
             public InputAction @Attack => m_Wrapper.m_Player_Attack;
             public InputAction @Rotate => m_Wrapper.m_Player_Rotate;
+            public InputAction @PickUp => m_Wrapper.m_Player_PickUp;
             public InputActionMap Get() { return m_Wrapper.m_Player; }
             public void Enable() { Get().Enable(); }
             public void Disable() { Get().Disable(); }
@@ -829,6 +863,9 @@ namespace Hawaiian.Input
                     @Rotate.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnRotate;
                     @Rotate.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnRotate;
                     @Rotate.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnRotate;
+                    @PickUp.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPickUp;
+                    @PickUp.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPickUp;
+                    @PickUp.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPickUp;
                 }
                 m_Wrapper.m_PlayerActionsCallbackInterface = instance;
                 if (instance != null)
@@ -848,6 +885,9 @@ namespace Hawaiian.Input
                     @Rotate.started += instance.OnRotate;
                     @Rotate.performed += instance.OnRotate;
                     @Rotate.canceled += instance.OnRotate;
+                    @PickUp.started += instance.OnPickUp;
+                    @PickUp.performed += instance.OnPickUp;
+                    @PickUp.canceled += instance.OnPickUp;
                 }
             }
         }
@@ -951,6 +991,7 @@ namespace Hawaiian.Input
             void OnActionB(InputAction.CallbackContext context);
             void OnAttack(InputAction.CallbackContext context);
             void OnRotate(InputAction.CallbackContext context);
+            void OnPickUp(InputAction.CallbackContext context);
         }
         public interface ILobbyPlayerActions
         {

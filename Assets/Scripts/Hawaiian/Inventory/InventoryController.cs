@@ -1,3 +1,4 @@
+using Hawaiian.PositionalEvents;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -7,11 +8,13 @@ namespace Hawaiian.Inventory
     {
         [SerializeField] private GameObject UI;
         [FormerlySerializedAs("canvas")] [SerializeField] private Transform uiParent;
-        private GameObject reference;
-        private Inventory _inv;
         [SerializeField] private bool addinv;
         [SerializeField] private Item item;
         //[SerializeField] private int invSize;
+        
+        private GameObject reference;
+        private Inventory _inv;
+        private PositionalEventCaller positionalEventCaller;
     
         private void Awake()
         {
@@ -22,25 +25,29 @@ namespace Hawaiian.Inventory
             reference = Instantiate(UI, uiParent);
             reference.GetComponent<InventoryUI>().inv = _inv;
             addinv = false;
+
+            positionalEventCaller = GetComponent<PositionalEventCaller>();
         }
 
         private void Update()
         {
-            if (addinv)
-            {
-                _inv.PickUp(item);
-                addinv = !addinv;
-            }
+            if (!addinv) return;
+            
+            _inv.PickUp(item);
+            addinv = !addinv;
         }
 
-        private void OnTriggerEnter2D(Collider2D col)
+        private void OnPickUp()
         {
-            if (col.gameObject.tag == "Item")
+            foreach (var target in positionalEventCaller.Targets)
             {
-                if (_inv.PickUp(col.gameObject.GetComponent<tempItem>().item))
-                {
-                    Destroy(col.gameObject);
-                }
+                var item = target.GetComponent<tempItem>().item;
+                
+                if (item == null) continue;
+
+                if (!_inv.PickUp(item)) continue;
+                
+                positionalEventCaller.Raise(target);
             }
         }
     }
