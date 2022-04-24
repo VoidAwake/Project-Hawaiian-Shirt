@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Hawaiian.Utilities;
 using MoreLinq;
@@ -100,6 +101,13 @@ namespace Hawaiian.PositionalEvents
             {
                 target.response.Invoke();
             }
+        }
+
+        public void Raise(PositionalEventListener target)
+        {
+            if (!Targets.Contains(target)) throw new ArgumentException($"Target {target} is not in {nameof(Targets)}");
+            
+            target.response.Invoke();
         }
     }
 }

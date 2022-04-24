@@ -4,7 +4,11 @@ namespace Hawaiian.Inventory
 {
     public class tempItem : MonoBehaviour
     {
-        // Start is called before the first frame update
         public Item item;
+
+        public void OnPickUp()
+        {
+            Destroy(gameObject);
+        }
     }
 }
