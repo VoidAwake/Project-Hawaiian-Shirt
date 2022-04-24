@@ -2,7 +2,7 @@
 using System.Linq;
 using UnityEngine;
 
-namespace Hawaiian.Interactables
+namespace Hawaiian.PositionalEvents
 {
     public class TargetHighlighter : MonoBehaviour
     {

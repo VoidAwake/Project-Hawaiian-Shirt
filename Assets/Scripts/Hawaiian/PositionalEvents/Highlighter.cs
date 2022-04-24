@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace Hawaiian.Interactables
+namespace Hawaiian.PositionalEvents
 {
     [RequireComponent(typeof(SpriteRenderer))]
     public class Highlighter : MonoBehaviour

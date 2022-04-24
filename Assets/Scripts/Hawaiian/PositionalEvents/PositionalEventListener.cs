@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.Events;
 
-namespace Hawaiian.Interactables
+namespace Hawaiian.PositionalEvents
 {
     [RequireComponent(typeof(Collider2D))]
     public class PositionalEventListener : MonoBehaviour

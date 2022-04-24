@@ -1,6 +1,6 @@
 ﻿using Hawaiian.Utilities;
 
-namespace Hawaiian.Interactables
+namespace Hawaiian.PositionalEvents
 {
     public class PositionalEventCallerGameEventListener : BaseGameEventListener<PositionalEventCaller>
     {

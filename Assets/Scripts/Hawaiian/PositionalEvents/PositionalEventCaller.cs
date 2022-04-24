@@ -4,7 +4,7 @@ using Hawaiian.Utilities;
 using MoreLinq;
 using UnityEngine;
 
-namespace Hawaiian.Interactables
+namespace Hawaiian.PositionalEvents
 {
     [RequireComponent(typeof(CircleCollider2D))]
     public class PositionalEventCaller : MonoBehaviour
