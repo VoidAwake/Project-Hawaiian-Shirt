@@ -134,13 +134,14 @@ GameObject:
   - component: {fileID: 745795117}
   - component: {fileID: 745795116}
   - component: {fileID: 745795118}
+  - component: {fileID: 745795119}
   m_Layer: 0
   m_Name: Target Highlighter
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!212 &745795116
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -220,9 +221,35 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6e6f2770f3c42a7b77a24e8e3778f33, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  positionalEventCallerEnabled: {fileID: 0}
-  positionalEventCallerDisabled: {fileID: 0}
   highlighterPrefab: {fileID: 2065759647219533693, guid: 72b964431f279f84a9dfe4bc9375930e, type: 3}
+--- !u!114 &745795119
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 745795115}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3edf1f5353e1451ea754eedcbddd175b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Event: {fileID: 11400000, guid: 37e77cbc288b0bb408597b25a3a84f7e, type: 2}
+  Response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 745795118}
+        m_TargetAssemblyTypeName: Hawaiian.Interactables.TargetHighlighter, Assembly-CSharp
+        m_MethodName: OnTargetsChanged
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1624415287
 GameObject:
   m_ObjectHideFlags: 0
@@ -444,16 +471,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   token: {fileID: 11400000, guid: 9f1d3cb3ed1f98a428d06c27ad583779, type: 2}
-  positionalEventCallerEnabled: {fileID: 11400000, guid: b4a00e71ad5b7404b8b79c4cd8c629f5, type: 2}
-  positionalEventCallerDisabled: {fileID: 11400000, guid: 3601bc7c031def049976fe833657d495, type: 2}
   radius: 2
   interactionTarget: 1
-  targetAdded:
-    m_PersistentCalls:
-      m_Calls: []
-  targetRemoved:
-    m_PersistentCalls:
-      m_Calls: []
+  targetsChanged: {fileID: 11400000, guid: 37e77cbc288b0bb408597b25a3a84f7e, type: 2}
 --- !u!1 &1852906531
 GameObject:
   m_ObjectHideFlags: 0

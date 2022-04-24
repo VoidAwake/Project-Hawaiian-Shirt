@@ -3,7 +3,6 @@ using System.Linq;
 using Hawaiian.Utilities;
 using MoreLinq;
 using UnityEngine;
-using UnityEngine.Events;
 
 namespace Hawaiian.Interactables
 {
@@ -13,17 +12,22 @@ namespace Hawaiian.Interactables
         public enum InteractionTarget { All, Closest }
 
         [SerializeField] private PositionalEventToken token;
-        [SerializeField] private GameEvent positionalEventCallerEnabled;
-        [SerializeField] private GameEvent positionalEventCallerDisabled;
         [SerializeField] private float radius;
         [SerializeField] private InteractionTarget interactionTarget;
-
-        public UnityEvent<PositionalEventListener> targetAdded = new();
-        public UnityEvent<PositionalEventListener> targetRemoved = new();
+        [SerializeField] private BaseGameEvent<PositionalEventCaller> targetsChanged; 
 
         private List<PositionalEventListener> interactablesInRange = new();
+        private List<PositionalEventListener> targets = new();
 
-        private List<PositionalEventListener> Targets { get; set; } = new();
+        public List<PositionalEventListener> Targets
+        {
+            get => targets;
+            set
+            {
+                targets = value;
+                targetsChanged.Raise(this);
+            }
+        }
 
         private void Awake()
         {
@@ -39,7 +43,7 @@ namespace Hawaiian.Interactables
             if (nearest == null)
                 Targets = new List<PositionalEventListener>();
             else
-                Targets = new List<PositionalEventListener> { NearestInteractable() };
+                Targets = new List<PositionalEventListener> { nearest };
         }
 
         private void OnTriggerEnter2D(Collider2D col)
@@ -73,7 +77,7 @@ namespace Hawaiian.Interactables
             return interactablesInRange.MinBy(i => Vector3.Distance(i.transform.position, transform.position));
         }
 
-        public void RegisterListener(PositionalEventListener listener)
+        private void RegisterListener(PositionalEventListener listener)
         {
             interactablesInRange.Add(listener);
 
@@ -81,7 +85,7 @@ namespace Hawaiian.Interactables
                 Targets = interactablesInRange;
         }
 
-        public void UnregisterListener(PositionalEventListener listener)
+        private void UnregisterListener(PositionalEventListener listener)
         {
             interactablesInRange.Remove(listener);
 

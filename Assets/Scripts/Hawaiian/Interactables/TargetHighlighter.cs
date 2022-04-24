@@ -1,29 +1,43 @@
 ﻿using System.Collections.Generic;
-using Hawaiian.Utilities;
+using System.Linq;
 using UnityEngine;
 
 namespace Hawaiian.Interactables
 {
     public class TargetHighlighter : MonoBehaviour
     {
-        [SerializeField] private GameEvent positionalEventCallerEnabled;
-        [SerializeField] private GameEvent positionalEventCallerDisabled;
         [SerializeField] private GameObject highlighterPrefab;
+        
+        private readonly Dictionary<PositionalEventCaller, Dictionary<PositionalEventListener, Highlighter>> highlighters = new();
 
-        private Dictionary<GameEventListener, Highlighter> highlighters = new();
+        public void OnTargetsChanged(PositionalEventCaller caller)
+        {
+            if (!highlighters.ContainsKey(caller))
+                highlighters.Add(caller, new Dictionary<PositionalEventListener, Highlighter>());
+            else
+                foreach (var target in highlighters[caller].Keys.ToList())
+                {
+                    RemoveHighlighter(caller, target);
+                }
 
-        public void OnTargetAdded(GameEventListener target)
+            foreach (var target in caller.Targets)
+            {
+                AddHighlighter(caller, target);
+            }
+        }
+
+        private void AddHighlighter(PositionalEventCaller caller, PositionalEventListener target)
         {
             var highlighterObject = Instantiate(highlighterPrefab, target.transform);
                 
-            highlighters.Add(target, highlighterObject.GetComponent<Highlighter>());
+            highlighters[caller].Add(target, highlighterObject.GetComponent<Highlighter>());
         }
 
-        public void OnTargetRemoved(GameEventListener target)
+        private void RemoveHighlighter(PositionalEventCaller caller, PositionalEventListener target)
         {
-            Destroy(highlighters[target].gameObject);
+            Destroy(highlighters[caller][target].gameObject);
 
-            highlighters.Remove(target);
+            highlighters[caller].Remove(target);
         }
     }
 }
