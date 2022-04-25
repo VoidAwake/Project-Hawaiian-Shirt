@@ -12,4 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0bd485a98644723ab7e31994a612738, type: 3}
   m_Name: GameTimeScale
   m_EditorClassIdentifier: 
-  value: 0
+  valueChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  value: 1
