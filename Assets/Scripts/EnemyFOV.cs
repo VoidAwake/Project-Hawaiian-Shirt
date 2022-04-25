@@ -4,14 +4,21 @@ using UnityEngine;
 
 public class EnemyFOV : MonoBehaviour
 {
-    public float viewRadius;[Range(0, 360)] //how far forward the fov is
+    [Range(0, 360)]
+    public float viewRadius; //how far forward the fov is
+    [Range(0, 360)]
     public float viewAngle; //how wide the fov is
+
+    [Range(0, 8)]
     public float viewDistance;
+
     public float meshResolution;
 
     public int edgeItr;
     public float edgeDst;
     public float maskCutaway = 0.1f;
+
+    public EnemyFSM fsm;
 
     public LayerMask targetMask;
     public LayerMask obstacleMask;
@@ -25,12 +32,16 @@ public class EnemyFOV : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+
         viewMesh = new Mesh()
         {
             name = "Mesh"
         };
         meshFilter.mesh = viewMesh;
-        StartCoroutine("FindTargetsDelay", 0.2f);
+        /*StartCoroutine("FindTargetsDelay", 0.2f);
+        DrawFOV();
+       */
+        
     }
 
     IEnumerator FindTargetsDelay(float delay)
@@ -44,7 +55,53 @@ public class EnemyFOV : MonoBehaviour
     // Update is called once per frame
     void LateUpdate()
     {
-        DrawFOV();
+        //DrawFOV();
+        int sections = Mathf.RoundToInt(viewRadius * meshResolution); //number of rays the fov cone will use
+        int rayCount = 50;
+        float angle = viewAngle;
+        float angleIncrease = viewAngle / rayCount;
+
+        Vector3[] vertices = new Vector3[rayCount + 1 + 1];
+        Vector2[] uv = new Vector2[vertices.Length];
+        int[] triangles = new int[rayCount * 3];
+
+        vertices[0] = Vector3.zero;
+
+        Vector3 destination = new Vector3(fsm.transform.position.x - fsm.currentDestination.x, fsm.transform.position.y - fsm.currentDestination.y);
+        int vertexIndex = 1;
+        int triangleIndex = 0;
+        for (int i = 0; i <= rayCount; i++)
+        {
+            Vector3 vertex;
+            RaycastHit2D raycastHit2D = Physics2D.Raycast(Vector3.zero, DirFromAngle(angle, true), viewDistance, targetMask);
+            if (raycastHit2D.collider == null)
+            {
+                vertex = Vector3.zero + DirFromAngle(angle, true) * viewDistance;
+            }
+            else
+            {
+                vertex = raycastHit2D.point;
+            }
+            vertices[vertexIndex] = vertex;
+
+            if (i > 0)
+            {
+                triangles[triangleIndex + 0] = 0;
+                triangles[triangleIndex + 1] = vertexIndex - 1;
+                triangles[triangleIndex + 2] = vertexIndex;
+
+                triangleIndex += 3;
+            }
+
+            vertexIndex++;
+            angle -= angleIncrease;
+        }
+
+
+        viewMesh.vertices = vertices;
+        viewMesh.uv = uv;
+        viewMesh.triangles = triangles;
+        //viewMesh.bounds = new Bounds(Vector3.zero, Vector3.one * 1000f);
     }
     public Vector3 DirFromAngle(float angle, bool isGlobalAngle)
     {
@@ -53,6 +110,7 @@ public class EnemyFOV : MonoBehaviour
             angle -= transform.eulerAngles.z;
         }
         return new Vector3(Mathf.Sin(angle * Mathf.Deg2Rad), Mathf.Cos(angle * Mathf.Deg2Rad));
+        //return new Vector3(fsm.transform.position.x - fsm.currentDestination.x, fsm.transform.position.y - fsm.currentDestination.y);
     }
     void FindTargets()
     {
@@ -131,6 +189,7 @@ public class EnemyFOV : MonoBehaviour
 
         viewMesh.vertices = vertices;
         viewMesh.triangles = triangles;
+        viewMesh.uv = new Vector2[vertices.Length];
         viewMesh.RecalculateNormals();
         
     }

@@ -11,7 +11,7 @@ public class EnemyFSM : MonoBehaviour
 
     public Rigidbody2D enemy;
     public PlayerInput controls;
-    //public EnemyFOV fov;
+    public EnemyFOV fov;
     //public PolygonCollider2D viewCone;
 
     public UnitEnemy unitEnemy;
@@ -30,6 +30,7 @@ public class EnemyFSM : MonoBehaviour
     {
         enemy = GetComponent<Rigidbody2D>();
         controls = GetComponent<PlayerInput>();
+        fov = GetComponent<EnemyFOV>();
         //viewCone = GetComponentInChildren<PolygonCollider2D>();
         //viewCone.CreateMesh(true, true);
         unitEnemy = GetComponent<UnitEnemy>();

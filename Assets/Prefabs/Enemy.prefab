@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 343484380682822114}
   - component: {fileID: 773512349449736286}
   - component: {fileID: 7506615711996646673}
-  - component: {fileID: 8034444487953650240}
   m_Layer: 0
   m_Name: FOV
   m_TagString: Untagged
@@ -48,12 +47,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   viewRadius: 4
-  viewAngle: 60
-  viewDistance: 10
+  viewAngle: 45
+  viewDistance: 5
   meshResolution: 1
   edgeItr: 4
   edgeDst: 4
   maskCutaway: 0.1
+  fsm: {fileID: 167374080983641883}
   targetMask:
     serializedVersion: 2
     m_Bits: 0
@@ -91,7 +91,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 0}
+  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -113,35 +113,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!60 &8034444487953650240
-PolygonCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3837106225297113474}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 1}
-    newSize: {x: 1, y: 1}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  m_Points:
-    m_Paths:
-    - - {x: -2.0026324, y: 3.9997525}
-      - {x: -0.5, y: -0.5}
-      - {x: 0.5, y: -0.5}
-      - {x: 2.0041678, y: 4.0005693}
 --- !u!1001 &4895615097980415704
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -241,6 +212,7 @@ MonoBehaviour:
   stateTimeElapsed: 0
   enemy: {fileID: 0}
   controls: {fileID: 0}
+  fov: {fileID: 0}
   unitEnemy: {fileID: 0}
   currentDestination: {x: 0, y: 0}
   nextWaypoint: 1
