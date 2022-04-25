@@ -17,6 +17,8 @@ namespace Hawaiian.Inventory
         {
             if (item == null) return;
 
+            name = item.name + " Item";
+
             if (spriteRenderer == null) return;
 
             spriteRenderer.sprite = item.itemSprite;

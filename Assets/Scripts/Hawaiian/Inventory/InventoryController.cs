@@ -41,7 +41,7 @@ namespace Hawaiian.Inventory
         {
             foreach (var target in positionalEventCaller.Targets)
             {
-                var item = target.GetComponent<tempItem>().item;
+                var item = target.GetComponent<DroppedItem>().item;
                 
                 if (item == null) continue;
 
