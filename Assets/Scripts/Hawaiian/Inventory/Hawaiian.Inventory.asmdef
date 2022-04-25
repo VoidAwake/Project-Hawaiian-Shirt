@@ -5,7 +5,6 @@
         "UniTask",
         "Unity.Mathematics",
         "Hawaiian.Utilities",
-        "Hawaiian.UI",
         "Hawaiian.Unit",
         "PositionalEvents"
     ],

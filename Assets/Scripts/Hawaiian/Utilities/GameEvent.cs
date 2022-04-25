@@ -4,7 +4,7 @@ using UnityEngine.Events;
 
 namespace Hawaiian.Utilities
 {
-    [CreateAssetMenu(order = 0, menuName = "Hawaiian/Events/GameEvent",fileName = "NewGameEvent")]
+    [CreateAssetMenu(order = 0, menuName = "Hawaiian/Events/GameEvent")]
     public class GameEvent : ScriptableObject
     {
         protected internal List<UnityEvent> _listeners = new List<UnityEvent>();

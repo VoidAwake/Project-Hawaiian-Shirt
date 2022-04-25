@@ -1,20 +1,16 @@
 using System.Collections.Generic;
-using Hawaiian.UI;
 using Hawaiian.Utilities;
 using Unity.Mathematics;
 using UnityEngine;
 
-namespace Hawaiian.Inventory
+namespace Hawaiian.UI.Game
 {
     public class InventoryUI : MonoBehaviour
     {
-        // Start is called before the first frame update
-        [SerializeField] public Inventory inv;
+        [SerializeField] public Inventory.Inventory inv;
         [SerializeField] private ScriptableInt size;
         private List<GameObject> invSlots = new ();
         [SerializeField] GameObject slot;
-    
-    
 
         private void Start()
         {

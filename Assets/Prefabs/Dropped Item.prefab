@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 7695339905545475047}
   - component: {fileID: 5877037893192355219}
   m_Layer: 0
-  m_Name: Temp Item
+  m_Name: Dropped Item
   m_TagString: Item
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -99,6 +99,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd58b1d76a74e504e887caf54f2f1608, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  spriteRenderer: {fileID: 3121759559945092667}
   item: {fileID: 0}
 --- !u!61 &7695339905545475047
 BoxCollider2D:
