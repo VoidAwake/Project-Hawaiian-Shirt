@@ -1,11 +1,10 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Hawaiian.UI
+namespace Hawaiian.UI.Game
 {
     public class SlotUI : MonoBehaviour
     {
-        // Start is called before the first frame update
         [SerializeField] private Image image;
         [SerializeField] private Sprite def;
 

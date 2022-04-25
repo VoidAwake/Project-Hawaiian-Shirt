@@ -46,10 +46,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 66c6441a83f4ea347a2e1d720ada3f61, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  UI: {fileID: 5056236730594589646, guid: 78879c192efd6f842b0a01570510afec, type: 3}
-  uiParent: {fileID: 0}
   addinv: 0
   item: {fileID: 0}
+  addedInventory: {fileID: 11400000, guid: 2220e64b52956274a8ac1a529699a2d4, type: 2}
 --- !u!58 &5733759701059878411
 CircleCollider2D:
   m_ObjectHideFlags: 0
