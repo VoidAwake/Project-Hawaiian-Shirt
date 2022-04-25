@@ -1,21 +1,23 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace Hawaiian.Utilities
 {
-    [CreateAssetMenu(order = 0, menuName = "Hawaiian/Events/GameEvent", fileName = "NewGameEvent")]
+    [CreateAssetMenu(order = 0, menuName = "Hawaiian/Events/GameEvent")]
     public class GameEvent : ScriptableObject
     {
-        internal List<GameEventListeners> _listeners = new();
+        protected internal List<UnityEvent> _listeners = new List<UnityEvent>();
 
         public virtual void Raise()
         {
+            // TODO: Does this prevent loop failure due to array modification? 
             for (int i = _listeners.Count - 1; i >= 0; i--)
-                _listeners[i].OnEventRaised();
+                _listeners[i].Invoke();
         }
         
-        public void RegisterListener(GameEventListeners listener) => _listeners.Add(listener);
+        public virtual void RegisterListener(UnityEvent listener) => _listeners.Add(listener);
 
-        public void UnregisterListener(GameEventListeners listener) => _listeners.Remove(listener);
+        public virtual void UnregisterListener(UnityEvent listener) => _listeners.Remove(listener);
     }
 }

@@ -32,12 +32,20 @@ namespace Hawaiian.Unit
         protected override void SetTargetVelocity()
         {
             // Update inputs and velocity
-            if (controlsEnabled) velocity = Vector2.Lerp(velocity, maxSpeed * (isRunning ? runMultiplier * move.normalized : move.normalized), Mathf.Clamp(Time.deltaTime * tweenRate, 0.0f, 1.0f));
+            Vector2 modifiedMove = move.magnitude * 2.0f > 1.0f ? move.normalized : move.magnitude < 0.1f ? Vector2.zero : move * 2.0f;
+            if (controlsEnabled) velocity = Vector2.Lerp(velocity, maxSpeed * (isRunning ? runMultiplier * modifiedMove : modifiedMove), Mathf.Clamp(Time.deltaTime * tweenRate, 0.0f, 1.0f));
             else velocity = Vector2.Lerp(velocity, Vector2.zero, Mathf.Clamp(Time.deltaTime * tweenRate, 0.0f, 1.0f));
         }
 
-   
+        public Vector2 GetVelocity()
+        {
+            return velocity;
+        }
 
+        public bool GetIsFullSpeed()
+        {
+            return isRunning && move.magnitude > 0.1f || move.magnitude >= 0.5f;
+        }
      
     }
 }

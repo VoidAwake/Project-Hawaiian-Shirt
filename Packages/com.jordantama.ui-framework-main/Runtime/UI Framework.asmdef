@@ -1,0 +1,16 @@
+{
+    "name": "com.jordantama.ui-framework",
+    "rootNamespace": "JordanTama.UI",
+    "references": [
+        "GUID:ca6b7f6e52ca43cda52eef5f1dd650f0"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
