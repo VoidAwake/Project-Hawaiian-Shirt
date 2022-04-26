@@ -26,3 +26,21 @@ namespace Hawaiian.Inventory
         
     }
 }
+
+        public void OnPickUp()
+        {
+        private void OnValidate()
+        }
+            Destroy(gameObject);
+
+        {
+            if (item == null) return;
+
+            name = item.name + " Item";
+            if (spriteRenderer == null) return;
+
+
+            spriteRenderer.sprite = item.itemSprite;
+        }
+}
+    }

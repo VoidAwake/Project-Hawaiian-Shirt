@@ -126,6 +126,8 @@ namespace Hawaiian.Inventory
                 }
                 
             }
+            _inv.PickUp(item);
+            addinv = !addinv;
         }
         
         void UpdateRotation(Vector2 newValue)
@@ -252,8 +254,10 @@ namespace Hawaiian.Inventory
         }
         
         private void OnTriggerEnter2D(Collider2D col)
+        private void OnPickUp()
         {
             if (col.gameObject.tag == "Item" && noDoubleDipping)
+            foreach (var target in positionalEventCaller.Targets)
             {
                 noDoubleDipping = false;
                 if(_inv.PickUp(col.gameObject.GetComponent<DroppedItem>().Item))
@@ -262,6 +266,13 @@ namespace Hawaiian.Inventory
                     Debug.Log("Hit");
                     SelectionUpdate();
                 }
+                var item = target.GetComponent<DroppedItem>().item;
+                
+                if (item == null) continue;
+
+                if (!_inv.PickUp(item)) continue;
+                
+                positionalEventCaller.Raise(target);
             }
         }
 

@@ -100,6 +100,15 @@ namespace Hawaiian.Input
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""PickUp"",
+                    ""type"": ""Button"",
+                    ""id"": ""5fe6fcd5-b353-4fd6-825a-dbe46fb29b06"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -520,6 +529,28 @@ namespace Hawaiian.Input
                     ""action"": ""HoldAttack"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""e53eb43a-7dde-462e-981f-181c34c78e25"",
+                    ""path"": ""<Keyboard>/f"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard1"",
+                    ""action"": ""PickUp"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""5b844866-dd44-49a2-ae31-08381ee9076f"",
+                    ""path"": ""<Gamepad>/buttonNorth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""PickUp"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -832,6 +863,7 @@ namespace Hawaiian.Input
             m_Player_InvLeft = m_Player.FindAction("InvLeft", throwIfNotFound: true);
             m_Player_InvParse = m_Player.FindAction("InvParse", throwIfNotFound: true);
             m_Player_HoldAttack = m_Player.FindAction("HoldAttack", throwIfNotFound: true);
+            m_Player_PickUp = m_Player.FindAction("PickUp", throwIfNotFound: true);
             // Lobby Player
             m_LobbyPlayer = asset.FindActionMap("Lobby Player", throwIfNotFound: true);
             m_LobbyPlayer_Ready = m_LobbyPlayer.FindAction("Ready", throwIfNotFound: true);
@@ -906,6 +938,7 @@ namespace Hawaiian.Input
         private readonly InputAction m_Player_InvLeft;
         private readonly InputAction m_Player_InvParse;
         private readonly InputAction m_Player_HoldAttack;
+        private readonly InputAction m_Player_PickUp;
         public struct PlayerActions
         {
             private @PlayerAction m_Wrapper;
@@ -918,6 +951,7 @@ namespace Hawaiian.Input
             public InputAction @InvLeft => m_Wrapper.m_Player_InvLeft;
             public InputAction @InvParse => m_Wrapper.m_Player_InvParse;
             public InputAction @HoldAttack => m_Wrapper.m_Player_HoldAttack;
+            public InputAction @PickUp => m_Wrapper.m_Player_PickUp;
             public InputActionMap Get() { return m_Wrapper.m_Player; }
             public void Enable() { Get().Enable(); }
             public void Disable() { Get().Disable(); }
@@ -951,6 +985,9 @@ namespace Hawaiian.Input
                     @HoldAttack.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnHoldAttack;
                     @HoldAttack.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnHoldAttack;
                     @HoldAttack.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnHoldAttack;
+                    @PickUp.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPickUp;
+                    @PickUp.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPickUp;
+                    @PickUp.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPickUp;
                 }
                 m_Wrapper.m_PlayerActionsCallbackInterface = instance;
                 if (instance != null)
@@ -979,6 +1016,9 @@ namespace Hawaiian.Input
                     @HoldAttack.started += instance.OnHoldAttack;
                     @HoldAttack.performed += instance.OnHoldAttack;
                     @HoldAttack.canceled += instance.OnHoldAttack;
+                    @PickUp.started += instance.OnPickUp;
+                    @PickUp.performed += instance.OnPickUp;
+                    @PickUp.canceled += instance.OnPickUp;
                 }
             }
         }
@@ -1085,6 +1125,7 @@ namespace Hawaiian.Input
             void OnInvLeft(InputAction.CallbackContext context);
             void OnInvParse(InputAction.CallbackContext context);
             void OnHoldAttack(InputAction.CallbackContext context);
+            void OnPickUp(InputAction.CallbackContext context);
         }
         public interface ILobbyPlayerActions
         {
