@@ -12,7 +12,8 @@ GameObject:
   - component: {fileID: 343484380682822114}
   - component: {fileID: 773512349449736286}
   - component: {fileID: 7506615711996646673}
-  m_Layer: 0
+  - component: {fileID: 8555081535995506898}
+  m_Layer: 8
   m_Name: FOV
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -113,6 +114,17 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!210 &8555081535995506898
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3837106225297113474}
+  m_Enabled: 1
+  m_SortingLayerID: 1664803701
+  m_SortingLayer: 1
+  m_SortingOrder: 0
 --- !u!1001 &4895615097980415704
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -123,6 +135,10 @@ PrefabInstance:
     - target: {fileID: 6886565524097403648, guid: 32cfed746529f4f4d9e044e3e5b89433, type: 3}
       propertyPath: m_Name
       value: Enemy
+      objectReference: {fileID: 0}
+    - target: {fileID: 6886565524097403648, guid: 32cfed746529f4f4d9e044e3e5b89433, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 6886565524097403652, guid: 32cfed746529f4f4d9e044e3e5b89433, type: 3}
       propertyPath: m_Color.b

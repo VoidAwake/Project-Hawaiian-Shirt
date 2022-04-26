@@ -1,0 +1,120 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!687078895 &4343727234628468602
+SpriteAtlas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: SpriteAtlas
+  m_EditorData:
+    serializedVersion: 2
+    textureSettings:
+      serializedVersion: 2
+      anisoLevel: 1
+      compressionQuality: 50
+      maxTextureSize: 2048
+      textureCompression: 0
+      filterMode: 0
+      generateMipMaps: 0
+      readable: 0
+      crunchedCompression: 0
+      sRGB: 1
+    platformSettings:
+    - serializedVersion: 3
+      m_BuildTarget: DefaultTexturePlatform
+      m_MaxTextureSize: 2048
+      m_ResizeAlgorithm: 0
+      m_TextureFormat: -1
+      m_TextureCompression: 0
+      m_CompressionQuality: 50
+      m_CrunchedCompression: 0
+      m_AllowsAlphaSplitting: 0
+      m_Overridden: 0
+      m_AndroidETC2FallbackOverride: 0
+      m_ForceMaximumCompressionQuality_BC6H_BC7: 0
+    packingSettings:
+      serializedVersion: 2
+      padding: 4
+      blockOffset: 1
+      allowAlphaSplitting: 0
+      enableRotation: 1
+      enableTightPacking: 1
+      enableAlphaDilation: 0
+    secondaryTextureSettings: {}
+    variantMultiplier: 1
+    packables:
+    - {fileID: 2800000, guid: d2eafee8257c0a543a88615b7c84eb7f, type: 3}
+    bindAsDefault: 1
+    isAtlasV2: 0
+    cachedData: {fileID: 0}
+  m_MasterAtlas: {fileID: 0}
+  m_PackedSprites:
+  - {fileID: -627972643, guid: d2eafee8257c0a543a88615b7c84eb7f, type: 3}
+  - {fileID: -444035235, guid: d2eafee8257c0a543a88615b7c84eb7f, type: 3}
+  - {fileID: 1897762216, guid: d2eafee8257c0a543a88615b7c84eb7f, type: 3}
+  - {fileID: -1538353870, guid: d2eafee8257c0a543a88615b7c84eb7f, type: 3}
+  - {fileID: 631177340, guid: d2eafee8257c0a543a88615b7c84eb7f, type: 3}
+  - {fileID: 1142330229, guid: d2eafee8257c0a543a88615b7c84eb7f, type: 3}
+  - {fileID: -1231348674, guid: d2eafee8257c0a543a88615b7c84eb7f, type: 3}
+  - {fileID: -1272350149, guid: d2eafee8257c0a543a88615b7c84eb7f, type: 3}
+  - {fileID: 2093321149, guid: d2eafee8257c0a543a88615b7c84eb7f, type: 3}
+  - {fileID: -386465612, guid: d2eafee8257c0a543a88615b7c84eb7f, type: 3}
+  - {fileID: -1623466749, guid: d2eafee8257c0a543a88615b7c84eb7f, type: 3}
+  - {fileID: -445899214, guid: d2eafee8257c0a543a88615b7c84eb7f, type: 3}
+  - {fileID: 1472176385, guid: d2eafee8257c0a543a88615b7c84eb7f, type: 3}
+  - {fileID: 751033253, guid: d2eafee8257c0a543a88615b7c84eb7f, type: 3}
+  - {fileID: -1115474642, guid: d2eafee8257c0a543a88615b7c84eb7f, type: 3}
+  - {fileID: 2126098770, guid: d2eafee8257c0a543a88615b7c84eb7f, type: 3}
+  - {fileID: 975216654, guid: d2eafee8257c0a543a88615b7c84eb7f, type: 3}
+  - {fileID: -1987129044, guid: d2eafee8257c0a543a88615b7c84eb7f, type: 3}
+  - {fileID: 740765391, guid: d2eafee8257c0a543a88615b7c84eb7f, type: 3}
+  - {fileID: -278782877, guid: d2eafee8257c0a543a88615b7c84eb7f, type: 3}
+  - {fileID: -1310415447, guid: d2eafee8257c0a543a88615b7c84eb7f, type: 3}
+  - {fileID: 1339863338, guid: d2eafee8257c0a543a88615b7c84eb7f, type: 3}
+  - {fileID: 464258949, guid: d2eafee8257c0a543a88615b7c84eb7f, type: 3}
+  - {fileID: 1882212176, guid: d2eafee8257c0a543a88615b7c84eb7f, type: 3}
+  - {fileID: -1619570829, guid: d2eafee8257c0a543a88615b7c84eb7f, type: 3}
+  - {fileID: 2002769757, guid: d2eafee8257c0a543a88615b7c84eb7f, type: 3}
+  - {fileID: 293121094, guid: d2eafee8257c0a543a88615b7c84eb7f, type: 3}
+  - {fileID: -1148150289, guid: d2eafee8257c0a543a88615b7c84eb7f, type: 3}
+  - {fileID: 2004881048, guid: d2eafee8257c0a543a88615b7c84eb7f, type: 3}
+  - {fileID: 673978868, guid: d2eafee8257c0a543a88615b7c84eb7f, type: 3}
+  - {fileID: 1644923130, guid: d2eafee8257c0a543a88615b7c84eb7f, type: 3}
+  - {fileID: -1187609375, guid: d2eafee8257c0a543a88615b7c84eb7f, type: 3}
+  m_PackedSpriteNamesToIndex:
+  - castle_tiles_13
+  - castle_tiles_12
+  - castle_tiles_11
+  - castle_tiles_10
+  - castle_tiles_26
+  - castle_tiles_17
+  - castle_tiles_27
+  - castle_tiles_16
+  - castle_tiles_24
+  - castle_tiles_15
+  - castle_tiles_25
+  - castle_tiles_14
+  - castle_tiles_22
+  - castle_tiles_23
+  - castle_tiles_20
+  - castle_tiles_19
+  - castle_tiles_21
+  - castle_tiles_18
+  - castle_tiles_28
+  - castle_tiles_29
+  - castle_tiles_31
+  - castle_tiles_30
+  - castle_tiles_0
+  - castle_tiles_1
+  - castle_tiles_2
+  - castle_tiles_3
+  - castle_tiles_4
+  - castle_tiles_5
+  - castle_tiles_6
+  - castle_tiles_7
+  - castle_tiles_8
+  - castle_tiles_9
+  m_RenderDataMap: {}
+  m_Tag: SpriteAtlas
+  m_IsVariant: 0
