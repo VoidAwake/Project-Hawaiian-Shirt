@@ -27,7 +27,7 @@ public class EnemyFOV : MonoBehaviour
 
     public Mesh viewMesh;
     public MeshFilter meshFilter;
-
+    public bool isSus;
     
     // Start is called before the first frame update
     void Start()
