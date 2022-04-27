@@ -5,10 +5,8 @@
         "UniTask",
         "Unity.Mathematics",
         "Hawaiian.Utilities",
-        "Hawaiian.UI",
         "Hawaiian.Unit",
-        "Hawaiian.Input",
-        "Unity.InputSystem"
+        "PositionalEvents"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

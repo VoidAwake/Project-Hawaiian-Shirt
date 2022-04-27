@@ -1,28 +1,27 @@
-using System;
 using UnityEngine;
 
 namespace Hawaiian.Inventory
 {
     public class DroppedItem : MonoBehaviour
     {
-        // Start is called before the first frame update
-        [SerializeField] private Item _item;
-
-        private SpriteRenderer _renderer;
-
-        public Item Item => _item;
+        [SerializeField] private SpriteRenderer spriteRenderer;
         
-        private void Awake()
+        public Item item;
+
+        public void OnPickUp()
         {
-            _renderer = GetComponent<SpriteRenderer>();
+            Destroy(gameObject);
         }
 
-        public void UpdateItem(Item newItem)
+        private void OnValidate()
         {
-            _item = newItem;
-            UpdateItemSprite();
+            if (item == null) return;
+
+            name = item.name + " Item";
+
+            if (spriteRenderer == null) return;
+
+            spriteRenderer.sprite = item.itemSprite;
         }
-        public void UpdateItemSprite() => _renderer.sprite = _item.DroppedItemSprite;
-        
     }
 }

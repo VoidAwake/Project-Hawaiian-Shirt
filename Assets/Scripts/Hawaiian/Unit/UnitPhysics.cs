@@ -1,4 +1,5 @@
 using UnityEngine;
+using Hawaiian.Utilities;
 
 namespace Hawaiian.Unit
 {
@@ -8,6 +9,8 @@ namespace Hawaiian.Unit
         [SerializeField] protected float minimumDistance = 0.001f;
         [SerializeField] protected float collisionBuffer = 0.01f;
         [SerializeField] protected bool isBoundByCamera = false;
+        [SerializeField] protected Collider2D physicsCollider;
+        [SerializeField] protected ScriptableFloat gameTimeScale;
 
         protected Vector2 velocity;
         protected bool isGrounded;
@@ -33,9 +36,9 @@ namespace Hawaiian.Unit
         protected virtual void FixedUpdate()
         {
             // Set and reset working variables
-            velocity += gravity * Time.deltaTime;
+            velocity += gravity * Time.deltaTime * gameTimeScale.Value;
             isGrounded = false;
-            Vector2 deltaPosition = velocity * Time.deltaTime;
+            Vector2 deltaPosition = velocity * Time.deltaTime * gameTimeScale.Value;
 
             // Make movement
             if (deltaPosition != null)
@@ -53,7 +56,7 @@ namespace Hawaiian.Unit
 
             //if (distance > minimumDistance)
             //{
-            int count = rigidbody.Cast(move, contactFilter, hitBuffer, distance + collisionBuffer);
+            int count = physicsCollider.Cast(move, contactFilter, hitBuffer, distance + collisionBuffer);
 
             for (int i = 0; i < count; i++)
             {

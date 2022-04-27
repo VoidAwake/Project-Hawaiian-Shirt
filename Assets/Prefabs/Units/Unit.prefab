@@ -439,22 +439,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &2062520251
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6924075283435537384}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 66c6441a83f4ea347a2e1d720ada3f61, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  UI: {fileID: 5056236730594589646, guid: 78879c192efd6f842b0a01570510afec, type: 3}
-  uiParent: {fileID: 0}
-  addinv: 0
-  item: {fileID: 0}
 --- !u!114 &2062520254
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -512,6 +496,8 @@ MonoBehaviour:
   minimumDistance: 0.001
   collisionBuffer: 0.01
   isBoundByCamera: 0
+  physicsCollider: {fileID: 6102377926319628895}
+  gameTimeScale: {fileID: 11400000, guid: a7999ebb747644c42b10ad44fd3b305b, type: 2}
   _maxHealth: 20
   maxSpeed: 5.5
   tweenRate: 15
