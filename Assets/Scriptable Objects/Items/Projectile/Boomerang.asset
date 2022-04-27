@@ -17,7 +17,7 @@ MonoBehaviour:
   DroppedItemSprite: {fileID: 2018568041, guid: 947cdc6af17876c49ac8cfca43d6a397, type: 3}
   ItemName: Boomerang
   MaxStack: 1
-  DroppedItemBase: {fileID: 672159416967220005, guid: 71327cd53b4980f419bd140f19933b91, type: 3}
+  DroppedItemBase: {fileID: 3056942884218095950, guid: 37132a09f5d1c4046a4bb460892afc47, type: 3}
   ProjectileInstance: {fileID: 8484802503941745754, guid: 6ccdae3489326844c9b49b012c477987, type: 3}
   ItemDamage: 10
   DrawSpeed: 10
