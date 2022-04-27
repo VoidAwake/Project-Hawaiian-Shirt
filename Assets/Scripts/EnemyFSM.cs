@@ -25,7 +25,7 @@ public class EnemyFSM : MonoBehaviour
     public float cautionMeter
     {
         get { return cautionMeter; }
-        set { cautionMeter = Mathf.Clamp(0, 0, 100); } //guard transitions to alert if caution hits 100
+        set { cautionMeter = Mathf.Clamp(2, 2, 100); } //guard transitions to alert if caution hits 100
     }
     void Awake()
     {
