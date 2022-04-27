@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b80aed388cd62a5479b406e914eb6b8d, type: 3}
+  m_Name: Sword
+  m_EditorClassIdentifier: 
+  Type: 0
+  ItemSprite: {fileID: 4980028, guid: 947cdc6af17876c49ac8cfca43d6a397, type: 3}
+  DroppedItemSprite: {fileID: 4980028, guid: 947cdc6af17876c49ac8cfca43d6a397, type: 3}
+  ItemName: Sword
+  MaxStack: 1
+  DroppedItemBase: {fileID: 672159416967220005, guid: 71327cd53b4980f419bd140f19933b91, type: 3}
+  ProjectileInstance: {fileID: 1546100782826642891, guid: 6916ca4131234a941b3eb78d5ca707fe, type: 3}
+  ItemDamage: 5
+  DrawSpeed: 0
+  DrawDistance: 0
+  SticksOnWall: 0
+  AttackRate: 5
+  IsMainObjective: 0
+  CanBeHeldByEnemies: 0
+  Points: 0

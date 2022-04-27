@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Hawaiian.Unit
 {
-    public class Unit : UnitPhysics
+    public class Unit : UnitPhysics 
     {
 
         [Header("Unit Stats")]

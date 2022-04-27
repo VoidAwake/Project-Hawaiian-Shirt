@@ -75,6 +75,33 @@ namespace Hawaiian.Input
                     ""initialStateCheck"": true
                 },
                 {
+                    ""name"": ""InvLeft"",
+                    ""type"": ""Button"",
+                    ""id"": ""b8f84ea5-8090-4a62-a950-0358aad2d429"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""InvParse"",
+                    ""type"": ""Value"",
+                    ""id"": ""eb9009d9-a746-47f5-8024-38a635c96257"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""HoldAttack"",
+                    ""type"": ""Button"",
+                    ""id"": ""fd863b22-3bee-4bcf-8169-3e0861cb5fe0"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
                     ""name"": ""PickUp"",
                     ""type"": ""Button"",
                     ""id"": ""5fe6fcd5-b353-4fd6-825a-dbe46fb29b06"",
@@ -437,6 +464,127 @@ namespace Hawaiian.Input
                 },
                 {
                     ""name"": """",
+                    ""id"": ""af31af3f-2fd1-476d-af1a-4b7d59203667"",
+                    ""path"": ""<Keyboard>/q"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""InvLeft"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""69a814ab-69ea-41fd-8c3c-581eaae02e91"",
+                    ""path"": ""<Gamepad>/dpad/left"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""InvLeft"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""1D Axis"",
+                    ""id"": ""e7b6dd70-e94e-4bec-93eb-879c849639e4"",
+                    ""path"": ""1DAxis"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""InvParse"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""negative"",
+                    ""id"": ""6e2ea6a2-79bb-4913-9050-2bd489e43bfb"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard1"",
+                    ""action"": ""InvParse"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""positive"",
+                    ""id"": ""a2607abf-ca51-41a8-a85f-fefdb3db30e3"",
+                    ""path"": ""<Keyboard>/q"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard1"",
+                    ""action"": ""InvParse"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""1D Axis"",
+                    ""id"": ""24118f8a-3447-480f-bf4a-51c146fa523a"",
+                    ""path"": ""1DAxis"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""InvParse"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""negative"",
+                    ""id"": ""c11a4f96-413d-45f6-afef-000cb153c47b"",
+                    ""path"": ""<Gamepad>/rightShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""InvParse"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""positive"",
+                    ""id"": ""9b8bc7b5-2435-49c0-bf1c-01f341a3da9c"",
+                    ""path"": ""<Gamepad>/leftShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad;Gamepad2;Gamepad3;Gamepad4"",
+                    ""action"": ""InvParse"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""e14e3f7b-6902-49ce-8bfe-c83bb7251bcc"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard1"",
+                    ""action"": ""HoldAttack"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""2aa1107e-e45f-450e-bb7e-e55819db4069"",
+                    ""path"": ""<Gamepad>/rightTrigger"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""HoldAttack"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""13851023-4a0d-43f1-be6c-61966182e3d3"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard1"",
+                    ""action"": ""HoldAttack"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""e53eb43a-7dde-462e-981f-181c34c78e25"",
                     ""path"": ""<Keyboard>/f"",
                     ""interactions"": """",
@@ -471,10 +619,10 @@ namespace Hawaiian.Input
                 {
                     ""name"": ""negative"",
                     ""id"": ""fe0b3698-8c23-415a-91b1-a3c853dd98f2"",
-                    ""path"": ""<Keyboard>/q"",
+                    ""path"": ""<Gamepad>/dpad/left"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""Gamepad;Gamepad2;Gamepad3;Gamepad4"",
                     ""action"": ""Parse"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
@@ -482,10 +630,43 @@ namespace Hawaiian.Input
                 {
                     ""name"": ""positive"",
                     ""id"": ""227af2a3-5837-427e-8d95-e9ff2443ea74"",
-                    ""path"": ""<Keyboard>/e"",
+                    ""path"": ""<Gamepad>/dpad/right"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad;Gamepad2;Gamepad3;Gamepad4"",
+                    ""action"": ""Parse"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""1D Axis"",
+                    ""id"": ""75e4d870-56fa-4902-91c8-b54f6e3e467e"",
+                    ""path"": ""1DAxis"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
+                    ""action"": ""Parse"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""negative"",
+                    ""id"": ""064fb6dc-ee3b-4401-a09e-ac6c64ca048a"",
+                    ""path"": ""<Keyboard>/q"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad;Gamepad2;Gamepad3;Gamepad4"",
+                    ""action"": ""Parse"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""positive"",
+                    ""id"": ""4b30df90-93c6-4854-8f78-f9c6766cab32"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad;Gamepad2;Gamepad3;Gamepad4"",
                     ""action"": ""Parse"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
@@ -788,6 +969,61 @@ namespace Hawaiian.Input
                     ""isOR"": false
                 }
             ]
+        },
+        {
+            ""name"": ""Gamepad2"",
+            ""bindingGroup"": ""Gamepad2"",
+            ""devices"": [
+                {
+                    ""devicePath"": ""<Gamepad>"",
+                    ""isOptional"": true,
+                    ""isOR"": false
+                }
+            ]
+        },
+        {
+            ""name"": ""Gamepad3"",
+            ""bindingGroup"": ""Gamepad3"",
+            ""devices"": [
+                {
+                    ""devicePath"": ""<Gamepad>"",
+                    ""isOptional"": false,
+                    ""isOR"": false
+                }
+            ]
+        },
+        {
+            ""name"": ""Gamepad4"",
+            ""bindingGroup"": ""Gamepad4"",
+            ""devices"": [
+                {
+                    ""devicePath"": ""<Gamepad>"",
+                    ""isOptional"": false,
+                    ""isOR"": false
+                }
+            ]
+        },
+        {
+            ""name"": ""Keyboard3"",
+            ""bindingGroup"": ""Keyboard3"",
+            ""devices"": [
+                {
+                    ""devicePath"": ""<Keyboard>"",
+                    ""isOptional"": false,
+                    ""isOR"": false
+                }
+            ]
+        },
+        {
+            ""name"": ""Keyboard4"",
+            ""bindingGroup"": ""Keyboard4"",
+            ""devices"": [
+                {
+                    ""devicePath"": ""<Keyboard>"",
+                    ""isOptional"": false,
+                    ""isOR"": false
+                }
+            ]
         }
     ]
 }");
@@ -798,6 +1034,9 @@ namespace Hawaiian.Input
             m_Player_ActionB = m_Player.FindAction("ActionB", throwIfNotFound: true);
             m_Player_Attack = m_Player.FindAction("Attack", throwIfNotFound: true);
             m_Player_Rotate = m_Player.FindAction("Rotate", throwIfNotFound: true);
+            m_Player_InvLeft = m_Player.FindAction("InvLeft", throwIfNotFound: true);
+            m_Player_InvParse = m_Player.FindAction("InvParse", throwIfNotFound: true);
+            m_Player_HoldAttack = m_Player.FindAction("HoldAttack", throwIfNotFound: true);
             m_Player_PickUp = m_Player.FindAction("PickUp", throwIfNotFound: true);
             m_Player_Parse = m_Player.FindAction("Parse", throwIfNotFound: true);
             // Lobby Player
@@ -871,6 +1110,9 @@ namespace Hawaiian.Input
         private readonly InputAction m_Player_ActionB;
         private readonly InputAction m_Player_Attack;
         private readonly InputAction m_Player_Rotate;
+        private readonly InputAction m_Player_InvLeft;
+        private readonly InputAction m_Player_InvParse;
+        private readonly InputAction m_Player_HoldAttack;
         private readonly InputAction m_Player_PickUp;
         private readonly InputAction m_Player_Parse;
         public struct PlayerActions
@@ -882,6 +1124,9 @@ namespace Hawaiian.Input
             public InputAction @ActionB => m_Wrapper.m_Player_ActionB;
             public InputAction @Attack => m_Wrapper.m_Player_Attack;
             public InputAction @Rotate => m_Wrapper.m_Player_Rotate;
+            public InputAction @InvLeft => m_Wrapper.m_Player_InvLeft;
+            public InputAction @InvParse => m_Wrapper.m_Player_InvParse;
+            public InputAction @HoldAttack => m_Wrapper.m_Player_HoldAttack;
             public InputAction @PickUp => m_Wrapper.m_Player_PickUp;
             public InputAction @Parse => m_Wrapper.m_Player_Parse;
             public InputActionMap Get() { return m_Wrapper.m_Player; }
@@ -908,6 +1153,15 @@ namespace Hawaiian.Input
                     @Rotate.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnRotate;
                     @Rotate.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnRotate;
                     @Rotate.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnRotate;
+                    @InvLeft.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnInvLeft;
+                    @InvLeft.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnInvLeft;
+                    @InvLeft.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnInvLeft;
+                    @InvParse.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnInvParse;
+                    @InvParse.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnInvParse;
+                    @InvParse.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnInvParse;
+                    @HoldAttack.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnHoldAttack;
+                    @HoldAttack.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnHoldAttack;
+                    @HoldAttack.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnHoldAttack;
                     @PickUp.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPickUp;
                     @PickUp.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPickUp;
                     @PickUp.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPickUp;
@@ -933,6 +1187,15 @@ namespace Hawaiian.Input
                     @Rotate.started += instance.OnRotate;
                     @Rotate.performed += instance.OnRotate;
                     @Rotate.canceled += instance.OnRotate;
+                    @InvLeft.started += instance.OnInvLeft;
+                    @InvLeft.performed += instance.OnInvLeft;
+                    @InvLeft.canceled += instance.OnInvLeft;
+                    @InvParse.started += instance.OnInvParse;
+                    @InvParse.performed += instance.OnInvParse;
+                    @InvParse.canceled += instance.OnInvParse;
+                    @HoldAttack.started += instance.OnHoldAttack;
+                    @HoldAttack.performed += instance.OnHoldAttack;
+                    @HoldAttack.canceled += instance.OnHoldAttack;
                     @PickUp.started += instance.OnPickUp;
                     @PickUp.performed += instance.OnPickUp;
                     @PickUp.canceled += instance.OnPickUp;
@@ -1035,6 +1298,51 @@ namespace Hawaiian.Input
                 return asset.controlSchemes[m_Keyboard2SchemeIndex];
             }
         }
+        private int m_Gamepad2SchemeIndex = -1;
+        public InputControlScheme Gamepad2Scheme
+        {
+            get
+            {
+                if (m_Gamepad2SchemeIndex == -1) m_Gamepad2SchemeIndex = asset.FindControlSchemeIndex("Gamepad2");
+                return asset.controlSchemes[m_Gamepad2SchemeIndex];
+            }
+        }
+        private int m_Gamepad3SchemeIndex = -1;
+        public InputControlScheme Gamepad3Scheme
+        {
+            get
+            {
+                if (m_Gamepad3SchemeIndex == -1) m_Gamepad3SchemeIndex = asset.FindControlSchemeIndex("Gamepad3");
+                return asset.controlSchemes[m_Gamepad3SchemeIndex];
+            }
+        }
+        private int m_Gamepad4SchemeIndex = -1;
+        public InputControlScheme Gamepad4Scheme
+        {
+            get
+            {
+                if (m_Gamepad4SchemeIndex == -1) m_Gamepad4SchemeIndex = asset.FindControlSchemeIndex("Gamepad4");
+                return asset.controlSchemes[m_Gamepad4SchemeIndex];
+            }
+        }
+        private int m_Keyboard3SchemeIndex = -1;
+        public InputControlScheme Keyboard3Scheme
+        {
+            get
+            {
+                if (m_Keyboard3SchemeIndex == -1) m_Keyboard3SchemeIndex = asset.FindControlSchemeIndex("Keyboard3");
+                return asset.controlSchemes[m_Keyboard3SchemeIndex];
+            }
+        }
+        private int m_Keyboard4SchemeIndex = -1;
+        public InputControlScheme Keyboard4Scheme
+        {
+            get
+            {
+                if (m_Keyboard4SchemeIndex == -1) m_Keyboard4SchemeIndex = asset.FindControlSchemeIndex("Keyboard4");
+                return asset.controlSchemes[m_Keyboard4SchemeIndex];
+            }
+        }
         public interface IPlayerActions
         {
             void OnMove(InputAction.CallbackContext context);
@@ -1042,6 +1350,9 @@ namespace Hawaiian.Input
             void OnActionB(InputAction.CallbackContext context);
             void OnAttack(InputAction.CallbackContext context);
             void OnRotate(InputAction.CallbackContext context);
+            void OnInvLeft(InputAction.CallbackContext context);
+            void OnInvParse(InputAction.CallbackContext context);
+            void OnHoldAttack(InputAction.CallbackContext context);
             void OnPickUp(InputAction.CallbackContext context);
             void OnParse(InputAction.CallbackContext context);
         }

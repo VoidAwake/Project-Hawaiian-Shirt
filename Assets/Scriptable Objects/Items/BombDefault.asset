@@ -12,8 +12,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b80aed388cd62a5479b406e914eb6b8d, type: 3}
   m_Name: BombDefault
   m_EditorClassIdentifier: 
-  itemName: Bomb
-  itemDamage: 10
-  itemSprite: {fileID: 1023588720, guid: 947cdc6af17876c49ac8cfca43d6a397, type: 3}
-  maxStack: 3
-  score: 0
+  Type: 0
+  ItemSprite: {fileID: 21300000, guid: 773fa4ebe39ae724c84e0f6637926eaf, type: 3}
+  DroppedItemSprite: {fileID: 0}
+  ItemName: Bomb
+  MaxStack: 10
+  DroppedItemBase: {fileID: 0}
+  ProjectileInstance: {fileID: 0}
+  ItemDamage: 20
+  DrawSpeed: 0
+  DrawDistance: 0
+  SticksOnWall: 0
+  AttackRate: 5
+  IsMainObjective: 0
+  CanBeHeldByEnemies: 0
+  Points: 0
