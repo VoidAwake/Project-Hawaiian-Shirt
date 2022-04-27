@@ -269,6 +269,7 @@ MonoBehaviour:
   collisionBuffer: 0.01
   isBoundByCamera: 0
   physicsCollider: {fileID: 71041501583584823}
+  gameTimeScale: {fileID: 11400000, guid: a7999ebb747644c42b10ad44fd3b305b, type: 2}
   _maxHealth: 20
   maxSpeed: 5.5
   tweenRate: 15
