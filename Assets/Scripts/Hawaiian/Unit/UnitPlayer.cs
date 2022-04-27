@@ -1,3 +1,7 @@
+using System;
+using Hawaiian.Input;
+using Hawaiian.Utilities;
+using MoreLinq;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -5,12 +9,48 @@ namespace Hawaiian.Unit
 {
     public class UnitPlayer : Unit, IUnit
     {
-        
+        [SerializeField] private GameEvent forward;
+        [SerializeField] private GameEvent backward;
         [SerializeField] private GameObject _damageReference;
         [SerializeField] private GameObject firePoint;
 
+        [SerializeField] private PlayerAction _input;
+
 
         private bool _attackFlag = false;
+        protected override void Awake()
+        {
+            base.Awake();
+            _input = new PlayerAction();
+        }
+
+        private void OnEnable()
+        {
+            _input.Enable();
+        }
+
+        private void OnDisable()
+        {
+            _input.Disable();
+        }
+
+        protected override void Start()
+        {
+            base.Start();
+            //forward.Raise();
+            _input.Player.Parse.performed += context =>
+            {
+                if (context.ReadValue<float>() > 0f)
+                {
+                    forward.Raise();
+                }
+                else
+                {
+                    backward.Raise();
+                }
+            };
+
+        }
 
         public void OnMove(InputValue value)
         {

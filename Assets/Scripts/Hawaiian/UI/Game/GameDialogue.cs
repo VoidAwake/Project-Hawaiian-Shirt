@@ -26,5 +26,7 @@ namespace Hawaiian.UI.Game
             inventoryGameObject.GetComponent<InventoryUI>().inv = inventory;
             inventoryGameObject.GetComponentInChildren<ScoreUI>().inventory = inventory;
         }
+        
+        
     }
 }
