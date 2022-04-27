@@ -6,7 +6,7 @@ namespace Hawaiian.Game
     [CreateAssetMenu(menuName = "Hawaiian/Managers/GameManager", fileName = "NewGameManager")]
     public class GameManager : ScriptableObject
     {
-        public enum GamePhase { Stealth, HighAlert }
+        public enum GamePhase { Stealth, HighAlert, GameOver }
 
         private GamePhase phase;
 

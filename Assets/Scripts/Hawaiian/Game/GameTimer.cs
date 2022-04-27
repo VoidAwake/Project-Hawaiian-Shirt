@@ -9,15 +9,18 @@ namespace Hawaiian.Game
         [SerializeField] private ScriptableFloat gameTimeScale;
         [SerializeField] private ScriptableFloat gameTime;
         [SerializeField] private bool startOnAwake;
+        [SerializeField] private GameManager gameManager;
 
         private bool timerActive;
 
-        private void Awake()
+        private void Start()
         {
             gameTime.Value = startTime;
             
             // TODO: Move this to a dedicated script, possibly the game manager
             gameTimeScale.Value = 1;
+
+            gameManager.Phase = GameManager.GamePhase.Stealth;
 
             if (startOnAwake)
                 StartTimer(); 
@@ -37,7 +40,8 @@ namespace Hawaiian.Game
             
             // TODO: Move this to a dedicated script, possibly the game manager
             gameTimeScale.Value = 0;
-            
+            gameManager.Phase = GameManager.GamePhase.GameOver;
+
             // TODO: Change to the results screen
         }
 
