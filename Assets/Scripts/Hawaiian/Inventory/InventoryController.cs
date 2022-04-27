@@ -97,6 +97,11 @@ namespace Hawaiian.Inventory
             
         }
 
+        public void UseItem()
+        {
+            
+        }
+
         private void SelectionUpdate()
         {
             

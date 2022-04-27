@@ -1,12 +1,12 @@
-using System;
 using Hawaiian.Input;
 using Hawaiian.Utilities;
-using MoreLinq;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+
 namespace Hawaiian.Unit
 {
+    
     public class UnitPlayer : Unit, IUnit
     {
         [SerializeField] private GameEvent forward;
@@ -24,7 +24,11 @@ namespace Hawaiian.Unit
         {
             base.Awake();
             _input = new PlayerAction();
-        }
+            //_attackComponent = GetComponent<UnitPlayerAttack>();
+        }   
+         
+      
+        
 
         private void OnEnable()
         {
@@ -52,11 +56,17 @@ namespace Hawaiian.Unit
                 }
             };
 
+
+            _input.Player.Rotate.performed += ctx =>  ctx.ReadValue<Vector2>();
+            //_input.Player.Rotate.canceled += ctx => //Vector2.zero;
+
+
         }
 
         public void OnMove(InputValue value)
         { 
-            
+            move = value.Get<Vector2>();
+
             // action = new PlayerAction();
             // _input = GetComponent<PlayerInput>();
             // _animator = GetComponent<UnitAnimator>();

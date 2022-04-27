@@ -253,15 +253,15 @@ PrefabInstance:
     - target: {fileID: 2062520251, guid: fe93fd4b04ca3d340865789a7d27cade, type: 3}
       propertyPath: _cursor
       value: 
-      objectReference: {fileID: 1824766554}
+      objectReference: {fileID: 0}
     - target: {fileID: 2062520251, guid: fe93fd4b04ca3d340865789a7d27cade, type: 3}
       propertyPath: handheld
       value: 
-      objectReference: {fileID: 1640934141}
+      objectReference: {fileID: 0}
     - target: {fileID: 2062520251, guid: fe93fd4b04ca3d340865789a7d27cade, type: 3}
       propertyPath: _listener
       value: 
-      objectReference: {fileID: 6074339650475639766}
+      objectReference: {fileID: 0}
     - target: {fileID: 2062520251, guid: fe93fd4b04ca3d340865789a7d27cade, type: 3}
       propertyPath: highlight
       value: 
@@ -269,7 +269,7 @@ PrefabInstance:
     - target: {fileID: 2062520251, guid: fe93fd4b04ca3d340865789a7d27cade, type: 3}
       propertyPath: _firePoint
       value: 
-      objectReference: {fileID: 1138886539}
+      objectReference: {fileID: 0}
     - target: {fileID: 2062520251, guid: fe93fd4b04ca3d340865789a7d27cade, type: 3}
       propertyPath: invPosition
       value: 1
@@ -357,14 +357,29 @@ PrefabInstance:
     m_RemovedComponents:
     - {fileID: 1993500985619104882, guid: fe93fd4b04ca3d340865789a7d27cade, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: fe93fd4b04ca3d340865789a7d27cade, type: 3}
+--- !u!212 &2502756493788210 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 6072127200931465306, guid: fe93fd4b04ca3d340865789a7d27cade, type: 3}
+  m_PrefabInstance: {fileID: 6074339651911699560}
+  m_PrefabAsset: {fileID: 0}
 --- !u!58 &71041501583584823 stripped
 CircleCollider2D:
   m_CorrespondingSourceObject: {fileID: 6102377926319628895, guid: fe93fd4b04ca3d340865789a7d27cade, type: 3}
   m_PrefabInstance: {fileID: 6074339651911699560}
   m_PrefabAsset: {fileID: 0}
+--- !u!212 &858650075133827644 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 6892453613909743188, guid: fe93fd4b04ca3d340865789a7d27cade, type: 3}
+  m_PrefabInstance: {fileID: 6074339651911699560}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &2635515794497460195 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8133316330003078027, guid: fe93fd4b04ca3d340865789a7d27cade, type: 3}
+  m_PrefabInstance: {fileID: 6074339651911699560}
+  m_PrefabAsset: {fileID: 0}
+--- !u!212 &2732052568612302068 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 8189321950830534812, guid: fe93fd4b04ca3d340865789a7d27cade, type: 3}
   m_PrefabInstance: {fileID: 6074339651911699560}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &3772646986385756032 stripped
@@ -401,6 +416,7 @@ MonoBehaviour:
   isBoundByCamera: 0
   physicsCollider: {fileID: 71041501583584823}
   gameTimeScale: {fileID: 11400000, guid: a7999ebb747644c42b10ad44fd3b305b, type: 2}
+  rigidbody: {fileID: 0}
   _maxHealth: 20
   maxSpeed: 5.5
   tweenRate: 15
@@ -408,7 +424,9 @@ MonoBehaviour:
   forward: {fileID: 11400000, guid: c7c3d2160d90618449eb41cb9f615812, type: 2}
   backward: {fileID: 11400000, guid: 19cbc4c553c6f7243a4b4e2b45feb256, type: 2}
   _damageReference: {fileID: 1546100782826642891, guid: 6916ca4131234a941b3eb78d5ca707fe, type: 3}
-  firePoint: {fileID: 6550718957222180552}
+  _offset: 0
+  _damageIndicatorOffset: 0
+  _firePoint: {fileID: 0}
 --- !u!114 &6432945937749252037
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -471,8 +489,18 @@ MonoBehaviour:
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
+--- !u!212 &7444473201232402626 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 3682949806367118506, guid: fe93fd4b04ca3d340865789a7d27cade, type: 3}
+  m_PrefabInstance: {fileID: 6074339651911699560}
+  m_PrefabAsset: {fileID: 0}
 --- !u!212 &8788798542820979622 stripped
 SpriteRenderer:
   m_CorrespondingSourceObject: {fileID: 3293387035487043534, guid: fe93fd4b04ca3d340865789a7d27cade, type: 3}
+  m_PrefabInstance: {fileID: 6074339651911699560}
+  m_PrefabAsset: {fileID: 0}
+--- !u!212 &9163593459947665383 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 3127745584417586063, guid: fe93fd4b04ca3d340865789a7d27cade, type: 3}
   m_PrefabInstance: {fileID: 6074339651911699560}
   m_PrefabAsset: {fileID: 0}
