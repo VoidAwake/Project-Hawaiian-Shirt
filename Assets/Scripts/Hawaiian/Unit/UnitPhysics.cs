@@ -36,9 +36,9 @@ namespace Hawaiian.Unit
         protected virtual void FixedUpdate()
         {
             // Set and reset working variables
-            velocity += gravity * Time.deltaTime * gameTimeScale.value;
+            velocity += gravity * Time.deltaTime * gameTimeScale.Value;
             isGrounded = false;
-            Vector2 deltaPosition = velocity * Time.deltaTime * gameTimeScale.value;
+            Vector2 deltaPosition = velocity * Time.deltaTime * gameTimeScale.Value;
 
             // Make movement
             if (deltaPosition != null)

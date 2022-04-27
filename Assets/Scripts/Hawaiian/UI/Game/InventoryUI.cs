@@ -14,7 +14,7 @@ namespace Hawaiian.UI.Game
 
         private void Start()
         {
-            for (int i = 0; i < size.value; i++)
+            for (int i = 0; i < size.Value; i++)
             {
                 invSlots.Add(Instantiate(slot, transform.position, quaternion.identity, transform));
                 //Instantiate this gamer inventory ui
@@ -33,7 +33,7 @@ namespace Hawaiian.UI.Game
 
         private void UpdateInv()
         {
-            for (int i = 0; i < size.value; i++)
+            for (int i = 0; i < size.Value; i++)
             {
             
                 //invSlots[i].refer to inv
