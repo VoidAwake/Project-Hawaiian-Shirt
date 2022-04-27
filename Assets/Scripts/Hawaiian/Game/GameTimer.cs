@@ -17,11 +17,6 @@ namespace Hawaiian.Game
         {
             gameTime.Value = startTime;
             
-            // TODO: Move this to a dedicated script, possibly the game manager
-            gameTimeScale.Value = 1;
-
-            gameManager.Phase = GameManager.GamePhase.Stealth;
-
             if (startOnAwake)
                 StartTimer(); 
         }
@@ -53,6 +48,12 @@ namespace Hawaiian.Game
         public void StopTimer()
         {
             timerActive = false;
+        }
+
+        public void OnPhaseChanged()
+        {
+            if (gameManager.Phase == GameManager.GamePhase.Stealth)
+                StartTimer();
         }
     }
 }
