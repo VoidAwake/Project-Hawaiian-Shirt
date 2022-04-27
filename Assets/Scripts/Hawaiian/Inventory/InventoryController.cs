@@ -7,10 +7,13 @@ namespace Hawaiian.Inventory
 {
     public class InventoryController : MonoBehaviour
     {
+        [SerializeField] private GameEvent parse;
         [SerializeField] private bool addinv;
         [SerializeField] private Item item;
 
         [SerializeField] private BaseGameEvent<Inventory> addedInventory;
+
+        [SerializeField] private SpriteRenderer hand;
         //[SerializeField] private int invSize;
         
 
@@ -56,35 +59,47 @@ namespace Hawaiian.Inventory
             }
         }
 
-        private void Parse(int i)
+        public void OnCycleForward()
         {
-            invPosition += i;
-            if (invPosition > _inv.inv.Length - 1)
-            {
-                invPosition = 0;
-            }
-
-            if (invPosition < 0)
-            {
-                invPosition = _inv.inv.Length - 1;
-            }
-            SelectionUpdate();
+            _inv.invPosition++;
+            Parse();
         }
 
-
-        public void UpdateItem()
+        public void OnCycleBackward()
         {
-            _projectileReference = GetCurrentItem().ProjectileInstance;
-            handheld.sprite = GetCurrentItem().ItemSprite;
-            _cursor.MaxRadius = GetCurrentItem().DrawDistance;
+            _inv.invPosition--;
+            Parse();
         }
-
-        public void SelectionUpdate()
+        private void Parse()
         {
-            highRef.transform.position = tempRef.invSlots[invPosition].transform.position;
-            handheld.sprite = _inv.inv[invPosition] != null ? _inv.inv[invPosition].ItemSprite : null;
+             //_inv.invPosition += i;
+            if (_inv.invPosition > _inv.inv.Length - 1)
+            {
+                _inv.invPosition = 0;
+            }
+
+            if (_inv.invPosition < 0)
+            {
+                _inv.invPosition = _inv.inv.Length - 1;
+            }
+            //SelectionUpdate();
+            if (_inv.inv[_inv.invPosition] != null)
+            {
+                hand.sprite = _inv.inv[_inv.invPosition].itemSprite;
+            }
+            else
+            {
+                hand.sprite = null;
+            }
             
-            UpdateItem();
+            //how do i call an event c:
+            parse.Raise();
+            
+        }
+
+        private void SelectionUpdate()
+        {
+            
         }
     }
 }

@@ -109,6 +109,15 @@ namespace Hawaiian.Input
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Parse"",
+                    ""type"": ""Button"",
+                    ""id"": ""3252ff69-73ab-4630-8993-d84f5b5d2a36"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -551,6 +560,39 @@ namespace Hawaiian.Input
                     ""action"": ""PickUp"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""1D Axis"",
+                    ""id"": ""5f8a81cf-d134-4ac8-8468-afcffbcd79a8"",
+                    ""path"": ""1DAxis"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Parse"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""negative"",
+                    ""id"": ""fe0b3698-8c23-415a-91b1-a3c853dd98f2"",
+                    ""path"": ""<Keyboard>/q"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Parse"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""positive"",
+                    ""id"": ""227af2a3-5837-427e-8d95-e9ff2443ea74"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Parse"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
                 }
             ]
         },
@@ -864,6 +906,7 @@ namespace Hawaiian.Input
             m_Player_InvParse = m_Player.FindAction("InvParse", throwIfNotFound: true);
             m_Player_HoldAttack = m_Player.FindAction("HoldAttack", throwIfNotFound: true);
             m_Player_PickUp = m_Player.FindAction("PickUp", throwIfNotFound: true);
+            m_Player_Parse = m_Player.FindAction("Parse", throwIfNotFound: true);
             // Lobby Player
             m_LobbyPlayer = asset.FindActionMap("Lobby Player", throwIfNotFound: true);
             m_LobbyPlayer_Ready = m_LobbyPlayer.FindAction("Ready", throwIfNotFound: true);
@@ -939,6 +982,7 @@ namespace Hawaiian.Input
         private readonly InputAction m_Player_InvParse;
         private readonly InputAction m_Player_HoldAttack;
         private readonly InputAction m_Player_PickUp;
+        private readonly InputAction m_Player_Parse;
         public struct PlayerActions
         {
             private @PlayerAction m_Wrapper;
@@ -952,6 +996,7 @@ namespace Hawaiian.Input
             public InputAction @InvParse => m_Wrapper.m_Player_InvParse;
             public InputAction @HoldAttack => m_Wrapper.m_Player_HoldAttack;
             public InputAction @PickUp => m_Wrapper.m_Player_PickUp;
+            public InputAction @Parse => m_Wrapper.m_Player_Parse;
             public InputActionMap Get() { return m_Wrapper.m_Player; }
             public void Enable() { Get().Enable(); }
             public void Disable() { Get().Disable(); }
@@ -988,6 +1033,9 @@ namespace Hawaiian.Input
                     @PickUp.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPickUp;
                     @PickUp.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPickUp;
                     @PickUp.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPickUp;
+                    @Parse.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnParse;
+                    @Parse.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnParse;
+                    @Parse.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnParse;
                 }
                 m_Wrapper.m_PlayerActionsCallbackInterface = instance;
                 if (instance != null)
@@ -1019,6 +1067,9 @@ namespace Hawaiian.Input
                     @PickUp.started += instance.OnPickUp;
                     @PickUp.performed += instance.OnPickUp;
                     @PickUp.canceled += instance.OnPickUp;
+                    @Parse.started += instance.OnParse;
+                    @Parse.performed += instance.OnParse;
+                    @Parse.canceled += instance.OnParse;
                 }
             }
         }
@@ -1126,6 +1177,7 @@ namespace Hawaiian.Input
             void OnInvParse(InputAction.CallbackContext context);
             void OnHoldAttack(InputAction.CallbackContext context);
             void OnPickUp(InputAction.CallbackContext context);
+            void OnParse(InputAction.CallbackContext context);
         }
         public interface ILobbyPlayerActions
         {

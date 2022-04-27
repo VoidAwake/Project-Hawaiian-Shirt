@@ -44,6 +44,8 @@ GameObject:
   - component: {fileID: 2465565676560978990}
   - component: {fileID: 121433996737073732}
   - component: {fileID: 473664526002343672}
+  - component: {fileID: 962725857412438921}
+  - component: {fileID: 2233624662916541967}
   m_Layer: 0
   m_Name: Inventory
   m_TagString: Untagged
@@ -78,9 +80,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 66c6441a83f4ea347a2e1d720ada3f61, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  parse: {fileID: 11400000, guid: 06a444aa59e4ca842aaf66d652849d39, type: 2}
   addinv: 0
   item: {fileID: 0}
   addedInventory: {fileID: 11400000, guid: 2220e64b52956274a8ac1a529699a2d4, type: 2}
+  hand: {fileID: 8788798542820979622}
 --- !u!58 &121433996737073732
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -113,6 +117,62 @@ MonoBehaviour:
   radius: 2
   interactionTarget: 1
   targetsChanged: {fileID: 11400000, guid: 37e77cbc288b0bb408597b25a3a84f7e, type: 2}
+--- !u!114 &962725857412438921
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6722766841112063685}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8beaaee945cf0844ad0f79ee7108362, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Event: {fileID: 11400000, guid: c7c3d2160d90618449eb41cb9f615812, type: 2}
+  Response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2465565676560978990}
+        m_TargetAssemblyTypeName: Hawaiian.Inventory.InventoryController, Hawaiian.Inventory
+        m_MethodName: OnCycleForward
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &2233624662916541967
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6722766841112063685}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8beaaee945cf0844ad0f79ee7108362, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Event: {fileID: 11400000, guid: 19cbc4c553c6f7243a4b4e2b45feb256, type: 2}
+  Response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2465565676560978990}
+        m_TargetAssemblyTypeName: Hawaiian.Inventory.InventoryController, Hawaiian.Inventory
+        m_MethodName: OnCycleBackward
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1001 &6062720292524341323
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -345,6 +405,8 @@ MonoBehaviour:
   maxSpeed: 5.5
   tweenRate: 15
   runMultiplier: 1.75
+  forward: {fileID: 11400000, guid: c7c3d2160d90618449eb41cb9f615812, type: 2}
+  backward: {fileID: 11400000, guid: 19cbc4c553c6f7243a4b4e2b45feb256, type: 2}
   _damageReference: {fileID: 1546100782826642891, guid: 6916ca4131234a941b3eb78d5ca707fe, type: 3}
   firePoint: {fileID: 6550718957222180552}
 --- !u!114 &6432945937749252037
@@ -409,3 +471,8 @@ MonoBehaviour:
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
+--- !u!212 &8788798542820979622 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 3293387035487043534, guid: fe93fd4b04ca3d340865789a7d27cade, type: 3}
+  m_PrefabInstance: {fileID: 6074339651911699560}
+  m_PrefabAsset: {fileID: 0}

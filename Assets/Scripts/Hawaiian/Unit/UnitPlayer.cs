@@ -1,4 +1,7 @@
+using System;
 using Hawaiian.Input;
+using Hawaiian.Utilities;
+using MoreLinq;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -6,35 +9,52 @@ namespace Hawaiian.Unit
 {
     public class UnitPlayer : Unit, IUnit
     {
+        [SerializeField] private GameEvent forward;
+        [SerializeField] private GameEvent backward;
         [SerializeField] private GameObject _damageReference;
         [SerializeField] private float _offset;
         [SerializeField] private float _damageIndicatorOffset;
         [SerializeField] private Transform _firePoint;
 
+        [SerializeField] private PlayerAction _input;
 
-        private PlayerAction action;
-        private PlayerInput _input;
-        private UnitAnimator _animator;
-        private Vector3 _lastAttackPosition;
-        private Vector2 _rotation;
-        private bool _attackFlag;
-        private bool isLookingLeft;
-        private bool _isJoystickNeutral = true;
 
-        #region RangedAttackVariables
+        private bool _attackFlag = false;
+        protected override void Awake()
+        {
+            base.Awake();
+            _input = new PlayerAction();
+        }
 
-        [SerializeField] private Hawaiian.Input.Cursor _cursor;
-        [SerializeField] private float minOffset;
-        [SerializeField] private float maxOffset;
-        [SerializeField] private GameObject _projectileReference; //TODO: Get from item
-        
-        private bool _isHoldingAttack = false;
-        private float _currentHoldTime;
-        
-        #endregion  
-        
-        
-        private void Awake()
+        private void OnEnable()
+        {
+            _input.Enable();
+        }
+
+        private void OnDisable()
+        {
+            _input.Disable();
+        }
+
+        protected override void Start()
+        {
+            base.Start();
+            //forward.Raise();
+            _input.Player.Parse.performed += context =>
+            {
+                if (context.ReadValue<float>() > 0f)
+                {
+                    forward.Raise();
+                }
+                else
+                {
+                    backward.Raise();
+                }
+            };
+
+        }
+
+        public void OnMove(InputValue value)
         {
             action = new PlayerAction();
             _input = GetComponent<PlayerInput>();
