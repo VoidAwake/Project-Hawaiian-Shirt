@@ -38,12 +38,12 @@ namespace Hawaiian.Inventory
             _inv.PickUp(item);
             addinv = !addinv;
         }
-        
-        void UpdateRotation(Vector2 newValue)
-        {
-            _rotation = newValue;
-            _isJoystickNeutral = false;
-        }
+        //
+        // void UpdateRotation(Vector2 newValue)
+        // {
+        //     _rotation = newValue;
+        //     _isJoystickNeutral = false;
+        // }
 
         private void OnPickUp()
         {
@@ -85,7 +85,7 @@ namespace Hawaiian.Inventory
             //SelectionUpdate();
             if (_inv.inv[_inv.invPosition] != null)
             {
-                hand.sprite = _inv.inv[_inv.invPosition].itemSprite;
+                hand.sprite = _inv.inv[_inv.invPosition].ItemSprite;
             }
             else
             {

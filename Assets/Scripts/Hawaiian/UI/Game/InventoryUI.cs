@@ -24,7 +24,7 @@ namespace Hawaiian.UI.Game
                 //Instantiate this gamer inventory ui
                 if (inv.inv[i] != null)
                 {
-                    invSlots[i].GetComponent<SlotUI>().UpdateSprite(inv.inv[i].itemSprite);
+                    invSlots[i].GetComponent<SlotUI>().UpdateSprite(inv.inv[i].ItemSprite);
                 }
                 else
                 {
@@ -45,7 +45,7 @@ namespace Hawaiian.UI.Game
                 //invSlots[i].refer to inv
                 if (inv.inv[i] != null)
                 {
-                    invSlots[i].GetComponent<SlotUI>().UpdateSprite(inv.inv[i].itemSprite);
+                    invSlots[i].GetComponent<SlotUI>().UpdateSprite(inv.inv[i].ItemSprite);
                 }
                 else
                 {

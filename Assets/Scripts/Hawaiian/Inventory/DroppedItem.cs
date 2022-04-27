@@ -21,7 +21,7 @@ namespace Hawaiian.Inventory
 
             if (spriteRenderer == null) return;
 
-            spriteRenderer.sprite = item.itemSprite;
+            spriteRenderer.sprite = item.ItemSprite;
         }
     }
 }

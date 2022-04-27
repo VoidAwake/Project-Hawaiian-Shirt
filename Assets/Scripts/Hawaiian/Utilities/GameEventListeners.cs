@@ -11,9 +11,9 @@ namespace Hawaiian.Utilities
       public UnityEvent Response;
 
 
-      private void OnEnable() => Event.RegisterListener(this);
+      private void OnEnable() => Event.RegisterListener(Response);
       
-      private void OnDisable() => Event.UnregisterListener(this);
+      private void OnDisable() => Event.UnregisterListener(Response);
 
       public void OnEventRaised(GameEvent gameEvent) => Response.Invoke();
       

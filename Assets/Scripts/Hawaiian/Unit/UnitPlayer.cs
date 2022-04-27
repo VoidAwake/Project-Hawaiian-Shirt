@@ -55,10 +55,11 @@ namespace Hawaiian.Unit
         }
 
         public void OnMove(InputValue value)
-        {
-            action = new PlayerAction();
-            _input = GetComponent<PlayerInput>();
-            _animator = GetComponent<UnitAnimator>();
+        { 
+            
+            // action = new PlayerAction();
+            // _input = GetComponent<PlayerInput>();
+            // _animator = GetComponent<UnitAnimator>();
             
             // action.Player.Rotate.performed += ctx => UpdateRotation(ctx.ReadValue<Vector2>());
             // action.Player.Rotate.canceled += ctx => CancelRotation();
@@ -78,35 +79,35 @@ namespace Hawaiian.Unit
             // }
         }
         
-        void UpdateRotation(Vector2 newValue)
-        {
-            _rotation = newValue;
-            _isJoystickNeutral = false;
-        }
+        // void UpdateRotation(Vector2 newValue)
+        // {
+        //     _rotation = newValue;
+        //     _isJoystickNeutral = false;
+        // }
+        //
+        // void UpdateHoldAttackCursor()
+        // {
+        //     _cursor.CurrentRad += _currentHoldTime / 10;
+        // }
+        //
+        // void CancelRotation()
+        // {
+        //     _rotation = Vector2.zero;
+        //     _isJoystickNeutral = true;
+        // }
 
-        void UpdateHoldAttackCursor()
-        {
-            _cursor.CurrentRad += _currentHoldTime / 10;
-        }
-
-        void CancelRotation()
-        {
-            _rotation = Vector2.zero;
-            _isJoystickNeutral = true;
-        }
-
-        private void OnEnable()
-        {
-            action.Enable();
-            _rotation = Vector2.zero;
-        }
-
-        private void OnDisable()
-        {
-            action.Disable();
-        }
+        // private void OnEnable()
+        // {
+        //     action.Enable();
+        //     _rotation = Vector2.zero;
+        // }
+        //
+        // private void OnDisable()
+        // {
+        //     action.Disable();
+        // }
         
-        public void OnMove(InputValue value) => move = value.Get<Vector2>();
+     //   public void OnMove(InputValue value) => move = value.Get<Vector2>();
         
         public void OnActionA(InputValue value) { isRunning = value.Get<float>() > 0.1f;} //Debug.Log("Button: " + value.Get<float>()); }
 
