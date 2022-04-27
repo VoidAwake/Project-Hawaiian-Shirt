@@ -12,6 +12,7 @@ namespace Hawaiian.Inventory
         //[SerializeField] private int invSize;
         [SerializeField] public Item[] inv;
         public UnityEvent itemchange = new ();
+        public int invPosition = 0;
     
         public Inventory()
         {
