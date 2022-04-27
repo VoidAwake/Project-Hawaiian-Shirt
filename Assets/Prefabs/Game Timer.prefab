@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &8438924235777187681
+--- !u!1 &3920133195234102889
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,64 +8,68 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 8438924235777187687}
-  - component: {fileID: 8438924235777187684}
-  - component: {fileID: 8438924235777187685}
+  - component: {fileID: 3920133195234102887}
+  - component: {fileID: 3920133195234102888}
+  - component: {fileID: 3920133195234102886}
   m_Layer: 0
-  m_Name: Target Highlighter
+  m_Name: Game Timer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &8438924235777187687
+--- !u!4 &3920133195234102887
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8438924235777187681}
+  m_GameObject: {fileID: 3920133195234102889}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 518.4547, y: 386.9502, z: -1.0063616}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8438924235777187684
+--- !u!114 &3920133195234102888
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8438924235777187681}
+  m_GameObject: {fileID: 3920133195234102889}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a6e6f2770f3c42a7b77a24e8e3778f33, type: 3}
+  m_Script: {fileID: 11500000, guid: 0cc2945ab51b4b0c88c54a3177efb799, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  highlighterPrefab: {fileID: 2065759647219533693, guid: 72b964431f279f84a9dfe4bc9375930e, type: 3}
---- !u!114 &8438924235777187685
+  startTime: 999
+  gameTimeScale: {fileID: 11400000, guid: a7999ebb747644c42b10ad44fd3b305b, type: 2}
+  gameTime: {fileID: 11400000, guid: 0c73cc340ca261c4fb0bb0fd9ce5302f, type: 2}
+  startOnAwake: 0
+  gameManager: {fileID: 11400000, guid: c305914e6d352644190ef7ee43a51bbd, type: 2}
+--- !u!114 &3920133195234102886
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8438924235777187681}
+  m_GameObject: {fileID: 3920133195234102889}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3edf1f5353e1451ea754eedcbddd175b, type: 3}
+  m_Script: {fileID: 11500000, guid: e8beaaee945cf0844ad0f79ee7108362, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Event: {fileID: 11400000, guid: 37e77cbc288b0bb408597b25a3a84f7e, type: 2}
+  Event: {fileID: 11400000, guid: d5c9e20f87d81084da0f7a6327a76a25, type: 2}
   Response:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 8438924235777187684}
-        m_TargetAssemblyTypeName: Hawaiian.Interactables.TargetHighlighter, Assembly-CSharp
-        m_MethodName: OnTargetsChanged
-        m_Mode: 0
+      - m_Target: {fileID: 3920133195234102888}
+        m_TargetAssemblyTypeName: Hawaiian.Game.GameTimer, Game
+        m_MethodName: OnPhaseChanged
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
