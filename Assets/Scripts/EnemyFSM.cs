@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Hawaiian.Unit;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class EnemyFSM : MonoBehaviour
 {
@@ -10,12 +11,16 @@ public class EnemyFSM : MonoBehaviour
     public float stateTimeElapsed;
 
     public Rigidbody2D enemy;
-    public UnitPhysics unit;
+    public PlayerInput controls;
+    public EnemyFOV fov;
+    //public PolygonCollider2D viewCone;
+
+    public UnitEnemy unitEnemy;
 
     [SerializeField] public Vector2 currentDestination;
 
     public int nextWaypoint = 1;
-    [SerializeField] public List<Waypoint> waypointList; //temp for now - I assume we want waypoints added procedurally later? 
+    [SerializeField] public List<Waypoint> waypointList; //waypoints should come from a set list from the generated map
 
     public float cautionMeter
     {
@@ -25,7 +30,11 @@ public class EnemyFSM : MonoBehaviour
     void Awake()
     {
         enemy = GetComponent<Rigidbody2D>();
-        unit = GetComponent<Unit>();
+        controls = GetComponent<PlayerInput>();
+        fov = GetComponent<EnemyFOV>();
+        //viewCone = GetComponentInChildren<PolygonCollider2D>();
+        //viewCone.CreateMesh(true, true);
+        unitEnemy = GetComponent<UnitEnemy>();
     }
 
     // Update is called once per frame
@@ -39,7 +48,4 @@ public class EnemyFSM : MonoBehaviour
 
     }
 
-    public void OnMove(Vector2 value) {
-        
-    }
 }
