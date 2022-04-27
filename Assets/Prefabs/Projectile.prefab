@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 9195330741462771491}
   - component: {fileID: 3626180007030424234}
   - component: {fileID: -5114614570845316818}
+  - component: {fileID: 2669586785488496362}
   m_Layer: 0
   m_Name: Projectile
   m_TagString: Untagged
@@ -148,3 +149,14 @@ MonoBehaviour:
   _speed: 5
   _canStickOnWalls: 0
   _damage: 5
+--- !u!210 &2669586785488496362
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8484802503941745754}
+  m_Enabled: 1
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 1

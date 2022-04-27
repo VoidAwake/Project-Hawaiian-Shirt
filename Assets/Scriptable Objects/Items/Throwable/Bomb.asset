@@ -20,8 +20,8 @@ MonoBehaviour:
   DroppedItemBase: {fileID: 672159416967220005, guid: 71327cd53b4980f419bd140f19933b91, type: 3}
   ProjectileInstance: {fileID: 7219347503953488023, guid: 4f710142cb30e3340842ff78b4fe5f9a, type: 3}
   ItemDamage: 10
-  DrawSpeed: 20
-  DrawDistance: 3
+  DrawSpeed: 10
+  DrawDistance: 5
   SticksOnWall: 0
   AttackRate: 0
   IsMainObjective: 0

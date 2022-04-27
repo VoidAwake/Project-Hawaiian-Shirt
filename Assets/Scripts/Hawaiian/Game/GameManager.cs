@@ -1,5 +1,7 @@
-﻿using Hawaiian.Utilities;
+﻿using System;
+using Hawaiian.Utilities;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace Hawaiian.Game
 {
@@ -9,6 +11,10 @@ namespace Hawaiian.Game
         public enum GamePhase { Stealth, HighAlert, GameOver }
 
         private GamePhase phase;
+
+      
+        
+        
 
         public GamePhase Phase
         {

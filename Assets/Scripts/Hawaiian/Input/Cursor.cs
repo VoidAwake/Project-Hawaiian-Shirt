@@ -40,13 +40,18 @@ namespace Hawaiian.Input
             set => _maxRadius = value;
         }
 
+        public void OnRotate(InputValue value)
+        {
+            _rotation = value.Get<Vector2>();
+            Debug.Log("test");
+        }
 
         private void Awake()
         {
             action = new PlayerAction();
             ResetRadius();
-            action.Player.Rotate.performed += ctx =>_rotation = ctx.ReadValue<Vector2>();
-            action.Player.Rotate.canceled += ctx => _rotation = Vector2.zero;
+           // action.Player.Rotate.performed += ctx =>_rotation = ctx.ReadValue<Vector2>();
+          //  action.Player.Rotate.canceled += ctx => _rotation = Vector2.zero;
         }
 
         private void OnEnable()
@@ -74,10 +79,14 @@ namespace Hawaiian.Input
             {
                 playerInput =  UnityEngine.Input.mousePosition;
                 Vector3 worldPosition = Camera.main.ScreenToWorldPoint(playerInput);
+                Debug.Log(worldPosition);
                 worldPosition.z = 0f; // set to zero since its a 2d game
                 var mouseDirection = (worldPosition - position).normalized;
                 var mousePosition = position + mouseDirection * _currentRadius;
+                Debug.Log("current radius: " + _currentRadius);
                 transform.position = mousePosition;
+                
+                Debug.Log("current transform" + transform.position);
             }
 
             // var  playerInput = UnityEngine.Input.mousePosition;

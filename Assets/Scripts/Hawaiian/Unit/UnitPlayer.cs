@@ -17,50 +17,78 @@ namespace Hawaiian.Unit
         [SerializeField] private Transform _firePoint;
 
         [SerializeField] private PlayerAction _input;
+        [SerializeField] private PlayerInput _playerInput;
 
+        public PlayerAction GetPlayerAction() => _input;
+        public PlayerInput GetPlayerInput() => _playerInput;
+
+       [SerializeField] private PlayerInputManager.PlayerJoinedEvent _playerJoined;
 
         private bool _attackFlag = false;
         protected override void Awake()
         {
             base.Awake();
             _input = new PlayerAction();
+            _playerInput = GetComponent<PlayerInput>();
+            Debug.Log(_playerInput.playerIndex + "Current player index");
             //_attackComponent = GetComponent<UnitPlayerAttack>();
-        }   
-         
-      
+        }
+
         
+
+        public void UpdateCount(PlayerInput input)
+        {
+
+            if (_playerInput.playerIndex != input.playerIndex)
+                return;
+            
+            if (input.currentControlScheme == "Gamepad")
+            {
+                _playerInput.SwitchCurrentControlScheme("Gamepad" + (input.playerIndex == 0 ? "" : input.playerIndex + 1));
+            }
+            else
+            {
+                _playerInput.SwitchCurrentControlScheme("Keyboard1" + (input.playerIndex == 0 ? 1 : input.playerIndex + 1));
+
+            }
+            
+            Debug.Log(_playerInput.currentControlScheme);
+        }
 
         private void OnEnable()
         {
             _input.Enable();
         }
 
+     
+
         private void OnDisable()
         {
             _input.Disable();
+            
+         
+
         }
 
         protected override void Start()
         {
             base.Start();
             //forward.Raise();
-            _input.Player.Parse.performed += context =>
-            {
-                if (context.ReadValue<float>() > 0f)
-                {
-                    forward.Raise();
-                }
-                else
-                {
-                    backward.Raise();
-                }
-            };
+            // _input.Player.Parse.performed += context =>
+            // {
+            //     if (context.ReadValue<float>() > 0f)
+            //     {
+            //         forward.Raise();
+            //     }
+            //     else
+            //     {
+            //         backward.Raise();
+            //     }
+            // };
 
 
             _input.Player.Rotate.performed += ctx =>  ctx.ReadValue<Vector2>();
             //_input.Player.Rotate.canceled += ctx => //Vector2.zero;
-
-
         }
 
         public void OnMove(InputValue value)
@@ -204,6 +232,8 @@ namespace Hawaiian.Unit
             
             Destroy(this.gameObject);
         }
+        
+        
 
         public void Use() { }
     }

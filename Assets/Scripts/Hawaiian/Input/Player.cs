@@ -85,12 +85,12 @@ namespace Hawaiian.Input
                 },
                 {
                     ""name"": ""InvParse"",
-                    ""type"": ""Button"",
+                    ""type"": ""Value"",
                     ""id"": ""eb9009d9-a746-47f5-8024-38a635c96257"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
-                    ""initialStateCheck"": false
+                    ""initialStateCheck"": true
                 },
                 {
                     ""name"": ""HoldAttack"",
@@ -474,6 +474,17 @@ namespace Hawaiian.Input
                     ""isPartOfComposite"": false
                 },
                 {
+                    ""name"": """",
+                    ""id"": ""69a814ab-69ea-41fd-8c3c-581eaae02e91"",
+                    ""path"": ""<Gamepad>/dpad/left"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""InvLeft"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
                     ""name"": ""1D Axis"",
                     ""id"": ""e7b6dd70-e94e-4bec-93eb-879c849639e4"",
                     ""path"": ""1DAxis"",
@@ -487,10 +498,10 @@ namespace Hawaiian.Input
                 {
                     ""name"": ""negative"",
                     ""id"": ""6e2ea6a2-79bb-4913-9050-2bd489e43bfb"",
-                    ""path"": ""<Keyboard>/q"",
+                    ""path"": ""<Keyboard>/e"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""Keyboard1"",
                     ""action"": ""InvParse"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
@@ -498,10 +509,43 @@ namespace Hawaiian.Input
                 {
                     ""name"": ""positive"",
                     ""id"": ""a2607abf-ca51-41a8-a85f-fefdb3db30e3"",
-                    ""path"": ""<Keyboard>/e"",
+                    ""path"": ""<Keyboard>/q"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard1"",
+                    ""action"": ""InvParse"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""1D Axis"",
+                    ""id"": ""24118f8a-3447-480f-bf4a-51c146fa523a"",
+                    ""path"": ""1DAxis"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
+                    ""action"": ""InvParse"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""negative"",
+                    ""id"": ""c11a4f96-413d-45f6-afef-000cb153c47b"",
+                    ""path"": ""<Gamepad>/rightShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""InvParse"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""positive"",
+                    ""id"": ""9b8bc7b5-2435-49c0-bf1c-01f341a3da9c"",
+                    ""path"": ""<Gamepad>/leftShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad;Gamepad2;Gamepad3;Gamepad4"",
                     ""action"": ""InvParse"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
@@ -575,10 +619,10 @@ namespace Hawaiian.Input
                 {
                     ""name"": ""negative"",
                     ""id"": ""fe0b3698-8c23-415a-91b1-a3c853dd98f2"",
-                    ""path"": ""<Keyboard>/q"",
+                    ""path"": ""<Gamepad>/dpad/left"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""Gamepad;Gamepad2;Gamepad3;Gamepad4"",
                     ""action"": ""Parse"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
@@ -586,10 +630,43 @@ namespace Hawaiian.Input
                 {
                     ""name"": ""positive"",
                     ""id"": ""227af2a3-5837-427e-8d95-e9ff2443ea74"",
-                    ""path"": ""<Keyboard>/e"",
+                    ""path"": ""<Gamepad>/dpad/right"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad;Gamepad2;Gamepad3;Gamepad4"",
+                    ""action"": ""Parse"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""1D Axis"",
+                    ""id"": ""75e4d870-56fa-4902-91c8-b54f6e3e467e"",
+                    ""path"": ""1DAxis"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
+                    ""action"": ""Parse"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""negative"",
+                    ""id"": ""064fb6dc-ee3b-4401-a09e-ac6c64ca048a"",
+                    ""path"": ""<Keyboard>/q"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad;Gamepad2;Gamepad3;Gamepad4"",
+                    ""action"": ""Parse"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""positive"",
+                    ""id"": ""4b30df90-93c6-4854-8f78-f9c6766cab32"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad;Gamepad2;Gamepad3;Gamepad4"",
                     ""action"": ""Parse"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
@@ -892,6 +969,61 @@ namespace Hawaiian.Input
                     ""isOR"": false
                 }
             ]
+        },
+        {
+            ""name"": ""Gamepad2"",
+            ""bindingGroup"": ""Gamepad2"",
+            ""devices"": [
+                {
+                    ""devicePath"": ""<Gamepad>"",
+                    ""isOptional"": true,
+                    ""isOR"": false
+                }
+            ]
+        },
+        {
+            ""name"": ""Gamepad3"",
+            ""bindingGroup"": ""Gamepad3"",
+            ""devices"": [
+                {
+                    ""devicePath"": ""<Gamepad>"",
+                    ""isOptional"": false,
+                    ""isOR"": false
+                }
+            ]
+        },
+        {
+            ""name"": ""Gamepad4"",
+            ""bindingGroup"": ""Gamepad4"",
+            ""devices"": [
+                {
+                    ""devicePath"": ""<Gamepad>"",
+                    ""isOptional"": false,
+                    ""isOR"": false
+                }
+            ]
+        },
+        {
+            ""name"": ""Keyboard3"",
+            ""bindingGroup"": ""Keyboard3"",
+            ""devices"": [
+                {
+                    ""devicePath"": ""<Keyboard>"",
+                    ""isOptional"": false,
+                    ""isOR"": false
+                }
+            ]
+        },
+        {
+            ""name"": ""Keyboard4"",
+            ""bindingGroup"": ""Keyboard4"",
+            ""devices"": [
+                {
+                    ""devicePath"": ""<Keyboard>"",
+                    ""isOptional"": false,
+                    ""isOR"": false
+                }
+            ]
         }
     ]
 }");
@@ -1164,6 +1296,51 @@ namespace Hawaiian.Input
             {
                 if (m_Keyboard2SchemeIndex == -1) m_Keyboard2SchemeIndex = asset.FindControlSchemeIndex("Keyboard2");
                 return asset.controlSchemes[m_Keyboard2SchemeIndex];
+            }
+        }
+        private int m_Gamepad2SchemeIndex = -1;
+        public InputControlScheme Gamepad2Scheme
+        {
+            get
+            {
+                if (m_Gamepad2SchemeIndex == -1) m_Gamepad2SchemeIndex = asset.FindControlSchemeIndex("Gamepad2");
+                return asset.controlSchemes[m_Gamepad2SchemeIndex];
+            }
+        }
+        private int m_Gamepad3SchemeIndex = -1;
+        public InputControlScheme Gamepad3Scheme
+        {
+            get
+            {
+                if (m_Gamepad3SchemeIndex == -1) m_Gamepad3SchemeIndex = asset.FindControlSchemeIndex("Gamepad3");
+                return asset.controlSchemes[m_Gamepad3SchemeIndex];
+            }
+        }
+        private int m_Gamepad4SchemeIndex = -1;
+        public InputControlScheme Gamepad4Scheme
+        {
+            get
+            {
+                if (m_Gamepad4SchemeIndex == -1) m_Gamepad4SchemeIndex = asset.FindControlSchemeIndex("Gamepad4");
+                return asset.controlSchemes[m_Gamepad4SchemeIndex];
+            }
+        }
+        private int m_Keyboard3SchemeIndex = -1;
+        public InputControlScheme Keyboard3Scheme
+        {
+            get
+            {
+                if (m_Keyboard3SchemeIndex == -1) m_Keyboard3SchemeIndex = asset.FindControlSchemeIndex("Keyboard3");
+                return asset.controlSchemes[m_Keyboard3SchemeIndex];
+            }
+        }
+        private int m_Keyboard4SchemeIndex = -1;
+        public InputControlScheme Keyboard4Scheme
+        {
+            get
+            {
+                if (m_Keyboard4SchemeIndex == -1) m_Keyboard4SchemeIndex = asset.FindControlSchemeIndex("Keyboard4");
+                return asset.controlSchemes[m_Keyboard4SchemeIndex];
             }
         }
         public interface IPlayerActions

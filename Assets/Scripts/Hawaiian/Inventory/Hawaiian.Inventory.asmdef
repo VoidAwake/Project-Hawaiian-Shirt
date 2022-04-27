@@ -6,7 +6,9 @@
         "Unity.Mathematics",
         "Hawaiian.Utilities",
         "Hawaiian.Unit",
-        "PositionalEvents"
+        "PositionalEvents",
+        "Unity.InputSystem",
+        "Hawaiian.Input"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

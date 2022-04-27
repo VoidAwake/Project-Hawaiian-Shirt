@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 607207432179776592}
   - component: {fileID: 3443248598201423430}
   - component: {fileID: 267089856033355879}
+  - component: {fileID: 679010742145070733}
   m_Layer: 0
   m_Name: DroppedItemBase
   m_TagString: Item
@@ -98,6 +99,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd58b1d76a74e504e887caf54f2f1608, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  spriteRenderer: {fileID: 0}
   item: {fileID: 0}
 --- !u!61 &267089856033355879
 BoxCollider2D:
@@ -125,3 +127,31 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &679010742145070733
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 672159416967220005}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 58347750f21c4542987e523e82cb91b7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  token: {fileID: 11400000, guid: 3b0ff5f6a462e6044b143ac5460cd59c, type: 2}
+  response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 3443248598201423430}
+        m_TargetAssemblyTypeName: Hawaiian.Inventory.DroppedItem, Hawaiian.Inventory
+        m_MethodName: OnPickUp
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
