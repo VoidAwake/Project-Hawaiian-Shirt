@@ -8,7 +8,9 @@ namespace Hawaiian.UI.Game
     {
         [SerializeField] private GameObject inventoryUIPrefab;
         [SerializeField] private Transform uiParent;
+        [SerializeField] private Transform uiParentForFourPlayers;
 
+        private int _inventoryCount = 0;
         private List<GameObject> inventoryGameObjects = new();
         
         protected override void OnClose() { }
@@ -19,12 +21,14 @@ namespace Hawaiian.UI.Game
 
         public void OnInventoryAdded(Inventory.Inventory inventory)
         {
-            var inventoryGameObject = Instantiate(inventoryUIPrefab, uiParent);
-            
+            var inventoryGameObject = Instantiate(inventoryUIPrefab, _inventoryCount >= 2 ? uiParentForFourPlayers : uiParent);
             inventoryGameObjects.Add(inventoryGameObject);
             
             inventoryGameObject.GetComponent<InventoryUI>().inv = inventory;
             inventoryGameObject.GetComponentInChildren<ScoreUI>().inventory = inventory;
+            _inventoryCount++;
         }
+        
+        
     }
 }

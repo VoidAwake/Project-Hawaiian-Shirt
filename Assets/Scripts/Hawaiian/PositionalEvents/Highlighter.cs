@@ -18,7 +18,7 @@ namespace Hawaiian.PositionalEvents
                 throw new Exception($"Could not highlight. Parent object does not have a {nameof(SpriteRenderer)}");
 
             spriteRenderer.sprite = targetSpriteRenderer.sprite;
-            spriteRenderer.sortingOrder = targetSpriteRenderer.sortingOrder - 1;
+            spriteRenderer.sortingOrder = targetSpriteRenderer.sortingOrder + 1;
         }
     }
 }

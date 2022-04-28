@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Hawaiian.Unit
 {
-    public class Unit : UnitPhysics
+    public class Unit : UnitPhysics 
     {
 
         [Header("Unit Stats")]
@@ -24,7 +24,7 @@ namespace Hawaiian.Unit
         protected bool controlsEnabled = true;
         protected bool isRunning = false;
 
-        protected void Start()
+        protected virtual void Start()
         {
             _health = _maxHealth;
         }

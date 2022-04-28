@@ -12,6 +12,7 @@ namespace Hawaiian.Inventory
         //[SerializeField] private int invSize;
         [SerializeField] public Item[] inv;
         public UnityEvent itemchange = new ();
+        public int invPosition = 0;
     
         public Inventory()
         {
@@ -31,6 +32,7 @@ namespace Hawaiian.Inventory
                     inv[i] = item;
                     //item.Picked();??Delete item in player script as there is no reference to ingame item referring to scriptable object obtainable here
                     itemchange.Invoke();
+                    Debug.Log("I have inserted an item into my inventory");
                     return true;
                 }
             }
