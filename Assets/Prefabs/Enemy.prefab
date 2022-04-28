@@ -54,7 +54,7 @@ MonoBehaviour:
   edgeItr: 4
   edgeDst: 4
   maskCutaway: 0.1
-  fsm: {fileID: 167374080983641883}
+  fsm: {fileID: 0}
   targetMask:
     serializedVersion: 2
     m_Bits: 0
@@ -64,6 +64,7 @@ MonoBehaviour:
   visibleTargets: []
   viewMesh: {fileID: 0}
   meshFilter: {fileID: 773512349449736286}
+  isSus: 0
 --- !u!33 &773512349449736286
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -123,7 +124,7 @@ SortingGroup:
   m_GameObject: {fileID: 3837106225297113474}
   m_Enabled: 1
   m_SortingLayerID: 1664803701
-  m_SortingLayer: 1
+  m_SortingLayer: 0
   m_SortingOrder: 0
 --- !u!1001 &4895615097980415704
 PrefabInstance:
@@ -132,6 +133,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4980213602528273827, guid: 32cfed746529f4f4d9e044e3e5b89433, type: 3}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6787493265823115218, guid: 32cfed746529f4f4d9e044e3e5b89433, type: 3}
+      propertyPath: m_RootOrder
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 6886565524097403648, guid: 32cfed746529f4f4d9e044e3e5b89433, type: 3}
       propertyPath: m_Name
       value: Enemy
@@ -211,28 +220,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 6886565524097403648, guid: 32cfed746529f4f4d9e044e3e5b89433, type: 3}
   m_PrefabInstance: {fileID: 4895615097980415704}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &167374080983641883
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2044996132595983832}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3cbde404bd26c2a4e80d707222285901, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  currentState: {fileID: 11400000, guid: 7063c87d8a7493e40b87367db5d0d48f, type: 2}
-  remainState: {fileID: 0}
-  stateTimeElapsed: 0
-  enemy: {fileID: 0}
-  controls: {fileID: 0}
-  fov: {fileID: 0}
-  unitEnemy: {fileID: 0}
-  currentDestination: {x: 0, y: 0}
-  nextWaypoint: 1
-  waypointList: []
 --- !u!114 &3157975998947384140
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -249,6 +236,35 @@ MonoBehaviour:
   minimumDistance: 0.001
   collisionBuffer: 0.01
   isBoundByCamera: 0
+  physicsCollider: {fileID: 0}
+  gameTimeScale: {fileID: 0}
+  _maxHealth: 0
   maxSpeed: 2
   tweenRate: 12.5
   runMultiplier: 1.75
+--- !u!114 &7385983358733650316
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2044996132595983832}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 930fb7ef0a3bf58449c2a3ae98a332c2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentState: {fileID: 11400000, guid: 7063c87d8a7493e40b87367db5d0d48f, type: 2}
+  remainState: {fileID: 11400000, guid: 7063c87d8a7493e40b87367db5d0d48f, type: 2}
+  stateTimeElapsed: 0
+  enemy: {fileID: 2044996132595983839}
+  controls: {fileID: 0}
+  unitEnemy: {fileID: 0}
+  currentDestination: {x: 0, y: 0}
+  nextWaypoint: 1
+  waypointList: []
+--- !u!50 &2044996132595983839 stripped
+Rigidbody2D:
+  m_CorrespondingSourceObject: {fileID: 6886565524097403655, guid: 32cfed746529f4f4d9e044e3e5b89433, type: 3}
+  m_PrefabInstance: {fileID: 4895615097980415704}
+  m_PrefabAsset: {fileID: 0}

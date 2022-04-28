@@ -4,11 +4,14 @@ using Hawaiian.Unit;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class UnitEnemy : Unit
+namespace Hawaiian.Unit
 {
-    EnemyFSM enemyFSM;
+    public class UnitEnemy : Unit
+    {
+        EnemyFSM enemyFSM;
 
-    // Start is called before the first frame update
-    public void OnMove(Vector2 yes) { move = yes; }
-    
+        // Start is called before the first frame update
+        public void OnMove(Vector2 yes) { move = yes; }
+
+    }
 }
