@@ -3,10 +3,8 @@ using Hawaiian.Utilities;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-
 namespace Hawaiian.Unit
 {
-    
     public class UnitPlayer : Unit, IUnit
     {
         [SerializeField] private GameEvent forward;
@@ -147,7 +145,7 @@ namespace Hawaiian.Unit
         
      //   public void OnMove(InputValue value) => move = value.Get<Vector2>();
         
-        public void OnActionA(InputValue value) { isRunning = value.Get<float>() > 0.1f;} //Debug.Log("Button: " + value.Get<float>()); }
+        //public void OnActionA(InputValue value) { isRunning = value.Get<float>() > 0.1f;} //Debug.Log("Button: " + value.Get<float>()); }
 
         // public void HoldAttack(InputAction.CallbackContext ctx)
         // {
