@@ -177,7 +177,7 @@ namespace Hawaiian.Unit
             itemUseDirection = direction;
             itemUseTimer = 0.0f;
 
-            itemHand.GetComponent<UnityEngine.U2D.Animation.SpriteSkin>().enabled = false;
+            //itemHand.GetComponent<UnityEngine.U2D.Animation.SpriteSkin>().enabled = false;
         }
     }
 }
