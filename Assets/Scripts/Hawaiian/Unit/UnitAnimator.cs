@@ -1,24 +1,31 @@
 using System;
 using UnityEngine;
+using UnityEngine.U2D;
 using Hawaiian.Unit;
 
 namespace Hawaiian.Unit
 {
     public enum UnitAnimationState
     {
-        Idle = 0,
-        Walking = 2,
-        Attacking = 4
+        //Idle = 0,
+        //Walking = 2,
+        //Attacking = 4
+        None, MeleeSwing
     }
         
     [RequireComponent(typeof(Unit))][RequireComponent(typeof(Animator))]
     public class UnitAnimator : MonoBehaviour
     {
         private int spriteDirection = -1;
-       [SerializeField] private SpriteRenderer[] _renderers;
+        [SerializeField] private SpriteRenderer[] _renderers;
        
         [SerializeField] private UnitAnimationState _currentAnimationState;
-        
+        [SerializeField] private GameObject itemHand;
+        [SerializeField] private GameObject heldItem;
+        private const float itemUseSpeed = 0.5f;
+        private float itemUseTimer;
+        private Vector2 itemUseDirection;
+
         private Animator _animator;
         private Unit _unit;
         private bool _isLookingLeft;
@@ -38,6 +45,8 @@ namespace Hawaiian.Unit
 
         private void Update()
         {
+            #region Player State Animation
+
             if (_animator != null && _unit != null)
             {
                 if (_unit.playerState == Unit.PlayerState.Walking)
@@ -112,6 +121,10 @@ namespace Hawaiian.Unit
                 }
             }
 
+            #endregion
+
+            #region Invincibility Flashing
+
             if (_unit.isInvincible)
             {
                 _invincibilityTimer += Time.deltaTime;
@@ -148,7 +161,23 @@ namespace Hawaiian.Unit
                     }
                 }
             }
+
+            #endregion
+
+            #region Use Item / Hands Override
+
+
+
+            #endregion
         }
 
+        public void UseItem(UnitAnimationState animationState, Vector2 direction)
+        {
+            _currentAnimationState = animationState;
+            itemUseDirection = direction;
+            itemUseTimer = 0.0f;
+
+            itemHand.GetComponent<UnityEngine.U2D.Animation.SpriteSkin>().enabled = false;
+        }
     }
 }
