@@ -26,6 +26,9 @@ namespace Hawaiian.Editor
         SerializedProperty points;
         SerializedProperty droppedItemBase;
         SerializedProperty projectileInstance;
+        SerializedProperty returnToPlayer;
+        SerializedProperty multishot;
+         SerializedProperty multishotAmount;
 
 
         private void OnEnable()
@@ -44,12 +47,14 @@ namespace Hawaiian.Editor
             points = serializedObject.FindProperty("Points");
             droppedItemBase = serializedObject.FindProperty("DroppedItemBase");
             projectileInstance = serializedObject.FindProperty("ProjectileInstance");
+            returnToPlayer = serializedObject.FindProperty("ReturnsToPlayer");
+            multishot = serializedObject.FindProperty("IsMultiShot");
+            multishotAmount = serializedObject.FindProperty("ProjectileAmount");
         }
 
         public override void OnInspectorGUI()
         {
             base.OnInspectorGUI();
-
             
             Item _item = (Item) target;
             
@@ -63,7 +68,7 @@ namespace Hawaiian.Editor
                     ShowMeleeComponents();
                     break;
                 case ItemType.Projectile:
-                    ShowProjectileComponents();
+                    ShowProjectileComponents(_item);
                     break;
                 case ItemType.Throwable:
                     ShowThrowableComponents();
@@ -104,7 +109,7 @@ namespace Hawaiian.Editor
             EditorGUILayout.PropertyField(attackRate, new GUIContent("Attack Rate"));
         }
         
-        private void ShowProjectileComponents()
+        private void ShowProjectileComponents(Item item)
         {
             GUILayout.Label("Projectile Stats", EditorStyles.boldLabel);
             EditorGUILayout.PropertyField(projectileInstance, new GUIContent("Projectile Instance Reference"));
@@ -115,6 +120,21 @@ namespace Hawaiian.Editor
             EditorGUILayout.PropertyField(drawDistance, new GUIContent("DrawDistance","Refers to how far the projectile can reach at full charge"));
             EditorGUILayout.Space();
             EditorGUILayout.PropertyField(sticksOnWall, new GUIContent("Sticks on Wall","Refers to if the projectile will stick on a wall"));
+            EditorGUILayout.Space();
+            EditorGUILayout.PropertyField(returnToPlayer, new GUIContent("Returns to the player?","If the projectile does not hit a unit or obstacle in its initial throw, the projectile will return to the player"));
+            
+            EditorGUILayout.Space();
+            EditorGUILayout.PropertyField(multishot, new GUIContent("Is A Multishot","Refers to if the item will produce multiple shots at once"));
+
+            if (item.IsMultiShot)
+            {
+                GUILayout.Label("Multishot Stats", EditorStyles.boldLabel);
+                EditorGUILayout.IntSlider(multishotAmount, 2, 20, new GUIContent("Number of Projectiles", "The amount of projectiles spawned by the item when used"));
+            }
+            else
+            {
+                item.ProjectileAmount = 0;
+            }
         }
         
         private void ShowThrowableComponents()

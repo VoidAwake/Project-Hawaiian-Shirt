@@ -23,6 +23,9 @@ MonoBehaviour:
   DrawSpeed: 10
   DrawDistance: 5
   SticksOnWall: 1
+  ReturnsToPlayer: 1
+  IsMultiShot: 1
+  ProjectileAmount: 3
   AttackRate: 0
   IsMainObjective: 0
   CanBeHeldByEnemies: 0

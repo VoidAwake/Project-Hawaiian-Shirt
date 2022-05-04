@@ -99,17 +99,24 @@ namespace Hawaiian.Inventory
         }
         public void OnCycleForward()
         {
+            if (GetComponent<ItemInteractor>().IsAttacking) // makes sure that they cant change their items while attacking since that make it go brokey
+                return;
+            
             _inv.invPosition++;
             Parse();
         }
 
         public void OnCycleBackward()
         {
+            if (GetComponent<ItemInteractor>().IsAttacking) // makes sure that they cant change their items while attacking since that make it go brokey
+                return;
+            
             _inv.invPosition--;
             Parse();
         }
         private void Parse()
         {
+            
              //_inv.invPosition += i;
             if (_inv.invPosition > _inv.inv.Length - 1)
             {

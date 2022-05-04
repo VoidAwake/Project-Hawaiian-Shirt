@@ -37,6 +37,10 @@ namespace Hawaiian.Inventory
         [HideInInspector] public float DrawSpeed;
         [HideInInspector] public float DrawDistance;
         [HideInInspector] public bool SticksOnWall;
+        [HideInInspector] public bool ReturnsToPlayer;
+        [HideInInspector] public bool IsMultiShot;
+        [HideInInspector] public int ProjectileAmount;
+
 
         //Melee Specific Stats
         [HideInInspector] public float AttackRate;
