@@ -1,40 +1,41 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu (menuName = "PluggableAI/State")]
-public class State : ScriptableObject
+namespace Hawaiian.AI
 {
-    public Action[] actions;
-    public Transition[] transitions;
-
-    public void UpdateState(EnemyFSM fsm)
+    [CreateAssetMenu (menuName = "PluggableAI/State")]
+    public class State : ScriptableObject
     {
-        DoActions(fsm);
-        CheckTransitions(fsm);
-    }
+        public Action[] actions;
+        public Transition[] transitions;
 
-    private void DoActions(EnemyFSM fsm)
-    {
-        for(int i = 0; i < actions.Length; i++)
+        public void UpdateState(EnemyFSM fsm)
         {
-            actions[i].Act(fsm);
+            DoActions(fsm);
+            CheckTransitions(fsm);
         }
-    }
 
-    private void CheckTransitions(EnemyFSM fsm)
-    {
-        for(int i = 0; i < transitions.Length; i++)
+        private void DoActions(EnemyFSM fsm)
         {
-            bool decisionSucceeded = transitions[i].decision.Decide(fsm);
-
-            if (decisionSucceeded)
+            for(int i = 0; i < actions.Length; i++)
             {
-                fsm.TransitionToState(transitions[i].trueState);
+                actions[i].Act(fsm);
             }
-            else
+        }
+
+        private void CheckTransitions(EnemyFSM fsm)
+        {
+            for(int i = 0; i < transitions.Length; i++)
             {
-                fsm.TransitionToState(transitions[i].falseState);
+                bool decisionSucceeded = transitions[i].decision.Decide(fsm);
+
+                if (decisionSucceeded)
+                {
+                    fsm.TransitionToState(transitions[i].trueState);
+                }
+                else
+                {
+                    fsm.TransitionToState(transitions[i].falseState);
+                }
             }
         }
     }

@@ -1,25 +1,30 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu (menuName = "PluggableAI/Actions/Patrol")]
-public class PatrolAction : Action
+namespace Hawaiian.AI
 {
-    public override void Act(EnemyFSM fsm)
+    [CreateAssetMenu(menuName = "PluggableAI/Actions/Patrol")]
+    public class PatrolAction : Action
     {
-        Patrol(fsm);
-    }
-
-    private void Patrol(EnemyFSM fsm)
-    {
-        fsm.currentDestination = fsm.waypointList[fsm.nextWaypoint].transform.position;
-        if (Vector2.Distance(fsm.transform.position, fsm.currentDestination) < 1.0f)
+        public override void Act(EnemyFSM fsm)
         {
-            fsm.nextWaypoint = (fsm.nextWaypoint + 1) % fsm.waypointList.Count;
-            fsm.currentDestination = fsm.waypointList[fsm.nextWaypoint].transform.position;
+            Patrol(fsm);
         }
-        fsm.OnMove(fsm.currentDestination);
-    }
 
-   
+        private void Patrol(EnemyFSM fsm)
+        {
+
+            fsm.currentDestination = fsm.waypointList[fsm.nextWaypoint].transform.position; 
+            if (Vector2.Distance(fsm.transform.position, fsm.currentDestination) < 0.5f)
+            {
+
+                fsm.nextWaypoint = (fsm.nextWaypoint + 1) % fsm.waypointList.Count;
+                fsm.currentDestination = fsm.waypointList[fsm.nextWaypoint].transform.position;
+            
+            }
+            else
+            {
+                fsm.unitEnemy.OnMove(fsm.currentDestination - (Vector2)fsm.transform.position);
+            }
+        }
+    }
 }

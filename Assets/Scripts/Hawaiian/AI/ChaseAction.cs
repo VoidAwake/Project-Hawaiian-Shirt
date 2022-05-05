@@ -1,19 +1,18 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "PluggableAI/Actions/Chase")]
-public class ChaseAction : Action
+namespace Hawaiian.AI
 {
-    
-    // Start is called before the first frame update
-    public override void Act(EnemyFSM fsm)
+    [CreateAssetMenu(menuName = "PluggableAI/Actions/Chase")]
+    public class ChaseAction : Action
     {
-        Chase(fsm);
-    }
+        public override void Act(EnemyFSM fsm)
+        {
+            Chase(fsm);
+        }
 
-    private void Chase(EnemyFSM fsm)
-    {
+        private void Chase(EnemyFSM fsm)
+        {
         
+        }
     }
 }

@@ -1,19 +1,18 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "PluggableAI/Actions/Caution")]
-public class CautionAction : Action
+namespace Hawaiian.AI
 {
-    
-    // Start is called before the first frame update
-    public override void Act(EnemyFSM fsm)
+    [CreateAssetMenu(menuName = "PluggableAI/Actions/Caution")]
+    public class CautionAction : Action
     {
-        Caution(fsm);
-    }
+        public override void Act(EnemyFSM fsm)
+        {
+            Caution(fsm);
+        }
 
-    private void Caution(EnemyFSM fsm)
-    {
+        private void Caution(EnemyFSM fsm)
+        {
         
+        }
     }
 }
