@@ -20,6 +20,8 @@ namespace Hawaiian.PositionalEvents
         private List<PositionalEventListener> interactablesInRange = new();
         private List<PositionalEventListener> targets = new();
 
+        public PositionalEventToken Token => token;
+
         public List<PositionalEventListener> Targets
         {
             get => targets;
