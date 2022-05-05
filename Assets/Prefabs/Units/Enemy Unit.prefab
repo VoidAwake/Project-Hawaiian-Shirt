@@ -279,17 +279,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 6924075283435537384, guid: fe93fd4b04ca3d340865789a7d27cade, type: 3}
   m_PrefabInstance: {fileID: 6074339651911699560}
   m_PrefabAsset: {fileID: 0}
---- !u!210 &2313854986825173522
-SortingGroup:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3772646986385756032}
-  m_Enabled: 1
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 1
 --- !u!114 &784775154253311892
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -303,13 +292,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentState: {fileID: 11400000, guid: 7063c87d8a7493e40b87367db5d0d48f, type: 2}
-  remainState: {fileID: 0}
-  stateTimeElapsed: 0
-  enemy: {fileID: 0}
-  unit: {fileID: 0}
   unitEnemy: {fileID: 0}
-  currentDestination: {x: 0, y: 0}
-  nextWaypoint: 1
   waypointList: []
 --- !u!114 &6331187281542622846
 MonoBehaviour:
@@ -334,10 +317,10 @@ MonoBehaviour:
   testVector: {x: 0, y: 0}
   testFloat: 0
   playerState: 0
-  _maxHealth: 0
+  _maxHealth: 20
   tripTime: 0.75
   invincibilityTime: 1
   isInvincible: 0
-  maxSpeed: 0
-  tweenRate: 0
-  runMultiplier: 0
+  maxSpeed: 5.5
+  tweenRate: 15
+  runMultiplier: 1.75

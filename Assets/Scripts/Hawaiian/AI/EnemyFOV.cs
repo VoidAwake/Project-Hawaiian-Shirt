@@ -68,7 +68,7 @@ namespace Hawaiian.AI
 
             vertices[0] = Vector3.zero;
 
-            Vector3 destination = new Vector3(fsm.transform.position.x - fsm.currentDestination.x, fsm.transform.position.y - fsm.currentDestination.y);
+            Vector3 destination = new Vector3(fsm.transform.position.x - fsm.CurrentDestination.x, fsm.transform.position.y - fsm.CurrentDestination.y);
             int vertexIndex = 1;
             int triangleIndex = 0;
             for (int i = 0; i <= rayCount; i++)

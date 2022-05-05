@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Hawaiian.AI
+namespace Hawaiian.AI.Actions
 {
     [CreateAssetMenu(menuName = "PluggableAI/Actions/Patrol")]
     public class PatrolAction : Action
@@ -12,16 +12,10 @@ namespace Hawaiian.AI
 
         private void Patrol(EnemyFSM fsm)
         {
-            fsm.currentDestination = fsm.waypointList[fsm.nextWaypoint].transform.position; 
-            if (Vector2.Distance(fsm.transform.position, fsm.currentDestination) < 0.5f)
-            {
-                fsm.nextWaypoint = (fsm.nextWaypoint + 1) % fsm.waypointList.Count;
-                fsm.currentDestination = fsm.waypointList[fsm.nextWaypoint].transform.position;
-            }
-            else
-            {
-                fsm.unitEnemy.OnMove(fsm.currentDestination - (Vector2)fsm.transform.position);
-            }
+            if (Vector2.Distance(fsm.transform.position, fsm.CurrentDestination) < 0.5f)
+                fsm.ToNextWaypoint();
+
+            fsm.unitEnemy.OnMove(fsm.CurrentDestination - (Vector2) fsm.transform.position);
         }
     }
 }

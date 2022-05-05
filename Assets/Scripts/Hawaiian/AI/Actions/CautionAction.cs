@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Hawaiian.AI
+namespace Hawaiian.AI.Actions
 {
     [CreateAssetMenu(menuName = "PluggableAI/Actions/Caution")]
     public class CautionAction : Action

@@ -1,4 +1,4 @@
-namespace Hawaiian.AI
+namespace Hawaiian.AI.Decisions
 {
     public class LookDecision : Decision
     {

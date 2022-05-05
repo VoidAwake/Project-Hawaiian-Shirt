@@ -9,11 +9,12 @@ namespace Hawaiian.AI
 
         public UnitEnemy unitEnemy;
 
-        [SerializeField] public Vector2 currentDestination;
-
-        public int nextWaypoint = 1;
+        private int currentWaypointIndex = 1;
         [SerializeField] public List<Waypoint> waypointList; //temp for now - I assume we want waypoints added procedurally later? 
 
+        public Waypoint CurrentWaypoint => waypointList[currentWaypointIndex];
+        public Vector2 CurrentDestination => CurrentWaypoint.transform.position;
+        
         private void Awake()
         {
             //viewCone = GetComponentInChildren<PolygonCollider2D>();
@@ -29,6 +30,11 @@ namespace Hawaiian.AI
         public void TransitionToState(State nextState)
         {
 
+        }
+
+        public void ToNextWaypoint()
+        {
+            currentWaypointIndex = (currentWaypointIndex + 1) % waypointList.Count;
         }
     }
 }
