@@ -16,25 +16,25 @@ namespace Hawaiian.AI
 
         private void DoActions(EnemyFSM fsm)
         {
-            for(int i = 0; i < actions.Length; i++)
+            foreach (var action in actions)
             {
-                actions[i].Act(fsm);
+                action.Act(fsm);
             }
         }
 
         private void CheckTransitions(EnemyFSM fsm)
         {
-            for(int i = 0; i < transitions.Length; i++)
+            foreach (var transition in transitions)
             {
-                bool decisionSucceeded = transitions[i].decision.Decide(fsm);
+                bool decisionSucceeded = transition.decision.Decide(fsm);
 
                 if (decisionSucceeded)
                 {
-                    fsm.TransitionToState(transitions[i].trueState);
+                    fsm.TransitionToState(transition.trueState);
                 }
                 else
                 {
-                    fsm.TransitionToState(transitions[i].falseState);
+                    fsm.TransitionToState(transition.falseState);
                 }
             }
         }
