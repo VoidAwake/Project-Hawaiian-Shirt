@@ -10,7 +10,7 @@ namespace Hawaiian.Game
         [SerializeField] private ScriptableFloat gameTime;
         [SerializeField] private bool startOnAwake;
         [SerializeField] private GameManager gameManager;
-        int minute, sec, msec;
+       
         private bool timerActive;
 
         private void Start()

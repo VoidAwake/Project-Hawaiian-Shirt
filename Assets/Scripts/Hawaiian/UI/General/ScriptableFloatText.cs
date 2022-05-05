@@ -14,7 +14,7 @@ namespace Hawaiian.UI.General
          int minute, sec, msec;
         private void OnValueChanged()
         {
-            text.text = String.Format(format, scriptableFloat.Value);
+            text.text = string.Format(format, scriptableFloat.Value);
         }
 
         protected override void Subscribe()
