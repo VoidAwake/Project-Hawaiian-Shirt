@@ -47,7 +47,7 @@ namespace Hawaiian.Unit
             if (testBool)
             {
                 testBool = false;
-                KnockBack(testVector, testFloat);
+                GetComponent<UnitAnimator>().UseItem(UnitAnimationState.MeleeSwing, testVector);
             }
 
             if (playerState == PlayerState.Walking)
