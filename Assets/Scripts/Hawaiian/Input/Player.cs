@@ -177,6 +177,17 @@ namespace Hawaiian.Input
                     ""isPartOfComposite"": false
                 },
                 {
+                    ""name"": """",
+                    ""id"": ""d0d94b88-3f0c-477d-82c4-e4c7dcdc618d"",
+                    ""path"": ""<Gamepad>/leftStick"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
                     ""name"": ""WASD"",
                     ""id"": ""9518770a-a6e5-484d-9439-0f67d574e2a3"",
                     ""path"": ""2DVector"",
@@ -199,9 +210,9 @@ namespace Hawaiian.Input
                     ""isPartOfComposite"": true
                 },
                 {
-                    ""name"": ""down"",
-                    ""id"": ""6d992bdf-5ce5-48f2-811b-052c63c4384c"",
-                    ""path"": ""<Keyboard>/s"",
+                    ""name"": ""left"",
+                    ""id"": ""7c7b4813-87c8-487e-a68a-f55135095f69"",
+                    ""path"": ""<Keyboard>/a"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard1"",
@@ -210,9 +221,9 @@ namespace Hawaiian.Input
                     ""isPartOfComposite"": true
                 },
                 {
-                    ""name"": ""left"",
-                    ""id"": ""7c7b4813-87c8-487e-a68a-f55135095f69"",
-                    ""path"": ""<Keyboard>/a"",
+                    ""name"": ""down"",
+                    ""id"": ""6d992bdf-5ce5-48f2-811b-052c63c4384c"",
+                    ""path"": ""<Keyboard>/s"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard1"",
@@ -296,17 +307,6 @@ namespace Hawaiian.Input
                     ""action"": ""Move"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""d0d94b88-3f0c-477d-82c4-e4c7dcdc618d"",
-                    ""path"": ""<Gamepad>/leftStick"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Gamepad"",
-                    ""action"": ""Move"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
                 },
                 {
                     ""name"": ""2D Vector"",
@@ -496,9 +496,9 @@ namespace Hawaiian.Input
                     ""isPartOfComposite"": false
                 },
                 {
-                    ""name"": ""negative"",
-                    ""id"": ""6e2ea6a2-79bb-4913-9050-2bd489e43bfb"",
-                    ""path"": ""<Keyboard>/e"",
+                    ""name"": ""positive"",
+                    ""id"": ""a2607abf-ca51-41a8-a85f-fefdb3db30e3"",
+                    ""path"": ""<Keyboard>/q"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard1"",
@@ -507,9 +507,9 @@ namespace Hawaiian.Input
                     ""isPartOfComposite"": true
                 },
                 {
-                    ""name"": ""positive"",
-                    ""id"": ""a2607abf-ca51-41a8-a85f-fefdb3db30e3"",
-                    ""path"": ""<Keyboard>/q"",
+                    ""name"": ""negative"",
+                    ""id"": ""6e2ea6a2-79bb-4913-9050-2bd489e43bfb"",
+                    ""path"": ""<Keyboard>/e"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard1"",
@@ -529,23 +529,23 @@ namespace Hawaiian.Input
                     ""isPartOfComposite"": false
                 },
                 {
-                    ""name"": ""negative"",
-                    ""id"": ""c11a4f96-413d-45f6-afef-000cb153c47b"",
-                    ""path"": ""<Gamepad>/rightShoulder"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Gamepad"",
-                    ""action"": ""InvParse"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
                     ""name"": ""positive"",
                     ""id"": ""9b8bc7b5-2435-49c0-bf1c-01f341a3da9c"",
                     ""path"": ""<Gamepad>/leftShoulder"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Gamepad;Gamepad2;Gamepad3;Gamepad4"",
+                    ""action"": ""InvParse"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""negative"",
+                    ""id"": ""c11a4f96-413d-45f6-afef-000cb153c47b"",
+                    ""path"": ""<Gamepad>/rightShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
                     ""action"": ""InvParse"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
