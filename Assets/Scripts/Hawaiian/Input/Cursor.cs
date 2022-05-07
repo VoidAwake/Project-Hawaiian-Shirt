@@ -68,12 +68,16 @@ namespace Hawaiian.Input
         {
 
             Vector3 playerInput;
-            var position = new Vector3(_player.transform.position.x, _player.transform.position.y , _player.transform.position.z);
+            var position = new Vector3(_player.transform.position.x, _player.transform.position.y + 0.5f , _player.transform.position.z);
 
             if (_input.currentControlScheme == "Gamepad")
             {
                 playerInput = _rotation;
-                transform.localPosition = playerInput * _currentRadius;
+                if (transform.parent.localScale.x < 0)
+                {
+                    playerInput = new Vector3(-playerInput.x, playerInput.y, playerInput.z);
+                }
+                transform.localPosition = playerInput * _currentRadius + Vector3.up * 0.5f;
             }
             else
             {
