@@ -134,7 +134,7 @@ MonoBehaviour:
   _cursor: {fileID: 4461786547461907839}
   _playerReference: {fileID: 5588978955059791629}
   _firePoint: {fileID: 8652883126283529586}
-  _meleeSlashRotationOffset: -65
+  _meleeSlashRotationOffset: -90
   _handHelder: {fileID: 937560079924309396}
   _animator: {fileID: 6074339650475639767}
 --- !u!120 &5706338390592453364
@@ -442,6 +442,10 @@ PrefabInstance:
       propertyPath: _meleeSlashRotationOffset
       value: -90
       objectReference: {fileID: 0}
+    - target: {fileID: 2062520255, guid: fe93fd4b04ca3d340865789a7d27cade, type: 3}
+      propertyPath: cursor
+      value: 
+      objectReference: {fileID: 7111658898038595601}
     - target: {fileID: 1165009643540554491, guid: fe93fd4b04ca3d340865789a7d27cade, type: 3}
       propertyPath: m_Bounds.m_Center.x
       value: 0.016073704
