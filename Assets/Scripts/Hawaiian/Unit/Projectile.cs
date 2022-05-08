@@ -17,6 +17,7 @@ namespace Hawaiian.Unit
         public float Speed => _speed;
         public bool CanStickOnWalls => _canStickOnWalls;
         public float Damage => _damage;
+        public Vector2 Direction { get; private set; }
 
         public void Initialise(Vector3 target)
         {
@@ -29,6 +30,8 @@ namespace Hawaiian.Unit
             _speed = speed;
             _damage = damage;
             _canStickOnWalls = canStickOnWalls;
+
+            Direction = _targetLocation - (Vector2) transform.position;
         }
         
 

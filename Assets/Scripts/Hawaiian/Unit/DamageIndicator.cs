@@ -13,7 +13,7 @@ namespace Hawaiian.Unit
 
         [SerializeField] private int _damage;
         [SerializeField] private float _speed;
-        [SerializeField]private GameEvent OnTakeDamage;
+        [SerializeField] private GameEvent OnTakeDamage;
         
         private Animator _animator;
         private bool _flag;
@@ -47,7 +47,7 @@ namespace Hawaiian.Unit
                     return;
                 
                 _flag = true;
-                col.gameObject.GetComponent<IUnit>().TakeDamage(_damage);
+                // col.gameObject.GetComponent<IUnit>().TakeDamage(_damage);
             }
         }
 

@@ -133,6 +133,8 @@ public class ItemInteractor : MonoBehaviour
         {
             instantiatedProjectile.GetComponent<Projectile>().Initialise(position, _controller.GetCurrentItem().DrawSpeed, _controller.GetCurrentItem().ItemDamage, _controller.GetCurrentItem().SticksOnWall);
             transform.parent.GetComponent<UnitAnimator>().UseItem(UnitAnimationState.Throw, _cursor.transform.position, false);
+            instantiatedProjectile.GetComponent<DealKnockback>().Initialise(2, _playerReference);
+            instantiatedProjectile.GetComponent<DropItem>().Initialise(_playerReference);
         }
 
             
@@ -171,8 +173,8 @@ public class ItemInteractor : MonoBehaviour
              
              var position = new Vector3(transform.position.x, transform.position.y + 0.5f, transform.position.z);
             // var mouse = UnityEngine.Input.mousePosition;
-            
-            
+
+            Vector2 direction;
             
              if (_playerReference.GetPlayerInput().currentControlScheme == "Gamepad")
              {
@@ -183,7 +185,7 @@ public class ItemInteractor : MonoBehaviour
                  playerInput = _rotation;
                  _lastAttackPosition = position + (Vector3)playerInput * _offset;
                  angle = Mathf.Atan2(playerInput.y, playerInput.x) * Mathf.Rad2Deg;
-            
+                 direction = playerInput;
              }
              else
              {
@@ -191,6 +193,7 @@ public class ItemInteractor : MonoBehaviour
                  Vector3 worldPosition = Camera.main.ScreenToWorldPoint(playerInput);
                  worldPosition.z = 0f; // set to zero since its a 2d game
                  var mouseDirection = (worldPosition - position).normalized;
+                 direction = mouseDirection;
                  _lastAttackPosition = position + mouseDirection * _offset;
                  Vector3 difference = Camera.main.ScreenToWorldPoint(playerInput) -position;
                  difference.Normalize();
@@ -203,6 +206,8 @@ public class ItemInteractor : MonoBehaviour
              GameObject indicator = Instantiate(_projectileReference,_lastAttackPosition,Quaternion.Euler(new Vector3(0,0,angle +_meleeSlashRotationOffset )),_firePoint);
             
              indicator.GetComponent<DamageIndicator>().Initialise(5,_attackFlag,_playerReference);
+             indicator.GetComponent<DealKnockback>().Initialise(2, _playerReference, direction);
+             indicator.GetComponent<DropItem>().Initialise(_playerReference);
              _attackFlag = !_attackFlag;
 
             #endregion
