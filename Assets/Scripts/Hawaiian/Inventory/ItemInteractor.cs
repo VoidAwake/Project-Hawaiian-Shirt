@@ -107,12 +107,15 @@ public class ItemInteractor : MonoBehaviour
     
     public void HoldAttack(InputAction.CallbackContext value)
     {
+        if(_controller.GetCurrentItem().Type == ItemType.Objective || _controller.GetCurrentItem().Type == ItemType.Other)
+        {
+            return;
+        }
         if (value.performed)
         {
             _isHoldingAttack = true;
             return;
         }
-
         
 
         var position = _cursor.transform.position;
@@ -203,6 +206,12 @@ public class ItemInteractor : MonoBehaviour
 
             #endregion
             
+        if(_controller.GetCurrentItem().Type is ItemType.Other or ItemType.Objective)
+        {
+
+            return;
+        }
+
         }
     
       public void UpdateItem()
