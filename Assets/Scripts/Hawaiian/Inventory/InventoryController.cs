@@ -14,6 +14,7 @@ namespace Hawaiian.Inventory
         [SerializeField] private GameEvent parse;
         [SerializeField] private bool addinv;
         [SerializeField] private Item item;
+        [SerializeField] private ScriptableInt size;
 
         [SerializeField] private BaseGameEvent<Inventory> addedInventory;
 
@@ -30,6 +31,7 @@ namespace Hawaiian.Inventory
         private void Awake()
         {
             _inv = ScriptableObject.CreateInstance<Inventory>();
+            _inv.SetInventory(size.Value);
             
             addedInventory.Raise(_inv);
             _player = GetComponentInParent<UnitPlayer>();
