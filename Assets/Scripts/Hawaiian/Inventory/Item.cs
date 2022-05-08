@@ -46,6 +46,9 @@ namespace Hawaiian.Inventory
         [HideInInspector] public bool CanBeHeldByEnemies;
         [HideInInspector] public float Points;
 
+        //Other Specific Stats
+        [HideInInspector] public bool IsKey;
+
         // Start is called before the first frame update
 
         public void DropItem() {}

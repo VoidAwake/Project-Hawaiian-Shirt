@@ -150,12 +150,21 @@ public class ItemInteractor : MonoBehaviour
 
             if (_controller.GetCurrentItem() == null)
                 return;
-            
-            //NEEDS TO BE A CHECK IF USING PROJECTILES TO ALLOW FOR ON HOLD ACTIONS AND IGNORE THIS
-            #region Ranged Attack
-            
-            
-            if (_controller.GetCurrentItem().Type is ItemType.Projectile or ItemType.Throwable)
+
+        if (_controller.GetCurrentItem().Type is ItemType.Other or ItemType.Objective)
+        {
+            if(_controller.GetCurrentItem().IsKey)
+            {
+                
+            }
+            return;
+        }
+
+        //NEEDS TO BE A CHECK IF USING PROJECTILES TO ALLOW FOR ON HOLD ACTIONS AND IGNORE THIS
+        #region Ranged Attack
+
+
+        if (_controller.GetCurrentItem().Type is ItemType.Projectile or ItemType.Throwable)
             {
                 HoldAttack(value);
                 return;
@@ -210,11 +219,7 @@ public class ItemInteractor : MonoBehaviour
 
             #endregion
             
-        if(_controller.GetCurrentItem().Type is ItemType.Other or ItemType.Objective)
-        {
-
-            return;
-        }
+        
 
         }
     
