@@ -20,6 +20,8 @@ namespace Hawaiian.PositionalEvents
         private List<PositionalEventListener> interactablesInRange = new();
         private List<PositionalEventListener> targets = new();
 
+        public PositionalEventToken Token => token;
+
         public List<PositionalEventListener> Targets
         {
             get => targets;
@@ -37,14 +39,7 @@ namespace Hawaiian.PositionalEvents
 
         private void Update()
         {
-            if (interactionTarget != InteractionTarget.Closest) return;
-
-            var nearest = NearestInteractable();
-                
-            if (nearest == null)
-                Targets = new List<PositionalEventListener>();
-            else
-                Targets = new List<PositionalEventListener> { nearest };
+            UpdateTargets();
         }
 
         private void OnTriggerEnter2D(Collider2D col)
@@ -82,16 +77,14 @@ namespace Hawaiian.PositionalEvents
         {
             interactablesInRange.Add(listener);
 
-            if (interactionTarget == InteractionTarget.All)
-                Targets = interactablesInRange;
+            UpdateTargets();
         }
 
         private void UnregisterListener(PositionalEventListener listener)
         {
             interactablesInRange.Remove(listener);
 
-            if (interactionTarget == InteractionTarget.All)
-                Targets = interactablesInRange;
+            UpdateTargets();
         }
 
         [ContextMenu("Raise")]
@@ -108,6 +101,26 @@ namespace Hawaiian.PositionalEvents
             if (!Targets.Contains(target)) throw new ArgumentException($"Target {target} is not in {nameof(Targets)}");
             
             target.response.Invoke();
+        }
+
+        private void UpdateTargets()
+        {
+            switch (interactionTarget)
+            {
+                case InteractionTarget.All:
+                    Targets = interactablesInRange;
+                    break;
+                case InteractionTarget.Closest:
+                    var nearest = NearestInteractable();
+                        
+                    if (nearest == null)
+                        Targets = new List<PositionalEventListener>();
+                    else
+                        Targets = new List<PositionalEventListener> { nearest };
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
         }
     }
 }

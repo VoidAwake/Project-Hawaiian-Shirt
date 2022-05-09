@@ -1,8 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class Action : ScriptableObject
+namespace Hawaiian.AI
 {
-    public abstract void Act(EnemyFSM fsm);
+    public abstract class Action : ScriptableObject
+    {
+        public abstract void Act(EnemyFSM fsm);
+    }
 }

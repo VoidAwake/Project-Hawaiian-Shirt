@@ -111,6 +111,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player Unit Variant
       objectReference: {fileID: 0}
+    - target: {fileID: 6432945937749252037, guid: cbb41f2b105532c4a878d6f54f9e31bd, type: 3}
+      propertyPath: m_DefaultControlScheme
+      value: Keyboard1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cbb41f2b105532c4a878d6f54f9e31bd, type: 3}
 --- !u!1 &6194350286644367876 stripped
@@ -118,24 +122,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 6722766841112063685, guid: cbb41f2b105532c4a878d6f54f9e31bd, type: 3}
   m_PrefabInstance: {fileID: 629043893052423361}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &3998436089518286197
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6194350286644367876}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 759602a1436df6c4787ac3b2960c1193, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _renderer: {fileID: 0}
-  _cursor: {fileID: 0}
-  _playerReference: {fileID: 0}
-  _firePoint: {fileID: 0}
-  _meleeSlashRotationOffset: 0
-  _handHelder: {fileID: 0}
 --- !u!120 &1199086453224074676
 LineRenderer:
   m_ObjectHideFlags: 0
@@ -235,3 +221,22 @@ LineRenderer:
     generateLightingData: 0
   m_UseWorldSpace: 1
   m_Loop: 0
+--- !u!114 &3998436089518286197
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6194350286644367876}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 759602a1436df6c4787ac3b2960c1193, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _renderer: {fileID: 0}
+  _cursor: {fileID: 0}
+  _playerReference: {fileID: 0}
+  _firePoint: {fileID: 0}
+  _meleeSlashRotationOffset: 0
+  _handHelder: {fileID: 0}
+  _animator: {fileID: 0}

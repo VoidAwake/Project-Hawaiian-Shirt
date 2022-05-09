@@ -198,11 +198,12 @@ public class ItemInteractor : MonoBehaviour
         if (_controller.GetCurrentItem().Type == ItemType.Throwable)
         {
             List<Vector2> positions = new List<Vector2>();
-                
+
             for (int i = 0; i < _renderer.positionCount; i++)
                 positions.Add((Vector2)_renderer.GetPosition(i));
                 
             _projectileInstance.GetComponent<Throwable>().Initialise(positions.ToArray(),_controller.GetCurrentItem().ItemSprite,_controller.GetCurrentItem().DrawSpeed,_controller.GetCurrentItem().ItemDamage,_controller.GetCurrentItem().SticksOnWall);
+            transform.parent.GetComponent<UnitAnimator>().UseItem(UnitAnimationState.Throw, _cursor.transform.position, false);
         }
         else
         {
@@ -217,6 +218,7 @@ public class ItemInteractor : MonoBehaviour
                 }
             }
         }
+            transform.parent.GetComponent<UnitAnimator>().UseItem(UnitAnimationState.Throw, _cursor.transform.position, false);
 
         if (_lineRenderers.Count > 0)
         {
@@ -293,8 +295,10 @@ public class ItemInteractor : MonoBehaviour
                 angle = Mathf.Atan2(difference.y, difference.x) * Mathf.Rad2Deg;
             }
              
-            _firePoint.position = _lastAttackPosition;
-            GameObject indicator = Instantiate(_projectileReference,_lastAttackPosition,Quaternion.Euler(new Vector3(0,0,angle +_meleeSlashRotationOffset )),_firePoint);
+             transform.parent.GetComponent<UnitAnimator>().UseItem(UnitAnimationState.MeleeSwing, new Vector2(Mathf.Sin(angle * Mathf.Deg2Rad + Mathf.PI / 2), -Mathf.Cos(angle * Mathf.Deg2Rad + Mathf.PI / 2)), _attackFlag);
+             
+             _firePoint.position = _lastAttackPosition;
+             GameObject indicator = Instantiate(_projectileReference,_lastAttackPosition,Quaternion.Euler(new Vector3(0,0,angle +_meleeSlashRotationOffset )),_firePoint);
             
             indicator.GetComponent<DamageIndicator>().Initialise(5,_attackFlag,_playerReference);
             _attackFlag = !_attackFlag;
