@@ -12,6 +12,7 @@ namespace Hawaiian.Inventory
         Throwable,
         Objective,
         Other,
+        Trap
     }
     
     
@@ -49,6 +50,12 @@ namespace Hawaiian.Inventory
         [HideInInspector] public bool IsMainObjective;
         [HideInInspector] public bool CanBeHeldByEnemies;
         [HideInInspector] public float Points;
+        
+        //Trap
+        [HideInInspector] public int PlacementRadius;
+        [HideInInspector] public Sprite PlacementIcon;
+        [HideInInspector] public GameObject TrapInstance;
+
 
         // Start is called before the first frame update
 

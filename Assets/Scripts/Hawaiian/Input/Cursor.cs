@@ -5,6 +5,14 @@ using UnityEngine.InputSystem;
 
 namespace Hawaiian.Input
 {
+    
+    public enum CursorMode
+    {
+        Static,
+        Free
+    }
+    
+    
     public class Cursor : MonoBehaviour
     {
         
@@ -34,9 +42,9 @@ namespace Hawaiian.Input
             }
         }
 
-        private Vector3 _mousePosition;
+        private Vector3 _keyboardPosition;
 
-        public Vector3 GetMousePosition() => _mousePosition;
+      //  public Vector3 GetMousePosition() => _mousePosition;
 
         public float MaxRadius
         {
@@ -50,6 +58,17 @@ namespace Hawaiian.Input
             Debug.Log("test");
         }
 
+        public void OnMoveCursor(InputValue value)
+        {
+            var tempPosition = _keyboardPosition;
+            _keyboardPosition = value.Get<Vector2>();
+
+            if (_keyboardPosition == Vector3.zero)
+            {
+                _keyboardPosition = tempPosition;
+            }
+            
+        }
         private void Awake()
         {
             action = new PlayerAction();
@@ -81,16 +100,17 @@ namespace Hawaiian.Input
             }
             else
             {
-                playerInput =  UnityEngine.Input.mousePosition;
-                
-                Vector3 worldPosition = Camera.main.ScreenToWorldPoint(playerInput);
-                // Debug.Log(worldPosition);
-                worldPosition.z = 0f; // set to zero since its a 2d game
-                var mouseDirection = (worldPosition - position).normalized;
-                _mousePosition = position + mouseDirection * _currentRadius;
-                // Debug.Log("current radius: " + _currentRadius);
-                transform.position = _mousePosition;
-                
+                transform.localPosition = _keyboardPosition * _currentRadius;
+                // playerInput =  UnityEngine.Input.mousePosition;
+                //
+                // Vector3 worldPosition = Camera.main.ScreenToWorldPoint(playerInput);
+                // // Debug.Log(worldPosition);
+                // worldPosition.z = 0f; // set to zero since its a 2d game
+                // var mouseDirection = (worldPosition - position).normalized;
+                // _mousePosition = position + mouseDirection * _currentRadius;
+                // // Debug.Log("current radius: " + _currentRadius);
+                // transform.position = _mousePosition;
+
                 // Debug.Log("current transform" + transform.position);
             }
 

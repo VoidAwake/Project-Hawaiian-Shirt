@@ -139,6 +139,10 @@ public class ItemInteractor : MonoBehaviour
     //Handles when the player holds the attack for throwables and projectiles
     public void HoldAttack(InputAction.CallbackContext value)
     {
+        // if (_controller.GetCurrentItem().Type != ItemType.Projectile ||
+        //     _controller.GetCurrentItem().Type != ItemType.Throwable)
+        //     return;
+        //
         if (_projectileInstance != null && _controller.GetCurrentItem().ReturnsToPlayer) //Guard statement for returnable projectiles to not allow for them to attack while the projectile is still active
             return; 
         
@@ -248,6 +252,12 @@ public class ItemInteractor : MonoBehaviour
             }
             
             
+            if (_controller.GetCurrentItem().Type == ItemType.Trap)
+            {
+                BeginTrapHighlighting();
+                return;
+            }
+            
             #endregion
 
             #region MeleeAttack
@@ -294,6 +304,23 @@ public class ItemInteractor : MonoBehaviour
         }
       
       #endregion
+
+      private void BeginTrapHighlighting()
+      {
+
+          _cursor.CurrentRad = _controller.GetCurrentItem().PlacementRadius;
+
+          GameObject instanceCircle = new GameObject();
+          SpriteRenderer renderer = instanceCircle.AddComponent(typeof(SpriteRenderer)) as SpriteRenderer;
+          renderer.sprite = Resources.Load<Sprite>("Circle");
+          var o = renderer.gameObject;
+          o.transform.parent = _playerReference.transform;
+          o.transform.localPosition = Vector3.zero;
+          renderer.gameObject.transform.localScale = new Vector3(_controller.GetCurrentItem().PlacementRadius,
+              _controller.GetCurrentItem().PlacementRadius, 0);
+          renderer.color = new Color32(255, 109, 114, 170);
+          renderer.sortingOrder = 1;
+      }
       
       void UpdateHoldAttackCursor()
       {

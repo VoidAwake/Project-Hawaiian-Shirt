@@ -3,6 +3,7 @@ using Codice.Client.BaseCommands;
 using Hawaiian.Inventory;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.U2D.Animation;
 
 #if UNITY_EDITOR
 
@@ -29,6 +30,9 @@ namespace Hawaiian.Editor
         SerializedProperty returnToPlayer;
         SerializedProperty multishot;
          SerializedProperty multishotAmount;
+         SerializedProperty trapPlacementRadius;
+         SerializedProperty trapPlacementIcon;
+         SerializedProperty trapInstance;
 
 
         private void OnEnable()
@@ -50,12 +54,16 @@ namespace Hawaiian.Editor
             returnToPlayer = serializedObject.FindProperty("ReturnsToPlayer");
             multishot = serializedObject.FindProperty("IsMultiShot");
             multishotAmount = serializedObject.FindProperty("ProjectileAmount");
+            trapPlacementIcon = serializedObject.FindProperty("PlacementIcon");
+            trapPlacementRadius = serializedObject.FindProperty("PlacementRadius");
+            trapInstance = serializedObject.FindProperty("TrapInstance");
+
         }
 
         public override void OnInspectorGUI()
         {
             base.OnInspectorGUI();
-            
+      
             Item _item = (Item) target;
             
             EditorGUILayout.Space();
@@ -75,6 +83,9 @@ namespace Hawaiian.Editor
                     break;
                 case ItemType.Objective:
                     ShowObjectiveComponent();
+                    break;
+                case ItemType.Trap:
+                    ShowTrapComponents();
                     break;
                 case ItemType.Other:
                     break;
@@ -98,6 +109,21 @@ namespace Hawaiian.Editor
             EditorGUILayout.Space();
             EditorGUILayout.PropertyField(droppedItemBase, new GUIContent("Dropped Item Reference"));
             EditorGUILayout.Space();
+        }
+
+        private void ShowTrapComponents()
+        {
+            GUILayout.Label("Trap Stats", EditorStyles.boldLabel);
+            EditorGUILayout.Space();
+            EditorGUILayout.PropertyField(itemDamage, new GUIContent("Damage"));
+            EditorGUILayout.IntSlider(trapPlacementRadius, 0, 30, new GUIContent("Placement Radius", "Refers to how far the placement time "));
+            EditorGUILayout.Space();
+            GUILayout.Label("Trap Components", EditorStyles.boldLabel);
+            EditorGUILayout.Space();
+            EditorGUILayout.PropertyField(trapPlacementIcon, new GUIContent("Placement Icon"));
+            EditorGUILayout.PropertyField(trapInstance, new GUIContent("Trap Instance "));
+
+            
         }
 
         private void ShowMeleeComponents()
