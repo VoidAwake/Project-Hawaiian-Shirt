@@ -19,7 +19,7 @@ namespace Hawaiian.PositionalEvents
             this.playerInput = playerInput;
             this.actionName = actionName;
             
-            action = inputActions.FindAction(actionName, true);
+            action = inputActions.FindAction(actionName, false);
 
             var inputBinding = action.bindings.First(a => a.groups.Contains(playerInput.currentControlScheme));
             var controlPath = inputBinding.path;

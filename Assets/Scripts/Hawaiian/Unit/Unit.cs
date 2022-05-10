@@ -61,6 +61,7 @@ namespace Hawaiian.Unit
             {
                 // Set velocity based on knockback curve
                 velocity = knockBackForce * 2 * (remainingTripTime / tripTime);
+                Debug.Log("Knockback!");
 
                 // Update timer, and stand back up if trip time has expired
                 remainingTripTime -= Time.deltaTime;
