@@ -115,7 +115,12 @@ TextureImporter:
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-      physicsShape: []
+      physicsShape:
+      - - {x: 0, y: 16}
+        - {x: 0, y: -3}
+        - {x: 0, y: -16}
+        - {x: 16, y: -16}
+        - {x: 16, y: 16}
       tessellationDetail: 0
       bones: []
       spriteID: 1be94fd06c56a304cbdc702e265ba94d
@@ -199,7 +204,11 @@ TextureImporter:
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-      physicsShape: []
+      physicsShape:
+      - - {x: -15, y: -16}
+        - {x: -15, y: 16}
+        - {x: 0, y: 16}
+        - {x: 0, y: -16}
       tessellationDetail: 0
       bones: []
       spriteID: 54b5b2c90380b6f43ac2b7b108ae34f9
@@ -721,7 +730,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 64
-        y: 1
+        y: 0
         width: 32
         height: 32
       alignment: 0
@@ -787,6 +796,35 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
+    - serializedVersion: 2
+      name: castle_tiles_32
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 160
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape:
+      - - {x: -64, y: -64}
+        - {x: -64, y: -33}
+        - {x: -48, y: -33}
+        - {x: -48, y: -64}
+      - - {x: 48, y: -64}
+        - {x: 48, y: -32}
+        - {x: 64, y: -32}
+        - {x: 64, y: -64}
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8cc4ac08325208d479a38a1636f7a4a4
+      internalID: -1614584101
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
@@ -807,6 +845,7 @@ TextureImporter:
       castle_tiles_17: 1142330229
       castle_tiles_26: 631177340
       castle_tiles_19: 2126098770
+      castle_tiles_32: -1614584101
       castle_tiles_8: 1644923130
       castle_tiles_5: -1148150289
       castle_tiles_2: -1619570829

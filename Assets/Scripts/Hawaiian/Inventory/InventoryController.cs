@@ -2,6 +2,7 @@ using System;
 using Hawaiian.PositionalEvents;
 using Hawaiian.Unit;
 using Hawaiian.Utilities;
+using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -19,6 +20,8 @@ namespace Hawaiian.Inventory
         [SerializeField] private BaseGameEvent<Inventory> addedInventory;
 
         [SerializeField] private SpriteRenderer hand;
+
+        [SerializeField] private GameObject droppedItem;
         
         //[SerializeField] private int invSize;a
         
@@ -145,6 +148,22 @@ namespace Hawaiian.Inventory
             
             parse.Raise();
             
+        }
+
+        public void OnDrop()
+        {
+            if (_inv.inv[_inv.invPosition] != null)
+            {
+                GameObject dp = Instantiate(droppedItem, transform.position, quaternion.identity);
+                dp.GetComponent<DroppedItem>().item = _inv.inv[_inv.invPosition];
+                dp.GetComponent<SpriteRenderer>().sprite = _inv.inv[_inv.invPosition].DroppedItemSprite;
+                _inv.DropItem();
+                hand.sprite = null;
+            }
+            else
+            {
+                Debug.Log("THIS BITCH EMPTY...............................YEET");
+            }
         }
 
         public void UseItem()

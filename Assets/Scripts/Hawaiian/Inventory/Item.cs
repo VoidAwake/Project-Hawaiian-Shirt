@@ -57,6 +57,10 @@ namespace Hawaiian.Inventory
         [HideInInspector] public GameObject TrapInstance;
 
 
+        //Other Specific Stats
+        [HideInInspector] public bool IsKey;
+
+
         // Start is called before the first frame update
 
         public void DropItem() {}

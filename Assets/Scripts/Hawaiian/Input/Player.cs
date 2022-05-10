@@ -127,6 +127,15 @@ namespace Hawaiian.Input
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Drop"",
+                    ""type"": ""Button"",
+                    ""id"": ""3b38de02-c033-4c49-a115-ce44b0c2fd04"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -734,6 +743,17 @@ namespace Hawaiian.Input
                     ""action"": ""MoveCursor"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b759c435-d0ba-4448-bd1c-5815f0bd9761"",
+                    ""path"": ""<Keyboard>/z"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Drop"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -1104,6 +1124,7 @@ namespace Hawaiian.Input
             m_Player_PickUp = m_Player.FindAction("PickUp", throwIfNotFound: true);
             m_Player_Parse = m_Player.FindAction("Parse", throwIfNotFound: true);
             m_Player_MoveCursor = m_Player.FindAction("MoveCursor", throwIfNotFound: true);
+            m_Player_Drop = m_Player.FindAction("Drop", throwIfNotFound: true);
             // Lobby Player
             m_LobbyPlayer = asset.FindActionMap("Lobby Player", throwIfNotFound: true);
             m_LobbyPlayer_Ready = m_LobbyPlayer.FindAction("Ready", throwIfNotFound: true);
@@ -1181,6 +1202,7 @@ namespace Hawaiian.Input
         private readonly InputAction m_Player_PickUp;
         private readonly InputAction m_Player_Parse;
         private readonly InputAction m_Player_MoveCursor;
+        private readonly InputAction m_Player_Drop;
         public struct PlayerActions
         {
             private @PlayerAction m_Wrapper;
@@ -1196,6 +1218,7 @@ namespace Hawaiian.Input
             public InputAction @PickUp => m_Wrapper.m_Player_PickUp;
             public InputAction @Parse => m_Wrapper.m_Player_Parse;
             public InputAction @MoveCursor => m_Wrapper.m_Player_MoveCursor;
+            public InputAction @Drop => m_Wrapper.m_Player_Drop;
             public InputActionMap Get() { return m_Wrapper.m_Player; }
             public void Enable() { Get().Enable(); }
             public void Disable() { Get().Disable(); }
@@ -1238,6 +1261,9 @@ namespace Hawaiian.Input
                     @MoveCursor.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMoveCursor;
                     @MoveCursor.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMoveCursor;
                     @MoveCursor.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMoveCursor;
+                    @Drop.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDrop;
+                    @Drop.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDrop;
+                    @Drop.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDrop;
                 }
                 m_Wrapper.m_PlayerActionsCallbackInterface = instance;
                 if (instance != null)
@@ -1275,6 +1301,9 @@ namespace Hawaiian.Input
                     @MoveCursor.started += instance.OnMoveCursor;
                     @MoveCursor.performed += instance.OnMoveCursor;
                     @MoveCursor.canceled += instance.OnMoveCursor;
+                    @Drop.started += instance.OnDrop;
+                    @Drop.performed += instance.OnDrop;
+                    @Drop.canceled += instance.OnDrop;
                 }
             }
         }
@@ -1429,6 +1458,7 @@ namespace Hawaiian.Input
             void OnPickUp(InputAction.CallbackContext context);
             void OnParse(InputAction.CallbackContext context);
             void OnMoveCursor(InputAction.CallbackContext context);
+            void OnDrop(InputAction.CallbackContext context);
         }
         public interface ILobbyPlayerActions
         {

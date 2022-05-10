@@ -33,6 +33,8 @@ namespace Hawaiian.Editor
          SerializedProperty trapPlacementRadius;
          SerializedProperty trapPlacementIcon;
          SerializedProperty trapInstance;
+        SerializedProperty isKey;
+        SerializedProperty otherInstance;
 
 
         private void OnEnable()
@@ -51,6 +53,7 @@ namespace Hawaiian.Editor
             points = serializedObject.FindProperty("Points");
             droppedItemBase = serializedObject.FindProperty("DroppedItemBase");
             projectileInstance = serializedObject.FindProperty("ProjectileInstance");
+            isKey = serializedObject.FindProperty("IsKey");
             returnToPlayer = serializedObject.FindProperty("ReturnsToPlayer");
             multishot = serializedObject.FindProperty("IsMultiShot");
             multishotAmount = serializedObject.FindProperty("ProjectileAmount");
@@ -88,6 +91,7 @@ namespace Hawaiian.Editor
                     ShowTrapComponents();
                     break;
                 case ItemType.Other:
+                    ShowOtherComponent();
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
@@ -182,6 +186,13 @@ namespace Hawaiian.Editor
             EditorGUILayout.PropertyField(isMainObjective, new GUIContent("Is Main Objective"));
             EditorGUILayout.PropertyField(canBeHeldByEnemies, new GUIContent("Can Be Held By Enemies"));
         }
+
+        private void ShowOtherComponent()
+        {
+            GUILayout.Label("Other Stats", EditorStyles.boldLabel);
+            EditorGUILayout.PropertyField(isKey, new GUIContent("Key"));
+        }
+
     }
 }
 
