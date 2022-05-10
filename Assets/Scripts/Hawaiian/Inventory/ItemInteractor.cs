@@ -8,7 +8,6 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using Hawaiian.Input;
 
-
 [RequireComponent(typeof(InventoryController))]
 public class ItemInteractor : MonoBehaviour
 {
@@ -63,11 +62,7 @@ public class ItemInteractor : MonoBehaviour
         {
             if (_controller.GetCurrentItem().Type == ItemType.Projectile)
             {
-                Vector3[] positions = new[]
-                {
-                    transform.position,
-                    _cursor.transform.position
-                };
+                Vector3[] positions = new[] {transform.position, _cursor.transform.position};
 
                 _renderer.positionCount = 2;
                 _renderer.SetPositions(positions);
@@ -85,8 +80,7 @@ public class ItemInteractor : MonoBehaviour
 
                             float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
 
-                            if (angle < 0)
-                                angle = 360 - angle * -1;
+                            if (angle < 0) angle = 360 - angle * -1;
 
                             angle += 20f * (i + 1);
 
@@ -96,7 +90,7 @@ public class ItemInteractor : MonoBehaviour
                             var y = Mathf.Sin(radians);
                             var targetPos = transform.position + new Vector3(x, y, 0f) * _cursor.CurrentRad;
 
-                            Vector3[] otherPositions = new[] { targetPos, _playerReference.transform.position, };
+                            Vector3[] otherPositions = new[] {targetPos, _playerReference.transform.position,};
 
                             _multiShotTargets[i] = targetPos;
                             lr.positionCount = 2;
@@ -133,6 +127,11 @@ public class ItemInteractor : MonoBehaviour
         }
 
         _isJoystickNeutral = false;
+    }
+
+    public void OnMoveCursor(InputValue value)
+    {
+        _rotation = value.Get<Vector2>();
     }
 
     //Handles when the player holds the attack for throwables and projectiles
@@ -175,9 +174,9 @@ public class ItemInteractor : MonoBehaviour
                     Gradient gradient = new Gradient();
                     gradient.SetKeys(
                         new GradientColorKey[]
-                            { new GradientColorKey(Color.red, 0.0f), new GradientColorKey(Color.red, 1.0f) },
-                        new GradientAlphaKey[] { new GradientAlphaKey(1, 0.0f), new GradientAlphaKey(1, 1.0f) }
-                    );
+                        {
+                            new GradientColorKey(Color.red, 0.0f), new GradientColorKey(Color.red, 1.0f)
+                        }, new GradientAlphaKey[] {new GradientAlphaKey(1, 0.0f), new GradientAlphaKey(1, 1.0f)});
 
                     renderer.colorGradient = gradient;
                 }
@@ -204,42 +203,43 @@ public class ItemInteractor : MonoBehaviour
         {
             List<Vector2> positions = new List<Vector2>();
 
-            for (int i = 0; i < _renderer.positionCount; i++)
-                positions.Add((Vector2)_renderer.GetPosition(i));
+            for (int i = 0; i < _renderer.positionCount; i++) positions.Add((Vector2) _renderer.GetPosition(i));
 
-            _projectileInstance.GetComponent<Throwable>().Initialise(positions.ToArray(),
-                _controller.GetCurrentItem().ItemSprite, _controller.GetCurrentItem().DrawSpeed,
-                _controller.GetCurrentItem().ItemDamage, _controller.GetCurrentItem().SticksOnWall);
+            _projectileInstance.GetComponent<Throwable>()
+                .Initialise(positions.ToArray(), _controller.GetCurrentItem().ItemSprite,
+                    _controller.GetCurrentItem().DrawSpeed, _controller.GetCurrentItem().ItemDamage,
+                    _controller.GetCurrentItem().SticksOnWall);
             transform.parent.GetComponent<UnitAnimator>()
                 .UseItem(UnitAnimationState.Throw, _cursor.transform.position, false);
         }
         else
         {
-            _projectileInstance.GetComponent<Projectile>().Initialise(_playerReference, position,
-                _controller.GetCurrentItem().DrawSpeed, _controller.GetCurrentItem().ItemDamage,
-                _controller.GetCurrentItem().SticksOnWall, _controller.GetCurrentItem().ReturnsToPlayer);
+            _projectileInstance.GetComponent<Projectile>()
+                .Initialise(_playerReference, position, _controller.GetCurrentItem().DrawSpeed,
+                    _controller.GetCurrentItem().ItemDamage, _controller.GetCurrentItem().SticksOnWall,
+                    _controller.GetCurrentItem().ReturnsToPlayer);
 
             if (_controller.GetCurrentItem().Type is ItemType.Projectile && _controller.GetCurrentItem().IsMultiShot)
             {
                 for (var i = 0; i < projectiles.Count; i++)
                 {
                     GameObject projectile = projectiles[i];
-                    projectile.GetComponent<Projectile>().Initialise(_playerReference, _multiShotTargets[i],
-                        _controller.GetCurrentItem().DrawSpeed, _controller.GetCurrentItem().ItemDamage,
-                        _controller.GetCurrentItem().SticksOnWall, _controller.GetCurrentItem().ReturnsToPlayer);
-                    
+                    projectile.GetComponent<Projectile>()
+                        .Initialise(_playerReference, _multiShotTargets[i], _controller.GetCurrentItem().DrawSpeed,
+                            _controller.GetCurrentItem().ItemDamage, _controller.GetCurrentItem().SticksOnWall,
+                            _controller.GetCurrentItem().ReturnsToPlayer);
+
                     projectile.GetComponent<DealKnockback>().Initialise(2, _playerReference);
                     projectile.GetComponent<DropItem>().Initialise(_playerReference);
                 }
             }
-            
+
             _projectileInstance.GetComponent<DealKnockback>().Initialise(2, _playerReference);
             _projectileInstance.GetComponent<DropItem>().Initialise(_playerReference);
         }
 
         transform.parent.GetComponent<UnitAnimator>()
             .UseItem(UnitAnimationState.Throw, _cursor.transform.position, false);
-
 
         if (_lineRenderers.Count > 0)
         {
@@ -260,8 +260,7 @@ public class ItemInteractor : MonoBehaviour
     //*MAIN ITEM INTERACTION FUNCTION* Handles the initial processing of item interactions
     public void StartAttack(InputAction.CallbackContext value)
     {
-        if (_controller.GetCurrentItem() == null)
-            return;
+        if (_controller.GetCurrentItem() == null) return;
 
         if (_controller.GetCurrentItem().Type is ItemType.Other or ItemType.Objective)
         {
@@ -282,7 +281,6 @@ public class ItemInteractor : MonoBehaviour
             return;
         }
 
-
         if (_controller.GetCurrentItem().Type == ItemType.Trap)
         {
             BeginTrapHighlighting();
@@ -293,8 +291,7 @@ public class ItemInteractor : MonoBehaviour
 
         #region MeleeAttack
 
-        if (value.performed)
-            return;
+        if (value.performed) return;
 
         Vector3 playerInput;
         float angle;
@@ -306,30 +303,18 @@ public class ItemInteractor : MonoBehaviour
 
         if (_playerReference.GetPlayerInput().currentControlScheme == "Gamepad")
         {
-            if (_isJoystickNeutral)
-                _rotation = _animator.IsLookingLeft ? Vector2.left : Vector2.right;
-
-            playerInput = _rotation;
-            _lastAttackPosition = position + (Vector3)playerInput * _offset;
-            angle = Mathf.Atan2(playerInput.y, playerInput.x) * Mathf.Rad2Deg;
-            direction = playerInput;
-        }
-        else
-        {
-            playerInput = UnityEngine.Input.mousePosition;
-            Vector3 worldPosition = Camera.main.ScreenToWorldPoint(playerInput);
-            worldPosition.z = 0f; // set to zero since its a 2d game
-            var mouseDirection = (worldPosition - position).normalized;
-            direction = mouseDirection;
-            _lastAttackPosition = position + mouseDirection * _offset;
-            Vector3 difference = Camera.main.ScreenToWorldPoint(playerInput) - position;
-            difference.Normalize();
-            angle = Mathf.Atan2(difference.y, difference.x) * Mathf.Rad2Deg;
+            if (_isJoystickNeutral) _rotation = _animator.IsLookingLeft ? Vector2.left : Vector2.right;
         }
 
-        transform.parent.GetComponent<UnitAnimator>().UseItem(UnitAnimationState.MeleeSwing,
-            new Vector2(Mathf.Sin(angle * Mathf.Deg2Rad + Mathf.PI / 2),
-                -Mathf.Cos(angle * Mathf.Deg2Rad + Mathf.PI / 2)), _attackFlag);
+        playerInput = _rotation;
+        _lastAttackPosition = position + (Vector3) playerInput * _offset;
+        angle = Mathf.Atan2(playerInput.y, playerInput.x) * Mathf.Rad2Deg;
+        direction = playerInput;
+
+        transform.parent.GetComponent<UnitAnimator>()
+            .UseItem(UnitAnimationState.MeleeSwing,
+                new Vector2(Mathf.Sin(angle * Mathf.Deg2Rad + Mathf.PI / 2),
+                    -Mathf.Cos(angle * Mathf.Deg2Rad + Mathf.PI / 2)), _attackFlag);
 
         _firePoint.position = _lastAttackPosition;
         GameObject indicator = Instantiate(_projectileReference, _lastAttackPosition,
@@ -361,10 +346,8 @@ public class ItemInteractor : MonoBehaviour
         renderer.sortingOrder = 1;
     }
 
-    void UpdateHoldAttackCursor()
-    {
-        _cursor.CurrentRad += _currentHoldTime / 2;
-    }
+    void UpdateHoldAttackCursor() => _cursor.CurrentRad += _currentHoldTime / 2;
+    
 
     void CancelRotation()
     {
@@ -372,12 +355,9 @@ public class ItemInteractor : MonoBehaviour
         _isJoystickNeutral = true;
     }
 
-
     public void UpdateItem()
     {
-        if (_controller.GetCurrentItem() == null)
-            return;
-
+        if (_controller.GetCurrentItem() == null) return;
 
         _projectileReference = _controller.GetCurrentItem().ProjectileInstance;
         _handHelder.sprite = _controller.GetCurrentItem().ItemSprite;
