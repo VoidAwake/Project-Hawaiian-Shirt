@@ -5,7 +5,7 @@ namespace Hawaiian.UI.Game
 {
     public class RestartButton : Button<GameDialogue>
     {
-        protected override void OnClick()
+        public override void OnClick()
         {
             base.OnClick();
 
