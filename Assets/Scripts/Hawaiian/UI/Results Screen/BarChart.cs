@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Hawaiian.Unit;
 using UI.Core;
 using UnityEngine;
 using UnityEngine.Events;
@@ -8,12 +9,11 @@ namespace Hawaiian.UI.Results_Screen
 {
     public class BarChart : DialogueComponent<ResultsScreenDialogue>
     {
-        // TODO: Make private
-        [SerializeField] private List<PlayerBar> bars;
         [SerializeField] private GameObject playerBarPrefab;
 
         public UnityEvent animationCompleted = new UnityEvent();
 
+        private readonly List<PlayerBar> bars = new List<PlayerBar>();
         private int currentBarIndex;
         
         protected override void Subscribe() { }
@@ -59,7 +59,7 @@ namespace Hawaiian.UI.Results_Screen
             }
         }
 
-        private void CreatePlayerBar()
+        private void CreatePlayerBar(PlayerData player)
         {
             var playerBarObject = Instantiate(playerBarPrefab, transform);
 
@@ -67,7 +67,23 @@ namespace Hawaiian.UI.Results_Screen
 
             if (playerBar == null) throw new Exception($"Player Bar prefab does not have a {nameof(PlayerBar)} component.");
 
+            playerBar.Initialise(player);
+
             bars.Add(playerBar);
+        }
+
+        public void Initialise(PlayersData playersData)
+        {
+            // TODO: Copies reference, is this a problem?
+            var sortedPlayers = playersData.players;
+            
+            // TODO: Won't work for some float scores
+            sortedPlayers.Sort((a, b) => Mathf.CeilToInt(a.score - b.score));
+            
+            foreach (var player in sortedPlayers)
+            {
+                CreatePlayerBar(player);
+            }
         }
     }
 }

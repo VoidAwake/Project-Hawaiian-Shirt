@@ -1,5 +1,5 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
+using Hawaiian.Unit;
 using UI.Core;
 using UnityEngine;
 
@@ -10,9 +10,13 @@ namespace Hawaiian.UI.Results_Screen
         [SerializeField] private BarChart barChart;
         [SerializeField] private Animator animator;
         [SerializeField] private float startDelayDuration;
+        // TODO: Pull this from PlayerPrefs
+        [SerializeField] private PlayersData playersData;
 
         private void Start()
         {
+            barChart.Initialise(playersData);
+            
             StartCoroutine(Animate());
         }
 
@@ -26,7 +30,7 @@ namespace Hawaiian.UI.Results_Screen
         {
             yield return new WaitForSeconds(startDelayDuration);
             
-            barChart.animationCompleted.AddListener((() => animator.SetTrigger("ShowButtons")));
+            barChart.animationCompleted.AddListener(() => animator.SetTrigger("ShowButtons"));
             
             barChart.AnimateBars();
         }

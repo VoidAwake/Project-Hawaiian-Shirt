@@ -1,8 +1,8 @@
-﻿using System;
-using System.Collections;
+﻿using Hawaiian.Unit;
 using UI.Core;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.UI;
 
 namespace Hawaiian.UI.Results_Screen
 {
@@ -47,6 +47,13 @@ namespace Hawaiian.UI.Results_Screen
         public void StartAnimation()
         {
             animator.SetTrigger("ShowBar");
+        }
+
+        public void Initialise(PlayerData player)
+        {
+            maxHeight = player.score * 10;
+            bar.GetComponent<Image>().color = player.color;
+            playerImage.GetComponent<Image>().sprite = player.sprite;
         }
     }
 }
