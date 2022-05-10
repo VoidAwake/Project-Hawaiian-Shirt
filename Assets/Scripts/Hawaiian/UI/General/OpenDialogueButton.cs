@@ -7,7 +7,7 @@ namespace Hawaiian.UI.General
     {
         [SerializeField] private GameObject dialoguePrefab;
 
-        protected override void OnClick()
+        public override void OnClick()
         {
             base.OnClick();
             

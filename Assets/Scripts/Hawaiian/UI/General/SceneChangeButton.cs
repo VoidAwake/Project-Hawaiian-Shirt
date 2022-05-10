@@ -8,8 +8,8 @@ namespace Hawaiian.UI.General
     {
         // TODO: Replace with scene reference
         [SerializeField] private int buildIndex;
-        
-        protected override void OnClick()
+
+        public override void OnClick()
         {
             base.OnClick();
             

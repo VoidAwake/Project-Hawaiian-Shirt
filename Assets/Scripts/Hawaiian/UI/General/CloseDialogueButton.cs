@@ -4,7 +4,7 @@ namespace Hawaiian.UI.General
 {
     public class CloseDialogueButton : Button<Dialogue>
     {
-        protected override void OnClick()
+        public override void OnClick()
         {
             base.OnClick();
             
