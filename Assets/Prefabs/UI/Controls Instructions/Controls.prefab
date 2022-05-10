@@ -1225,6 +1225,10 @@ PrefabInstance:
       value: Move
       objectReference: {fileID: 0}
     - target: {fileID: 6576780411933169898, guid: f6d2e8e760200b94e91dee8e59416e02, type: 3}
+      propertyPath: intialiseOnAwake
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6576780411933169898, guid: f6d2e8e760200b94e91dee8e59416e02, type: 3}
       propertyPath: defaultControlScheme
       value: Gamepad
       objectReference: {fileID: 0}
@@ -1335,6 +1339,10 @@ PrefabInstance:
       value: InvParse
       objectReference: {fileID: 0}
     - target: {fileID: 6576780411933169898, guid: f6d2e8e760200b94e91dee8e59416e02, type: 3}
+      propertyPath: intialiseOnAwake
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6576780411933169898, guid: f6d2e8e760200b94e91dee8e59416e02, type: 3}
       propertyPath: defaultControlScheme
       value: Gamepad
       objectReference: {fileID: 0}
@@ -1439,6 +1447,10 @@ PrefabInstance:
     - target: {fileID: 4007288518340750343, guid: f6d2e8e760200b94e91dee8e59416e02, type: 3}
       propertyPath: m_Name
       value: Keyboard Movement
+      objectReference: {fileID: 0}
+    - target: {fileID: 6576780411933169898, guid: f6d2e8e760200b94e91dee8e59416e02, type: 3}
+      propertyPath: intialiseOnAwake
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f6d2e8e760200b94e91dee8e59416e02, type: 3}
@@ -1975,6 +1987,10 @@ PrefabInstance:
       value: PickUp
       objectReference: {fileID: 0}
     - target: {fileID: 6576780411933169898, guid: f6d2e8e760200b94e91dee8e59416e02, type: 3}
+      propertyPath: intialiseOnAwake
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6576780411933169898, guid: f6d2e8e760200b94e91dee8e59416e02, type: 3}
       propertyPath: defaultControlScheme
       value: Gamepad
       objectReference: {fileID: 0}
@@ -2085,6 +2101,10 @@ PrefabInstance:
       value: InvParse
       objectReference: {fileID: 0}
     - target: {fileID: 6576780411933169898, guid: f6d2e8e760200b94e91dee8e59416e02, type: 3}
+      propertyPath: intialiseOnAwake
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6576780411933169898, guid: f6d2e8e760200b94e91dee8e59416e02, type: 3}
       propertyPath: defaultControlScheme
       value: Keyboard
       objectReference: {fileID: 0}
@@ -2193,6 +2213,10 @@ PrefabInstance:
     - target: {fileID: 6576780411933169898, guid: f6d2e8e760200b94e91dee8e59416e02, type: 3}
       propertyPath: actionName
       value: PickUp
+      objectReference: {fileID: 0}
+    - target: {fileID: 6576780411933169898, guid: f6d2e8e760200b94e91dee8e59416e02, type: 3}
+      propertyPath: intialiseOnAwake
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6576780411933169898, guid: f6d2e8e760200b94e91dee8e59416e02, type: 3}
       propertyPath: defaultControlScheme

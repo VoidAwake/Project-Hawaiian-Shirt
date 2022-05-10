@@ -9,7 +9,6 @@ namespace Hawaiian.UI.Game
     {
         [SerializeField] private GameManager gameManager;
         [SerializeField] private ScriptableFloat gameTimeScale;
-        [SerializeField] private GameObject toDisable;
 
         public override void OnClick()
         {
@@ -18,8 +17,6 @@ namespace Hawaiian.UI.Game
             gameManager.Phase = GameManager.GamePhase.Stealth;
             
             gameTimeScale.Value = 1;
-            
-            toDisable.SetActive(false);
         }
     }
 }

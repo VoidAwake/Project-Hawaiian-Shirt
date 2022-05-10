@@ -1089,7 +1089,6 @@ MonoBehaviour:
   manager: {fileID: 11400000, guid: b205461929d08b7439e72030dc234753, type: 2}
   gameManager: {fileID: 11400000, guid: c305914e6d352644190ef7ee43a51bbd, type: 2}
   gameTimeScale: {fileID: 11400000, guid: a7999ebb747644c42b10ad44fd3b305b, type: 2}
-  toDisable: {fileID: 0}
 --- !u!114 &2127302449678286598
 MonoBehaviour:
   m_ObjectHideFlags: 0
