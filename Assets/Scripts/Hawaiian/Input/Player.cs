@@ -438,6 +438,17 @@ namespace Hawaiian.Input
                 },
                 {
                     ""name"": """",
+                    ""id"": ""0a8f0a0b-6860-4d14-af61-538c544b3b62"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard1"",
+                    ""action"": ""Attack"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""9537be8b-c34e-42c7-b8e7-b8454fd076a4"",
                     ""path"": ""<Mouse>/leftButton"",
                     ""interactions"": """",
@@ -454,17 +465,6 @@ namespace Hawaiian.Input
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
-                    ""action"": ""Attack"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""0a8f0a0b-6860-4d14-af61-538c544b3b62"",
-                    ""path"": ""<Keyboard>/space"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Keyboard1"",
                     ""action"": ""Attack"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false

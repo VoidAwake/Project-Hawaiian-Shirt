@@ -35,3 +35,17 @@ MonoBehaviour:
     sprite: {fileID: 21300000, guid: bddbb1618d200c14d91f1f240b8f68c5, type: 3}
   - controlPath: <Keyboard>/e
     sprite: {fileID: 21300000, guid: 3e18878b3fcf1044a8f8a8b73bd0b498, type: 3}
+  - controlPath: <Keyboard>/leftArrow
+    sprite: {fileID: 21300000, guid: 5c3b75eaaaf19d64584e875a47b17d0f, type: 3}
+  - controlPath: <Keyboard>/rightArrow
+    sprite: {fileID: 21300000, guid: b723023f420259e48ad96e7cd533f1bf, type: 3}
+  - controlPath: <Keyboard>/upArrow
+    sprite: {fileID: 21300000, guid: 70675ce9490de28438814e56c7309797, type: 3}
+  - controlPath: <Keyboard>/downArrow
+    sprite: {fileID: 21300000, guid: c3532984fe4440c4bbfa11413befdf6c, type: 3}
+  - controlPath: <Gamepad>/rightStick
+    sprite: {fileID: 21300000, guid: 608d4c0ce9cde324087ce7b648e271a2, type: 3}
+  - controlPath: <Gamepad>/rightTrigger
+    sprite: {fileID: 21300000, guid: 92e3626ffbb779a4997138cced9a9150, type: 3}
+  - controlPath: <Keyboard>/space
+    sprite: {fileID: 21300000, guid: c6b66d8565773cc42953ebcd9c2395d2, type: 3}
