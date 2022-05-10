@@ -38,7 +38,6 @@ namespace Hawaiian.UI.CharacterSelect
         {
             if (transitionActive)
             {
-                Debug.Log("Transitioning... " + transitionTimer + " / " + transitionInt + " / ");
                 if (transitionTimer > stepDuration)
                 {
                     transitionTimer -= stepDuration;
