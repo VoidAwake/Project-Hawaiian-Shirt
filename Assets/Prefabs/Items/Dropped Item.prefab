@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 934334665417937965}
   - component: {fileID: 7695339905545475047}
   - component: {fileID: 5877037893192355219}
+  - component: {fileID: 3429498943903044509}
   m_Layer: 0
   m_Name: Dropped Item
   m_TagString: Item
@@ -155,3 +156,14 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!210 &3429498943903044509
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3056942884218095950}
+  m_Enabled: 1
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 1
