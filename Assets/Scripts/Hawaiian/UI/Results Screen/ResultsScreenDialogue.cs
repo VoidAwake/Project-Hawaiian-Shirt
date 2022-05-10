@@ -26,7 +26,7 @@ namespace Hawaiian.UI.Results_Screen
         {
             yield return new WaitForSeconds(startDelayDuration);
             
-            barChart.animationComplete.AddListener((() => animator.SetTrigger("ShowButtons")));
+            barChart.animationCompleted.AddListener((() => animator.SetTrigger("ShowButtons")));
             
             barChart.AnimateBars();
         }

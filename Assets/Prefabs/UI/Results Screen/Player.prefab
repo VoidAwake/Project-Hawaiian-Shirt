@@ -86,6 +86,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6457051467521496292}
   - component: {fileID: 1243409534}
+  - component: {fileID: 1936283575750461022}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -130,8 +131,33 @@ MonoBehaviour:
   manager: {fileID: 11400000, guid: b205461929d08b7439e72030dc234753, type: 2}
   bar: {fileID: 6457051467021099813}
   playerImage: {fileID: 6457051467686685867}
+  animator: {fileID: 1936283575750461022}
   maxHeight: 100
+  spacing: 25
+  animationCompleted:
+    m_PersistentCalls:
+      m_Calls: []
   fill: 1
+--- !u!95 &1936283575750461022
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6457051467521496293}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 2604a9c3cf833a54aa1c8d3c0da80547, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &6457051467686685864
 GameObject:
   m_ObjectHideFlags: 0
@@ -167,7 +193,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 100}
+  m_AnchoredPosition: {x: 0, y: 125}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6457051467686685869

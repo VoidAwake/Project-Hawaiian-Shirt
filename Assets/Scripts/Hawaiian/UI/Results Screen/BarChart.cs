@@ -1,4 +1,4 @@
-﻿using System.Collections;
+﻿using System;
 using System.Collections.Generic;
 using UI.Core;
 using UnityEngine;
@@ -8,10 +8,13 @@ namespace Hawaiian.UI.Results_Screen
 {
     public class BarChart : DialogueComponent<ResultsScreenDialogue>
     {
-        [SerializeField] private float barAnimationDuration;
+        // TODO: Make private
         [SerializeField] private List<PlayerBar> bars;
+        [SerializeField] private GameObject playerBarPrefab;
 
-        public UnityEvent animationComplete = new UnityEvent();
+        public UnityEvent animationCompleted = new UnityEvent();
+
+        private int currentBarIndex;
         
         protected override void Subscribe() { }
 
@@ -19,19 +22,52 @@ namespace Hawaiian.UI.Results_Screen
 
         public void AnimateBars()
         {
-            StartCoroutine(BarAnimation());
+            if (bars.Count == 0) return;
+
+            currentBarIndex = -1;
+
+            StartNextAnimation();
         }
 
-        private IEnumerator BarAnimation()
+        private void OnAnimationCompleted()
         {
-            foreach (var bar in bars)
-            {
-               bar.AnimateFill(barAnimationDuration);
+            StartNextAnimation();
+        }
 
-               yield return new WaitForSeconds(barAnimationDuration);
+        private void StartNextAnimation()
+        {
+            if (currentBarIndex >= 0 && currentBarIndex < bars.Count)
+            {
+                var prevBar = bars[currentBarIndex];
+
+                prevBar.animationCompleted.RemoveListener(OnAnimationCompleted);
             }
-            
-            animationComplete.Invoke();
+
+            currentBarIndex++;
+                
+            if (currentBarIndex >= 0 && currentBarIndex < bars.Count)
+            {
+                var bar = bars[currentBarIndex];
+
+                bar.animationCompleted.AddListener(OnAnimationCompleted);
+
+                bar.StartAnimation();
+            }
+            else
+            {
+                animationCompleted.Invoke();
+            }
+        }
+
+        private void CreatePlayerBar()
+        {
+            var playerBarObject = Instantiate(playerBarPrefab, transform);
+
+            var playerBar = playerBarObject.GetComponent<PlayerBar>();
+
+            if (playerBar == null) throw new Exception($"Player Bar prefab does not have a {nameof(PlayerBar)} component.");
+
+            bars.Add(playerBar);
         }
     }
 }

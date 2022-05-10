@@ -2,6 +2,7 @@
 using System.Collections;
 using UI.Core;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace Hawaiian.UI.Results_Screen
 {
@@ -9,11 +10,14 @@ namespace Hawaiian.UI.Results_Screen
     {
         [SerializeField] private RectTransform bar;
         [SerializeField] private RectTransform playerImage;
+        [SerializeField] private Animator animator;
         [SerializeField] private float maxHeight;
+        [SerializeField] private float spacing;
+
+        public UnityEvent animationCompleted = new UnityEvent();
         
-        [Range(0, 1)]
-        public float fill;
-        
+        [Range(0, 1)] [SerializeField] private float fill;
+
         protected override void Subscribe() { }
 
         protected override void Unsubscribe() { }
@@ -23,34 +27,26 @@ namespace Hawaiian.UI.Results_Screen
             UpdateFill();
         }
 
+        private void Update()
+        {
+            UpdateFill();
+        }
+
         private void UpdateFill()
         {
-            playerImage.anchoredPosition = new Vector2(0, fill * maxHeight);
+            playerImage.anchoredPosition = new Vector2(0, fill * maxHeight + spacing);
 
             bar.sizeDelta = new Vector2(100, fill * maxHeight);
         }
 
-        public void AnimateFill(float duration)
+        private void OnAnimationCompleted()
         {
-            StartCoroutine(FillAnimation(duration));
+            animationCompleted.Invoke();
         }
 
-        private IEnumerator FillAnimation(float duration)
+        public void StartAnimation()
         {
-            float timer = 0;
-
-            while (timer < duration)
-            {
-                fill = timer / duration;
-                
-                UpdateFill();
-
-                timer += Time.deltaTime;
-
-                yield return null;
-            }
-
-            fill = 1;
+            animator.SetTrigger("ShowBar");
         }
     }
 }
