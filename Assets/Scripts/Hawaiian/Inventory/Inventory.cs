@@ -48,7 +48,7 @@ namespace Hawaiian.Inventory
         }
 
 
-        public void DropItem()
+        public void DropItem(int invPosition)
         {
             //Manager.drop(inv[invPos]);
             inv[invPosition] = null;
