@@ -32,8 +32,8 @@ MonoBehaviour:
       m_Sprite: {fileID: -1057007253, guid: 7e590c97eac2c4f4aa98580729e4b759, type: 3}
       m_FromMain: 0
       m_SpriteOverride: {fileID: -1057007253, guid: 7e590c97eac2c4f4aa98580729e4b759, type: 3}
-    - m_Name: Entry_2
-      m_Hash: -636385706
+    - m_Name: Cat
+      m_Hash: -1508702904
       m_Sprite: {fileID: 1402687085, guid: 7e590c97eac2c4f4aa98580729e4b759, type: 3}
       m_FromMain: 0
       m_SpriteOverride: {fileID: 1402687085, guid: 7e590c97eac2c4f4aa98580729e4b759, type: 3}

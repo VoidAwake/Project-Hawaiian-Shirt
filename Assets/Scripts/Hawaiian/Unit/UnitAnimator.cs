@@ -109,7 +109,8 @@ namespace Hawaiian.Unit
                             //foreach (var renderer in _renderers)
                             //    renderer.flipX = false;
 
-                            FlipCharacter(false);                        }
+                            FlipCharacter(false);
+                        }
                         else
                         {
                             //foreach (var renderer in _renderers)

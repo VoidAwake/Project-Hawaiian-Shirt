@@ -228,7 +228,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &6851814674353488676
 RectTransform:
   m_ObjectHideFlags: 0
@@ -608,3 +608,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e35f2998102c2584abc417f7af771f45, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  manager: {fileID: 0}
+  textNumber: {fileID: 2323392223736049118}
+  textPrompt: {fileID: 3162321612936736869}
+  textReady: {fileID: 940756105214926743}
+  unit: {fileID: 0}
+  head: {fileID: 0}
+  torso: {fileID: 0}
+  renderCamera: {fileID: 0}
+  renderTexture: {fileID: 7074674319736101517}
