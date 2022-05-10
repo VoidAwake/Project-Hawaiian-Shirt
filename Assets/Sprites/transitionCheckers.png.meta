@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: a3627312065ae844b926aec3d48b7f5a
+guid: ebdfa010ef5bee54ba4e826fe89f6c9a
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -44,7 +44,7 @@ TextureImporter:
   compressionQuality: 50
   spriteMode: 2
   spriteExtrude: 1
-  spriteMeshType: 0
+  spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
   spritePixelsToUnits: 32
@@ -104,64 +104,127 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: inventoryCursor_0
+      name: transitionCheckers_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 48
+        width: 48
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 83976a382a86cd749be064198a041214
+      internalID: 1295583527
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: transitionCheckers_1
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 48
+        width: 48
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6f66012b168996c4895c5f6f3e7602da
+      internalID: 422712940
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: transitionCheckers_2
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 48
+        width: 48
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cbe999a8cfbc5e74892eeb8d45ef880a
+      internalID: 1469595996
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: transitionCheckers_3
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 42
-        height: 42
+        width: 48
+        height: 48
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 14, y: 14, z: 14, w: 14}
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 4b64e6b774a2f264b9ddc27b8f959a99
-      internalID: -1959829100
+      spriteID: efece1025f7bfb843bc694f6754b37f1
+      internalID: -1238110045
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: inventoryCursor_1
+      name: transitionCheckers_4
       rect:
         serializedVersion: 2
-        x: 42
+        x: 48
         y: 0
-        width: 42
-        height: 42
+        width: 48
+        height: 48
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 14, y: 14, z: 14, w: 14}
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: eff6518e115c98d4688f5fd733896f98
-      internalID: -1859449190
+      spriteID: 6a6973c44599c6b47a72562a5cf45a67
+      internalID: 1409174548
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: inventoryCursor_2
+      name: transitionCheckers_5
       rect:
         serializedVersion: 2
-        x: 84
+        x: 96
         y: 0
-        width: 42
-        height: 42
+        width: 48
+        height: 48
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 14, y: 14, z: 14, w: 14}
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b07568a9ad07ab44884c857f42e480bb
-      internalID: 1988936865
+      spriteID: f321d4e43ad8db344b8e6546f80070d0
+      internalID: -562163301
       vertices: []
       indices: 
       edges: []
@@ -177,9 +240,12 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      inventoryCursor_0: -1959829100
-      inventoryCursor_2: 1988936865
-      inventoryCursor_1: -1859449190
+      transitionCheckers_0: 1295583527
+      transitionCheckers_4: 1409174548
+      transitionCheckers_5: -562163301
+      transitionCheckers_1: 422712940
+      transitionCheckers_2: 1469595996
+      transitionCheckers_3: -1238110045
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

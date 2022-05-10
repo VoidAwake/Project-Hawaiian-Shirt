@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 6224668783586983983}
   m_Layer: 0
   m_Name: Door
-  m_TagString: Untagged
+  m_TagString: Door
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -102,6 +102,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isLocked: 1
+  inRange: 0
   doorRange: {fileID: 0}
 --- !u!1 &3349007198255008620
 GameObject:
@@ -114,7 +115,7 @@ GameObject:
   - component: {fileID: 911170203818178746}
   m_Layer: 0
   m_Name: Door
-  m_TagString: Untagged
+  m_TagString: Door
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -149,7 +150,7 @@ GameObject:
   - component: {fileID: 4861433021491833773}
   m_Layer: 0
   m_Name: Door Sprite
-  m_TagString: Untagged
+  m_TagString: Door
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: a3627312065ae844b926aec3d48b7f5a
+guid: 69c1f676b75cded47b6d39a7823c0a22
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -44,7 +44,7 @@ TextureImporter:
   compressionQuality: 50
   spriteMode: 2
   spriteExtrude: 1
-  spriteMeshType: 0
+  spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
   spritePixelsToUnits: 32
@@ -104,64 +104,43 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: inventoryCursor_0
+      name: coinSprites_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 42
-        height: 42
+        width: 32
+        height: 32
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 14, y: 14, z: 14, w: 14}
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 4b64e6b774a2f264b9ddc27b8f959a99
-      internalID: -1959829100
+      spriteID: 94d25bfb4452d0f418626557972ba82c
+      internalID: 806094325
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: inventoryCursor_1
+      name: coinSprites_1
       rect:
         serializedVersion: 2
-        x: 42
+        x: 32
         y: 0
-        width: 42
-        height: 42
+        width: 32
+        height: 32
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 14, y: 14, z: 14, w: 14}
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: eff6518e115c98d4688f5fd733896f98
-      internalID: -1859449190
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: inventoryCursor_2
-      rect:
-        serializedVersion: 2
-        x: 84
-        y: 0
-        width: 42
-        height: 42
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 14, y: 14, z: 14, w: 14}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: b07568a9ad07ab44884c857f42e480bb
-      internalID: 1988936865
+      spriteID: 378b73fffb10cd84799b4c36cb2465c2
+      internalID: -1236609809
       vertices: []
       indices: 
       edges: []
@@ -177,9 +156,8 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      inventoryCursor_0: -1959829100
-      inventoryCursor_2: 1988936865
-      inventoryCursor_1: -1859449190
+      coinSprites_1: -1236609809
+      coinSprites_0: 806094325
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

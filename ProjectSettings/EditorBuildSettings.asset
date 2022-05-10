@@ -9,6 +9,9 @@ EditorBuildSettings:
     path: Assets/Scenes/MainMenu.unity
     guid: 4f35cff614acf774490bd35fbd174d70
   - enabled: 1
+    path: Assets/Scenes/CharacterSelect.unity
+    guid: d16a4626545988844af636cf388650df
+  - enabled: 1
     path: Assets/Scenes/LocalCoop 3.unity
     guid: aebc5ae7dee0de0459e10f845a419888
   m_configObjects: {}
