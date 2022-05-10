@@ -50,7 +50,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1241927491090660177
 Transform:
   m_ObjectHideFlags: 0
@@ -78,9 +78,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 66c6441a83f4ea347a2e1d720ada3f61, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _player: {fileID: 0}
+  parse: {fileID: 0}
   addinv: 0
   item: {fileID: 0}
   addedInventory: {fileID: 11400000, guid: 2220e64b52956274a8ac1a529699a2d4, type: 2}
+  hand: {fileID: 0}
 --- !u!58 &121433996737073732
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -186,6 +189,30 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1165009643540554491, guid: fe93fd4b04ca3d340865789a7d27cade, type: 3}
+      propertyPath: m_Bounds.m_Center.x
+      value: 0.016073525
+      objectReference: {fileID: 0}
+    - target: {fileID: 1411784524321343871, guid: fe93fd4b04ca3d340865789a7d27cade, type: 3}
+      propertyPath: m_Bounds.m_Center.x
+      value: 0.15784265
+      objectReference: {fileID: 0}
+    - target: {fileID: 3829584689620955966, guid: fe93fd4b04ca3d340865789a7d27cade, type: 3}
+      propertyPath: m_Bounds.m_Center.x
+      value: -0.06716013
+      objectReference: {fileID: 0}
+    - target: {fileID: 4075481484501139696, guid: fe93fd4b04ca3d340865789a7d27cade, type: 3}
+      propertyPath: m_Bounds.m_Center.x
+      value: 0.004439503
+      objectReference: {fileID: 0}
+    - target: {fileID: 5140635630313659711, guid: fe93fd4b04ca3d340865789a7d27cade, type: 3}
+      propertyPath: m_Bounds.m_Center.x
+      value: 0.10695328
+      objectReference: {fileID: 0}
+    - target: {fileID: 6600241691312842047, guid: fe93fd4b04ca3d340865789a7d27cade, type: 3}
+      propertyPath: m_Bounds.m_Center.x
+      value: -0.14865875
+      objectReference: {fileID: 0}
     - target: {fileID: 6924075283435537384, guid: fe93fd4b04ca3d340865789a7d27cade, type: 3}
       propertyPath: m_Name
       value: Enemy Unit
@@ -252,18 +279,7 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 6924075283435537384, guid: fe93fd4b04ca3d340865789a7d27cade, type: 3}
   m_PrefabInstance: {fileID: 6074339651911699560}
   m_PrefabAsset: {fileID: 0}
---- !u!210 &2313854986825173522
-SortingGroup:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3772646986385756032}
-  m_Enabled: 1
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 1
---- !u!114 &5588978955059791629
+--- !u!114 &784775154253311892
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -272,103 +288,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 3772646986385756032}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f30bb729de375d14bbde70ab49fda8d7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  gravity: {x: 0, y: 0}
-  minimumDistance: 0.001
-  collisionBuffer: 0.01
-  isBoundByCamera: 0
-  physicsCollider: {fileID: 71041501583584823}
-  gameTimeScale: {fileID: 11400000, guid: a7999ebb747644c42b10ad44fd3b305b, type: 2}
-  _maxHealth: 20
-  maxSpeed: 5.5
-  tweenRate: 15
-  runMultiplier: 1.75
-  _damageReference: {fileID: 1546100782826642891, guid: 6916ca4131234a941b3eb78d5ca707fe, type: 3}
-  firePoint: {fileID: 6550718957222180552}
---- !u!114 &6432945937749252037
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3772646986385756032}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Actions: {fileID: -944628639613478452, guid: 1fbf3dcea99b03942b04fac4b66d2c19, type: 3}
-  m_NotificationBehavior: 1
-  m_UIInputModule: {fileID: 0}
-  m_DeviceLostEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_DeviceRegainedEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_ControlsChangedEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_ActionEvents:
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 04dea6c0-e35f-4372-bcc9-0445bc0c4b0c
-    m_ActionName: Player/Move[/Keyboard/w,/Keyboard/s,/Keyboard/a,/Keyboard/d,/XInputControllerWindows/dpad/up,/XInputControllerWindows/dpad/down,/XInputControllerWindows/dpad/left,/XInputControllerWindows/dpad/right,/XInputControllerWindows/leftStick,/Keyboard/upArrow,/Keyboard/downArrow,/Keyboard/leftArrow,/Keyboard/rightArrow]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: eb5fc80f-30ab-4fa0-820b-d1b30b590205
-    m_ActionName: Player/ActionA[/Keyboard/r,/XInputControllerWindows/buttonEast,/Keyboard/numpad1,/Keyboard/period,/XInputControllerWindows/buttonNorth]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: c9d8cb36-0efd-4faa-a1fa-08fa3a086fb5
-    m_ActionName: Player/ActionB[/Keyboard/t,/XInputControllerWindows/buttonSouth,/Keyboard/numpad2,/Keyboard/comma,/XInputControllerWindows/buttonWest]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 6313d96c-bf06-4f98-afeb-950ceebcde40
-    m_ActionName: Lobby Player/Ready[/Keyboard/r,/XInputControllerWindows/buttonEast,/Keyboard/numpad1,/Keyboard/period,/XInputControllerWindows/buttonNorth]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: a4e85f39-9e16-49f8-82a5-9809a8c2eee7
-    m_ActionName: Lobby Player/Left[/Keyboard/leftArrow,/Keyboard/a,/XInputControllerWindows/dpad/left,/XInputControllerWindows/leftStick/left]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: e02bc53f-7606-4d85-9d2e-036af7dd8d66
-    m_ActionName: Lobby Player/Right[/Keyboard/rightArrow,/Keyboard/d,/XInputControllerWindows/dpad/right,/XInputControllerWindows/leftStick/right]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 300f2ece-fe16-40b7-b6d8-b2d6231cdbcc
-    m_ActionName: Lobby Player/AddBot[/Keyboard/t,/Keyboard/numpad2,/Keyboard/comma,/XInputControllerWindows/rightTrigger]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: f99a9359-81ed-484c-8e86-6a2f4fcdb5b2
-    m_ActionName: Lobby Player/RemoveBot[/XInputControllerWindows/leftTrigger,/Keyboard/y]
-  m_NeverAutoSwitchControlSchemes: 0
-  m_DefaultControlScheme: 
-  m_DefaultActionMap: Player
-  m_SplitScreenIndex: -1
-  m_Camera: {fileID: 0}
---- !u!114 &4512960524458516258
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3772646986385756032}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 930fb7ef0a3bf58449c2a3ae98a332c2, type: 3}
+  m_Script: {fileID: 11500000, guid: d25b25989da0dd14b88121f57e667874, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   currentState: {fileID: 11400000, guid: 7063c87d8a7493e40b87367db5d0d48f, type: 2}
-  remainState: {fileID: 11400000, guid: 7063c87d8a7493e40b87367db5d0d48f, type: 2}
-  stateTimeElapsed: 0
-  enemy: {fileID: 6074339650475639761}
-  controls: {fileID: 6432945937749252037}
-  unitEnemy: {fileID: 6331187281542622846}
-  currentDestination: {x: 0, y: 0}
-  nextWaypoint: 1
+  unitEnemy: {fileID: 0}
   waypointList: []
 --- !u!114 &6331187281542622846
 MonoBehaviour:
@@ -382,18 +306,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7436e27665767764584f0d7765eeb219, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gravity: {x: 0, y: -9.8}
+  gravity: {x: 0, y: 0}
   minimumDistance: 0.001
   collisionBuffer: 0.01
   isBoundByCamera: 0
-  physicsCollider: {fileID: 0}
-  gameTimeScale: {fileID: 0}
-  _maxHealth: 0
-  maxSpeed: 0
-  tweenRate: 0
-  runMultiplier: 0
---- !u!50 &6074339650475639761 stripped
-Rigidbody2D:
-  m_CorrespondingSourceObject: {fileID: 2062520249, guid: fe93fd4b04ca3d340865789a7d27cade, type: 3}
-  m_PrefabInstance: {fileID: 6074339651911699560}
-  m_PrefabAsset: {fileID: 0}
+  physicsCollider: {fileID: 71041501583584823}
+  gameTimeScale: {fileID: 11400000, guid: a7999ebb747644c42b10ad44fd3b305b, type: 2}
+  rigidbody: {fileID: 0}
+  testBool: 0
+  testVector: {x: 0, y: 0}
+  testFloat: 0
+  playerState: 0
+  _maxHealth: 20
+  tripTime: 0.75
+  invincibilityTime: 1
+  isInvincible: 0
+  maxSpeed: 5.5
+  tweenRate: 15
+  runMultiplier: 1.75

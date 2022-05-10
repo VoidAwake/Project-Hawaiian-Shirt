@@ -1,12 +1,13 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class Waypoint : MonoBehaviour
+namespace Hawaiian.AI
 {
-    private void OnDrawGizmos()
+    public class Waypoint : MonoBehaviour
     {
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawSphere(transform.position, 0.1f);
+        private void OnDrawGizmos()
+        {
+            Gizmos.color = Color.yellow;
+            Gizmos.DrawSphere(transform.position, 0.1f);
+        }
     }
 }

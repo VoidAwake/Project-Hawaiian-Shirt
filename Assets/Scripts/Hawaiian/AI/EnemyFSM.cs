@@ -1,46 +1,40 @@
-using System.Collections;
 using System.Collections.Generic;
-using Hawaiian.Unit;
 using UnityEngine;
 
-public class EnemyFSM : MonoBehaviour
+namespace Hawaiian.AI
 {
-    public State currentState;
-    public State remainState;
-    public float stateTimeElapsed;
-
-    public Rigidbody2D enemy;
-    public UnitPhysics unit;
-
-    [SerializeField] public Vector2 currentDestination;
-
-    public int nextWaypoint = 1;
-    [SerializeField] public List<Waypoint> waypointList; //temp for now - I assume we want waypoints added procedurally later? 
-
-    public float cautionMeter
+    public class EnemyFSM : MonoBehaviour
     {
-        get { return cautionMeter; }
-        set { cautionMeter = Mathf.Clamp(0, 0, 100); } //guard transitions to alert if caution hits 100
-    }
-    void Awake()
-    {
-        enemy = GetComponent<Rigidbody2D>();
-        unit = GetComponent<Unit>();
-    }
+        public State currentState;
 
-    // Update is called once per frame
-    void Update()
-    {
-        currentState.UpdateState(this);
-    }
+        public UnitEnemy unitEnemy;
 
-    public void TransitionToState(State nextState)
-    {
+        private int currentWaypointIndex = 1;
+        [SerializeField] public List<Waypoint> waypointList; //temp for now - I assume we want waypoints added procedurally later? 
 
-    }
+        public Waypoint CurrentWaypoint => waypointList[currentWaypointIndex];
+        public Vector2 CurrentDestination => CurrentWaypoint.transform.position;
+        
+        private void Awake()
+        {
+            //viewCone = GetComponentInChildren<PolygonCollider2D>();
+            //viewCone.CreateMesh(true, true);
+            unitEnemy = GetComponent<UnitEnemy>();
+        }
 
-    public void OnMove(Vector2 value)
-    {
-        Vector3.Lerp(transform.position, value,0.5f);
+        private void Update()
+        {
+            currentState.UpdateState(this);
+        }
+
+        public void TransitionToState(State nextState)
+        {
+
+        }
+
+        public void ToNextWaypoint()
+        {
+            currentWaypointIndex = (currentWaypointIndex + 1) % waypointList.Count;
+        }
     }
 }
