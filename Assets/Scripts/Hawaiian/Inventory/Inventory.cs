@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.Events;
+using Hawaiian.Utilities;
 
 namespace Hawaiian.Inventory
 {
@@ -11,12 +12,18 @@ namespace Hawaiian.Inventory
         //[SerializeField] private ScriptableInt invSize;
         //[SerializeField] private int invSize;
         [SerializeField] public Item[] inv;
+        [SerializeField] public int size;
         public UnityEvent itemchange = new ();
         public int invPosition = 0;
     
         public Inventory()
         {
-            inv = new Item[3];
+            //inv = new Item[size];
+        }
+        public void SetInventory(int invSize)
+        {
+            size = invSize;
+            inv = new Item[size];
         }
         public bool PickUp(Item item)
         {
