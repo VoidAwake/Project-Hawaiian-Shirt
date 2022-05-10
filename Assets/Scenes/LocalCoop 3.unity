@@ -1062,11 +1062,6 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 5433760765802800313, guid: 06a8f405b1eba494fb68a1773ece674c, type: 3}
   m_PrefabInstance: {fileID: 654823872}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &654823874 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3382368823289034658, guid: 06a8f405b1eba494fb68a1773ece674c, type: 3}
-  m_PrefabInstance: {fileID: 654823872}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1068176158
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1541,7 +1536,7 @@ PrefabInstance:
     - target: {fileID: 7592496277458101620, guid: 7f73c268d04cb0e478dbb92264a5cd8d, type: 3}
       propertyPath: m_FirstSelected
       value: 
-      objectReference: {fileID: 654823874}
+      objectReference: {fileID: 0}
     - target: {fileID: 7592496277458101622, guid: 7f73c268d04cb0e478dbb92264a5cd8d, type: 3}
       propertyPath: m_Name
       value: EventSystem
