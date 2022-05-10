@@ -21,11 +21,11 @@ MonoBehaviour:
   ProjectileInstance: {fileID: 8484802503941745754, guid: 6ccdae3489326844c9b49b012c477987, type: 3}
   ItemDamage: 10
   DrawSpeed: 5
-  DrawDistance: 10
-  SticksOnWall: 1
-  ReturnsToPlayer: 1
-  IsMultiShot: 1
-  ProjectileAmount: 7
+  DrawDistance: 2
+  SticksOnWall: 0
+  ReturnsToPlayer: 0
+  IsMultiShot: 0
+  ProjectileAmount: 0
   AttackRate: 0
   IsMainObjective: 0
   CanBeHeldByEnemies: 0
@@ -33,3 +33,4 @@ MonoBehaviour:
   PlacementRadius: 0
   PlacementIcon: {fileID: 0}
   TrapInstance: {fileID: 0}
+  IsKey: 0
