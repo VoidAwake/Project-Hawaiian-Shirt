@@ -120,6 +120,15 @@ namespace Hawaiian.Input
                     ""initialStateCheck"": false
                 },
                 {
+                    ""name"": ""MoveCursor"",
+                    ""type"": ""Value"",
+                    ""id"": ""18a10a16-bed1-44c5-88e0-13fe5a732231"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
                     ""name"": ""Drop"",
                     ""type"": ""Button"",
                     ""id"": ""3b38de02-c033-4c49-a115-ce44b0c2fd04"",
@@ -681,6 +690,61 @@ namespace Hawaiian.Input
                     ""isPartOfComposite"": true
                 },
                 {
+                    ""name"": ""MoveCursor"",
+                    ""id"": ""c7f19130-e1db-4b49-ac85-5427a0f7e7fe"",
+                    ""path"": ""2DVector"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MoveCursor"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""up"",
+                    ""id"": ""ce1c29cf-4866-4456-96ce-8f78787c5a6a"",
+                    ""path"": ""<Keyboard>/upArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard1"",
+                    ""action"": ""MoveCursor"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""down"",
+                    ""id"": ""484a45a6-bc29-4e67-94b4-fcf143ff0802"",
+                    ""path"": ""<Keyboard>/downArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard1"",
+                    ""action"": ""MoveCursor"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""left"",
+                    ""id"": ""5fc1550f-4a78-40de-8e10-a7c15de3f66e"",
+                    ""path"": ""<Keyboard>/leftArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard1"",
+                    ""action"": ""MoveCursor"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""right"",
+                    ""id"": ""583fdcc8-4528-4111-b8d0-3646babca449"",
+                    ""path"": ""<Keyboard>/rightArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard1"",
+                    ""action"": ""MoveCursor"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
                     ""name"": """",
                     ""id"": ""b759c435-d0ba-4448-bd1c-5815f0bd9761"",
                     ""path"": ""<Keyboard>/z"",
@@ -1059,6 +1123,7 @@ namespace Hawaiian.Input
             m_Player_HoldAttack = m_Player.FindAction("HoldAttack", throwIfNotFound: true);
             m_Player_PickUp = m_Player.FindAction("PickUp", throwIfNotFound: true);
             m_Player_Parse = m_Player.FindAction("Parse", throwIfNotFound: true);
+            m_Player_MoveCursor = m_Player.FindAction("MoveCursor", throwIfNotFound: true);
             m_Player_Drop = m_Player.FindAction("Drop", throwIfNotFound: true);
             // Lobby Player
             m_LobbyPlayer = asset.FindActionMap("Lobby Player", throwIfNotFound: true);
@@ -1136,6 +1201,7 @@ namespace Hawaiian.Input
         private readonly InputAction m_Player_HoldAttack;
         private readonly InputAction m_Player_PickUp;
         private readonly InputAction m_Player_Parse;
+        private readonly InputAction m_Player_MoveCursor;
         private readonly InputAction m_Player_Drop;
         public struct PlayerActions
         {
@@ -1151,6 +1217,7 @@ namespace Hawaiian.Input
             public InputAction @HoldAttack => m_Wrapper.m_Player_HoldAttack;
             public InputAction @PickUp => m_Wrapper.m_Player_PickUp;
             public InputAction @Parse => m_Wrapper.m_Player_Parse;
+            public InputAction @MoveCursor => m_Wrapper.m_Player_MoveCursor;
             public InputAction @Drop => m_Wrapper.m_Player_Drop;
             public InputActionMap Get() { return m_Wrapper.m_Player; }
             public void Enable() { Get().Enable(); }
@@ -1191,6 +1258,9 @@ namespace Hawaiian.Input
                     @Parse.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnParse;
                     @Parse.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnParse;
                     @Parse.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnParse;
+                    @MoveCursor.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMoveCursor;
+                    @MoveCursor.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMoveCursor;
+                    @MoveCursor.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMoveCursor;
                     @Drop.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDrop;
                     @Drop.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDrop;
                     @Drop.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDrop;
@@ -1228,6 +1298,9 @@ namespace Hawaiian.Input
                     @Parse.started += instance.OnParse;
                     @Parse.performed += instance.OnParse;
                     @Parse.canceled += instance.OnParse;
+                    @MoveCursor.started += instance.OnMoveCursor;
+                    @MoveCursor.performed += instance.OnMoveCursor;
+                    @MoveCursor.canceled += instance.OnMoveCursor;
                     @Drop.started += instance.OnDrop;
                     @Drop.performed += instance.OnDrop;
                     @Drop.canceled += instance.OnDrop;
@@ -1384,6 +1457,7 @@ namespace Hawaiian.Input
             void OnHoldAttack(InputAction.CallbackContext context);
             void OnPickUp(InputAction.CallbackContext context);
             void OnParse(InputAction.CallbackContext context);
+            void OnMoveCursor(InputAction.CallbackContext context);
             void OnDrop(InputAction.CallbackContext context);
         }
         public interface ILobbyPlayerActions
