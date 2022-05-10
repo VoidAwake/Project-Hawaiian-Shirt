@@ -7,6 +7,7 @@ public class DoorScript : MonoBehaviour
 
     Animator animator;
     public bool isLocked = true;
+    [SerializeField] public bool inRange = false;
     public BoxCollider2D doorRange;
     // Start is called before the first frame update
     void Start()
@@ -21,11 +22,22 @@ public class DoorScript : MonoBehaviour
         
     }
 
-    void UnlockDoor()
+    public void UnlockDoor()
     {
-        if (isLocked && doorRange.IsTouchingLayers(1))
-        {
+        animator.SetTrigger("Unlock");
+    }
 
+
+
+    public void OnTriggerStay2D(Collider2D col)
+    {
+        if (col.CompareTag("Player"))
+        {
+            inRange = true;
+        }
+        else
+        {
+            inRange = false;
         }
     }
 }

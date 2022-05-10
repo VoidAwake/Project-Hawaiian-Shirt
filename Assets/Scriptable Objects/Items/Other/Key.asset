@@ -18,7 +18,7 @@ MonoBehaviour:
   ItemName: Key
   MaxStack: 1
   DroppedItemBase: {fileID: 3056942884218095950, guid: 37132a09f5d1c4046a4bb460892afc47, type: 3}
-  ProjectileInstance: {fileID: 0}
+  ProjectileInstance: {fileID: 1546100782826642891, guid: 6916ca4131234a941b3eb78d5ca707fe, type: 3}
   ItemDamage: 0
   DrawSpeed: 0
   DrawDistance: 0
@@ -27,3 +27,4 @@ MonoBehaviour:
   IsMainObjective: 0
   CanBeHeldByEnemies: 0
   Points: 0
+  IsKey: 1

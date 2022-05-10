@@ -1121,6 +1121,17 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 37132a09f5d1c4046a4bb460892afc47, type: 3}
+--- !u!114 &1610068733 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6224668783586983983, guid: e883ecf8ab0d7c2448478d7657c479c1, type: 3}
+  m_PrefabInstance: {fileID: 2105748254}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 92f27a90be88a864aaeb35f4a5099ec3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1694678082
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3144,6 +3155,22 @@ PrefabInstance:
     - target: {fileID: 3349007198255008620, guid: e883ecf8ab0d7c2448478d7657c479c1, type: 3}
       propertyPath: m_Name
       value: Door
+      objectReference: {fileID: 0}
+    - target: {fileID: 4627064510781441651, guid: e883ecf8ab0d7c2448478d7657c479c1, type: 3}
+      propertyPath: Response.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1610068733}
+    - target: {fileID: 4627064510781441651, guid: e883ecf8ab0d7c2448478d7657c479c1, type: 3}
+      propertyPath: Response.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: UnlockDoor
+      objectReference: {fileID: 0}
+    - target: {fileID: 4627064510781441651, guid: e883ecf8ab0d7c2448478d7657c479c1, type: 3}
+      propertyPath: Response.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: DoorScript, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 4627064510781441651, guid: e883ecf8ab0d7c2448478d7657c479c1, type: 3}
+      propertyPath: Response.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e883ecf8ab0d7c2448478d7657c479c1, type: 3}

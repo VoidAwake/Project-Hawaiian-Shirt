@@ -27,6 +27,7 @@ namespace Hawaiian.Editor
         SerializedProperty droppedItemBase;
         SerializedProperty projectileInstance;
         SerializedProperty isKey;
+        SerializedProperty otherInstance;
 
 
         private void OnEnable()

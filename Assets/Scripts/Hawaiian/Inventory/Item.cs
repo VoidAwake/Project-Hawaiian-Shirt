@@ -49,6 +49,7 @@ namespace Hawaiian.Inventory
         //Other Specific Stats
         [HideInInspector] public bool IsKey;
 
+
         // Start is called before the first frame update
 
         public void DropItem() {}
