@@ -22,9 +22,10 @@ namespace Hawaiian.Inventory
         [SerializeField] private SpriteRenderer hand;
 
         [SerializeField] private GameObject droppedItem;
-        
+
+       
         //[SerializeField] private int invSize;a
-        
+
 
         private Inventory _inv;
         private PositionalEventCaller positionalEventCaller;
@@ -49,6 +50,7 @@ namespace Hawaiian.Inventory
         private void Start()
         {
             _player.GetPlayerInput().actions["InvParse"].performed += SwitchItem;
+            
         }
 
 
@@ -91,6 +93,7 @@ namespace Hawaiian.Inventory
 
         public void SwitchItem(InputAction.CallbackContext value)
         {
+           
             if (!value.performed)
                 return;
             
@@ -100,6 +103,7 @@ namespace Hawaiian.Inventory
                 OnCycleForward();
 
             GetComponent<ItemInteractor>().UpdateItem();
+            
 
         }
         public void OnCycleForward()
@@ -136,6 +140,7 @@ namespace Hawaiian.Inventory
             if (_inv.inv[_inv.invPosition] != null)
             {
                 hand.sprite = _inv.inv[_inv.invPosition].ItemSprite;
+                
             }
             else
             {
@@ -143,27 +148,11 @@ namespace Hawaiian.Inventory
             }
             
             //how do i call an event c:
-            
-       
-            
+
+
+
             parse.Raise();
             
-        }
-
-        public void OnDrop()
-        {
-            if (_inv.inv[_inv.invPosition] != null)
-            {
-                GameObject dp = Instantiate(droppedItem, transform.position, quaternion.identity);
-                dp.GetComponent<DroppedItem>().item = _inv.inv[_inv.invPosition];
-                dp.GetComponent<SpriteRenderer>().sprite = _inv.inv[_inv.invPosition].DroppedItemSprite;
-                _inv.DropItem();
-                hand.sprite = null;
-            }
-            else
-            {
-                Debug.Log("THIS BITCH EMPTY...............................YEET");
-            }
         }
 
         public void UseItem()

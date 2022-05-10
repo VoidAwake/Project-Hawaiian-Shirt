@@ -21,6 +21,8 @@ public class ItemInteractor : MonoBehaviour
     [SerializeField] private SpriteRenderer _handHelder;
     [SerializeField] private UnitAnimator _animator;
 
+    
+    
     //Components
     private InventoryController _controller;
     private List<LineRenderer> _lineRenderers;
@@ -36,6 +38,10 @@ public class ItemInteractor : MonoBehaviour
 
     private GameObject _projectileInstance;
     private GameObject _projectileReference; //TODO: Get from item
+
+    [SerializeField] public bool isHoldingKey = false;
+    [SerializeField] public bool canUnlock = false;
+    public bool signal = false;
 
     public bool IsAttacking => _isHoldingAttack;
     
@@ -245,9 +251,13 @@ public class ItemInteractor : MonoBehaviour
 
         if (_controller.GetCurrentItem().Type is ItemType.Other or ItemType.Objective)
         {
-            if(_controller.GetCurrentItem().IsKey)
+            if(_controller.GetCurrentItem().IsKey && canUnlock)
             {
-                
+                signal = true;
+            }
+            else
+            {
+                signal = false;
             }
             return;
         }
@@ -348,19 +358,31 @@ public class ItemInteractor : MonoBehaviour
           _isJoystickNeutral = true;
       }
 
-    
-      public void UpdateItem()
-      {
-          
-          if (_controller.GetCurrentItem() == null)
-              return;
-          
-          
-          _projectileReference = _controller.GetCurrentItem().ProjectileInstance;
+
+    public void UpdateItem()
+    {
+
+        if (_controller.GetCurrentItem() == null) { 
+        isHoldingKey = false;
+        signal = false;
+        return; 
+        }
+
+        if (_controller.GetCurrentItem().IsKey)
+            isHoldingKey = true;
+        else
+        {
+            isHoldingKey = false;
+        }
+        
+
+        _projectileReference = _controller.GetCurrentItem().ProjectileInstance;
           _handHelder.sprite = _controller.GetCurrentItem().ItemSprite;
           _cursor.MaxRadius = _controller.GetCurrentItem().DrawDistance;
       }
 
-    
-    
+   
+
+
+
 }
