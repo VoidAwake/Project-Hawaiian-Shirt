@@ -48,10 +48,10 @@ namespace Hawaiian.Inventory
         }
 
 
-        public void DropItem(Vector2 pos, int invPos)
+        public void DropItem(int invPosition)
         {
             //Manager.drop(inv[invPos]);
-            inv[invPos] = null;
+            inv[invPosition] = null;
             itemchange.Invoke();
         }
 

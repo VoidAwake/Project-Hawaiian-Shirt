@@ -35,7 +35,7 @@ namespace Hawaiian.PositionalEvents
         
         private void Initialise()
         {
-            var action = inputActions.FindAction(actionName);
+            var action = inputActions.FindAction(actionName, false);
 
             if (action == null)
             {
