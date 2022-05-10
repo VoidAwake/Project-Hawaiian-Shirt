@@ -212,9 +212,6 @@ public class ItemInteractor : MonoBehaviour
                 _controller.GetCurrentItem().ItemDamage, _controller.GetCurrentItem().SticksOnWall);
             transform.parent.GetComponent<UnitAnimator>()
                 .UseItem(UnitAnimationState.Throw, _cursor.transform.position, false);
-            
-            _projectileInstance.GetComponent<DealKnockback>().Initialise(2, _playerReference);
-            _projectileInstance.GetComponent<DropItem>().Initialise(_playerReference);
         }
         else
         {
@@ -235,6 +232,9 @@ public class ItemInteractor : MonoBehaviour
                     projectile.GetComponent<DropItem>().Initialise(_playerReference);
                 }
             }
+            
+            _projectileInstance.GetComponent<DealKnockback>().Initialise(2, _playerReference);
+            _projectileInstance.GetComponent<DropItem>().Initialise(_playerReference);
         }
 
         transform.parent.GetComponent<UnitAnimator>()
