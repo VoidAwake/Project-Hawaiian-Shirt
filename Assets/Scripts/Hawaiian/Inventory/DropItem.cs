@@ -1,4 +1,5 @@
-﻿using Hawaiian.Unit;
+﻿using System.Collections.Generic;
+using Hawaiian.Unit;
 using UnityEngine;
 
 namespace Hawaiian.Inventory
@@ -6,6 +7,7 @@ namespace Hawaiian.Inventory
     public class DropItem : MonoBehaviour
     {
         private IUnit user;
+        private readonly List<IUnit> oldTargets = new List<IUnit>();
 
         public void Initialise(IUnit user) 
         {
@@ -20,8 +22,10 @@ namespace Hawaiian.Inventory
                 //Yucky 
                 IUnit target = (IUnit) col.gameObject.GetComponent<Unit.Unit>();
 
-                if (target == user)
+                if (target == user || oldTargets.Contains(target))
                     return;
+                
+                oldTargets.Add(target);
                 
                 // TODO: Should find a better way to access inventory
                 var inventoryController = col.GetComponentInChildren<InventoryController>();
