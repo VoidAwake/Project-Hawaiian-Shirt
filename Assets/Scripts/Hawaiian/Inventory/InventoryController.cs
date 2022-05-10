@@ -1,10 +1,10 @@
-using System;
 using Hawaiian.PositionalEvents;
 using Hawaiian.Unit;
 using Hawaiian.Utilities;
 using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Random = UnityEngine.Random;
 
 
 namespace Hawaiian.Inventory
