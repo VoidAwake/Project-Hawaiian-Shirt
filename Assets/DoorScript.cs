@@ -12,7 +12,7 @@ public class DoorScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        animator = GetComponent<Animator>();
+        animator = GetComponentInChildren<Animator>();
         doorRange = GetComponent<BoxCollider2D>();
     }
 
@@ -25,6 +25,7 @@ public class DoorScript : MonoBehaviour
     public void UnlockDoor()
     {
         animator.SetTrigger("Unlock");
+        Destroy(doorRange);
     }
 
 
@@ -34,10 +35,28 @@ public class DoorScript : MonoBehaviour
         if (col.CompareTag("Player"))
         {
             inRange = true;
+            ItemInteractor interactor = col.gameObject.GetComponentInChildren<ItemInteractor>();
+            if (interactor)
+            {
+                if (interactor.isHoldingKey)
+                {
+                    interactor.canUnlock = true;
+                }
+                else
+                {
+                    interactor.canUnlock = false;
+                }
+            }
+
+            if (interactor.signal)
+            {
+                UnlockDoor();
+            }
         }
         else
         {
             inRange = false;
         }
     }
+    
 }
