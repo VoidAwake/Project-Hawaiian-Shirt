@@ -107,12 +107,15 @@ public class ItemInteractor : MonoBehaviour
     
     public void HoldAttack(InputAction.CallbackContext value)
     {
+        if(_controller.GetCurrentItem().Type == ItemType.Objective || _controller.GetCurrentItem().Type == ItemType.Other)
+        {
+            return;
+        }
         if (value.performed)
         {
             _isHoldingAttack = true;
             return;
         }
-
         
 
         var position = _cursor.transform.position;
@@ -149,12 +152,21 @@ public class ItemInteractor : MonoBehaviour
 
             if (_controller.GetCurrentItem() == null)
                 return;
-            
-            //NEEDS TO BE A CHECK IF USING PROJECTILES TO ALLOW FOR ON HOLD ACTIONS AND IGNORE THIS
-            #region Ranged Attack
-            
-            
-            if (_controller.GetCurrentItem().Type is ItemType.Projectile or ItemType.Throwable)
+
+        if (_controller.GetCurrentItem().Type is ItemType.Other or ItemType.Objective)
+        {
+            if(_controller.GetCurrentItem().IsKey)
+            {
+                
+            }
+            return;
+        }
+
+        //NEEDS TO BE A CHECK IF USING PROJECTILES TO ALLOW FOR ON HOLD ACTIONS AND IGNORE THIS
+        #region Ranged Attack
+
+
+        if (_controller.GetCurrentItem().Type is ItemType.Projectile or ItemType.Throwable)
             {
                 HoldAttack(value);
                 return;
@@ -212,6 +224,8 @@ public class ItemInteractor : MonoBehaviour
 
             #endregion
             
+        
+
         }
     
       public void UpdateItem()
