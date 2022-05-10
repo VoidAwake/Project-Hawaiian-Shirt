@@ -14,6 +14,8 @@ GameObject:
   - component: {fileID: 1720245491}
   - component: {fileID: 5973478539246383931}
   - component: {fileID: 1720245496}
+  - component: {fileID: 1413342130090747480}
+  - component: {fileID: 1337574294931782039}
   m_Layer: 0
   m_Name: MeleeSlash
   m_TagString: Untagged
@@ -170,3 +172,28 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &1413342130090747480
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1546100782826642891}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6bd43b9a334e47efad33d995f0d17efa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rigidbody2D: {fileID: 1720245496}
+--- !u!114 &1337574294931782039
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1546100782826642891}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ddb6f2901ea84de79ea7a904e1e56c48, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
