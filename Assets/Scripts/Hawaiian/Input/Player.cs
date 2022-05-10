@@ -118,6 +118,15 @@ namespace Hawaiian.Input
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Drop"",
+                    ""type"": ""Button"",
+                    ""id"": ""3b38de02-c033-4c49-a115-ce44b0c2fd04"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -670,6 +679,17 @@ namespace Hawaiian.Input
                     ""action"": ""Parse"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b759c435-d0ba-4448-bd1c-5815f0bd9761"",
+                    ""path"": ""<Keyboard>/z"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Drop"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -1039,6 +1059,7 @@ namespace Hawaiian.Input
             m_Player_HoldAttack = m_Player.FindAction("HoldAttack", throwIfNotFound: true);
             m_Player_PickUp = m_Player.FindAction("PickUp", throwIfNotFound: true);
             m_Player_Parse = m_Player.FindAction("Parse", throwIfNotFound: true);
+            m_Player_Drop = m_Player.FindAction("Drop", throwIfNotFound: true);
             // Lobby Player
             m_LobbyPlayer = asset.FindActionMap("Lobby Player", throwIfNotFound: true);
             m_LobbyPlayer_Ready = m_LobbyPlayer.FindAction("Ready", throwIfNotFound: true);
@@ -1115,6 +1136,7 @@ namespace Hawaiian.Input
         private readonly InputAction m_Player_HoldAttack;
         private readonly InputAction m_Player_PickUp;
         private readonly InputAction m_Player_Parse;
+        private readonly InputAction m_Player_Drop;
         public struct PlayerActions
         {
             private @PlayerAction m_Wrapper;
@@ -1129,6 +1151,7 @@ namespace Hawaiian.Input
             public InputAction @HoldAttack => m_Wrapper.m_Player_HoldAttack;
             public InputAction @PickUp => m_Wrapper.m_Player_PickUp;
             public InputAction @Parse => m_Wrapper.m_Player_Parse;
+            public InputAction @Drop => m_Wrapper.m_Player_Drop;
             public InputActionMap Get() { return m_Wrapper.m_Player; }
             public void Enable() { Get().Enable(); }
             public void Disable() { Get().Disable(); }
@@ -1168,6 +1191,9 @@ namespace Hawaiian.Input
                     @Parse.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnParse;
                     @Parse.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnParse;
                     @Parse.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnParse;
+                    @Drop.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDrop;
+                    @Drop.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDrop;
+                    @Drop.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDrop;
                 }
                 m_Wrapper.m_PlayerActionsCallbackInterface = instance;
                 if (instance != null)
@@ -1202,6 +1228,9 @@ namespace Hawaiian.Input
                     @Parse.started += instance.OnParse;
                     @Parse.performed += instance.OnParse;
                     @Parse.canceled += instance.OnParse;
+                    @Drop.started += instance.OnDrop;
+                    @Drop.performed += instance.OnDrop;
+                    @Drop.canceled += instance.OnDrop;
                 }
             }
         }
@@ -1355,6 +1384,7 @@ namespace Hawaiian.Input
             void OnHoldAttack(InputAction.CallbackContext context);
             void OnPickUp(InputAction.CallbackContext context);
             void OnParse(InputAction.CallbackContext context);
+            void OnDrop(InputAction.CallbackContext context);
         }
         public interface ILobbyPlayerActions
         {
