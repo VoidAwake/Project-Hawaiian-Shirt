@@ -575,7 +575,7 @@ PrefabInstance:
     - target: {fileID: 2135048521545393823, guid: 06a8f405b1eba494fb68a1773ece674c, type: 3}
       propertyPath: Event
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 11400000, guid: 2220e64b52956274a8ac1a529699a2d4, type: 2}
     - target: {fileID: 2135048521676535366, guid: 06a8f405b1eba494fb68a1773ece674c, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -40
@@ -1552,7 +1552,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 447917920994042306, guid: 85f32cfcc96d14c4b81d22ccac59709f, type: 3}
       propertyPath: m_AnimatedTiles.Array.data[1].second.m_AnimationSpeed
-      value: 5.0000005
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 447917920994042306, guid: 85f32cfcc96d14c4b81d22ccac59709f, type: 3}
       propertyPath: m_Tiles.Array.data[0].second.m_TileObjectToInstantiateIndex
@@ -1867,41 +1867,3 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c38b0ae045ef1114a82b930dd73f6ed5, type: 3}
---- !u!1 &2081614068 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2387493150576276818, guid: c38b0ae045ef1114a82b930dd73f6ed5, type: 3}
-  m_PrefabInstance: {fileID: 2081614067}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &2081614069
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2081614068}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a79441f348de89743a2939f4d699eac1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_RenderShadows: 1
-  m_RequiresDepthTextureOption: 2
-  m_RequiresOpaqueTextureOption: 2
-  m_CameraType: 0
-  m_Cameras: []
-  m_RendererIndex: -1
-  m_VolumeLayerMask:
-    serializedVersion: 2
-    m_Bits: 1
-  m_VolumeTrigger: {fileID: 0}
-  m_VolumeFrameworkUpdateModeOption: 2
-  m_RenderPostProcessing: 0
-  m_Antialiasing: 0
-  m_AntialiasingQuality: 2
-  m_StopNaN: 0
-  m_Dithering: 0
-  m_ClearDepth: 1
-  m_AllowXRRendering: 1
-  m_RequiresDepthTexture: 0
-  m_RequiresColorTexture: 0
-  m_Version: 2

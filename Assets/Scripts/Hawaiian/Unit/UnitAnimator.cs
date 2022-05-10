@@ -76,8 +76,8 @@ namespace Hawaiian.Unit
                     // Flip sprite if moving in opposite direction
                     if (spriteDirection < 0 && velocity.x > 0.1f)
                     {
-                        foreach (var renderer in _renderers)
-                            renderer.flipX = true;
+                     //   foreach (var renderer in _renderers)
+                       //     renderer.flipX = true;
 
                         if (_currentAnimationState == UnitAnimationState.None)
                         {
@@ -86,8 +86,8 @@ namespace Hawaiian.Unit
                     }
                     else if (spriteDirection > 0 && velocity.x < -0.1f)
                     {
-                        foreach (var renderer in _renderers)
-                            renderer.flipX = false;
+                      //  foreach (var renderer in _renderers)
+                      //      renderer.flipX = false;
 
                         if (_currentAnimationState == UnitAnimationState.None)
                         {
@@ -238,7 +238,14 @@ namespace Hawaiian.Unit
                 _isLookingLeft = false;
                 spriteDirection = 1;
                 //Vector2 prevPos = cursor.transform.position;
-                transform.localScale = new Vector2(-1.0f, 1.0f);
+             //  transform.localScale = new Vector2(-1.0f, 1.0f);
+                
+                foreach (var renderer in _renderers)
+                    renderer.flipX = true;
+                
+                heldItem.transform.localPosition = new Vector2(0.6f, 0.55f);
+
+
                 //if (cursor != null) cursor.transform.position = prevPos;
             }
             else
@@ -246,7 +253,12 @@ namespace Hawaiian.Unit
                 _isLookingLeft = true;
                 spriteDirection = -1;
                 //Vector2 prevPos = cursor.transform.position;
-                transform.localScale = new Vector2(1.0f, 1.0f);
+               // transform.localScale = new Vector2(1.0f, 1.0f);
+               foreach (var renderer in _renderers)
+                   renderer.flipX = false;
+               
+               heldItem.transform.localPosition = new Vector2(-0.6f, 0.55f);
+
                 //if (cursor != null) cursor.transform.position = prevPos;
             }
         }
