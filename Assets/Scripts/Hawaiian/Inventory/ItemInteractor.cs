@@ -189,43 +189,61 @@ public class ItemInteractor : MonoBehaviour
             return;
         }
      
-        //Logic for when the player stops holding their attack
-        var position = _cursor.transform.position;
-        var projectiles = new List<GameObject>();
-        
-        if (_controller.GetCurrentItem().Type is ItemType.Projectile && _controller.GetCurrentItem().IsMultiShot)
-        {
-            for (int i = 0; i < _controller.GetCurrentItem().ProjectileAmount - 1; i++)
-                projectiles.Add( Instantiate(_controller.GetCurrentItem().ProjectileInstance,transform.position,Quaternion.identity));
-        }
-        
-        _projectileInstance  = Instantiate(_controller.GetCurrentItem().ProjectileInstance,transform.position,Quaternion.identity);
-
-        if (_controller.GetCurrentItem().Type == ItemType.Throwable)
-        {
-            List<Vector2> positions = new List<Vector2>();
-
-            for (int i = 0; i < _renderer.positionCount; i++)
-                positions.Add((Vector2)_renderer.GetPosition(i));
-                
-            _projectileInstance.GetComponent<Throwable>().Initialise(positions.ToArray(),_controller.GetCurrentItem().ItemSprite,_controller.GetCurrentItem().DrawSpeed,_controller.GetCurrentItem().ItemDamage,_controller.GetCurrentItem().SticksOnWall);
-            transform.parent.GetComponent<UnitAnimator>().UseItem(UnitAnimationState.Throw, _cursor.transform.position, false);
-        }
-        else
-        {
-            _projectileInstance.GetComponent<Projectile>().Initialise(_playerReference,position,_controller.GetCurrentItem().DrawSpeed,_controller.GetCurrentItem().ItemDamage,_controller.GetCurrentItem().SticksOnWall,_controller.GetCurrentItem().ReturnsToPlayer);
-            
-            if (_controller.GetCurrentItem().Type is ItemType.Projectile && _controller.GetCurrentItem().IsMultiShot)
-            {
-                for (var i = 0; i < projectiles.Count; i++)
-                {
-                    GameObject projectile = projectiles[i];
-                    projectile.GetComponent<Projectile>().Initialise(_playerReference, _multiShotTargets[i], _controller.GetCurrentItem().DrawSpeed, _controller.GetCurrentItem().ItemDamage, _controller.GetCurrentItem().SticksOnWall, _controller.GetCurrentItem().ReturnsToPlayer);
-                }
-            }
-        }
-            transform.parent.GetComponent<UnitAnimator>().UseItem(UnitAnimationState.Throw, _cursor.transform.position, false);
-
+       //Logic for when the player stops holding their attack 
+        var position = _cursor.transform.position; 
+        var projectiles = new List<GameObject>(); 
+ 
+        if (_controller.GetCurrentItem().Type is ItemType.Projectile && _controller.GetCurrentItem().IsMultiShot) 
+        { 
+            for (int i = 0; i < _controller.GetCurrentItem().ProjectileAmount - 1; i++) 
+                projectiles.Add(Instantiate(_controller.GetCurrentItem().ProjectileInstance, transform.position, 
+                    Quaternion.identity)); 
+        } 
+ 
+        _projectileInstance = Instantiate(_controller.GetCurrentItem().ProjectileInstance, transform.position, 
+            Quaternion.identity); 
+ 
+        if (_controller.GetCurrentItem().Type == ItemType.Throwable) 
+        { 
+            List<Vector2> positions = new List<Vector2>(); 
+ 
+            for (int i = 0; i < _renderer.positionCount; i++) 
+                positions.Add((Vector2)_renderer.GetPosition(i)); 
+ 
+            _projectileInstance.GetComponent<Throwable>().Initialise(positions.ToArray(), 
+                _controller.GetCurrentItem().ItemSprite, _controller.GetCurrentItem().DrawSpeed, 
+                _controller.GetCurrentItem().ItemDamage, _controller.GetCurrentItem().SticksOnWall); 
+            transform.parent.GetComponent<UnitAnimator>() 
+                .UseItem(UnitAnimationState.Throw, _cursor.transform.position, false); 
+        } 
+        else 
+        { 
+            _projectileInstance.GetComponent<Projectile>().Initialise(_playerReference, position, 
+                _controller.GetCurrentItem().DrawSpeed, _controller.GetCurrentItem().ItemDamage, 
+                _controller.GetCurrentItem().SticksOnWall, _controller.GetCurrentItem().ReturnsToPlayer); 
+ 
+            if (_controller.GetCurrentItem().Type is ItemType.Projectile && _controller.GetCurrentItem().IsMultiShot) 
+            { 
+                for (var i = 0; i < projectiles.Count; i++) 
+                { 
+                    GameObject projectile = projectiles[i]; 
+                    projectile.GetComponent<Projectile>().Initialise(_playerReference, _multiShotTargets[i], 
+                        _controller.GetCurrentItem().DrawSpeed, _controller.GetCurrentItem().ItemDamage, 
+                        _controller.GetCurrentItem().SticksOnWall, _controller.GetCurrentItem().ReturnsToPlayer); 
+                     
+                    projectile.GetComponent<DealKnockback>().Initialise(2, _playerReference); 
+                    projectile.GetComponent<DropItem>().Initialise(_playerReference); 
+                } 
+            } 
+             
+            _projectileInstance.GetComponent<DealKnockback>().Initialise(2, _playerReference); 
+            _projectileInstance.GetComponent<DropItem>().Initialise(_playerReference); 
+        } 
+ 
+        transform.parent.GetComponent<UnitAnimator>() 
+            .UseItem(UnitAnimationState.Throw, _cursor.transform.position, false); 
+ 
+ 
         if (_lineRenderers.Count > 0)
         {
             for (int i = _lineRenderers.Count - 1; i >= 0; i--)
