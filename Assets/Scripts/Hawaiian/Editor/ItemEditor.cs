@@ -26,6 +26,8 @@ namespace Hawaiian.Editor
         SerializedProperty points;
         SerializedProperty droppedItemBase;
         SerializedProperty projectileInstance;
+        SerializedProperty isKey;
+        SerializedProperty otherInstance;
 
 
         private void OnEnable()
@@ -44,6 +46,7 @@ namespace Hawaiian.Editor
             points = serializedObject.FindProperty("Points");
             droppedItemBase = serializedObject.FindProperty("DroppedItemBase");
             projectileInstance = serializedObject.FindProperty("ProjectileInstance");
+            isKey = serializedObject.FindProperty("IsKey");
         }
 
         public override void OnInspectorGUI()
@@ -72,6 +75,7 @@ namespace Hawaiian.Editor
                     ShowObjectiveComponent();
                     break;
                 case ItemType.Other:
+                    ShowOtherComponent();
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
@@ -136,6 +140,13 @@ namespace Hawaiian.Editor
             EditorGUILayout.PropertyField(isMainObjective, new GUIContent("Is Main Objective"));
             EditorGUILayout.PropertyField(canBeHeldByEnemies, new GUIContent("Can Be Held By Enemies"));
         }
+
+        private void ShowOtherComponent()
+        {
+            GUILayout.Label("Other Stats", EditorStyles.boldLabel);
+            EditorGUILayout.PropertyField(isKey, new GUIContent("Key"));
+        }
+
     }
 }
 
