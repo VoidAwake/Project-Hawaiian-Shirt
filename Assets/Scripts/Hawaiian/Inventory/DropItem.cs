@@ -32,7 +32,7 @@ namespace Hawaiian.Inventory
 
                 if (inventoryController != null)
                 {
-                    inventoryController.DropRandom();
+                    //inventoryController.DropRandom();
                 }
             }
         }
