@@ -63,6 +63,7 @@ namespace Hawaiian.UI.CharacterSelect
             public bool isPlayer { get; set; }
             public int playerNumber;
             public int characterNumber;
+            public float score;
 
             // Player input info
             public PlayerInput inputComponent;

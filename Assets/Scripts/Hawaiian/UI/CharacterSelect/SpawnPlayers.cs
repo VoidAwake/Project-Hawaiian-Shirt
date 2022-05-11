@@ -1,8 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Hawaiian.Game;
+using Hawaiian.Inventory;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 namespace Hawaiian.UI.CharacterSelect
 {
@@ -12,6 +15,10 @@ namespace Hawaiian.UI.CharacterSelect
         enum PlayerColours { Red, Blue, Yellow, Green }
 
         [SerializeField] GameObject playerPrefab;
+        [SerializeField] private int buildIndex;
+        [SerializeField] private GameManager gameManager;
+
+        private Dictionary<LobbyGameManager.PlayerConfig, InventoryController> inventoryControllers = new();
 
         // Start is called before the first frame update
         void Start()
@@ -41,6 +48,8 @@ namespace Hawaiian.UI.CharacterSelect
                             Inventory.InventoryController temp = newPlayer.transform.GetChild(i).GetComponent<Inventory.InventoryController>();
                             if (temp != null)
                             {
+                                inventoryControllers.Add(config, temp);
+                                
                                 Inventory.Inventory inv = temp._inv;
 
                                 // Search for inventory UIs, and find the one that matches our inventory
@@ -57,12 +66,40 @@ namespace Hawaiian.UI.CharacterSelect
                     }
                 }
 
-                Destroy(playerData.gameObject);
+                // Data is still needed for results
+                // Destroy(playerData.gameObject);
                 inputManager.joinBehavior = PlayerJoinBehavior.JoinPlayersManually;
             }
             else if (inputManager != null)
             {
                 inputManager.joinBehavior = PlayerJoinBehavior.JoinPlayersWhenButtonIsPressed;
+            }
+        }
+
+        public void SaveScores()
+        {
+            if (gameManager.Phase != GameManager.GamePhase.GameOver) return;
+            
+            // TODO: For each player, get the score and save it to the PlayerConfig
+            foreach (var VARIABLE in inventoryControllers)
+            {
+                var inventoryController = VARIABLE.Value;
+                var playerConfig = VARIABLE.Key;
+
+                // TODO: Duplicate code. See ScoreUI.
+                var score = inventoryController._inv.inv.Where(i => i != null).Sum(i => i.Points);
+
+                playerConfig.score = score;
+            }
+            
+            Transition transition = FindObjectOfType<Transition>();
+            if (transition != null)
+            {
+                transition.BeginTransition(true, true, buildIndex, false);
+            }
+            else
+            {
+                SceneManager.LoadScene(buildIndex);
             }
         }
     }
