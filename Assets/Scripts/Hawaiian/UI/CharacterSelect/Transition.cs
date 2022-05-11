@@ -63,7 +63,15 @@ namespace Hawaiian.UI.CharacterSelect
                             // TODO: Grab player information from this class and LobbyGameManager (which has a PlayerConfig class) and pass it into the next scene
                             if (stashPlayerInfo)
                             {
+                                LobbyGameManager manager = FindObjectOfType<LobbyGameManager>();
 
+                                foreach (LobbyGameManager.PlayerConfig config in manager.playerConfigs)
+                                {
+                                    if (config.isPlayer) config.SetInputInfo(config.inputComponent);
+                                }
+
+                                Destroy(manager.GetComponent<LobbyManager>());
+                                //Destroy(manager.GetComponent<PlayerInputManager>());
                             }
 
                             // Then, load the next scene

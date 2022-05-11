@@ -6,7 +6,7 @@ namespace Hawaiian.UI.MainMenu
 {
     public class MainMenuButtonFunctions : MonoBehaviour
     {
-        enum ButtonFunction { LoadSceneByIndex, CloseApp }
+        enum ButtonFunction { LoadSceneByIndex, CloseApp, DeleteSelf, ResumeGame, DisplayControls }
         [SerializeField] ButtonFunction function;
         [SerializeField] int buildIndex;
         [SerializeField] bool callTransition;
@@ -41,6 +41,16 @@ namespace Hawaiian.UI.MainMenu
             Destroy(gameObject);
         }
 
+        public void ResumeGame()
+        {
+            FindObjectOfType<MainMenuController>().pausePlayer.ResumeGame();
+        }
+
+        public void DisplayControls()
+        {
+            Debug.Log("Display the controls!");
+        }
+
         public void CallSerializedFunction()
         {
             switch (function)
@@ -50,6 +60,15 @@ namespace Hawaiian.UI.MainMenu
                     break;
                 case ButtonFunction.CloseApp:
                     CloseApp();
+                    break;
+                case ButtonFunction.DeleteSelf:
+                    DeleteSelf();
+                    break;
+                case ButtonFunction.ResumeGame:
+                    ResumeGame();
+                    break;
+                case ButtonFunction.DisplayControls:
+                    DisplayControls();
                     break;
                 default:
                     break;

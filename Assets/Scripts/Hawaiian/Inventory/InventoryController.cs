@@ -28,7 +28,7 @@ namespace Hawaiian.Inventory
         //[SerializeField] private int invSize;a
 
 
-        private Inventory _inv;
+        public Inventory _inv;
         private PositionalEventCaller positionalEventCaller;
 
         public Item GetCurrentItem() => _inv.inv[_inv.invPosition];

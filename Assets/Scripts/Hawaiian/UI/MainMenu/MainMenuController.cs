@@ -10,15 +10,11 @@ namespace Hawaiian.UI.MainMenu
     {
         int actionA = 0;    // INPUT STATUSES:
         int actionB = 0;    // 0 - Up
-        int actionL = 0;    // 1 - Down, Action Buffered
-        int actionR = 0;    // 2 - Down, Action Recieved
         Vector2 move = new Vector2();
 
         public void OnMove(InputValue value) { move = value.Get<Vector2>(); }
         public void OnActionA(InputValue value) { HandleButtonInput(value.Get<float>(), ref actionA); }
         public void OnActionB(InputValue value) { HandleButtonInput(value.Get<float>(), ref actionB); }
-        public void OnActionL(InputValue value) { HandleButtonInput(value.Get<float>(), ref actionL); }
-        public void OnActionR(InputValue value) { HandleButtonInput(value.Get<float>(), ref actionR); }
 
         void HandleButtonInput(float value, ref int status)
         {
@@ -34,6 +30,8 @@ namespace Hawaiian.UI.MainMenu
         bool cursorActive;
         int selected;
         bool disabled;
+
+        public PauseController pausePlayer;
 
         // Start is called before the first frame update
         void Start()
@@ -71,8 +69,9 @@ namespace Hawaiian.UI.MainMenu
                         else
                         {
                             selected = (selected - 1) % (buttons.Length);
+                            if (selected < 0) selected = buttons.Length + selected;
                             cursor.rectTransform.anchoredPosition = buttons[selected].GetComponent<RectTransform>().anchoredPosition;
-                            Debug.Log(selected + " " + buttons.Length);
+                            //Debug.Log(selected + " " + buttons.Length);
                         }
                         moveBuffer = 1;
                     }
@@ -83,7 +82,7 @@ namespace Hawaiian.UI.MainMenu
                         {
                             selected = (selected + 1) % (buttons.Length);
                             cursor.rectTransform.anchoredPosition = buttons[selected].GetComponent<RectTransform>().anchoredPosition;
-                            Debug.Log(selected +" "+ buttons.Length);
+                            //Debug.Log(selected +" "+ buttons.Length);
                         }
                         moveBuffer = -1;
                     }
@@ -103,11 +102,23 @@ namespace Hawaiian.UI.MainMenu
                     if (!cursorActive) { cursor.enabled = true; cursorActive = true; }
                     else
                     {
-                        ;
+                        if (pausePlayer != null)
+                        {
+                            pausePlayer.ResumeGame();
+                        }
                     }
                     actionB++;
                 }
             }
+        }
+
+        public void CursorToStartingState()
+        {
+            selected = 0;
+            cursor.rectTransform.anchoredPosition = buttons[selected].GetComponent<RectTransform>().anchoredPosition;
+            cursor.enabled = false;
+            cursorActive = false;
+            disabled = false;
         }
     }
 }

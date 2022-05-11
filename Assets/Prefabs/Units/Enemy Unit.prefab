@@ -85,6 +85,7 @@ MonoBehaviour:
   size: {fileID: 0}
   addedInventory: {fileID: 11400000, guid: 2220e64b52956274a8ac1a529699a2d4, type: 2}
   hand: {fileID: 0}
+  droppedItem: {fileID: 0}
 --- !u!58 &121433996737073732
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -361,6 +362,8 @@ MonoBehaviour:
   testBool: 0
   testVector: {x: 0, y: 0}
   testFloat: 0
+  head: {fileID: 7237116040329313408}
+  torso: {fileID: 6508653587361009964}
   playerState: 0
   _maxHealth: 20
   tripTime: 0.75
@@ -369,3 +372,25 @@ MonoBehaviour:
   maxSpeed: 5.5
   tweenRate: 15
   runMultiplier: 1.75
+--- !u!114 &6508653587361009964 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1017534579100998980, guid: fe93fd4b04ca3d340865789a7d27cade, type: 3}
+  m_PrefabInstance: {fileID: 6074339651911699560}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed8b1ae4e4e52b34ea557c1c11e076fc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &7237116040329313408 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3468621683669627112, guid: fe93fd4b04ca3d340865789a7d27cade, type: 3}
+  m_PrefabInstance: {fileID: 6074339651911699560}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed8b1ae4e4e52b34ea557c1c11e076fc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

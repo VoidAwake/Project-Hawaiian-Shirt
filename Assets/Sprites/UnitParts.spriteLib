@@ -73,8 +73,8 @@ MonoBehaviour:
       m_Sprite: {fileID: -371724849, guid: 15627e08c6b9b0740859614b25441267, type: 3}
       m_FromMain: 0
       m_SpriteOverride: {fileID: -371724849, guid: 15627e08c6b9b0740859614b25441267, type: 3}
-    - m_Name: Entry_2
-      m_Hash: -636385706
+    - m_Name: Green
+      m_Hash: 291225893
       m_Sprite: {fileID: -1366062675, guid: 15627e08c6b9b0740859614b25441267, type: 3}
       m_FromMain: 0
       m_SpriteOverride: {fileID: -1366062675, guid: 15627e08c6b9b0740859614b25441267, type: 3}

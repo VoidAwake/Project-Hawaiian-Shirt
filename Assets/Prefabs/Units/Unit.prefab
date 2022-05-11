@@ -293,19 +293,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -587020401536548690, guid: c6c9aef488140724c8e8b37d62a49058, type: 3}
       propertyPath: m_Bounds.m_Center.x
-      value: 0.00898391
+      value: 0.0076681376
       objectReference: {fileID: 0}
     - target: {fileID: -587020401536548690, guid: c6c9aef488140724c8e8b37d62a49058, type: 3}
       propertyPath: m_Bounds.m_Center.y
-      value: 0.102063924
+      value: 0.08882406
       objectReference: {fileID: 0}
     - target: {fileID: -587020401536548690, guid: c6c9aef488140724c8e8b37d62a49058, type: 3}
       propertyPath: m_Bounds.m_Extent.x
-      value: 0.62435794
+      value: 0.6377739
       objectReference: {fileID: 0}
     - target: {fileID: -587020401536548690, guid: c6c9aef488140724c8e8b37d62a49058, type: 3}
       propertyPath: m_Bounds.m_Extent.y
-      value: 0.54769605
+      value: 0.536656
       objectReference: {fileID: 0}
     - target: {fileID: -587020401536548690, guid: c6c9aef488140724c8e8b37d62a49058, type: 3}
       propertyPath: m_BoneTransforms.Array.size
@@ -702,6 +702,8 @@ MonoBehaviour:
   testBool: 0
   testVector: {x: 0, y: 0}
   testFloat: 0
+  head: {fileID: 3468621683669627112}
+  torso: {fileID: 1017534579100998980}
   playerState: 0
   _maxHealth: 20
   tripTime: 0.75
