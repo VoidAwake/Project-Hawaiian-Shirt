@@ -29,7 +29,7 @@ MonoBehaviour:
   AttackRate: 0
   IsMainObjective: 0
   CanBeHeldByEnemies: 0
-  Points: 20
+  Points: 10
   PlacementRadius: 0
   PlacementIcon: {fileID: 0}
   TrapInstance: {fileID: 0}
