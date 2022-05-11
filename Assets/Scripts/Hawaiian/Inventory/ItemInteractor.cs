@@ -189,43 +189,59 @@ public class ItemInteractor : MonoBehaviour
             return;
         }
      
-        //Logic for when the player stops holding their attack
-        var position = _cursor.transform.position;
-        var projectiles = new List<GameObject>();
-        
-        if (_controller.GetCurrentItem().Type is ItemType.Projectile && _controller.GetCurrentItem().IsMultiShot)
-        {
-            for (int i = 0; i < _controller.GetCurrentItem().ProjectileAmount - 1; i++)
-                projectiles.Add( Instantiate(_controller.GetCurrentItem().ProjectileInstance,transform.position,Quaternion.identity));
-        }
-        
-        _projectileInstance  = Instantiate(_controller.GetCurrentItem().ProjectileInstance,transform.position,Quaternion.identity);
-
-        if (_controller.GetCurrentItem().Type == ItemType.Throwable)
-        {
-            List<Vector2> positions = new List<Vector2>();
-
-            for (int i = 0; i < _renderer.positionCount; i++)
-                positions.Add((Vector2)_renderer.GetPosition(i));
-                
-            _projectileInstance.GetComponent<Throwable>().Initialise(positions.ToArray(),_controller.GetCurrentItem().ItemSprite,_controller.GetCurrentItem().DrawSpeed,_controller.GetCurrentItem().ItemDamage,_controller.GetCurrentItem().SticksOnWall);
-            transform.parent.GetComponent<UnitAnimator>().UseItem(UnitAnimationState.Throw, _cursor.transform.position, false);
-        }
-        else
-        {
-            _projectileInstance.GetComponent<Projectile>().Initialise(_playerReference,position,_controller.GetCurrentItem().DrawSpeed,_controller.GetCurrentItem().ItemDamage,_controller.GetCurrentItem().SticksOnWall,_controller.GetCurrentItem().ReturnsToPlayer);
-            
-            if (_controller.GetCurrentItem().Type is ItemType.Projectile && _controller.GetCurrentItem().IsMultiShot)
-            {
-                for (var i = 0; i < projectiles.Count; i++)
-                {
-                    GameObject projectile = projectiles[i];
-                    projectile.GetComponent<Projectile>().Initialise(_playerReference, _multiShotTargets[i], _controller.GetCurrentItem().DrawSpeed, _controller.GetCurrentItem().ItemDamage, _controller.GetCurrentItem().SticksOnWall, _controller.GetCurrentItem().ReturnsToPlayer);
-                }
-            }
-        }
-            transform.parent.GetComponent<UnitAnimator>().UseItem(UnitAnimationState.Throw, _cursor.transform.position, false);
-
+       //Logic for when the player stops holding their attack 
+        var position = _cursor.transform.position; 
+        var projectiles = new List<GameObject>(); 
+ 
+        if (_controller.GetCurrentItem().Type is ItemType.Projectile && _controller.GetCurrentItem().IsMultiShot) 
+        { 
+            for (int i = 0; i < _controller.GetCurrentItem().ProjectileAmount - 1; i++) 
+                projectiles.Add(Instantiate(_controller.GetCurrentItem().ProjectileInstance, transform.position, 
+                    Quaternion.identity)); 
+        } 
+ 
+        _projectileInstance = Instantiate(_controller.GetCurrentItem().ProjectileInstance, transform.position, 
+            Quaternion.identity); 
+ 
+        if (_controller.GetCurrentItem().Type == ItemType.Throwable) 
+        { 
+            List<Vector2> positions = new List<Vector2>(); 
+ 
+            for (int i = 0; i < _renderer.positionCount; i++) 
+                positions.Add((Vector2)_renderer.GetPosition(i)); 
+ 
+            _projectileInstance.GetComponent<Throwable>().Initialise(positions.ToArray(), 
+                _controller.GetCurrentItem().ItemSprite, _controller.GetCurrentItem().DrawSpeed, 
+                _controller.GetCurrentItem().ItemDamage, _controller.GetCurrentItem().SticksOnWall); 
+            transform.parent.GetComponent<UnitAnimator>() 
+                .UseItem(UnitAnimationState.Throw, _cursor.transform.position, false); 
+        } 
+        else 
+        { 
+            _projectileInstance.GetComponent<Projectile>().Initialise(_playerReference, position, 
+                _controller.GetCurrentItem().DrawSpeed, _controller.GetCurrentItem().ItemDamage, 
+                _controller.GetCurrentItem().SticksOnWall, _controller.GetCurrentItem().ReturnsToPlayer); 
+ 
+            if (_controller.GetCurrentItem().Type is ItemType.Projectile && _controller.GetCurrentItem().IsMultiShot) 
+            { 
+                for (var i = 0; i < projectiles.Count; i++) 
+                { 
+                    GameObject projectile = projectiles[i]; 
+                    projectile.GetComponent<Projectile>().Initialise(_playerReference, _multiShotTargets[i], 
+                        _controller.GetCurrentItem().DrawSpeed, _controller.GetCurrentItem().ItemDamage, 
+                        _controller.GetCurrentItem().SticksOnWall, _controller.GetCurrentItem().ReturnsToPlayer); 
+                     
+                    projectile.GetComponent<HitUnit>().Initialise(_playerReference, _multiShotTargets[i] - transform.position); 
+                } 
+            } 
+             
+            _projectileInstance.GetComponent<HitUnit>().Initialise(_playerReference,  position - transform.position); 
+        } 
+ 
+        transform.parent.GetComponent<UnitAnimator>() 
+            .UseItem(UnitAnimationState.Throw, _cursor.transform.position, false); 
+ 
+ 
         if (_lineRenderers.Count > 0)
         {
             for (int i = _lineRenderers.Count - 1; i >= 0; i--)
@@ -288,6 +304,8 @@ public class ItemInteractor : MonoBehaviour
             
             Vector3 playerInput;
             float angle;
+
+            Vector2 direction;
              
             var position = new Vector3(transform.position.x, transform.position.y + 0.5f, transform.position.z);
             
@@ -300,7 +318,8 @@ public class ItemInteractor : MonoBehaviour
                 playerInput = _rotation;
                 _lastAttackPosition = position + (Vector3)playerInput * _offset;
                 angle = Mathf.Atan2(playerInput.y, playerInput.x) * Mathf.Rad2Deg;
-            
+
+                direction = playerInput;
             }
             else
             {
@@ -312,6 +331,8 @@ public class ItemInteractor : MonoBehaviour
                 Vector3 difference = Camera.main.ScreenToWorldPoint(playerInput) -position;
                 difference.Normalize();
                 angle = Mathf.Atan2(difference.y, difference.x) * Mathf.Rad2Deg;
+
+                direction = mouseDirection;
             }
              
              transform.parent.GetComponent<UnitAnimator>().UseItem(UnitAnimationState.MeleeSwing, new Vector2(Mathf.Sin(angle * Mathf.Deg2Rad + Mathf.PI / 2), -Mathf.Cos(angle * Mathf.Deg2Rad + Mathf.PI / 2)), _attackFlag);
@@ -320,6 +341,9 @@ public class ItemInteractor : MonoBehaviour
              GameObject indicator = Instantiate(_projectileReference,_lastAttackPosition,Quaternion.Euler(new Vector3(0,0,angle +_meleeSlashRotationOffset )),_firePoint);
             
             indicator.GetComponent<DamageIndicator>().Initialise(5,_attackFlag,_playerReference);
+            
+            indicator.GetComponent<HitUnit>().Initialise(_playerReference, direction); 
+
             _attackFlag = !_attackFlag;
 
             #endregion

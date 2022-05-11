@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 1720245496}
   - component: {fileID: 1413342130090747480}
   - component: {fileID: 1337574294931782039}
+  - component: {fileID: -2370930947307229260}
   m_Layer: 0
   m_Name: MeleeSlash
   m_TagString: Untagged
@@ -184,7 +185,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6bd43b9a334e47efad33d995f0d17efa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rigidbody2D: {fileID: 1720245496}
+  knockbackDistance: 2
 --- !u!114 &1337574294931782039
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -197,3 +198,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ddb6f2901ea84de79ea7a904e1e56c48, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &-2370930947307229260
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1546100782826642891}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8d27a13a051e46fbb02877bffabf3400, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hitEffects:
+  - {fileID: 1413342130090747480}
+  - {fileID: 1337574294931782039}
