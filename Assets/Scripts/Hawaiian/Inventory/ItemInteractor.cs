@@ -231,13 +231,11 @@ public class ItemInteractor : MonoBehaviour
                         _controller.GetCurrentItem().DrawSpeed, _controller.GetCurrentItem().ItemDamage, 
                         _controller.GetCurrentItem().SticksOnWall, _controller.GetCurrentItem().ReturnsToPlayer); 
                      
-                    projectile.GetComponent<DealKnockback>().Initialise(2, _playerReference); 
-                    projectile.GetComponent<DropItem>().Initialise(_playerReference); 
+                    projectile.GetComponent<HitUnit>().Initialise(_playerReference, _multiShotTargets[i] - transform.position); 
                 } 
             } 
              
-            _projectileInstance.GetComponent<DealKnockback>().Initialise(2, _playerReference); 
-            _projectileInstance.GetComponent<DropItem>().Initialise(_playerReference); 
+            _projectileInstance.GetComponent<HitUnit>().Initialise(_playerReference,  position - transform.position); 
         } 
  
         transform.parent.GetComponent<UnitAnimator>() 
@@ -306,6 +304,8 @@ public class ItemInteractor : MonoBehaviour
             
             Vector3 playerInput;
             float angle;
+
+            Vector2 direction;
              
             var position = new Vector3(transform.position.x, transform.position.y + 0.5f, transform.position.z);
             
@@ -318,7 +318,8 @@ public class ItemInteractor : MonoBehaviour
                 playerInput = _rotation;
                 _lastAttackPosition = position + (Vector3)playerInput * _offset;
                 angle = Mathf.Atan2(playerInput.y, playerInput.x) * Mathf.Rad2Deg;
-            
+
+                direction = playerInput;
             }
             else
             {
@@ -330,6 +331,8 @@ public class ItemInteractor : MonoBehaviour
                 Vector3 difference = Camera.main.ScreenToWorldPoint(playerInput) -position;
                 difference.Normalize();
                 angle = Mathf.Atan2(difference.y, difference.x) * Mathf.Rad2Deg;
+
+                direction = mouseDirection;
             }
              
              transform.parent.GetComponent<UnitAnimator>().UseItem(UnitAnimationState.MeleeSwing, new Vector2(Mathf.Sin(angle * Mathf.Deg2Rad + Mathf.PI / 2), -Mathf.Cos(angle * Mathf.Deg2Rad + Mathf.PI / 2)), _attackFlag);
@@ -338,6 +341,9 @@ public class ItemInteractor : MonoBehaviour
              GameObject indicator = Instantiate(_projectileReference,_lastAttackPosition,Quaternion.Euler(new Vector3(0,0,angle +_meleeSlashRotationOffset )),_firePoint);
             
             indicator.GetComponent<DamageIndicator>().Initialise(5,_attackFlag,_playerReference);
+            
+            indicator.GetComponent<HitUnit>().Initialise(_playerReference, direction); 
+
             _attackFlag = !_attackFlag;
 
             #endregion

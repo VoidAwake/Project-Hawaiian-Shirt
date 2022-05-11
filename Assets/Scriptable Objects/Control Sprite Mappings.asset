@@ -49,3 +49,7 @@ MonoBehaviour:
     sprite: {fileID: 21300000, guid: 92e3626ffbb779a4997138cced9a9150, type: 3}
   - controlPath: <Keyboard>/space
     sprite: {fileID: 21300000, guid: c6b66d8565773cc42953ebcd9c2395d2, type: 3}
+  - controlPath: <Keyboard>/z
+    sprite: {fileID: 21300000, guid: bfd8f49f933986b4183724e979331175, type: 3}
+  - controlPath: <Gamepad>/leftTrigger
+    sprite: {fileID: 21300000, guid: 761aede4f81f8894e8a5f9163649c2b5, type: 3}
