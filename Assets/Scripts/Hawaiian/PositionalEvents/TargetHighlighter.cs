@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Hawaiian.Unit;
 using UnityEngine;
 
 namespace Hawaiian.PositionalEvents
@@ -7,6 +8,8 @@ namespace Hawaiian.PositionalEvents
     public class TargetHighlighter : MonoBehaviour
     {
         [SerializeField] private GameObject highlighterPrefab;
+        // TODO: Retrieve from PlayerPrefs.
+        [SerializeField] private PlayersData playersData;
         
         private readonly Dictionary<PositionalEventCaller, Dictionary<PositionalEventListener, Highlighter>> highlighters = new();
 
@@ -29,8 +32,12 @@ namespace Hawaiian.PositionalEvents
         private void AddHighlighter(PositionalEventCaller caller, PositionalEventListener target)
         {
             var highlighterObject = Instantiate(highlighterPrefab, target.transform);
-                
-            highlighters[caller].Add(target, highlighterObject.GetComponent<Highlighter>());
+
+            var highlighter = highlighterObject.GetComponent<Highlighter>();
+
+            highlighter.Initialise(playersData.players.Count, playersData.players.Select(a => a.color).ToList());
+            
+            highlighters[caller].Add(target, highlighter);
         }
 
         private void RemoveHighlighter(PositionalEventCaller caller, PositionalEventListener target)

@@ -134,6 +134,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Target Highlighter
       objectReference: {fileID: 0}
+    - target: {fileID: 8438924235777187684, guid: 03a8c1dfafe4269459b7a253f2a25095, type: 3}
+      propertyPath: playersData
+      value: 
+      objectReference: {fileID: 11400000, guid: c756a91a5c590f049a3da8c1bacc8e21, type: 2}
     - target: {fileID: 8438924235777187687, guid: 03a8c1dfafe4269459b7a253f2a25095, type: 3}
       propertyPath: m_RootOrder
       value: 4
