@@ -1,3 +1,4 @@
+using System;
 using Hawaiian.Utilities;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -14,7 +15,14 @@ namespace Hawaiian.Inventory
         Other,
         Trap
     }
-    
+
+    public enum ItemRarity
+    {
+        Common,
+        Rare,
+        VeryRare,
+        Legendary
+    }
     
     [CreateAssetMenu]
     public class Item : ScriptableObject, IItem
@@ -30,8 +38,12 @@ namespace Hawaiian.Inventory
         
         [HideInInspector] public GameObject DroppedItemBase;
         [HideInInspector] public GameObject ProjectileInstance;
+        [HideInInspector] public ItemRarity Rarity;
+        [HideInInspector] public int ItemWeight;
 
-        
+        [HideInInspector] public int ProbabilityRangeFrom;
+        [HideInInspector] public int ProbabilityRangeTo;
+
         [HideInInspector] public float ItemDamage;
 
         //Projectile/Throwable Specific Stats
@@ -41,6 +53,8 @@ namespace Hawaiian.Inventory
         [HideInInspector] public bool ReturnsToPlayer;
         [HideInInspector] public bool IsMultiShot;
         [HideInInspector] public int ProjectileAmount;
+        [HideInInspector] public bool IsRicochet;
+        [HideInInspector] public int MaximumBounces;
 
 
         //Melee Specific Stats
@@ -70,5 +84,27 @@ namespace Hawaiian.Inventory
         public void UseItemAlternate() {}
 
         public float GetDamage() => ItemDamage;
+
+
+        public void OnValidate()
+        {
+            switch (Rarity)
+            {
+                case ItemRarity.Common:
+                    ItemWeight = 60;
+                    break;
+                case ItemRarity.Rare:
+                    ItemWeight = 50;
+                    break;
+                case ItemRarity.VeryRare:
+                    ItemWeight = 30;
+                    break;
+                case ItemRarity.Legendary:
+                    ItemWeight = 10;
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+        }
     }
 }

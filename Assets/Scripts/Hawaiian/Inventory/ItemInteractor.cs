@@ -244,7 +244,7 @@ public class ItemInteractor : MonoBehaviour
             _projectileInstance.GetComponent<Projectile>()
                 .Initialise(_playerReference, position, _controller.GetCurrentItem().DrawSpeed,
                     _controller.GetCurrentItem().ItemDamage, _controller.GetCurrentItem().SticksOnWall,
-                    _controller.GetCurrentItem().ReturnsToPlayer);
+                    _controller.GetCurrentItem().ReturnsToPlayer,_controller.GetCurrentItem().IsRicochet,_controller.GetCurrentItem().MaximumBounces);
 
             if (_controller.GetCurrentItem().Type is ItemType.Projectile && _controller.GetCurrentItem().IsMultiShot)
             {
@@ -254,7 +254,7 @@ public class ItemInteractor : MonoBehaviour
                     projectile.GetComponent<Projectile>()
                         .Initialise(_playerReference, _multiShotTargets[i], _controller.GetCurrentItem().DrawSpeed,
                             _controller.GetCurrentItem().ItemDamage, _controller.GetCurrentItem().SticksOnWall,
-                            _controller.GetCurrentItem().ReturnsToPlayer);
+                            _controller.GetCurrentItem().ReturnsToPlayer,_controller.GetCurrentItem().IsRicochet,_controller.GetCurrentItem().MaximumBounces);
 
                     projectile.GetComponent<DealKnockback>().Initialise(2, _playerReference);
                     projectile.GetComponent<DropItem>().Initialise(_playerReference);
