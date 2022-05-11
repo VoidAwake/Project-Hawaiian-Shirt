@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using Hawaiian.UI.CharacterSelect;
 using Hawaiian.Unit;
 using UI.Core;
 using UnityEngine;
@@ -59,8 +61,10 @@ namespace Hawaiian.UI.Results_Screen
             }
         }
 
-        private void CreatePlayerBar(PlayerData player)
+        private void CreatePlayerBar(LobbyGameManager.PlayerConfig player)
         {
+            if (!player.isPlayer) return;
+            
             var playerBarObject = Instantiate(playerBarPrefab, transform);
 
             var playerBar = playerBarObject.GetComponent<PlayerBar>();
@@ -72,10 +76,9 @@ namespace Hawaiian.UI.Results_Screen
             bars.Add(playerBar);
         }
 
-        public void Initialise(PlayersData playersData)
+        public void Initialise(LobbyGameManager playersData)
         {
-            // TODO: Copies reference, is this a problem?
-            var sortedPlayers = playersData.players;
+            var sortedPlayers = playersData.playerConfigs.ToList();
             
             // TODO: Won't work for some float scores
             sortedPlayers.Sort((a, b) => Mathf.CeilToInt(a.score - b.score));

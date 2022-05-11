@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using Hawaiian.UI.CharacterSelect;
 using Hawaiian.Unit;
 using UI.Core;
 using UnityEngine;
@@ -10,12 +11,14 @@ namespace Hawaiian.UI.Results_Screen
         [SerializeField] private BarChart barChart;
         [SerializeField] private Animator animator;
         [SerializeField] private float startDelayDuration;
-        // TODO: Pull this from PlayerPrefs
-        [SerializeField] private PlayersData playersData;
+        
+        private LobbyGameManager.PlayerConfig playersData;
 
         private void Start()
         {
-            barChart.Initialise(playersData);
+            LobbyGameManager playerData = FindObjectOfType<LobbyGameManager>();
+            
+            barChart.Initialise(playerData);
             
             StartCoroutine(Animate());
         }

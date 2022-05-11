@@ -14,4 +14,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/LocalCoop 3.unity
     guid: aebc5ae7dee0de0459e10f845a419888
+  - enabled: 1
+    path: Assets/Scenes/Results Screen.unity
+    guid: b0930558751c425429485c00789637e4
   m_configObjects: {}

@@ -138,6 +138,13 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   fill: 0
+  headSprites:
+  - {fileID: -1082135578, guid: 7e590c97eac2c4f4aa98580729e4b759, type: 3}
+  - {fileID: -1370121563, guid: 7e590c97eac2c4f4aa98580729e4b759, type: 3}
+  - {fileID: -1057007253, guid: 7e590c97eac2c4f4aa98580729e4b759, type: 3}
+  - {fileID: 1402687085, guid: 7e590c97eac2c4f4aa98580729e4b759, type: 3}
+  - {fileID: -1232166184, guid: 7e590c97eac2c4f4aa98580729e4b759, type: 3}
+  - {fileID: -2054229679, guid: 7e590c97eac2c4f4aa98580729e4b759, type: 3}
 --- !u!95 &1936283575750461022
 Animator:
   serializedVersion: 4
