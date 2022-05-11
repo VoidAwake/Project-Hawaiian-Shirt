@@ -1,22 +1,21 @@
 using UnityEngine;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine.InputSystem;
+using System.Linq;
+
 
 namespace Hawaiian.UI.CharacterSelect
 {
     public class LobbyGameManager : MonoBehaviour
     {
-        public enum GameState { MainMenu, Board1, Board2 }
-        public GameState gameState;
         public PlayerConfig[] playerConfigs;
-        //bool loadedManager = false;
-
-        public Sprite[] playerIcons;
-        public Material[] playerMaterials;
 
         // Start is called before the first frame update
         void Start()
         {
             // Check that this is the one and only GameManager // Also look at preload scene for creating the GameManager
-            // DontDestroyOnLoad(this);
+            DontDestroyOnLoad(this);
             playerConfigs = new PlayerConfig[4];
             for (int i = 0; i < 4; i++)
             {
@@ -64,6 +63,14 @@ namespace Hawaiian.UI.CharacterSelect
             public bool isPlayer { get; set; }
             public int playerNumber;
             public int characterNumber;
+
+            // Player input info
+            public PlayerInput inputComponent;
+            public int playerIndex;
+            public int splitScreenIndex;
+            public string controlScheme;
+            public List<int> deviceIds;
+
             public PlayerConfig(int playerNumber)
             {
                 this.manager = null;
@@ -74,6 +81,7 @@ namespace Hawaiian.UI.CharacterSelect
             public void SetPlayer(LobbyPlayerController LobbyPlayerController)
             {
                 this.manager = LobbyPlayerController;
+                this.inputComponent = LobbyPlayerController.GetComponent<PlayerInput>();
                 this.isPlayer = true;
             }
 
@@ -82,6 +90,14 @@ namespace Hawaiian.UI.CharacterSelect
                 this.manager = null;
                 this.isPlayer = false;
                 this.characterNumber = -1;
+            }
+
+            public void SetInputInfo(PlayerInput playerInput)
+            {
+                playerIndex = playerInput.playerIndex;
+                splitScreenIndex = playerInput.splitScreenIndex;
+                controlScheme = playerInput.currentControlScheme;
+                deviceIds = playerInput.devices.Select(d => d.deviceId).ToList();
             }
         }
     }

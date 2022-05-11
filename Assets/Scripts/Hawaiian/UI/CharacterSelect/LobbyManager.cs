@@ -70,12 +70,13 @@ namespace Hawaiian.UI.CharacterSelect
             if (menuState == MenuState.CharacterSelect) HandleCharacterSelect();
 
             // Animate cursors
-            foreach (int index in playerStatus)
+            for (int i = 0; i < 4; i++)
             {
-                if (playerStatus[index] == 1)
+
+                if (playerStatus[i] == 1)
                 {
                     // Animate cursor
-                    characterSelects[index].GetComponent<Image>().sprite = characterSelectSprites
+                    characterSelects[i].GetComponent<Image>().sprite = characterSelectSprites
                         [
                             Mathf.FloorToInt((Time.time % 0.39999f) * 10.0f) - (Mathf.FloorToInt((Time.time % 0.39999f) * 10.0f) > 2 ? 2 : 0)
                         ];
@@ -83,7 +84,7 @@ namespace Hawaiian.UI.CharacterSelect
                 else
                 {
                     // Set to still cursor
-                    characterSelects[index].GetComponent<Image>().sprite = characterSelectSprites[1];
+                    characterSelects[i].GetComponent<Image>().sprite = characterSelectSprites[1];
                 }
             }
 

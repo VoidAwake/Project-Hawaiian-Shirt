@@ -7,9 +7,8 @@ namespace Hawaiian.Unit
 {
     public class UnitPlayer : Unit, IUnit
     {
+        public int playerNumber = -1;
         [SerializeField] private PlayerInputManager.PlayerJoinedEvent _playerJoined;
-
-        
         [SerializeField] private PlayerAction _input;
         [SerializeField] private PlayerInput _playerInput;
         private bool _attackFlag = false;

@@ -49,3 +49,6 @@ TagManager:
   - name: Walls
     uniqueID: 2357660697
     locked: 0
+  - name: Control Prompts
+    uniqueID: 2420767691
+    locked: 0

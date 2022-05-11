@@ -136,6 +136,15 @@ namespace Hawaiian.Input
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Menu"",
+                    ""type"": ""Button"",
+                    ""id"": ""eae77aa8-94c9-4a1d-aa15-7e7778d5cb6e"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -750,8 +759,52 @@ namespace Hawaiian.Input
                     ""path"": ""<Keyboard>/z"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""Keyboard1"",
                     ""action"": ""Drop"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""75b7d6b9-e534-4a2f-8b67-7c1b9c25813e"",
+                    ""path"": ""<Gamepad>/leftTrigger"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Drop"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""2d577a1d-3bf6-42a9-8f43-52b19d8cb261"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Menu"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""831b70c1-c461-4a21-a234-3fd41c320dc3"",
+                    ""path"": ""<Gamepad>/start"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Menu"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ff20fef0-b150-43f3-88be-6ffad3b45fe6"",
+                    ""path"": ""<Gamepad>/select"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Menu"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -1125,6 +1178,7 @@ namespace Hawaiian.Input
             m_Player_Parse = m_Player.FindAction("Parse", throwIfNotFound: true);
             m_Player_MoveCursor = m_Player.FindAction("MoveCursor", throwIfNotFound: true);
             m_Player_Drop = m_Player.FindAction("Drop", throwIfNotFound: true);
+            m_Player_Menu = m_Player.FindAction("Menu", throwIfNotFound: true);
             // Lobby Player
             m_LobbyPlayer = asset.FindActionMap("Lobby Player", throwIfNotFound: true);
             m_LobbyPlayer_Ready = m_LobbyPlayer.FindAction("Ready", throwIfNotFound: true);
@@ -1203,6 +1257,7 @@ namespace Hawaiian.Input
         private readonly InputAction m_Player_Parse;
         private readonly InputAction m_Player_MoveCursor;
         private readonly InputAction m_Player_Drop;
+        private readonly InputAction m_Player_Menu;
         public struct PlayerActions
         {
             private @PlayerAction m_Wrapper;
@@ -1219,6 +1274,7 @@ namespace Hawaiian.Input
             public InputAction @Parse => m_Wrapper.m_Player_Parse;
             public InputAction @MoveCursor => m_Wrapper.m_Player_MoveCursor;
             public InputAction @Drop => m_Wrapper.m_Player_Drop;
+            public InputAction @Menu => m_Wrapper.m_Player_Menu;
             public InputActionMap Get() { return m_Wrapper.m_Player; }
             public void Enable() { Get().Enable(); }
             public void Disable() { Get().Disable(); }
@@ -1264,6 +1320,9 @@ namespace Hawaiian.Input
                     @Drop.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDrop;
                     @Drop.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDrop;
                     @Drop.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDrop;
+                    @Menu.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMenu;
+                    @Menu.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMenu;
+                    @Menu.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMenu;
                 }
                 m_Wrapper.m_PlayerActionsCallbackInterface = instance;
                 if (instance != null)
@@ -1304,6 +1363,9 @@ namespace Hawaiian.Input
                     @Drop.started += instance.OnDrop;
                     @Drop.performed += instance.OnDrop;
                     @Drop.canceled += instance.OnDrop;
+                    @Menu.started += instance.OnMenu;
+                    @Menu.performed += instance.OnMenu;
+                    @Menu.canceled += instance.OnMenu;
                 }
             }
         }
@@ -1459,6 +1521,7 @@ namespace Hawaiian.Input
             void OnParse(InputAction.CallbackContext context);
             void OnMoveCursor(InputAction.CallbackContext context);
             void OnDrop(InputAction.CallbackContext context);
+            void OnMenu(InputAction.CallbackContext context);
         }
         public interface ILobbyPlayerActions
         {

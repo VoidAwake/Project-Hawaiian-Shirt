@@ -1,11 +1,10 @@
-using System;
-using System.Collections.Generic;
 using Hawaiian.PositionalEvents;
 using Hawaiian.Unit;
 using Hawaiian.Utilities;
 using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using System.Collections.Generic;
 
 
 namespace Hawaiian.Inventory
@@ -28,7 +27,7 @@ namespace Hawaiian.Inventory
         //[SerializeField] private int invSize;a
 
 
-        private Inventory _inv;
+        public Inventory _inv;
         private PositionalEventCaller positionalEventCaller;
 
         public Item GetCurrentItem() => _inv.inv[_inv.invPosition];
