@@ -69,6 +69,7 @@ namespace Hawaiian.UI.MainMenu
                         else
                         {
                             selected = (selected - 1) % (buttons.Length);
+                            if (selected < 0) selected = buttons.Length + selected;
                             cursor.rectTransform.anchoredPosition = buttons[selected].GetComponent<RectTransform>().anchoredPosition;
                             //Debug.Log(selected + " " + buttons.Length);
                         }
