@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 namespace Hawaiian.Unit
 {
@@ -10,6 +11,7 @@ namespace Hawaiian.Unit
         private IUnit user;
         private Vector2 defaultDirection;
         private bool useDefaultDirection;
+        private readonly List<IUnit> oldTargets = new List<IUnit>();
 
         public void Initialise(int knockbackDistance, IUnit user) 
         {
@@ -28,14 +30,21 @@ namespace Hawaiian.Unit
         public void OnTriggerEnter2D(Collider2D col)
         {
             // TODO: Duplicate code. See DamageIndicator.OnTriggerEnter2D
-            if (col.gameObject.GetComponent<Unit>() is IUnit)
+            var unit = col.gameObject.GetComponent<Unit>();
+            if (unit is IUnit)
             {
                 //Yucky 
-                IUnit target = (IUnit) col.gameObject.GetComponent<Unit>();
+                IUnit target = (IUnit) unit;
 
                 if (target == user)
                     return;
 
+                if (unit.isInvincible) return;
+                
+                if (target == user || oldTargets.Contains(target))
+                    return;
+
+                oldTargets.Add(target);
                 Vector2 direction;
 
                 // TODO: This is really jank, but I don't want to rework Projectile and cause merge conflicts

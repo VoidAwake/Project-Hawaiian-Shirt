@@ -17,13 +17,17 @@ namespace Hawaiian.Inventory
         public void OnTriggerEnter2D(Collider2D col)
         {
             // TODO: Duplicate code. See DamageIndicator.OnTriggerEnter2D
-            if (col.gameObject.GetComponent<Unit.Unit>() is IUnit)
+            var unit = col.gameObject.GetComponent<Unit.Unit>();
+            if (unit is IUnit)
             {
                 //Yucky 
-                IUnit target = (IUnit) col.gameObject.GetComponent<Unit.Unit>();
+                IUnit target = (IUnit) unit;
 
                 if (target == user || oldTargets.Contains(target))
                     return;
+                
+                
+                if (unit.isInvincible) return;
                 
                 oldTargets.Add(target);
                 
