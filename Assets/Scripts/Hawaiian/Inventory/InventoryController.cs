@@ -161,6 +161,12 @@ namespace Hawaiian.Inventory
             DropItem(_inv.invPosition);
         }
 
+        public void RemoveCurrentItem()
+        {
+            RemoveItemFromIndex(_inv.invPosition);
+        }
+
+
         public void DropRandom()
         {
             var itemIndexes = new List<int>();
@@ -192,6 +198,18 @@ namespace Hawaiian.Inventory
             {
                 Debug.Log("THIS BITCH EMPTY...............................YEET");
             }
+        }
+
+        public void RemoveItemFromIndex(int invPosition)
+        {
+            if (_inv.inv[invPosition] != null)
+            {
+                _inv.DropItem(_inv.invPosition);
+                hand.sprite = null;
+            }
+            else
+                Debug.Log("THIS BITCH EMPTY...............................YEET");
+            
         }
 
         public void UseItem()

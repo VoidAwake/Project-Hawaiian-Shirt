@@ -157,6 +157,9 @@ public class ItemInteractor : MonoBehaviour
                 .ReturnsToPlayer) //Guard statement for returnable projectiles to not allow for them to attack while the projectile is still active
             return;
 
+        if (_projectileInstance != null && _controller.GetCurrentItem().Type == ItemType.Throwable)
+            return;
+
         if (value.performed)
         {
             _isHoldingAttack = true;

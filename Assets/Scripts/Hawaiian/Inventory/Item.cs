@@ -70,6 +70,5 @@ namespace Hawaiian.Inventory
         public void UseItemAlternate() {}
 
         public float GetDamage() => ItemDamage;
-        
     }
 }

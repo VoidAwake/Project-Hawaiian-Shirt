@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b80aed388cd62a5479b406e914eb6b8d, type: 3}
+  m_Name: Smoke Bomb
+  m_EditorClassIdentifier: 
+  Type: 2
+  ItemSprite: {fileID: 21300000, guid: 8910701d3f9671d44bcecd8ecd3781a3, type: 3}
+  DroppedItemSprite: {fileID: 21300000, guid: 8910701d3f9671d44bcecd8ecd3781a3, type: 3}
+  ItemName: Smoke Bomb
+  MaxStack: 0
+  DroppedItemBase: {fileID: 3056942884218095950, guid: 37132a09f5d1c4046a4bb460892afc47, type: 3}
+  ProjectileInstance: {fileID: 5387373904414807758, guid: 84361e5a6995d564b8208790e37d5c37, type: 3}
+  ItemDamage: 5
+  DrawSpeed: 8
+  DrawDistance: 6
+  SticksOnWall: 0
+  ReturnsToPlayer: 0
+  IsMultiShot: 0
+  ProjectileAmount: 0
+  AttackRate: 0
+  IsMainObjective: 0
+  CanBeHeldByEnemies: 0
+  Points: 0
+  PlacementRadius: 0
+  PlacementIcon: {fileID: 0}
+  TrapInstance: {fileID: 0}
+  IsKey: 0

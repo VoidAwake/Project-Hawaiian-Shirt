@@ -46,6 +46,7 @@ GameObject:
   - component: {fileID: 473664526002343672}
   - component: {fileID: 2023147119661780085}
   - component: {fileID: 5706338390592453364}
+  - component: {fileID: 6321439291829256184}
   m_Layer: 0
   m_Name: Inventory
   m_TagString: Untagged
@@ -139,6 +140,9 @@ MonoBehaviour:
   _meleeSlashRotationOffset: -90
   _handHelder: {fileID: 937560079924309396}
   _animator: {fileID: 6074339650475639767}
+  isHoldingKey: 0
+  canUnlock: 0
+  signal: 0
 --- !u!120 &5706338390592453364
 LineRenderer:
   m_ObjectHideFlags: 0
@@ -238,6 +242,34 @@ LineRenderer:
     generateLightingData: 0
   m_UseWorldSpace: 1
   m_Loop: 0
+--- !u!114 &6321439291829256184
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6722766841112063685}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8beaaee945cf0844ad0f79ee7108362, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Event: {fileID: 11400000, guid: cf1f575adfa07164c815adb0bfac6f43, type: 2}
+  Response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2465565676560978990}
+        m_TargetAssemblyTypeName: Hawaiian.Inventory.InventoryController, Hawaiian.Inventory
+        m_MethodName: RemoveCurrentItem
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &7111658898038595601
 GameObject:
   m_ObjectHideFlags: 0
@@ -466,19 +498,19 @@ PrefabInstance:
       objectReference: {fileID: 858650075133827644}
     - target: {fileID: 1165009643540554491, guid: fe93fd4b04ca3d340865789a7d27cade, type: 3}
       propertyPath: m_Bounds.m_Center.x
-      value: 0.016073704
+      value: 0.0076681376
       objectReference: {fileID: 0}
     - target: {fileID: 1165009643540554491, guid: fe93fd4b04ca3d340865789a7d27cade, type: 3}
       propertyPath: m_Bounds.m_Center.y
-      value: 0.010638058
+      value: 0.08882406
       objectReference: {fileID: 0}
     - target: {fileID: 1165009643540554491, guid: fe93fd4b04ca3d340865789a7d27cade, type: 3}
       propertyPath: m_Bounds.m_Extent.x
-      value: 0.5463426
+      value: 0.6377739
       objectReference: {fileID: 0}
     - target: {fileID: 1165009643540554491, guid: fe93fd4b04ca3d340865789a7d27cade, type: 3}
       propertyPath: m_Bounds.m_Extent.y
-      value: 0.4641537
+      value: 0.536656
       objectReference: {fileID: 0}
     - target: {fileID: 1411784524321343871, guid: fe93fd4b04ca3d340865789a7d27cade, type: 3}
       propertyPath: m_Bounds.m_Center.x
@@ -514,19 +546,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4075481484501139696, guid: fe93fd4b04ca3d340865789a7d27cade, type: 3}
       propertyPath: m_Bounds.m_Center.x
-      value: 0.0044394433
+      value: 0.0037112236
       objectReference: {fileID: 0}
     - target: {fileID: 4075481484501139696, guid: fe93fd4b04ca3d340865789a7d27cade, type: 3}
       propertyPath: m_Bounds.m_Center.y
-      value: 0.0028363466
+      value: -0.006710589
       objectReference: {fileID: 0}
     - target: {fileID: 4075481484501139696, guid: fe93fd4b04ca3d340865789a7d27cade, type: 3}
       propertyPath: m_Bounds.m_Extent.x
-      value: 0.36588645
+      value: 0.3612623
       objectReference: {fileID: 0}
     - target: {fileID: 4075481484501139696, guid: fe93fd4b04ca3d340865789a7d27cade, type: 3}
       propertyPath: m_Bounds.m_Extent.y
-      value: 0.33164167
+      value: 0.32747728
       objectReference: {fileID: 0}
     - target: {fileID: 4153188563775757182, guid: fe93fd4b04ca3d340865789a7d27cade, type: 3}
       propertyPath: m_RootOrder
