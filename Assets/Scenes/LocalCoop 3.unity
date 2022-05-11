@@ -1309,6 +1309,34 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &913532267 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2387493150576276818, guid: c38b0ae045ef1114a82b930dd73f6ed5, type: 3}
+  m_PrefabInstance: {fileID: 2081614067}
+  m_PrefabAsset: {fileID: 0}
+--- !u!20 &913532270 stripped
+Camera:
+  m_CorrespondingSourceObject: {fileID: 2387493150576276816, guid: c38b0ae045ef1114a82b930dd73f6ed5, type: 3}
+  m_PrefabInstance: {fileID: 2081614067}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &913532272
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 913532267}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 43b9228e346b0da4db113057c466db5f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _camera: {fileID: 913532270}
+  _smoothTime: 1
+  _offset: {x: 0, y: 0}
+  _maxZoom: 5
+  _minZoom: 20
+  _maximumDistance: 200
 --- !u!1001 &1130480398
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1316,6 +1344,22 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3377805235245769501, guid: 69a14f6995d869c4e824d65c2df2234d, type: 3}
+      propertyPath: m_SpriteTilingProperty.newSize.x
+      value: 2.21875
+      objectReference: {fileID: 0}
+    - target: {fileID: 3377805235245769501, guid: 69a14f6995d869c4e824d65c2df2234d, type: 3}
+      propertyPath: m_SpriteTilingProperty.newSize.y
+      value: 2.03125
+      objectReference: {fileID: 0}
+    - target: {fileID: 3377805235245769501, guid: 69a14f6995d869c4e824d65c2df2234d, type: 3}
+      propertyPath: m_SpriteTilingProperty.oldSize.x
+      value: 2.21875
+      objectReference: {fileID: 0}
+    - target: {fileID: 3377805235245769501, guid: 69a14f6995d869c4e824d65c2df2234d, type: 3}
+      propertyPath: m_SpriteTilingProperty.oldSize.y
+      value: 2.03125
+      objectReference: {fileID: 0}
     - target: {fileID: 4912029886202819108, guid: 69a14f6995d869c4e824d65c2df2234d, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -1381,12 +1425,20 @@ PrefabInstance:
       value: Boomerang Item
       objectReference: {fileID: 0}
     - target: {fileID: 8032661348194094785, guid: 69a14f6995d869c4e824d65c2df2234d, type: 3}
-      propertyPath: m_Sprite
-      value: 
+      propertyPath: m_Size.x
+      value: 2.21875
       objectReference: {fileID: 0}
     - target: {fileID: 8032661348194094785, guid: 69a14f6995d869c4e824d65c2df2234d, type: 3}
+      propertyPath: m_Size.y
+      value: 2.03125
+      objectReference: {fileID: 0}
+    - target: {fileID: 8032661348194094785, guid: 69a14f6995d869c4e824d65c2df2234d, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: a4b192624056cf140ad7257173ddbe2c, type: 3}
+    - target: {fileID: 8032661348194094785, guid: 69a14f6995d869c4e824d65c2df2234d, type: 3}
       propertyPath: m_WasSpriteAssigned
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 69a14f6995d869c4e824d65c2df2234d, type: 3}
@@ -1988,6 +2040,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2387493150576276816, guid: c38b0ae045ef1114a82b930dd73f6ed5, type: 3}
+      propertyPath: near clip plane
+      value: -5
+      objectReference: {fileID: 0}
     - target: {fileID: 2387493150576276817, guid: c38b0ae045ef1114a82b930dd73f6ed5, type: 3}
       propertyPath: m_RootOrder
       value: 2
