@@ -95,8 +95,13 @@ MonoBehaviour:
   - {fileID: 1469595996, guid: ebdfa010ef5bee54ba4e826fe89f6c9a, type: 3}
   - {fileID: -1238110045, guid: ebdfa010ef5bee54ba4e826fe89f6c9a, type: 3}
   - {fileID: 1409174548, guid: ebdfa010ef5bee54ba4e826fe89f6c9a, type: 3}
-  - {fileID: -562163301, guid: ebdfa010ef5bee54ba4e826fe89f6c9a, type: 3}
-  stepDuration: 0.15
+  - {fileID: -1795198455, guid: ebdfa010ef5bee54ba4e826fe89f6c9a, type: 3}
+  - {fileID: 1665989708, guid: ebdfa010ef5bee54ba4e826fe89f6c9a, type: 3}
+  - {fileID: -1814678466, guid: ebdfa010ef5bee54ba4e826fe89f6c9a, type: 3}
+  - {fileID: 1038280326, guid: ebdfa010ef5bee54ba4e826fe89f6c9a, type: 3}
+  - {fileID: -1411936884, guid: ebdfa010ef5bee54ba4e826fe89f6c9a, type: 3}
+  - {fileID: -867677588, guid: ebdfa010ef5bee54ba4e826fe89f6c9a, type: 3}
+  stepDuration: 0.05
   buildIndexOfNextScene: 0
   loadNextScene: 0
   fadeOut: 0
