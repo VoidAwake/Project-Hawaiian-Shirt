@@ -226,5 +226,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hitEffects:
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 5391378509165820473}
+  - {fileID: -2898891701924309365}

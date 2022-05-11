@@ -256,7 +256,6 @@ public class ItemInteractor : MonoBehaviour
                             _controller.GetCurrentItem().ItemDamage, _controller.GetCurrentItem().SticksOnWall,
                             _controller.GetCurrentItem().ReturnsToPlayer,_controller.GetCurrentItem().IsRicochet,_controller.GetCurrentItem().MaximumBounces);
 
-               //     projectile.GetComponent<DealKnockback>().Initialise(2, _playerReference);
                     projectile.GetComponent<HitUnit>().Initialise(_playerReference, _multiShotTargets[i] - transform.position);  
                 }
             }

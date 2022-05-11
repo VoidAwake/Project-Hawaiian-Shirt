@@ -17,8 +17,9 @@ GameObject:
   - component: {fileID: 5461295986185296381}
   - component: {fileID: 3395858211575043066}
   - component: {fileID: 3618523993444695880}
-  - component: {fileID: 6649227738096903504}
-  m_Layer: 0
+  - component: {fileID: 7415379330208218587}
+  - component: {fileID: 5120233360191099128}
+  m_Layer: 8
   m_Name: RicochetProjectile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -200,7 +201,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6bd43b9a334e47efad33d995f0d17efa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rigidbody2D: {fileID: 0}
+  knockbackDistance: 0
 --- !u!114 &3618523993444695880
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -213,7 +214,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ddb6f2901ea84de79ea7a904e1e56c48, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!61 &6649227738096903504
+--- !u!114 &7415379330208218587
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1167162177695253913}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8d27a13a051e46fbb02877bffabf3400, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hitEffects:
+  - {fileID: 3618523993444695880}
+  - {fileID: 3395858211575043066}
+--- !u!61 &5120233360191099128
 BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
