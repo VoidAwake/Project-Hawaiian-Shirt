@@ -12,6 +12,7 @@ namespace Hawaiian.Inventory
         Throwable,
         Objective,
         Other,
+        Trap
     }
     
     
@@ -37,6 +38,10 @@ namespace Hawaiian.Inventory
         [HideInInspector] public float DrawSpeed;
         [HideInInspector] public float DrawDistance;
         [HideInInspector] public bool SticksOnWall;
+        [HideInInspector] public bool ReturnsToPlayer;
+        [HideInInspector] public bool IsMultiShot;
+        [HideInInspector] public int ProjectileAmount;
+
 
         //Melee Specific Stats
         [HideInInspector] public float AttackRate;
@@ -45,6 +50,16 @@ namespace Hawaiian.Inventory
         [HideInInspector] public bool IsMainObjective;
         [HideInInspector] public bool CanBeHeldByEnemies;
         [HideInInspector] public float Points;
+        
+        //Trap
+        [HideInInspector] public int PlacementRadius;
+        [HideInInspector] public Sprite PlacementIcon;
+        [HideInInspector] public GameObject TrapInstance;
+
+
+        //Other Specific Stats
+        [HideInInspector] public bool IsKey;
+
 
         // Start is called before the first frame update
 

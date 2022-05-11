@@ -3,6 +3,7 @@ using Codice.Client.BaseCommands;
 using Hawaiian.Inventory;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.U2D.Animation;
 
 #if UNITY_EDITOR
 
@@ -26,6 +27,14 @@ namespace Hawaiian.Editor
         SerializedProperty points;
         SerializedProperty droppedItemBase;
         SerializedProperty projectileInstance;
+        SerializedProperty returnToPlayer;
+        SerializedProperty multishot;
+         SerializedProperty multishotAmount;
+         SerializedProperty trapPlacementRadius;
+         SerializedProperty trapPlacementIcon;
+         SerializedProperty trapInstance;
+        SerializedProperty isKey;
+        SerializedProperty otherInstance;
 
 
         private void OnEnable()
@@ -44,13 +53,20 @@ namespace Hawaiian.Editor
             points = serializedObject.FindProperty("Points");
             droppedItemBase = serializedObject.FindProperty("DroppedItemBase");
             projectileInstance = serializedObject.FindProperty("ProjectileInstance");
+            isKey = serializedObject.FindProperty("IsKey");
+            returnToPlayer = serializedObject.FindProperty("ReturnsToPlayer");
+            multishot = serializedObject.FindProperty("IsMultiShot");
+            multishotAmount = serializedObject.FindProperty("ProjectileAmount");
+            trapPlacementIcon = serializedObject.FindProperty("PlacementIcon");
+            trapPlacementRadius = serializedObject.FindProperty("PlacementRadius");
+            trapInstance = serializedObject.FindProperty("TrapInstance");
+
         }
 
         public override void OnInspectorGUI()
         {
             base.OnInspectorGUI();
-
-            
+      
             Item _item = (Item) target;
             
             EditorGUILayout.Space();
@@ -63,7 +79,7 @@ namespace Hawaiian.Editor
                     ShowMeleeComponents();
                     break;
                 case ItemType.Projectile:
-                    ShowProjectileComponents();
+                    ShowProjectileComponents(_item);
                     break;
                 case ItemType.Throwable:
                     ShowThrowableComponents();
@@ -71,7 +87,11 @@ namespace Hawaiian.Editor
                 case ItemType.Objective:
                     ShowObjectiveComponent();
                     break;
+                case ItemType.Trap:
+                    ShowTrapComponents();
+                    break;
                 case ItemType.Other:
+                    ShowOtherComponent();
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
@@ -95,6 +115,21 @@ namespace Hawaiian.Editor
             EditorGUILayout.Space();
         }
 
+        private void ShowTrapComponents()
+        {
+            GUILayout.Label("Trap Stats", EditorStyles.boldLabel);
+            EditorGUILayout.Space();
+            EditorGUILayout.PropertyField(itemDamage, new GUIContent("Damage"));
+            EditorGUILayout.IntSlider(trapPlacementRadius, 0, 30, new GUIContent("Placement Radius", "Refers to how far the placement time "));
+            EditorGUILayout.Space();
+            GUILayout.Label("Trap Components", EditorStyles.boldLabel);
+            EditorGUILayout.Space();
+            EditorGUILayout.PropertyField(trapPlacementIcon, new GUIContent("Placement Icon"));
+            EditorGUILayout.PropertyField(trapInstance, new GUIContent("Trap Instance "));
+
+            
+        }
+
         private void ShowMeleeComponents()
         {
             GUILayout.Label("Melee Stats", EditorStyles.boldLabel);
@@ -104,7 +139,7 @@ namespace Hawaiian.Editor
             EditorGUILayout.PropertyField(attackRate, new GUIContent("Attack Rate"));
         }
         
-        private void ShowProjectileComponents()
+        private void ShowProjectileComponents(Item item)
         {
             GUILayout.Label("Projectile Stats", EditorStyles.boldLabel);
             EditorGUILayout.PropertyField(projectileInstance, new GUIContent("Projectile Instance Reference"));
@@ -115,6 +150,21 @@ namespace Hawaiian.Editor
             EditorGUILayout.PropertyField(drawDistance, new GUIContent("DrawDistance","Refers to how far the projectile can reach at full charge"));
             EditorGUILayout.Space();
             EditorGUILayout.PropertyField(sticksOnWall, new GUIContent("Sticks on Wall","Refers to if the projectile will stick on a wall"));
+            EditorGUILayout.Space();
+            EditorGUILayout.PropertyField(returnToPlayer, new GUIContent("Returns to the player?","If the projectile does not hit a unit or obstacle in its initial throw, the projectile will return to the player"));
+            
+            EditorGUILayout.Space();
+            EditorGUILayout.PropertyField(multishot, new GUIContent("Is A Multishot","Refers to if the item will produce multiple shots at once"));
+
+            if (item.IsMultiShot)
+            {
+                GUILayout.Label("Multishot Stats", EditorStyles.boldLabel);
+                EditorGUILayout.IntSlider(multishotAmount, 2, 20, new GUIContent("Number of Projectiles", "The amount of projectiles spawned by the item when used"));
+            }
+            else
+            {
+                item.ProjectileAmount = 0;
+            }
         }
         
         private void ShowThrowableComponents()
@@ -136,6 +186,13 @@ namespace Hawaiian.Editor
             EditorGUILayout.PropertyField(isMainObjective, new GUIContent("Is Main Objective"));
             EditorGUILayout.PropertyField(canBeHeldByEnemies, new GUIContent("Can Be Held By Enemies"));
         }
+
+        private void ShowOtherComponent()
+        {
+            GUILayout.Label("Other Stats", EditorStyles.boldLabel);
+            EditorGUILayout.PropertyField(isKey, new GUIContent("Key"));
+        }
+
     }
 }
 

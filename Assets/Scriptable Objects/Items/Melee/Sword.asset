@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Sword
   m_EditorClassIdentifier: 
   Type: 0
-  ItemSprite: {fileID: 4980028, guid: 947cdc6af17876c49ac8cfca43d6a397, type: 3}
-  DroppedItemSprite: {fileID: 4980028, guid: 947cdc6af17876c49ac8cfca43d6a397, type: 3}
+  ItemSprite: {fileID: 21300000, guid: 907a0c313dfc52a43864441dee94caa1, type: 3}
+  DroppedItemSprite: {fileID: 21300000, guid: 907a0c313dfc52a43864441dee94caa1, type: 3}
   ItemName: Sword
   MaxStack: 1
   DroppedItemBase: {fileID: 3056942884218095950, guid: 37132a09f5d1c4046a4bb460892afc47, type: 3}
@@ -23,7 +23,14 @@ MonoBehaviour:
   DrawSpeed: 0
   DrawDistance: 0
   SticksOnWall: 0
+  ReturnsToPlayer: 0
+  IsMultiShot: 0
+  ProjectileAmount: 0
   AttackRate: 5
   IsMainObjective: 0
   CanBeHeldByEnemies: 0
   Points: 0
+  PlacementRadius: 0
+  PlacementIcon: {fileID: 0}
+  TrapInstance: {fileID: 0}
+  IsKey: 0

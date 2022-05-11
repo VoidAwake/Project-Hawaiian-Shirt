@@ -1,7 +1,8 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace Hawaiian.Utilities
 {
     [CreateAssetMenu]
-    public class ScriptableFloat : ScriptableType<float> { }
+    public class ScriptableFloat : ScriptableType<float>{}
 }

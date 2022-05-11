@@ -45,7 +45,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cc2945ab51b4b0c88c54a3177efb799, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startTime: 999
+  startTime: 120
   gameTimeScale: {fileID: 11400000, guid: a7999ebb747644c42b10ad44fd3b305b, type: 2}
   gameTime: {fileID: 11400000, guid: 0c73cc340ca261c4fb0bb0fd9ce5302f, type: 2}
   startOnAwake: 0

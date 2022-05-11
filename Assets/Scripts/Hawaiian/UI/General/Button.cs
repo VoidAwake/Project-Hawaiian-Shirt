@@ -22,6 +22,6 @@ namespace Hawaiian.UI.General
             button.onClick.RemoveListener(OnClick);
         }
 
-        protected virtual void OnClick() { }
+        public virtual void OnClick() { }
     }
 }

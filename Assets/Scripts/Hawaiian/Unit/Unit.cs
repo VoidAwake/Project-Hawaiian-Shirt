@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.U2D.Animation;
 
 namespace Hawaiian.Unit
 {
@@ -8,6 +9,9 @@ namespace Hawaiian.Unit
         [SerializeField] bool testBool;
         [SerializeField] Vector2 testVector;
         [SerializeField] float testFloat;
+
+        [SerializeField] SpriteResolver head;
+        [SerializeField] SpriteResolver torso;
 
         public enum PlayerState { Walking, Tripped }
         public PlayerState playerState = PlayerState.Walking;
@@ -61,6 +65,7 @@ namespace Hawaiian.Unit
             {
                 // Set velocity based on knockback curve
                 velocity = knockBackForce * 2 * (remainingTripTime / tripTime);
+                Debug.Log("Knockback!");
 
                 // Update timer, and stand back up if trip time has expired
                 remainingTripTime -= Time.deltaTime;
@@ -126,6 +131,12 @@ namespace Hawaiian.Unit
         {
             if (knockBackForce.x > 0.0f) return true;
             else return false;
+        }
+
+        public void SetSpriteResolvers(string headName, string torsoName)
+        {
+            head.SetCategoryAndLabel("Head", headName);
+            torso.SetCategoryAndLabel("Torso", torsoName);
         }
     }
 }

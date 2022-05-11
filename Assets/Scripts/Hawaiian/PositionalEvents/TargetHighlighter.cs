@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Hawaiian.Unit;
 using UnityEngine;
 
 namespace Hawaiian.PositionalEvents
@@ -7,37 +8,71 @@ namespace Hawaiian.PositionalEvents
     public class TargetHighlighter : MonoBehaviour
     {
         [SerializeField] private GameObject highlighterPrefab;
+        // TODO: Retrieve from PlayerPrefs.
+        [SerializeField] private PlayersData playersData;
         
-        private readonly Dictionary<PositionalEventCaller, Dictionary<PositionalEventListener, Highlighter>> highlighters = new();
+        private readonly Dictionary<PositionalEventCaller, List<PositionalEventListener>> callerCurrentTargets = new();
+        private readonly Dictionary<PositionalEventListener, Highlighter> highlighters = new();
 
         public void OnTargetsChanged(PositionalEventCaller caller)
         {
-            if (!highlighters.ContainsKey(caller))
-                highlighters.Add(caller, new Dictionary<PositionalEventListener, Highlighter>());
-            else
-                foreach (var target in highlighters[caller].Keys.ToList())
-                {
-                    RemoveHighlighter(caller, target);
-                }
-
-            foreach (var target in caller.Targets)
+            if (!callerCurrentTargets.ContainsKey(caller))
+                callerCurrentTargets.Add(caller, new List<PositionalEventListener>());
+            
+            var currentTargets = callerCurrentTargets[caller];
+            var newTargets = caller.Targets;
+            
+            foreach (var currentTarget in currentTargets)
             {
-                AddHighlighter(caller, target);
+                if (!newTargets.Contains(currentTarget)) {
+                    RemoveCallerFromHighlighter(caller, currentTarget);
+                }
             }
+
+            foreach (var newTarget in newTargets)
+            {
+                if (!currentTargets.Contains(newTarget))
+                {
+                    AddCallerToHighlighter(caller, newTarget);
+                }
+            }
+
+            // Soft copy to prevent issues
+            callerCurrentTargets[caller] = newTargets.ToList();
         }
 
-        private void AddHighlighter(PositionalEventCaller caller, PositionalEventListener target)
+        private void AddCallerToHighlighter(PositionalEventCaller caller, PositionalEventListener target)
         {
-            var highlighterObject = Instantiate(highlighterPrefab, target.transform);
+            Highlighter highlighter;
+            
+            if (!highlighters.ContainsKey(target))
+            {
+                var highlighterObject = Instantiate(highlighterPrefab, target.transform);
+
+                highlighter = highlighterObject.GetComponent<Highlighter>();
                 
-            highlighters[caller].Add(target, highlighterObject.GetComponent<Highlighter>());
+                highlighters.Add(target, highlighter);
+            }
+            else
+            {
+                highlighter = highlighters[target];
+            }
+            
+            highlighter.AddCaller(caller);
         }
 
-        private void RemoveHighlighter(PositionalEventCaller caller, PositionalEventListener target)
+        private void RemoveCallerFromHighlighter(PositionalEventCaller caller, PositionalEventListener target)
         {
-            Destroy(highlighters[caller][target].gameObject);
+            var highlighter = highlighters[target];
+            
+            highlighter.RemoveCaller(caller);
 
-            highlighters[caller].Remove(target);
+            if (highlighter.Callers.Count == 0)
+            {
+                Destroy(highlighter.gameObject);
+
+                highlighters.Remove(target);
+            }
         }
     }
 }
