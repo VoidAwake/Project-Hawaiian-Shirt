@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Hawaiian.Game;
 using Hawaiian.Inventory;
+using Hawaiian.Utilities;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
@@ -17,7 +18,7 @@ namespace Hawaiian.UI.CharacterSelect
         [SerializeField] GameObject playerPrefab;
         [SerializeField] private int buildIndex;
         [SerializeField] private GameManager gameManager;
-
+        [SerializeField] private GameEvent playersJoined;
         private Dictionary<LobbyGameManager.PlayerConfig, InventoryController> inventoryControllers = new();
 
         // Start is called before the first frame update
@@ -68,6 +69,7 @@ namespace Hawaiian.UI.CharacterSelect
 
                 // Data is still needed for results
                 // Destroy(playerData.gameObject);
+                playersJoined.Raise();
                 inputManager.joinBehavior = PlayerJoinBehavior.JoinPlayersManually;
             }
             else if (inputManager != null)

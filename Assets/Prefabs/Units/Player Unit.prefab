@@ -716,23 +716,8 @@ MonoBehaviour:
   tweenRate: 15
   runMultiplier: 1.75
   playerNumber: -1
-  _playerJoined:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 5588978955059791629}
-        m_TargetAssemblyTypeName: Hawaiian.Unit.UnitPlayer, Hawaiian.Unit
-        m_MethodName: UpdateCount
-        m_Mode: 2
-        m_Arguments:
-          m_ObjectArgument: {fileID: 6432945937749252037}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.InputSystem.PlayerInput,
-            Unity.InputSystem
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
   _playerInput: {fileID: 6432945937749252037}
+  _playerJoined: {fileID: 11400000, guid: 2a2ac177cfbc4ee44a6355e7378dddb1, type: 2}
 --- !u!114 &6432945937749252037
 MonoBehaviour:
   m_ObjectHideFlags: 0

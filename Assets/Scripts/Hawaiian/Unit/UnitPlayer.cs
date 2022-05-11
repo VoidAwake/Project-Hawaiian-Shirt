@@ -8,9 +8,11 @@ namespace Hawaiian.Unit
     public class UnitPlayer : Unit, IUnit
     {
         public int playerNumber = -1;
-        [SerializeField] private PlayerInputManager.PlayerJoinedEvent _playerJoined;
+       // [SerializeField] private PlayerInputManager.PlayerJoinedEvent _playerJoined;
         [SerializeField] private PlayerAction _input;
         [SerializeField] private PlayerInput _playerInput;
+        [SerializeField] private GameEvent _playerJoined;
+
         private bool _attackFlag = false;
 
         public PlayerAction GetPlayerAction() => _input;
@@ -23,6 +25,7 @@ namespace Hawaiian.Unit
             _input = new PlayerAction();
             _playerInput = GetComponent<PlayerInput>();
             Debug.Log(_playerInput.playerIndex + "Current player index");
+           // _playerJoined.Raise();
         }
 
         public void UpdateCount(PlayerInput input)

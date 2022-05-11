@@ -2,8 +2,11 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Codice.Client.BaseCommands;
+using Hawaiian.UI.CharacterSelect;
+using Hawaiian.Unit;
 using UnityEngine;
 using UnityEngine.InputSystem;
+
 
 [RequireComponent(typeof(Camera))]
 public class CameraController : MonoBehaviour
@@ -28,18 +31,24 @@ public class CameraController : MonoBehaviour
 
     private void Start()
     {
-        PlayerInputManager.instance.onPlayerJoined += AddTarget;
     }
 
     private void OnDisable()
     {
-        if (PlayerInputManager.instance == null)
-            return;
         
-        PlayerInputManager.instance.onPlayerJoined -= AddTarget;
+     
     }
 
-    public void AddTarget(PlayerInput input) => players.Add(input.gameObject.transform);
+    public void AddTarget()
+    {
+       var players =  Resources.FindObjectsOfTypeAll<UnitPlayer>();
+
+       foreach (UnitPlayer player in players)
+       {
+           this.players.Add(player.transform);
+       }
+
+    }
 
     private void FixedUpdate()
     {
