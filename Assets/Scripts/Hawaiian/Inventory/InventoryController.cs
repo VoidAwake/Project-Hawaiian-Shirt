@@ -4,6 +4,7 @@ using Hawaiian.Utilities;
 using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using System.Collections.Generic;
 
 
 namespace Hawaiian.Inventory
