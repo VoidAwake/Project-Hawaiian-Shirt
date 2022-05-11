@@ -11,7 +11,7 @@ namespace Hawaiian.UI.General
         [SerializeField] private TMP_Text text;
         [SerializeField] private ScriptableFloat scriptableFloat;
         [SerializeField] private string format;
-         ScriptableFloat minute, sec, msec;
+         
         private void OnValueChanged()
         {
             text.text = string.Format(format, (int)scriptableFloat.Value / 60 % 60, ((int)scriptableFloat.Value % 60).ToString("00"), ((int)(Mathf.Floor(scriptableFloat.Value * 100) % 100)).ToString("00"));

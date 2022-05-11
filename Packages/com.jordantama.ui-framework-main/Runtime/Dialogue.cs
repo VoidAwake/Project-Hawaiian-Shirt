@@ -20,7 +20,7 @@ namespace UI.Core
         
         #region MonoBehaviour
 
-        private void Awake()
+        protected virtual void Awake()
         {
             canvasGroup = GetComponent<CanvasGroup>();
             

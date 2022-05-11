@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Boomerang v2
   m_EditorClassIdentifier: 
   Type: 1
-  ItemSprite: {fileID: 2018568041, guid: 947cdc6af17876c49ac8cfca43d6a397, type: 3}
-  DroppedItemSprite: {fileID: 2018568041, guid: 947cdc6af17876c49ac8cfca43d6a397, type: 3}
+  ItemSprite: {fileID: 21300000, guid: 183e326c5acf75946b6ab73d34453b10, type: 3}
+  DroppedItemSprite: {fileID: 21300000, guid: 183e326c5acf75946b6ab73d34453b10, type: 3}
   ItemName: Boomerang v2
   MaxStack: 0
   DroppedItemBase: {fileID: 672159416967220005, guid: 71327cd53b4980f419bd140f19933b91, type: 3}
@@ -23,7 +23,14 @@ MonoBehaviour:
   DrawSpeed: 2
   DrawDistance: 15
   SticksOnWall: 0
+  ReturnsToPlayer: 0
+  IsMultiShot: 0
+  ProjectileAmount: 0
   AttackRate: 0
   IsMainObjective: 0
   CanBeHeldByEnemies: 0
   Points: 0
+  PlacementRadius: 0
+  PlacementIcon: {fileID: 0}
+  TrapInstance: {fileID: 0}
+  IsKey: 0

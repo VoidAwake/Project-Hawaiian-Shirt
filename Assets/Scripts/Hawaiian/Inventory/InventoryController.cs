@@ -4,7 +4,6 @@ using Hawaiian.Utilities;
 using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using Random = UnityEngine.Random;
 
 
 namespace Hawaiian.Inventory
@@ -22,11 +21,12 @@ namespace Hawaiian.Inventory
         [SerializeField] private SpriteRenderer hand;
 
         [SerializeField] private GameObject droppedItem;
-        
-        //[SerializeField] private int invSize;a
-        
 
-        private Inventory _inv;
+       
+        //[SerializeField] private int invSize;a
+
+
+        public Inventory _inv;
         private PositionalEventCaller positionalEventCaller;
 
         public Item GetCurrentItem() => _inv.inv[_inv.invPosition];
@@ -49,6 +49,7 @@ namespace Hawaiian.Inventory
         private void Start()
         {
             _player.GetPlayerInput().actions["InvParse"].performed += SwitchItem;
+            
         }
 
 
@@ -91,6 +92,7 @@ namespace Hawaiian.Inventory
 
         public void SwitchItem(InputAction.CallbackContext value)
         {
+           
             if (!value.performed)
                 return;
             
@@ -100,6 +102,7 @@ namespace Hawaiian.Inventory
                 OnCycleForward();
 
             GetComponent<ItemInteractor>().UpdateItem();
+            
 
         }
         public void OnCycleForward()
@@ -136,6 +139,7 @@ namespace Hawaiian.Inventory
             if (_inv.inv[_inv.invPosition] != null)
             {
                 hand.sprite = _inv.inv[_inv.invPosition].ItemSprite;
+                
             }
             else
             {
@@ -143,13 +147,13 @@ namespace Hawaiian.Inventory
             }
             
             //how do i call an event c:
-            
-       
-            
+
+
+
             parse.Raise();
             
         }
-
+        
         public void OnDrop()
         {
             DropItem(_inv.invPosition);
@@ -167,7 +171,7 @@ namespace Hawaiian.Inventory
 
             if (itemIndexes.Count == 0) return;
 
-            var randomItemIndex = itemIndexes[Random.Range(0, itemIndexes.Count)];
+            var randomItemIndex = itemIndexes[UnityEngine.Random.Range(0, itemIndexes.Count)];
 
             DropItem(randomItemIndex);
         }
