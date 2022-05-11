@@ -256,13 +256,13 @@ public class ItemInteractor : MonoBehaviour
                             _controller.GetCurrentItem().ItemDamage, _controller.GetCurrentItem().SticksOnWall,
                             _controller.GetCurrentItem().ReturnsToPlayer,_controller.GetCurrentItem().IsRicochet,_controller.GetCurrentItem().MaximumBounces);
 
-                    projectile.GetComponent<DealKnockback>().Initialise(2, _playerReference);
-                    projectile.GetComponent<DropItem>().Initialise(_playerReference);
+               //     projectile.GetComponent<DealKnockback>().Initialise(2, _playerReference);
+                    projectile.GetComponent<HitUnit>().Initialise(_playerReference, _multiShotTargets[i] - transform.position);  
                 }
             }
 
-            _projectileInstance.GetComponent<DealKnockback>().Initialise(2, _playerReference);
-            _projectileInstance.GetComponent<DropItem>().Initialise(_playerReference);
+         //   _projectileInstance.GetComponent<DealKnockback>().Initialise(2, _playerReference);
+            _projectileInstance.GetComponent<HitUnit>().Initialise(_playerReference,  position - transform.position);  
         }
 
         transform.parent.GetComponent<UnitAnimator>()
@@ -357,8 +357,9 @@ public class ItemInteractor : MonoBehaviour
             Quaternion.Euler(new Vector3(0, 0, angle + _meleeSlashRotationOffset)), _firePoint);
 
         indicator.GetComponent<DamageIndicator>().Initialise(5, _attackFlag, _playerReference,direction);
-        indicator.GetComponent<DealKnockback>().Initialise(2, _playerReference, direction);
-        indicator.GetComponent<DropItem>().Initialise(_playerReference);
+        indicator.GetComponent<HitUnit>().Initialise(_playerReference, direction);  
+   //     indicator.GetComponent<DealKnockback>().Initialise(2, _playerReference, direction);
+      //  indicator.GetComponent<DropItem>().Initialise(_playerReference);
         _attackFlag = !_attackFlag;
 
         #endregion

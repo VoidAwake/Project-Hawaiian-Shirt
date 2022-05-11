@@ -154,6 +154,8 @@ MonoBehaviour:
   _canStickOnWalls: 0
   _damage: 5
   _returnsToPlayer: 0
+  _isRicochet: 0
+  _maximumBounces: 0
 --- !u!210 &2669586785488496362
 SortingGroup:
   m_ObjectHideFlags: 0
@@ -198,7 +200,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6bd43b9a334e47efad33d995f0d17efa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  knockbackDistance: 2
+  knockbackDistance: 0
 --- !u!114 &-2898891701924309365
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -224,5 +226,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hitEffects:
-  - {fileID: 5391378509165820473}
-  - {fileID: -2898891701924309365}
+  - {fileID: 0}
+  - {fileID: 0}

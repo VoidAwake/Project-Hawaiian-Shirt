@@ -42,4 +42,3 @@ namespace Hawaiian.Inventory
         }
     }
 }
-        

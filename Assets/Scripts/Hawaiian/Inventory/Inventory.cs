@@ -27,10 +27,7 @@ namespace Hawaiian.Inventory
         }
         public bool PickUp(Item item)
         {
-            /*if(inv.Count < invSize)
-        {
-            
-        }*/
+           
 
             for (int i = 0; i < inv.Length; i++)
             {

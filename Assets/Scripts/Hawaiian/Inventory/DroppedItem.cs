@@ -7,7 +7,7 @@ namespace Hawaiian.Inventory
     {
         [SerializeField] private SpriteRenderer spriteRenderer;
 
-        private Item _item;
+       [SerializeField] private Item _item;
         public Item item
         {
             get => _item;
