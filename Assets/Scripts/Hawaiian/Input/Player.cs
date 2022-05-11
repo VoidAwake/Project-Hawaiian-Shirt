@@ -120,6 +120,15 @@ namespace Hawaiian.Input
                     ""initialStateCheck"": false
                 },
                 {
+                    ""name"": ""MoveCursor"",
+                    ""type"": ""Value"",
+                    ""id"": ""18a10a16-bed1-44c5-88e0-13fe5a732231"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
                     ""name"": ""Drop"",
                     ""type"": ""Button"",
                     ""id"": ""3b38de02-c033-4c49-a115-ce44b0c2fd04"",
@@ -186,6 +195,17 @@ namespace Hawaiian.Input
                     ""isPartOfComposite"": false
                 },
                 {
+                    ""name"": """",
+                    ""id"": ""d0d94b88-3f0c-477d-82c4-e4c7dcdc618d"",
+                    ""path"": ""<Gamepad>/leftStick"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
                     ""name"": ""WASD"",
                     ""id"": ""9518770a-a6e5-484d-9439-0f67d574e2a3"",
                     ""path"": ""2DVector"",
@@ -208,9 +228,9 @@ namespace Hawaiian.Input
                     ""isPartOfComposite"": true
                 },
                 {
-                    ""name"": ""down"",
-                    ""id"": ""6d992bdf-5ce5-48f2-811b-052c63c4384c"",
-                    ""path"": ""<Keyboard>/s"",
+                    ""name"": ""left"",
+                    ""id"": ""7c7b4813-87c8-487e-a68a-f55135095f69"",
+                    ""path"": ""<Keyboard>/a"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard1"",
@@ -219,9 +239,9 @@ namespace Hawaiian.Input
                     ""isPartOfComposite"": true
                 },
                 {
-                    ""name"": ""left"",
-                    ""id"": ""7c7b4813-87c8-487e-a68a-f55135095f69"",
-                    ""path"": ""<Keyboard>/a"",
+                    ""name"": ""down"",
+                    ""id"": ""6d992bdf-5ce5-48f2-811b-052c63c4384c"",
+                    ""path"": ""<Keyboard>/s"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard1"",
@@ -305,17 +325,6 @@ namespace Hawaiian.Input
                     ""action"": ""Move"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""d0d94b88-3f0c-477d-82c4-e4c7dcdc618d"",
-                    ""path"": ""<Gamepad>/leftStick"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Gamepad"",
-                    ""action"": ""Move"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
                 },
                 {
                     ""name"": ""2D Vector"",
@@ -429,6 +438,17 @@ namespace Hawaiian.Input
                 },
                 {
                     ""name"": """",
+                    ""id"": ""0a8f0a0b-6860-4d14-af61-538c544b3b62"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard1"",
+                    ""action"": ""Attack"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""9537be8b-c34e-42c7-b8e7-b8454fd076a4"",
                     ""path"": ""<Mouse>/leftButton"",
                     ""interactions"": """",
@@ -445,17 +465,6 @@ namespace Hawaiian.Input
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
-                    ""action"": ""Attack"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""0a8f0a0b-6860-4d14-af61-538c544b3b62"",
-                    ""path"": ""<Keyboard>/space"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Keyboard1"",
                     ""action"": ""Attack"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -505,9 +514,9 @@ namespace Hawaiian.Input
                     ""isPartOfComposite"": false
                 },
                 {
-                    ""name"": ""negative"",
-                    ""id"": ""6e2ea6a2-79bb-4913-9050-2bd489e43bfb"",
-                    ""path"": ""<Keyboard>/e"",
+                    ""name"": ""positive"",
+                    ""id"": ""a2607abf-ca51-41a8-a85f-fefdb3db30e3"",
+                    ""path"": ""<Keyboard>/q"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard1"",
@@ -516,9 +525,9 @@ namespace Hawaiian.Input
                     ""isPartOfComposite"": true
                 },
                 {
-                    ""name"": ""positive"",
-                    ""id"": ""a2607abf-ca51-41a8-a85f-fefdb3db30e3"",
-                    ""path"": ""<Keyboard>/q"",
+                    ""name"": ""negative"",
+                    ""id"": ""6e2ea6a2-79bb-4913-9050-2bd489e43bfb"",
+                    ""path"": ""<Keyboard>/e"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard1"",
@@ -538,23 +547,23 @@ namespace Hawaiian.Input
                     ""isPartOfComposite"": false
                 },
                 {
-                    ""name"": ""negative"",
-                    ""id"": ""c11a4f96-413d-45f6-afef-000cb153c47b"",
-                    ""path"": ""<Gamepad>/rightShoulder"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Gamepad"",
-                    ""action"": ""InvParse"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
                     ""name"": ""positive"",
                     ""id"": ""9b8bc7b5-2435-49c0-bf1c-01f341a3da9c"",
                     ""path"": ""<Gamepad>/leftShoulder"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Gamepad;Gamepad2;Gamepad3;Gamepad4"",
+                    ""action"": ""InvParse"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""negative"",
+                    ""id"": ""c11a4f96-413d-45f6-afef-000cb153c47b"",
+                    ""path"": ""<Gamepad>/rightShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
                     ""action"": ""InvParse"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
@@ -677,6 +686,61 @@ namespace Hawaiian.Input
                     ""processors"": """",
                     ""groups"": ""Gamepad;Gamepad2;Gamepad3;Gamepad4"",
                     ""action"": ""Parse"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""MoveCursor"",
+                    ""id"": ""c7f19130-e1db-4b49-ac85-5427a0f7e7fe"",
+                    ""path"": ""2DVector"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MoveCursor"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""up"",
+                    ""id"": ""ce1c29cf-4866-4456-96ce-8f78787c5a6a"",
+                    ""path"": ""<Keyboard>/upArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard1"",
+                    ""action"": ""MoveCursor"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""down"",
+                    ""id"": ""484a45a6-bc29-4e67-94b4-fcf143ff0802"",
+                    ""path"": ""<Keyboard>/downArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard1"",
+                    ""action"": ""MoveCursor"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""left"",
+                    ""id"": ""5fc1550f-4a78-40de-8e10-a7c15de3f66e"",
+                    ""path"": ""<Keyboard>/leftArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard1"",
+                    ""action"": ""MoveCursor"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""right"",
+                    ""id"": ""583fdcc8-4528-4111-b8d0-3646babca449"",
+                    ""path"": ""<Keyboard>/rightArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard1"",
+                    ""action"": ""MoveCursor"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
                 },
@@ -1059,6 +1123,7 @@ namespace Hawaiian.Input
             m_Player_HoldAttack = m_Player.FindAction("HoldAttack", throwIfNotFound: true);
             m_Player_PickUp = m_Player.FindAction("PickUp", throwIfNotFound: true);
             m_Player_Parse = m_Player.FindAction("Parse", throwIfNotFound: true);
+            m_Player_MoveCursor = m_Player.FindAction("MoveCursor", throwIfNotFound: true);
             m_Player_Drop = m_Player.FindAction("Drop", throwIfNotFound: true);
             // Lobby Player
             m_LobbyPlayer = asset.FindActionMap("Lobby Player", throwIfNotFound: true);
@@ -1136,6 +1201,7 @@ namespace Hawaiian.Input
         private readonly InputAction m_Player_HoldAttack;
         private readonly InputAction m_Player_PickUp;
         private readonly InputAction m_Player_Parse;
+        private readonly InputAction m_Player_MoveCursor;
         private readonly InputAction m_Player_Drop;
         public struct PlayerActions
         {
@@ -1151,6 +1217,7 @@ namespace Hawaiian.Input
             public InputAction @HoldAttack => m_Wrapper.m_Player_HoldAttack;
             public InputAction @PickUp => m_Wrapper.m_Player_PickUp;
             public InputAction @Parse => m_Wrapper.m_Player_Parse;
+            public InputAction @MoveCursor => m_Wrapper.m_Player_MoveCursor;
             public InputAction @Drop => m_Wrapper.m_Player_Drop;
             public InputActionMap Get() { return m_Wrapper.m_Player; }
             public void Enable() { Get().Enable(); }
@@ -1191,6 +1258,9 @@ namespace Hawaiian.Input
                     @Parse.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnParse;
                     @Parse.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnParse;
                     @Parse.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnParse;
+                    @MoveCursor.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMoveCursor;
+                    @MoveCursor.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMoveCursor;
+                    @MoveCursor.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMoveCursor;
                     @Drop.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDrop;
                     @Drop.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDrop;
                     @Drop.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDrop;
@@ -1228,6 +1298,9 @@ namespace Hawaiian.Input
                     @Parse.started += instance.OnParse;
                     @Parse.performed += instance.OnParse;
                     @Parse.canceled += instance.OnParse;
+                    @MoveCursor.started += instance.OnMoveCursor;
+                    @MoveCursor.performed += instance.OnMoveCursor;
+                    @MoveCursor.canceled += instance.OnMoveCursor;
                     @Drop.started += instance.OnDrop;
                     @Drop.performed += instance.OnDrop;
                     @Drop.canceled += instance.OnDrop;
@@ -1384,6 +1457,7 @@ namespace Hawaiian.Input
             void OnHoldAttack(InputAction.CallbackContext context);
             void OnPickUp(InputAction.CallbackContext context);
             void OnParse(InputAction.CallbackContext context);
+            void OnMoveCursor(InputAction.CallbackContext context);
             void OnDrop(InputAction.CallbackContext context);
         }
         public interface ILobbyPlayerActions

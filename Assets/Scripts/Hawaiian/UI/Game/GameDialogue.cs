@@ -9,6 +9,7 @@ namespace Hawaiian.UI.Game
         [SerializeField] private GameObject inventoryUIPrefab;
         [SerializeField] private Transform uiParent;
         [SerializeField] private Transform uiParentForFourPlayers;
+        [SerializeField] private GameObject controlsInstructionsDialoguePrefab;
 
         private int _inventoryCount = 0;
         private List<GameObject> inventoryGameObjects = new();
@@ -28,7 +29,12 @@ namespace Hawaiian.UI.Game
             inventoryGameObject.GetComponentInChildren<ScoreUI>().inventory = inventory;
             _inventoryCount++;
         }
-        
-        
+
+        protected override void Awake()
+        {
+            base.Awake();
+            
+            Instantiate(controlsInstructionsDialoguePrefab, transform.parent); 
+        }
     }
 }
