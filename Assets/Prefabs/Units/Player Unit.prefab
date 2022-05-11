@@ -139,6 +139,9 @@ MonoBehaviour:
   _meleeSlashRotationOffset: -90
   _handHelder: {fileID: 937560079924309396}
   _animator: {fileID: 6074339650475639767}
+  isHoldingKey: 0
+  canUnlock: 0
+  signal: 0
 --- !u!120 &5706338390592453364
 LineRenderer:
   m_ObjectHideFlags: 0
@@ -466,19 +469,19 @@ PrefabInstance:
       objectReference: {fileID: 858650075133827644}
     - target: {fileID: 1165009643540554491, guid: fe93fd4b04ca3d340865789a7d27cade, type: 3}
       propertyPath: m_Bounds.m_Center.x
-      value: 0.016073704
+      value: 0.0076681376
       objectReference: {fileID: 0}
     - target: {fileID: 1165009643540554491, guid: fe93fd4b04ca3d340865789a7d27cade, type: 3}
       propertyPath: m_Bounds.m_Center.y
-      value: 0.010638058
+      value: 0.08882406
       objectReference: {fileID: 0}
     - target: {fileID: 1165009643540554491, guid: fe93fd4b04ca3d340865789a7d27cade, type: 3}
       propertyPath: m_Bounds.m_Extent.x
-      value: 0.5463426
+      value: 0.6377739
       objectReference: {fileID: 0}
     - target: {fileID: 1165009643540554491, guid: fe93fd4b04ca3d340865789a7d27cade, type: 3}
       propertyPath: m_Bounds.m_Extent.y
-      value: 0.4641537
+      value: 0.536656
       objectReference: {fileID: 0}
     - target: {fileID: 1411784524321343871, guid: fe93fd4b04ca3d340865789a7d27cade, type: 3}
       propertyPath: m_Bounds.m_Center.x
@@ -514,19 +517,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4075481484501139696, guid: fe93fd4b04ca3d340865789a7d27cade, type: 3}
       propertyPath: m_Bounds.m_Center.x
-      value: 0.0044394433
+      value: 0.0037112236
       objectReference: {fileID: 0}
     - target: {fileID: 4075481484501139696, guid: fe93fd4b04ca3d340865789a7d27cade, type: 3}
       propertyPath: m_Bounds.m_Center.y
-      value: 0.0028363466
+      value: -0.006710589
       objectReference: {fileID: 0}
     - target: {fileID: 4075481484501139696, guid: fe93fd4b04ca3d340865789a7d27cade, type: 3}
       propertyPath: m_Bounds.m_Extent.x
-      value: 0.36588645
+      value: 0.3612623
       objectReference: {fileID: 0}
     - target: {fileID: 4075481484501139696, guid: fe93fd4b04ca3d340865789a7d27cade, type: 3}
       propertyPath: m_Bounds.m_Extent.y
-      value: 0.33164167
+      value: 0.32747728
       objectReference: {fileID: 0}
     - target: {fileID: 4153188563775757182, guid: fe93fd4b04ca3d340865789a7d27cade, type: 3}
       propertyPath: m_RootOrder
@@ -749,6 +752,19 @@ MonoBehaviour:
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
+--- !u!114 &4532151668749739656
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3772646986385756032}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94b80a4d87da3054493bc057924e613a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameTime: {fileID: 11400000, guid: a7999ebb747644c42b10ad44fd3b305b, type: 2}
 --- !u!114 &6074339650475639767 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2062520255, guid: fe93fd4b04ca3d340865789a7d27cade, type: 3}
