@@ -55,7 +55,6 @@ namespace Hawaiian.Input
         public void OnRotate(InputValue value)
         {
             _rotation = value.Get<Vector2>();
-            Debug.Log("test");
         }
 
         public void OnMoveCursor(InputValue value)

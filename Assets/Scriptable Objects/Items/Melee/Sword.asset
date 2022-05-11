@@ -26,7 +26,7 @@ MonoBehaviour:
   ReturnsToPlayer: 0
   IsMultiShot: 0
   ProjectileAmount: 0
-  AttackRate: 5
+  AttackRate: 0.3
   IsMainObjective: 0
   CanBeHeldByEnemies: 0
   Points: 0

@@ -76,5 +76,10 @@ namespace Hawaiian.Unit
         }
         
         public void Use() { }
+        
+        public void ApplyKnockback(Vector2 direction, float distance)
+        {
+            ApplyKnockbackOnly(direction, distance);
+        }
     }
 }

@@ -7,6 +7,7 @@ using Hawaiian.Utilities;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Hawaiian.Input;
+using UnityEngine.UIElements;
 
 [RequireComponent(typeof(InventoryController))]
 public class ItemInteractor : MonoBehaviour
@@ -35,6 +36,7 @@ public class ItemInteractor : MonoBehaviour
     private bool _isHoldingAttack = false;
     private float _currentHoldTime;
     private float _offset = 1.1f;
+    private float _slashCooldown;
 
     private GameObject _projectileInstance;
     private GameObject _projectileReference; //TODO: Get from item
@@ -54,6 +56,8 @@ public class ItemInteractor : MonoBehaviour
         set => _rotation = value;
     }
 
+    public bool CanMeleeAttack() => _slashCooldown <= 0;
+    
     public bool signal = false;
 
     #region Monobehaviour
@@ -120,6 +124,15 @@ public class ItemInteractor : MonoBehaviour
                 UpdateHoldAttackCursor();
             }
         }
+    }
+
+    public void Update()
+    {
+        if (_slashCooldown >= 0)
+        {
+            _slashCooldown -= Time.deltaTime;
+        }
+    
     }
 
     #endregion
@@ -312,6 +325,10 @@ public class ItemInteractor : MonoBehaviour
 
         if (value.performed) return;
 
+        if (!CanMeleeAttack()) return;
+
+        _slashCooldown = _controller.GetCurrentItem().AttackRate;
+
         Vector3 playerInput;
         float angle;
 
@@ -339,7 +356,7 @@ public class ItemInteractor : MonoBehaviour
         GameObject indicator = Instantiate(_projectileReference, _lastAttackPosition,
             Quaternion.Euler(new Vector3(0, 0, angle + _meleeSlashRotationOffset)), _firePoint);
 
-        indicator.GetComponent<DamageIndicator>().Initialise(5, _attackFlag, _playerReference);
+        indicator.GetComponent<DamageIndicator>().Initialise(5, _attackFlag, _playerReference,direction);
         indicator.GetComponent<DealKnockback>().Initialise(2, _playerReference, direction);
         indicator.GetComponent<DropItem>().Initialise(_playerReference);
         _attackFlag = !_attackFlag;
