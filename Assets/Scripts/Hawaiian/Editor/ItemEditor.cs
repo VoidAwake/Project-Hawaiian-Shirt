@@ -35,6 +35,9 @@ namespace Hawaiian.Editor
          SerializedProperty trapInstance;
         SerializedProperty isKey;
         SerializedProperty otherInstance;
+        SerializedProperty IsRicochet;
+        SerializedProperty MaximumBounces;
+        SerializedProperty Rarity;
 
 
         private void OnEnable()
@@ -60,6 +63,11 @@ namespace Hawaiian.Editor
             trapPlacementIcon = serializedObject.FindProperty("PlacementIcon");
             trapPlacementRadius = serializedObject.FindProperty("PlacementRadius");
             trapInstance = serializedObject.FindProperty("TrapInstance");
+            IsRicochet = serializedObject.FindProperty("IsRicochet");
+            MaximumBounces = serializedObject.FindProperty("MaximumBounces");
+            Rarity = serializedObject.FindProperty("Rarity");
+
+
 
         }
 
@@ -113,6 +121,9 @@ namespace Hawaiian.Editor
             EditorGUILayout.Space();
             EditorGUILayout.PropertyField(droppedItemBase, new GUIContent("Dropped Item Reference"));
             EditorGUILayout.Space();
+            EditorGUILayout.PropertyField(Rarity, new GUIContent("Item Rarity"));
+            EditorGUILayout.Space();
+
         }
 
         private void ShowTrapComponents()
@@ -155,6 +166,9 @@ namespace Hawaiian.Editor
             
             EditorGUILayout.Space();
             EditorGUILayout.PropertyField(multishot, new GUIContent("Is A Multishot","Refers to if the item will produce multiple shots at once"));
+            
+            EditorGUILayout.Space();
+            EditorGUILayout.PropertyField(IsRicochet, new GUIContent("Is Ricochet","Refers to if the item will bounce of wall"));
 
             if (item.IsMultiShot)
             {
@@ -164,6 +178,12 @@ namespace Hawaiian.Editor
             else
             {
                 item.ProjectileAmount = 0;
+            }
+            
+            if (item.IsRicochet)
+            {
+                GUILayout.Label("Ricochet Settings", EditorStyles.boldLabel);
+                EditorGUILayout.PropertyField(MaximumBounces, new GUIContent("Maximum Bounces","Refers to the max amount of time an item can bounce off the wall"));
             }
         }
         

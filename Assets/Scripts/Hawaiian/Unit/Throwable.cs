@@ -6,9 +6,9 @@ using UnityEngine;
 public class Throwable : MonoBehaviour
 {
     
-    [SerializeField] private float _speed;
-    [SerializeField] private bool _canStickOnWalls;
-    [SerializeField] private float _damage;
+    [SerializeField] internal float _speed;
+    [SerializeField] internal bool _canStickOnWalls;
+    [SerializeField] internal float _damage;
 
     private SpriteRenderer _renderer;
     private float _currentDistance;
@@ -18,9 +18,11 @@ public class Throwable : MonoBehaviour
     public float Speed => _speed;
     public bool CanStickOnWalls => _canStickOnWalls;
     public float Damage => _damage;
+    public Vector2 LastPosition => _positions[^1]; // ^1 
+    
 
         
-    public void Initialise(Vector2 [] targets, Sprite newSprite,float speed = 5, float damage = 5,bool canStickOnWalls = false)
+    public virtual void Initialise(Vector2 [] targets, Sprite newSprite,float speed = 5, float damage = 5,bool canStickOnWalls = false)
     {
         _positions = targets;
         _speed = speed;
@@ -36,14 +38,14 @@ public class Throwable : MonoBehaviour
         _renderer = GetComponent<SpriteRenderer>();
     }
 
-    private void Update()
+    public virtual void Update()
     {
         if (_positions == null)
             return;
-        
-        if (positionIndex >= _positions.Length - 1)
-            Destroy(this.gameObject);
 
+        if (positionIndex >= _positions.Length - 1)
+            OnTargetReached();
+        
         var step = _speed * Time.deltaTime;
 
         transform.position = Vector3.MoveTowards(transform.position, _positions[positionIndex], step);
@@ -51,6 +53,11 @@ public class Throwable : MonoBehaviour
         if (Vector3.Distance(transform.position, _positions[positionIndex]) < 0.01f)
             positionIndex++;
         
+    }
+
+    public virtual void OnTargetReached()
+    {
+        Destroy(this.gameObject);
     }
 
 

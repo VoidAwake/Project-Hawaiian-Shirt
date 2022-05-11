@@ -38,13 +38,13 @@ public class DoorScript : MonoBehaviour
             ItemInteractor interactor = col.gameObject.GetComponentInChildren<ItemInteractor>();
             if (interactor)
             {
-                if (interactor.isHoldingKey)
+                if (interactor.IsHoldingKey)
                 {
-                    interactor.canUnlock = true;
+                    interactor.CanUnlock = true;
                 }
                 else
                 {
-                    interactor.canUnlock = false;
+                    interactor.CanUnlock = false;
                 }
             }
 

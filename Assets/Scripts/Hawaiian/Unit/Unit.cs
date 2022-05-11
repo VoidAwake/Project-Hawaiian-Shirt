@@ -36,6 +36,7 @@ namespace Hawaiian.Unit
         [SerializeField] internal float tweenRate;
         [SerializeField] internal float runMultiplier;
 
+        private bool knockbackOverride = false;
         protected Vector2 move = new Vector2(); // for directional input
         protected bool controlsEnabled = true;
         protected bool isRunning = false;
@@ -54,14 +55,14 @@ namespace Hawaiian.Unit
                 GetComponent<UnitAnimator>().UseItem(UnitAnimationState.Throw, testVector, false);
             }
 
-            if (playerState == PlayerState.Walking)
+            if (playerState == PlayerState.Walking && !knockbackOverride)
             {
                 // Update inputs and velocity
                 Vector2 modifiedMove = move.magnitude * 1.2f > 1.0f ? move.normalized : move.magnitude < 0.05f ? Vector2.zero : move * 1.2f;
                 if (controlsEnabled) velocity = Vector2.Lerp(velocity, maxSpeed * (isRunning ? runMultiplier * modifiedMove : modifiedMove), Mathf.Clamp(Time.deltaTime * gameTimeScale.Value * tweenRate, 0.0f, 1.0f));
                 else velocity = Vector2.Lerp(velocity, Vector2.zero, Mathf.Clamp(Time.deltaTime * gameTimeScale.Value * tweenRate, 0.0f, 1.0f));
             }
-            else if (playerState == PlayerState.Tripped)
+            else if (playerState == PlayerState.Tripped || knockbackOverride)
             {
                 // Set velocity based on knockback curve
                 velocity = knockBackForce * 2 * (remainingTripTime / tripTime);
@@ -72,6 +73,7 @@ namespace Hawaiian.Unit
                 if (remainingTripTime < 0.0f)
                 {
                     remainingTripTime = 0.0f;
+                    knockbackOverride = false;
                     playerState = PlayerState.Walking;
                 }
             }
@@ -90,6 +92,16 @@ namespace Hawaiian.Unit
             playerState = PlayerState.Tripped;
             remainingTripTime = tripTime;
             BecomeInvincible(invincibilityTime);
+        }
+
+        public void ApplyKnockbackOnly(Vector2 direction, float distance)
+        {
+            // Talk shit
+            knockBackForce = direction.normalized * distance;
+
+            // Get hit
+            knockbackOverride = true;
+            remainingTripTime = 0.5f;   
         }
 
         public void BecomeInvincible(float duration)
