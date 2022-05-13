@@ -12,7 +12,7 @@ namespace Hawaiian.UI.CharacterSelect
 {
     public class SpawnPlayers : MonoBehaviour
     {
-        enum CharacterNames { Fox, Robin, Monkey, Cat, Goose, Soup }
+        public enum CharacterNames { Fox, Robin, Monkey, Cat, Goose, Soup, Gambit, Bert }
         enum PlayerColours { Red, Blue, Yellow, Green }
 
         [SerializeField] GameObject playerPrefab;

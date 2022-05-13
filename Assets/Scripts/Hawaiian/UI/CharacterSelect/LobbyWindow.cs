@@ -7,7 +7,7 @@ namespace Hawaiian.UI.CharacterSelect
 {
     public class LobbyWindow : MonoBehaviour
     {
-        public enum CharacterNames { Fox, Robin, Monkey, Cat, Goose, Soup }
+        //public enum CharacterNames { Fox, Robin, Monkey, Cat, Goose, Soup, Gambit, Bert } // Use public enum is SpawnPlayers
 
         [SerializeField] LobbyGameManager manager;
         [SerializeField] TextMeshProUGUI textNumber;
@@ -75,7 +75,7 @@ namespace Hawaiian.UI.CharacterSelect
 
         public void UpdateHead(int characterNumber)
         {
-            head.SetCategoryAndLabel("Head", ((CharacterNames)characterNumber).ToString());
+            head.SetCategoryAndLabel("Head", ((SpawnPlayers.CharacterNames)characterNumber).ToString());
         }
     }
 }
