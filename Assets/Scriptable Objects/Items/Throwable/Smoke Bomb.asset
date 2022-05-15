@@ -19,6 +19,10 @@ MonoBehaviour:
   MaxStack: 0
   DroppedItemBase: {fileID: 3056942884218095950, guid: 37132a09f5d1c4046a4bb460892afc47, type: 3}
   ProjectileInstance: {fileID: 5387373904414807758, guid: 84361e5a6995d564b8208790e37d5c37, type: 3}
+  Rarity: 1
+  ItemWeight: 50
+  ProbabilityRangeFrom: 0
+  ProbabilityRangeTo: 0
   ItemDamage: 5
   DrawSpeed: 8
   DrawDistance: 6
@@ -26,7 +30,10 @@ MonoBehaviour:
   ReturnsToPlayer: 0
   IsMultiShot: 0
   ProjectileAmount: 0
+  IsRicochet: 0
+  MaximumBounces: 0
   AttackRate: 0
+  KnockbackDistance: 0
   IsMainObjective: 0
   CanBeHeldByEnemies: 0
   Points: 0

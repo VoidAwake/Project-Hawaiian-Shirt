@@ -11,7 +11,7 @@ namespace Hawaiian.Inventory
         private readonly List<IUnit> oldTargets = new List<IUnit>();
         private IUnit user;
         private Vector2 direction;
-        
+
         public void Initialise(IUnit user, Vector2 direction) 
         {
             this.user = user;

@@ -19,6 +19,7 @@ namespace Hawaiian.UI.CharacterSelect
         [SerializeField] private int buildIndex;
         [SerializeField] private GameManager gameManager;
         [SerializeField] private GameEvent playersJoined;
+
         private Dictionary<LobbyGameManager.PlayerConfig, InventoryController> inventoryControllers = new();
 
         // Start is called before the first frame update

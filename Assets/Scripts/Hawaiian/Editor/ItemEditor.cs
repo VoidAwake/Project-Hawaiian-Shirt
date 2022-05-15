@@ -12,7 +12,6 @@ namespace Hawaiian.Editor
     [CustomEditor(typeof(Item))]
     public class ItemEditor : UnityEditor.Editor
     {
-        
         SerializedProperty itemSprite;
         SerializedProperty itemName;
         SerializedProperty maxStacks;
@@ -29,15 +28,16 @@ namespace Hawaiian.Editor
         SerializedProperty projectileInstance;
         SerializedProperty returnToPlayer;
         SerializedProperty multishot;
-         SerializedProperty multishotAmount;
-         SerializedProperty trapPlacementRadius;
-         SerializedProperty trapPlacementIcon;
-         SerializedProperty trapInstance;
+        SerializedProperty multishotAmount;
+        SerializedProperty trapPlacementRadius;
+        SerializedProperty trapPlacementIcon;
+        SerializedProperty trapInstance;
         SerializedProperty isKey;
         SerializedProperty otherInstance;
         SerializedProperty IsRicochet;
         SerializedProperty MaximumBounces;
         SerializedProperty Rarity;
+        SerializedProperty KnockbackDistance;
 
 
         private void OnEnable()
@@ -66,17 +66,15 @@ namespace Hawaiian.Editor
             IsRicochet = serializedObject.FindProperty("IsRicochet");
             MaximumBounces = serializedObject.FindProperty("MaximumBounces");
             Rarity = serializedObject.FindProperty("Rarity");
-
-
-
+            KnockbackDistance = serializedObject.FindProperty("KnockbackDistance");
         }
 
         public override void OnInspectorGUI()
         {
             base.OnInspectorGUI();
-      
+
             Item _item = (Item) target;
-            
+
             EditorGUILayout.Space();
 
             ShowMainComponents();
@@ -104,7 +102,7 @@ namespace Hawaiian.Editor
                 default:
                     throw new ArgumentOutOfRangeException();
             }
-            
+
 
             serializedObject.ApplyModifiedProperties();
         }
@@ -117,13 +115,14 @@ namespace Hawaiian.Editor
             EditorGUILayout.PropertyField(itemSprite, new GUIContent("Item Sprite "));
             EditorGUILayout.PropertyField(droppedItemSprite, new GUIContent("Dropped Item Sprite "));
             EditorGUILayout.Space();
-            EditorGUILayout.IntSlider(maxStacks, 0, 100, new GUIContent("Maximum Stacks", "Stacks refer to how many of this item can be in one inventory slot at a time"));
+            EditorGUILayout.IntSlider(maxStacks, 0, 100,
+                new GUIContent("Maximum Stacks",
+                    "Stacks refer to how many of this item can be in one inventory slot at a time"));
             EditorGUILayout.Space();
             EditorGUILayout.PropertyField(droppedItemBase, new GUIContent("Dropped Item Reference"));
             EditorGUILayout.Space();
             EditorGUILayout.PropertyField(Rarity, new GUIContent("Item Rarity"));
             EditorGUILayout.Space();
-
         }
 
         private void ShowTrapComponents()
@@ -131,14 +130,13 @@ namespace Hawaiian.Editor
             GUILayout.Label("Trap Stats", EditorStyles.boldLabel);
             EditorGUILayout.Space();
             EditorGUILayout.PropertyField(itemDamage, new GUIContent("Damage"));
-            EditorGUILayout.IntSlider(trapPlacementRadius, 0, 30, new GUIContent("Placement Radius", "Refers to how far the placement time "));
+            EditorGUILayout.IntSlider(trapPlacementRadius, 0, 30,
+                new GUIContent("Placement Radius", "Refers to how far the placement time "));
             EditorGUILayout.Space();
             GUILayout.Label("Trap Components", EditorStyles.boldLabel);
             EditorGUILayout.Space();
             EditorGUILayout.PropertyField(trapPlacementIcon, new GUIContent("Placement Icon"));
             EditorGUILayout.PropertyField(trapInstance, new GUIContent("Trap Instance "));
-
-            
         }
 
         private void ShowMeleeComponents()
@@ -147,9 +145,12 @@ namespace Hawaiian.Editor
             EditorGUILayout.PropertyField(projectileInstance, new GUIContent("Melee Slash Reference"));
             EditorGUILayout.Space();
             EditorGUILayout.PropertyField(itemDamage, new GUIContent("Damage"));
+            EditorGUILayout.Space();
             EditorGUILayout.PropertyField(attackRate, new GUIContent("Attack Rate"));
+            EditorGUILayout.Space();
+            EditorGUILayout.PropertyField(KnockbackDistance, new GUIContent("Knockback Distance"));
         }
-        
+
         private void ShowProjectileComponents(Item item)
         {
             GUILayout.Label("Projectile Stats", EditorStyles.boldLabel);
@@ -157,36 +158,46 @@ namespace Hawaiian.Editor
             EditorGUILayout.Space();
             EditorGUILayout.PropertyField(itemDamage, new GUIContent("Damage"));
             EditorGUILayout.Space();
-            EditorGUILayout.PropertyField(drawSpeed, new GUIContent("DrawSpeed","Refers to how quickly the projectile reaches its maximum distance"));
-            EditorGUILayout.PropertyField(drawDistance, new GUIContent("DrawDistance","Refers to how far the projectile can reach at full charge"));
+            EditorGUILayout.PropertyField(drawSpeed,
+                new GUIContent("DrawSpeed", "Refers to how quickly the projectile reaches its maximum distance"));
+            EditorGUILayout.PropertyField(drawDistance,
+                new GUIContent("DrawDistance", "Refers to how far the projectile can reach at full charge"));
             EditorGUILayout.Space();
-            EditorGUILayout.PropertyField(sticksOnWall, new GUIContent("Sticks on Wall","Refers to if the projectile will stick on a wall"));
+            EditorGUILayout.PropertyField(sticksOnWall,
+                new GUIContent("Sticks on Wall", "Refers to if the projectile will stick on a wall"));
             EditorGUILayout.Space();
-            EditorGUILayout.PropertyField(returnToPlayer, new GUIContent("Returns to the player?","If the projectile does not hit a unit or obstacle in its initial throw, the projectile will return to the player"));
-            
+            EditorGUILayout.PropertyField(returnToPlayer,
+                new GUIContent("Returns to the player?",
+                    "If the projectile does not hit a unit or obstacle in its initial throw, the projectile will return to the player"));
+
             EditorGUILayout.Space();
-            EditorGUILayout.PropertyField(multishot, new GUIContent("Is A Multishot","Refers to if the item will produce multiple shots at once"));
-            
+            EditorGUILayout.PropertyField(multishot,
+                new GUIContent("Is A Multishot", "Refers to if the item will produce multiple shots at once"));
+
             EditorGUILayout.Space();
-            EditorGUILayout.PropertyField(IsRicochet, new GUIContent("Is Ricochet","Refers to if the item will bounce of wall"));
+            EditorGUILayout.PropertyField(IsRicochet,
+                new GUIContent("Is Ricochet", "Refers to if the item will bounce of wall"));
 
             if (item.IsMultiShot)
             {
                 GUILayout.Label("Multishot Stats", EditorStyles.boldLabel);
-                EditorGUILayout.IntSlider(multishotAmount, 2, 20, new GUIContent("Number of Projectiles", "The amount of projectiles spawned by the item when used"));
+                EditorGUILayout.IntSlider(multishotAmount, 2, 20,
+                    new GUIContent("Number of Projectiles", "The amount of projectiles spawned by the item when used"));
             }
             else
             {
                 item.ProjectileAmount = 0;
             }
-            
+
             if (item.IsRicochet)
             {
                 GUILayout.Label("Ricochet Settings", EditorStyles.boldLabel);
-                EditorGUILayout.PropertyField(MaximumBounces, new GUIContent("Maximum Bounces","Refers to the max amount of time an item can bounce off the wall"));
+                EditorGUILayout.PropertyField(MaximumBounces,
+                    new GUIContent("Maximum Bounces",
+                        "Refers to the max amount of time an item can bounce off the wall"));
             }
         }
-        
+
         private void ShowThrowableComponents()
         {
             EditorGUILayout.PropertyField(projectileInstance, new GUIContent("Throwable Instance Reference"));
@@ -194,14 +205,18 @@ namespace Hawaiian.Editor
             GUILayout.Label("Throwable Stats", EditorStyles.boldLabel);
             EditorGUILayout.PropertyField(itemDamage, new GUIContent("Damage"));
             EditorGUILayout.Space();
-            EditorGUILayout.PropertyField(drawSpeed, new GUIContent("Speed","Refers to how fast the item moves through the air"));
-            EditorGUILayout.PropertyField(drawDistance, new GUIContent("Distance","Refers to how far the throwable can go"));
+            EditorGUILayout.PropertyField(drawSpeed,
+                new GUIContent("Speed", "Refers to how fast the item moves through the air"));
+            EditorGUILayout.PropertyField(drawDistance,
+                new GUIContent("Distance", "Refers to how far the throwable can go"));
         }
-        
+
         private void ShowObjectiveComponent()
         {
             GUILayout.Label("Objective Stats", EditorStyles.boldLabel);
-            EditorGUILayout.PropertyField(points, new GUIContent("Points", "The amount of points/money the player will recieve if they finish the mission with this item in their inventory"));
+            EditorGUILayout.PropertyField(points,
+                new GUIContent("Points",
+                    "The amount of points/money the player will recieve if they finish the mission with this item in their inventory"));
             EditorGUILayout.Space();
             EditorGUILayout.PropertyField(isMainObjective, new GUIContent("Is Main Objective"));
             EditorGUILayout.PropertyField(canBeHeldByEnemies, new GUIContent("Can Be Held By Enemies"));
@@ -212,7 +227,6 @@ namespace Hawaiian.Editor
             GUILayout.Label("Other Stats", EditorStyles.boldLabel);
             EditorGUILayout.PropertyField(isKey, new GUIContent("Key"));
         }
-
     }
 }
 

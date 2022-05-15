@@ -5,6 +5,7 @@ using UnityEngine;
 
 namespace Hawaiian.Unit
 {
+    [RequireComponent(typeof(DealKnockback))]
     public class DamageIndicator : MonoBehaviour
     {
 
@@ -16,6 +17,7 @@ namespace Hawaiian.Unit
         [SerializeField] private GameEvent OnTakeDamage;
         [SerializeField] private Vector2 _knockbackDirection;
 
+        public int _knockbackDistance;
         private Animator _animator;
         private bool _flag;
         private IUnit _user;
@@ -35,13 +37,15 @@ namespace Hawaiian.Unit
             _user = user;
         }
         
-        public void Initialise(int damage, bool flag, IUnit user, Vector2 knockbackDirection) 
+        public void Initialise(int damage, bool flag, IUnit user, Vector2 knockbackDirection, int knockbackDistance) 
         {
             _damage = damage;
             _animator = GetComponent<Animator>();
             _animator.SetTrigger(flag ? _alternateSlash : _slash);
             _user = user;
             _knockbackDirection = knockbackDirection;
+            _knockbackDistance = knockbackDistance;
+            
         }
     
         public void OnAnimationEnd() => Destroy(this.gameObject);
@@ -65,7 +69,7 @@ namespace Hawaiian.Unit
             
             if (col.gameObject.GetComponent<DamageIndicator>() && col.gameObject != this.gameObject)
             {
-               _user.ApplyKnockback(-_knockbackDirection, 1);
+               _user.ApplyKnockback(-_knockbackDirection, _knockbackDistance);
             }
             
         }

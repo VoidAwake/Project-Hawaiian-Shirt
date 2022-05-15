@@ -26,7 +26,7 @@ public class ItemSpawner : MonoBehaviour
     public void SpawnItem()
     {
         _currentItem = _pool.RetrieveRandomItem();
-        _currentItemInstance = Instantiate(DroppedItem, transform.localPosition = Vector3.zero, quaternion.identity);
+        _currentItemInstance = Instantiate(DroppedItem, transform.localPosition, quaternion.identity);
         DroppedItem droppedItem = _currentItemInstance.GetComponent<DroppedItem>();
         droppedItem.item = _currentItem;
     }

@@ -59,7 +59,8 @@ namespace Hawaiian.Inventory
 
         //Melee Specific Stats
         [HideInInspector] public float AttackRate;
-        
+        [HideInInspector] public int KnockbackDistance;
+
         //Objective Specific Stats
         [HideInInspector] public bool IsMainObjective;
         [HideInInspector] public bool CanBeHeldByEnemies;

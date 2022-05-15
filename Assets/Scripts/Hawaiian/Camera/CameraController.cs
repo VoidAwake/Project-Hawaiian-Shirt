@@ -1,11 +1,6 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
-using Codice.Client.BaseCommands;
-using Hawaiian.UI.CharacterSelect;
 using Hawaiian.Unit;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 
 [RequireComponent(typeof(Camera))]

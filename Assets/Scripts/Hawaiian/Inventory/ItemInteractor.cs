@@ -355,7 +355,7 @@ public class ItemInteractor : MonoBehaviour
         GameObject indicator = Instantiate(_projectileReference, _lastAttackPosition,
             Quaternion.Euler(new Vector3(0, 0, angle + _meleeSlashRotationOffset)), _firePoint);
 
-        indicator.GetComponent<DamageIndicator>().Initialise(5, _attackFlag, _playerReference,direction);
+        indicator.GetComponent<DamageIndicator>().Initialise(5, _attackFlag, _playerReference,direction, _controller.GetCurrentItem().KnockbackDistance);
         indicator.GetComponent<HitUnit>().Initialise(_playerReference, direction);  
    //     indicator.GetComponent<DealKnockback>().Initialise(2, _playerReference, direction);
       //  indicator.GetComponent<DropItem>().Initialise(_playerReference);

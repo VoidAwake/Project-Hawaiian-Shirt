@@ -15,18 +15,25 @@ MonoBehaviour:
   Type: 1
   ItemSprite: {fileID: 21300000, guid: 183e326c5acf75946b6ab73d34453b10, type: 3}
   DroppedItemSprite: {fileID: 21300000, guid: 183e326c5acf75946b6ab73d34453b10, type: 3}
-  ItemName: Boomerang
+  ItemName: Basic Boomerang
   MaxStack: 1
   DroppedItemBase: {fileID: 3056942884218095950, guid: 37132a09f5d1c4046a4bb460892afc47, type: 3}
   ProjectileInstance: {fileID: 8484802503941745754, guid: 6ccdae3489326844c9b49b012c477987, type: 3}
+  Rarity: 0
+  ItemWeight: 60
+  ProbabilityRangeFrom: 0
+  ProbabilityRangeTo: 0
   ItemDamage: 10
-  DrawSpeed: 5
-  DrawDistance: 2
+  DrawSpeed: 8
+  DrawDistance: 5
   SticksOnWall: 0
   ReturnsToPlayer: 0
   IsMultiShot: 0
   ProjectileAmount: 0
+  IsRicochet: 0
+  MaximumBounces: 0
   AttackRate: 0
+  KnockbackDistance: 0
   IsMainObjective: 0
   CanBeHeldByEnemies: 0
   Points: 0
