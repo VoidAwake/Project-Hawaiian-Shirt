@@ -21,7 +21,6 @@ public class ItemInteractor : MonoBehaviour
     [SerializeField] private float _meleeSlashRotationOffset;
     [SerializeField] private SpriteRenderer _handHelder;
     [SerializeField] private UnitAnimator _animator;
-    [SerializeField] private bool isHoldingKey = false;
     [SerializeField] private bool canUnlock;
 
     //Components
@@ -42,7 +41,6 @@ public class ItemInteractor : MonoBehaviour
     private GameObject _projectileReference; //TODO: Get from item
 
     public bool IsAttacking => _isHoldingAttack;
-    public bool IsHoldingKey => isHoldingKey;
 
     public bool CanUnlock
     {
@@ -58,8 +56,6 @@ public class ItemInteractor : MonoBehaviour
 
     public bool CanMeleeAttack() => _slashCooldown <= 0;
     
-    public bool signal = false;
-
     #region Monobehaviour
 
     private void Awake()
@@ -288,20 +284,6 @@ public class ItemInteractor : MonoBehaviour
     {
         if (_controller.GetCurrentItem() == null) return;
 
-        if (_controller.GetCurrentItem().Type is ItemType.Other or ItemType.Objective) 
-        { 
-            if(_controller.GetCurrentItem().IsKey && canUnlock) 
-            { 
-                signal = true; 
-            } 
-            else 
-            { 
-                signal = false; 
-            } 
-            return; 
-        } 
-
-
         //NEEDS TO BE A CHECK IF USING PROJECTILES TO ALLOW FOR ON HOLD ACTIONS AND IGNORE THIS
 
         #region Ranged Attack
@@ -383,7 +365,6 @@ public class ItemInteractor : MonoBehaviour
     }
 
     void UpdateHoldAttackCursor() => _cursor.CurrentRad += _currentHoldTime / 2;
-    
 
     void CancelRotation()
     {
@@ -393,24 +374,8 @@ public class ItemInteractor : MonoBehaviour
 
     public void UpdateItem()
     {
-
-        if (_controller.GetCurrentItem() == null) { 
-            isHoldingKey = false;
-            signal = false;
-            return; 
-        }
-
-        if (_controller.GetCurrentItem().IsKey)
-            isHoldingKey = true;
-        else
-        {
-            isHoldingKey = false;
-        }
-        
-
         _projectileReference = _controller.GetCurrentItem().ProjectileInstance;
         _handHelder.sprite = _controller.GetCurrentItem().ItemSprite;
         _cursor.MaxRadius = _controller.GetCurrentItem().DrawDistance;
     }
-
 }
