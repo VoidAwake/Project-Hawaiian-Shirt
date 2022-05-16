@@ -4,21 +4,13 @@ namespace Hawaiian.Level
 {
     public class Door : MonoBehaviour
     {
-        Animator animator;
-        public bool isLocked = true;
-        [SerializeField] public bool inRange = false;
-        public BoxCollider2D doorRange;
+        [SerializeField] private Animator animator;
         
-        void Start()
-        {
-            animator = GetComponentInChildren<Animator>();
-            doorRange = GetComponent<BoxCollider2D>();
-        }
+        private static readonly int UnlockTrigger = Animator.StringToHash("Unlock");
 
         public void Unlock()
         {
-            animator.SetTrigger("Unlock");
-            Destroy(doorRange);
+            animator.SetTrigger(UnlockTrigger);
         }
     }
 }

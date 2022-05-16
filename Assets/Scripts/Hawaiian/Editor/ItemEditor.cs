@@ -38,6 +38,7 @@ namespace Hawaiian.Editor
         SerializedProperty MaximumBounces;
         SerializedProperty Rarity;
         SerializedProperty KnockbackDistance;
+        private SerializedProperty heldItemPrefab;
 
 
         private void OnEnable()
@@ -67,6 +68,7 @@ namespace Hawaiian.Editor
             MaximumBounces = serializedObject.FindProperty("MaximumBounces");
             Rarity = serializedObject.FindProperty("Rarity");
             KnockbackDistance = serializedObject.FindProperty("KnockbackDistance");
+            heldItemPrefab = serializedObject.FindProperty("heldItemPrefab");
         }
 
         public override void OnInspectorGUI()
@@ -123,6 +125,7 @@ namespace Hawaiian.Editor
             EditorGUILayout.Space();
             EditorGUILayout.PropertyField(Rarity, new GUIContent("Item Rarity"));
             EditorGUILayout.Space();
+            EditorGUILayout.PropertyField(heldItemPrefab);
         }
 
         private void ShowTrapComponents()

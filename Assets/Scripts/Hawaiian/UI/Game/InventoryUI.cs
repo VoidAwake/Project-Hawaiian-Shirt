@@ -49,7 +49,7 @@ namespace Hawaiian.UI.Game
             transform.GetChild(0).GetComponent<RectTransform>().localPosition = new Vector2(70.0f - (70.0f + length) / 2.0f, 0.0f);
 
             highlight = Instantiate(highlightPrefab, invSlots[0].transform.position, quaternion.identity, invSlots[0].transform);
-            inv.itemchange.AddListener(UpdateInv);
+            inv.currentItemChanged.AddListener(UpdateInv);
         }
         
 
@@ -75,14 +75,14 @@ namespace Hawaiian.UI.Game
 
         private void OnDestroy()
         {
-            inv.itemchange.RemoveListener(UpdateInv);
+            inv.currentItemChanged.RemoveListener(UpdateInv);
         }
         
         
 
         public void OnParsed()
         {
-            highlight.transform.position = invSlots[inv.invPosition].transform.position;
+            highlight.transform.position = invSlots[inv.InvPosition].transform.position;
             
             // Animate highlight
             if (highlightCoroutine != null)

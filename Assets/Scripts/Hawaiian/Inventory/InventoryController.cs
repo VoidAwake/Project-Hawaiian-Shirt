@@ -5,6 +5,7 @@ using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using System.Collections.Generic;
+using UnityEngine.Events;
 
 
 namespace Hawaiian.Inventory
@@ -23,6 +24,8 @@ namespace Hawaiian.Inventory
 
         [SerializeField] private GameObject droppedItem;
 
+        public UnityEvent currentItemChanged = new UnityEvent();
+
        
         //[SerializeField] private int invSize;a
 
@@ -30,12 +33,13 @@ namespace Hawaiian.Inventory
         public Inventory _inv;
         private PositionalEventCaller positionalEventCaller;
 
-        public Item GetCurrentItem() => _inv.inv[_inv.invPosition];
+        public Item CurrentItem() => _inv.CurrentItem;
     
         private void Awake()
         {
             _inv = ScriptableObject.CreateInstance<Inventory>();
             _inv.SetInventory(size.Value);
+            _inv.currentItemChanged.AddListener(OnCurrentItemChanged);
             
             addedInventory.Raise(_inv);
             _player = GetComponentInParent<UnitPlayer>();
@@ -44,15 +48,16 @@ namespace Hawaiian.Inventory
             positionalEventCaller = GetComponent<PositionalEventCaller>();
         }
 
-       
-        
-
-        private void Start()
+        private void OnCurrentItemChanged()
         {
-            _player.GetPlayerInput().actions["InvParse"].performed += SwitchItem;
-            
+            currentItemChanged.Invoke();
         }
 
+        // TODO: Replace with messages
+        private void OnEnable()
+        {
+            _player.GetPlayerInput().actions["InvParse"].performed += SwitchItem;
+        }
 
         private void OnDisable()
         {
@@ -83,17 +88,16 @@ namespace Hawaiian.Inventory
 
                 if (!_inv.PickUp(item)) continue;
                 
+                // TODO: Two way dependency.
                 GetComponent<ItemInteractor>().UpdateItem();
 
                 positionalEventCaller.Raise(target);
-                
             }
         }
 
 
         public void SwitchItem(InputAction.CallbackContext value)
         {
-           
             if (!value.performed)
                 return;
             
@@ -102,16 +106,15 @@ namespace Hawaiian.Inventory
             else
                 OnCycleForward();
 
+            // TODO: Two way dependency.
             GetComponent<ItemInteractor>().UpdateItem();
-            
-
         }
         public void OnCycleForward()
         {
             if (GetComponent<ItemInteractor>().IsAttacking) // makes sure that they cant change their items while attacking since that make it go brokey
                 return;
             
-            _inv.invPosition++;
+            _inv.InvPosition++;
             Parse();
         }
 
@@ -120,26 +123,27 @@ namespace Hawaiian.Inventory
             if (GetComponent<ItemInteractor>().IsAttacking) // makes sure that they cant change their items while attacking since that make it go brokey
                 return;
             
-            _inv.invPosition--;
+            _inv.InvPosition--;
             Parse();
         }
+        
         private void Parse()
         {
             
              //_inv.invPosition += i;
-            if (_inv.invPosition > _inv.inv.Length - 1)
+            if (_inv.InvPosition > _inv.inv.Length - 1)
             {
-                _inv.invPosition = 0;
+                _inv.InvPosition = 0;
             }
 
-            if (_inv.invPosition < 0)
+            if (_inv.InvPosition < 0)
             {
-                _inv.invPosition = _inv.inv.Length - 1;
+                _inv.InvPosition = _inv.inv.Length - 1;
             }
             //SelectionUpdate();
-            if (_inv.inv[_inv.invPosition] != null)
+            if (_inv.inv[_inv.InvPosition] != null)
             {
-                hand.sprite = _inv.inv[_inv.invPosition].ItemSprite;
+                hand.sprite = _inv.inv[_inv.InvPosition].ItemSprite;
                 
             }
             else
@@ -157,12 +161,12 @@ namespace Hawaiian.Inventory
         
         public void OnDrop()
         {
-            DropItem(_inv.invPosition);
+            DropItem(_inv.InvPosition);
         }
 
         public void RemoveCurrentItem()
         {
-            RemoveItemFromIndex(_inv.invPosition);
+            RemoveItemFromIndex(_inv.InvPosition);
         }
 
 
@@ -203,7 +207,7 @@ namespace Hawaiian.Inventory
         {
             if (_inv.inv[invPosition] != null)
             {
-                _inv.DropItem(_inv.invPosition);
+                _inv.DropItem(_inv.InvPosition);
                 hand.sprite = null;
             }
             else
