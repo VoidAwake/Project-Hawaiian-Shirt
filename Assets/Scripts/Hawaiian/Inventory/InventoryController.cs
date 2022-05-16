@@ -33,7 +33,7 @@ namespace Hawaiian.Inventory
         public Inventory _inv;
         private PositionalEventCaller positionalEventCaller;
 
-        public Item CurrentItem() => _inv.CurrentItem;
+        public Item CurrentItem => _inv.CurrentItem;
     
         private void Awake()
         {
@@ -88,9 +88,6 @@ namespace Hawaiian.Inventory
 
                 if (!_inv.PickUp(item)) continue;
                 
-                // TODO: Two way dependency.
-                GetComponent<ItemInteractor>().UpdateItem();
-
                 positionalEventCaller.Raise(target);
             }
         }
@@ -105,12 +102,12 @@ namespace Hawaiian.Inventory
                 OnCycleBackward();
             else
                 OnCycleForward();
-
-            // TODO: Two way dependency.
-            GetComponent<ItemInteractor>().UpdateItem();
         }
+        
         public void OnCycleForward()
         {
+            // TODO: Two way dependency.
+            // TODO: Replace with a cancel attack function
             if (GetComponent<ItemInteractor>().IsAttacking) // makes sure that they cant change their items while attacking since that make it go brokey
                 return;
             
@@ -120,6 +117,8 @@ namespace Hawaiian.Inventory
 
         public void OnCycleBackward()
         {
+            // TODO: Two way dependency.
+            // TODO: Replace with a cancel attack function
             if (GetComponent<ItemInteractor>().IsAttacking) // makes sure that they cant change their items while attacking since that make it go brokey
                 return;
             

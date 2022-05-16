@@ -28,7 +28,7 @@ namespace Hawaiian.Inventory
                 heldItem = null;
             }
             
-            var currentItem = inventoryController.CurrentItem();
+            var currentItem = inventoryController.CurrentItem;
 
             if (currentItem == null) return;
 
