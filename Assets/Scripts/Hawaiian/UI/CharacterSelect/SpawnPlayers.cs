@@ -112,5 +112,11 @@ namespace Hawaiian.UI.CharacterSelect
                 SceneManager.LoadScene(buildIndex);
             }
         }
+
+        // Message from Player Input Manager
+        private void OnPlayerJoined(PlayerInput playerInput)
+        {
+            playersJoined.Raise();
+        }
     }
 }
