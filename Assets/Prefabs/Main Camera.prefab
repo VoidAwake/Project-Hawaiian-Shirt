@@ -132,12 +132,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 43b9228e346b0da4db113057c466db5f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _camera: {fileID: 0}
+  _camera: {fileID: 2387493150576276816}
   _smoothTime: 1
   _offset: {x: 0, y: 0}
   _maxZoom: 6
-  _minZoom: 28
-  _maximumDistance: 165.6
+  _minZoom: 30
+  _maximumDistance: 130
 --- !u!114 &1101175532
 MonoBehaviour:
   m_ObjectHideFlags: 0
