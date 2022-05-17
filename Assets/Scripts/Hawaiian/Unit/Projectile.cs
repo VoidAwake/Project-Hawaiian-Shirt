@@ -1,20 +1,18 @@
-using System.Linq;
 using UnityEngine;
 using Vector2 = UnityEngine.Vector2;
 using Vector3 = UnityEngine.Vector3;
 
 namespace Hawaiian.Unit
 {
-    public class Projectile : MonoBehaviour
+    public class Projectile : ItemBehaviour
     {
-        [SerializeField] private float _speed;
         [SerializeField] private bool _canStickOnWalls;
-        [SerializeField] private float _damage;
         [SerializeField] private bool _returnsToPlayer;
         [SerializeField] private bool _isRicochet;
         [SerializeField] private int _maximumBounces;
         [SerializeField] private AnimationCurve _speedCurve;
         [SerializeField] private AnimationCurve _returnToPlayerCurve;
+        
 
         private bool hasReachedDestination;
 
@@ -27,7 +25,6 @@ namespace Hawaiian.Unit
         private float maxSpeed;
         public float Speed => _speed;
         public bool CanStickOnWalls => _canStickOnWalls;
-        public float Damage => _damage;
         public Vector2 Direction { get; private set; }
 
         public void Initialise(Vector3 target)
@@ -35,18 +32,15 @@ namespace Hawaiian.Unit
             _targetLocation = target;
         }
 
-        public void Initialise(IUnit user, Vector3 target, float speed = 5, float damage = 5,
-            bool canStickOnWalls = false, bool returnsToPlayer = false, bool ricochet = false, int maximumBounce = 0)
+        public override void Initialise(IUnit user, Vector3 target, bool canStickOnWalls = false, bool returnsToPlayer = false, bool ricochet = false, int maximumBounce = 0)
         {
             _targetLocation = target;
-            _speed = speed;
-            _damage = damage;
+            maxSpeed = _speed;
             _canStickOnWalls = canStickOnWalls;
             _returnsToPlayer = returnsToPlayer;
             _user = user;
             hasReachedDestination = false;
             _isRicochet = ricochet;
-            maxSpeed = speed;
             _maximumBounces = maximumBounce;
             totalDistance = Vector3.Distance(transform.position, _targetLocation);
             Direction = _targetLocation - (Vector2) transform.position;

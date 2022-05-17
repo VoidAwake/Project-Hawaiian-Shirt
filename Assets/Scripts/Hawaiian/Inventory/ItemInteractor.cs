@@ -1,13 +1,10 @@
 using System;
 using System.Collections.Generic;
-using System.Dynamic;
 using Hawaiian.Inventory;
 using Hawaiian.Unit;
 using Hawaiian.Utilities;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using Hawaiian.Input;
-using UnityEngine.UIElements;
 
 [RequireComponent(typeof(InventoryController))]
 public class ItemInteractor : MonoBehaviour
@@ -50,6 +47,8 @@ public class ItemInteractor : MonoBehaviour
         set => canUnlock = value;
     }
 
+    public Item CurrentItem => _controller.GetCurrentItem();
+
     public Vector2 Rotation
     {
         get => _rotation;
@@ -57,7 +56,7 @@ public class ItemInteractor : MonoBehaviour
     }
 
     public bool CanMeleeAttack() => _slashCooldown <= 0;
-    
+
     public bool signal = false;
 
     #region Monobehaviour
@@ -76,44 +75,7 @@ public class ItemInteractor : MonoBehaviour
         if (_isHoldingAttack)
         {
             if (_controller.GetCurrentItem().Type == ItemType.Projectile)
-            {
-                Vector3[] positions = new[] {transform.position, _cursor.transform.position};
-
-                _renderer.positionCount = 2;
-                _renderer.SetPositions(positions);
-
-                if (_controller.GetCurrentItem().IsMultiShot)
-                {
-                    if (_lineRenderers.Count > 0)
-                    {
-                        for (var i = 0; i < _lineRenderers.Count; i++)
-                        {
-                            LineRenderer lr = _lineRenderers[i];
-                            lr.transform.localPosition = Vector3.zero;
-
-                            var direction = (_cursor.transform.position - transform.position).normalized;
-
-                            float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-
-                            if (angle < 0) angle = 360 - angle * -1;
-
-                            angle += 20f * (i + 1);
-
-                            var radians = angle * Mathf.Deg2Rad;
-
-                            var x = Mathf.Cos(radians);
-                            var y = Mathf.Sin(radians);
-                            var targetPos = transform.position + new Vector3(x, y, 0f) * _cursor.CurrentRad;
-
-                            Vector3[] otherPositions = new[] {targetPos, _playerReference.transform.position,};
-
-                            _multiShotTargets[i] = targetPos;
-                            lr.positionCount = 2;
-                            lr.SetPositions(otherPositions);
-                        }
-                    }
-                }
-            }
+                UpdateLineRenderers();
             else
                 _renderer = BezierCurve.DrawQuadraticBezierCurve(_renderer, transform.position,
                     transform.position + new Vector3(0.5f, 2, 0), _cursor.transform.position);
@@ -129,15 +91,11 @@ public class ItemInteractor : MonoBehaviour
     public void Update()
     {
         if (_slashCooldown >= 0)
-        {
             _slashCooldown -= Time.deltaTime;
-        }
-    
     }
 
     #endregion
 
-    #region ItemInteraction
 
     //Rotation Handling for the cursor
     public void OnRotate(InputValue value)
@@ -161,10 +119,6 @@ public class ItemInteractor : MonoBehaviour
     //Handles when the player holds the attack for throwables and projectiles
     public void HoldAttack(InputAction.CallbackContext value)
     {
-        // if (_controller.GetCurrentItem().Type != ItemType.Projectile ||
-        //     _controller.GetCurrentItem().Type != ItemType.Throwable)
-        //     return;
-        //
         if (_projectileInstance != null &&
             _controller.GetCurrentItem()
                 .ReturnsToPlayer) //Guard statement for returnable projectiles to not allow for them to attack while the projectile is still active
@@ -177,92 +131,37 @@ public class ItemInteractor : MonoBehaviour
         {
             _isHoldingAttack = true;
 
-            if (_controller.GetCurrentItem().IsMultiShot)
-            {
-                _multiShotTargets =
-                    new Vector3[_controller.GetCurrentItem().ProjectileAmount -
-                                1]; // -1 since the first one is not counted
-                _lineRenderers = new List<LineRenderer>();
+            _multiShotTargets =
+                new Vector3[CurrentItem.ProjectileAmount == 0 ? 1 : CurrentItem.ProjectileAmount];
+            _lineRenderers = new List<LineRenderer>();
 
-                for (int i = 0; i < _controller.GetCurrentItem().ProjectileAmount - 1; i++)
-                {
-                    GameObject instance = new GameObject();
-
-                    instance.transform.parent = transform.parent;
-                    LineRenderer renderer = instance.AddComponent(typeof(LineRenderer)) as LineRenderer;
-                    renderer.sortingOrder = 100;
-                    _lineRenderers.Add(renderer);
-
-                    renderer.material = Resources.Load<Material>("Sprites/lineRendererMaterial");
-
-                    renderer.startWidth = 0.2f;
-                    renderer.endWidth = 0.2f;
-
-                    Gradient gradient = new Gradient();
-                    gradient.SetKeys(
-                        new GradientColorKey[]
-                        {
-                            new GradientColorKey(Color.red, 0.0f), new GradientColorKey(Color.red, 1.0f)
-                        }, new GradientAlphaKey[] {new GradientAlphaKey(1, 0.0f), new GradientAlphaKey(1, 1.0f)});
-
-                    renderer.colorGradient = gradient;
-                }
-            }
-
+            GenerateLineRenderers();
             return;
         }
 
-        //Logic for when the player stops holding their attack
-        var position = _cursor.transform.position;
         var projectiles = new List<GameObject>();
 
-        if (_controller.GetCurrentItem().Type is ItemType.Projectile && _controller.GetCurrentItem().IsMultiShot)
+        for (int i = _controller.GetCurrentItem().ProjectileAmount == 0 ? -1 : 0;
+             i < _controller.GetCurrentItem().ProjectileAmount;
+             i++)
         {
-            for (int i = 0; i < _controller.GetCurrentItem().ProjectileAmount - 1; i++)
-                projectiles.Add(Instantiate(_controller.GetCurrentItem().ProjectileInstance, transform.position,
-                    Quaternion.identity));
+            projectiles.Add(Instantiate(_controller.GetCurrentItem().ProjectileInstance, transform.position,
+                Quaternion.identity));
+
+            if (i == -1)
+                break;
         }
 
-        _projectileInstance = Instantiate(_controller.GetCurrentItem().ProjectileInstance, transform.position,
-            Quaternion.identity);
-
-        if (_controller.GetCurrentItem().Type == ItemType.Throwable)
+        switch (CurrentItem.Type)
         {
-            List<Vector2> positions = new List<Vector2>();
-
-            for (int i = 0; i < _renderer.positionCount; i++) positions.Add((Vector2) _renderer.GetPosition(i));
-
-            _projectileInstance.GetComponent<Throwable>()
-                .Initialise(positions.ToArray(), _controller.GetCurrentItem().ItemSprite,
-                    _controller.GetCurrentItem().DrawSpeed, _controller.GetCurrentItem().ItemDamage,
-                    _controller.GetCurrentItem().SticksOnWall);
-            transform.parent.GetComponent<UnitAnimator>()
-                .UseItem(UnitAnimationState.Throw, _cursor.transform.position, false);
+            case ItemType.Throwable:
+                UseItem<Throwable>(projectiles);
+                break;
+            case ItemType.Projectile:
+                UseItem<Projectile>(projectiles);
+                break;
         }
-        else
-        {
-            _projectileInstance.GetComponent<Projectile>()
-                .Initialise(_playerReference, position, _controller.GetCurrentItem().DrawSpeed,
-                    _controller.GetCurrentItem().ItemDamage, _controller.GetCurrentItem().SticksOnWall,
-                    _controller.GetCurrentItem().ReturnsToPlayer,_controller.GetCurrentItem().IsRicochet,_controller.GetCurrentItem().MaximumBounces);
 
-            if (_controller.GetCurrentItem().Type is ItemType.Projectile && _controller.GetCurrentItem().IsMultiShot)
-            {
-                for (var i = 0; i < projectiles.Count; i++)
-                {
-                    GameObject projectile = projectiles[i];
-                    projectile.GetComponent<Projectile>()
-                        .Initialise(_playerReference, _multiShotTargets[i], _controller.GetCurrentItem().DrawSpeed,
-                            _controller.GetCurrentItem().ItemDamage, _controller.GetCurrentItem().SticksOnWall,
-                            _controller.GetCurrentItem().ReturnsToPlayer,_controller.GetCurrentItem().IsRicochet,_controller.GetCurrentItem().MaximumBounces);
-
-                    projectile.GetComponent<HitUnit>().Initialise(_playerReference, _multiShotTargets[i] - transform.position);  
-                }
-            }
-
-         //   _projectileInstance.GetComponent<DealKnockback>().Initialise(2, _playerReference);
-            _projectileInstance.GetComponent<HitUnit>().Initialise(_playerReference,  position - transform.position);  
-        }
 
         transform.parent.GetComponent<UnitAnimator>()
             .UseItem(UnitAnimationState.Throw, _cursor.transform.position, false);
@@ -288,21 +187,14 @@ public class ItemInteractor : MonoBehaviour
     {
         if (_controller.GetCurrentItem() == null) return;
 
-        if (_controller.GetCurrentItem().Type is ItemType.Other or ItemType.Objective) 
-        { 
-            if(_controller.GetCurrentItem().IsKey && canUnlock) 
-            { 
-                signal = true; 
-            } 
-            else 
-            { 
-                signal = false; 
-            } 
-            return; 
-        } 
-
-
-        //NEEDS TO BE A CHECK IF USING PROJECTILES TO ALLOW FOR ON HOLD ACTIONS AND IGNORE THIS
+        if (_controller.GetCurrentItem().Type is ItemType.Other or ItemType.Objective)
+        {
+            if (_controller.GetCurrentItem().IsKey && canUnlock)
+                signal = true;
+            else
+                signal = false;
+            return;
+        }
 
         #region Ranged Attack
 
@@ -326,42 +218,7 @@ public class ItemInteractor : MonoBehaviour
 
         if (!CanMeleeAttack()) return;
 
-        _slashCooldown = _controller.GetCurrentItem().AttackRate;
-
-        Vector3 playerInput;
-        float angle;
-
-        var position = new Vector3(transform.position.x, transform.position.y + 0.5f, transform.position.z);
-        // var mouse = UnityEngine.Input.mousePosition;
-
-        Vector2 direction;
-
-        if (_playerReference.GetPlayerInput().currentControlScheme == "Gamepad")
-        {
-            if (_isJoystickNeutral) _rotation = _animator.IsLookingLeft ? Vector2.left : Vector2.right;
-        }
-
-        playerInput = _rotation;
-        _lastAttackPosition = position + (Vector3) playerInput * _offset;
-        angle = Mathf.Atan2(playerInput.y, playerInput.x) * Mathf.Rad2Deg;
-        direction = playerInput;
-
-        transform.parent.GetComponent<UnitAnimator>()
-            .UseItem(UnitAnimationState.MeleeSwing,
-                new Vector2(Mathf.Sin(angle * Mathf.Deg2Rad + Mathf.PI / 2),
-                    -Mathf.Cos(angle * Mathf.Deg2Rad + Mathf.PI / 2)), _attackFlag);
-
-        _firePoint.position = _lastAttackPosition;
-        GameObject indicator = Instantiate(_projectileReference, _lastAttackPosition,
-            Quaternion.Euler(new Vector3(0, 0, angle + _meleeSlashRotationOffset)), _firePoint);
-
-        indicator.GetComponent<DamageIndicator>().Initialise(5, _attackFlag, _playerReference,direction, _controller.GetCurrentItem().KnockbackDistance);
-        indicator.GetComponent<HitUnit>().Initialise(_playerReference, direction);  
-   //     indicator.GetComponent<DealKnockback>().Initialise(2, _playerReference, direction);
-      //  indicator.GetComponent<DropItem>().Initialise(_playerReference);
-        _attackFlag = !_attackFlag;
-
-        #endregion
+        UseItem<DamageIndicator>();
     }
 
     #endregion
@@ -382,8 +239,8 @@ public class ItemInteractor : MonoBehaviour
         renderer.sortingOrder = 1;
     }
 
-    void UpdateHoldAttackCursor() => _cursor.CurrentRad += _currentHoldTime / 2;
-    
+    void UpdateHoldAttackCursor() => _cursor.CurrentRad += _currentHoldTime / 0.5f;
+
 
     void CancelRotation()
     {
@@ -393,11 +250,11 @@ public class ItemInteractor : MonoBehaviour
 
     public void UpdateItem()
     {
-
-        if (_controller.GetCurrentItem() == null) { 
+        if (_controller.GetCurrentItem() == null)
+        {
             isHoldingKey = false;
             signal = false;
-            return; 
+            return;
         }
 
         if (_controller.GetCurrentItem().IsKey)
@@ -406,11 +263,157 @@ public class ItemInteractor : MonoBehaviour
         {
             isHoldingKey = false;
         }
-        
+
 
         _projectileReference = _controller.GetCurrentItem().ProjectileInstance;
         _handHelder.sprite = _controller.GetCurrentItem().ItemSprite;
         _cursor.MaxRadius = _controller.GetCurrentItem().DrawDistance;
     }
 
+    private void UseItem<T>(List<GameObject> projectiles = null) where T : ItemBehaviour
+    {
+        List<Vector2> positions = new List<Vector2>();
+
+        for (int i = 0; i < _renderer.positionCount; i++)
+            positions.Add((Vector2) _renderer.GetPosition(i));
+
+        int index = 0;
+
+        if (projectiles == null)
+        {
+            projectiles.ForEach(p =>
+            {
+                p.GetComponent<T>()
+                    .BaseInitialise(_playerReference, CurrentItem.DrawSpeed, CurrentItem.KnockbackDistance);
+
+                switch (p.GetComponent<T>())
+                {
+                    case Throwable:
+                        p.GetComponent<T>().Initialise(positions.ToArray(), CurrentItem.ItemSprite,
+                            CurrentItem.SticksOnWall);
+                        break;
+                    case Projectile:
+                        p.GetComponent<T>().Initialise(_playerReference, _multiShotTargets[index],
+                            CurrentItem.SticksOnWall, CurrentItem.ReturnsToPlayer, CurrentItem.IsRicochet,
+                            CurrentItem.MaximumBounces);
+                        break;
+                }
+
+                if (p.GetComponent<HitUnit>())
+                    p.GetComponent<HitUnit>()
+                        .Initialise(_playerReference, _cursor.transform.position - transform.position);
+
+                index++;
+            });
+        }
+        else 
+        {
+            //Begin melee 
+            Vector3 input = GetPlayerInput();
+            var angle = Mathf.Atan2(input.y, input.x) * Mathf.Rad2Deg;
+            var direction = input;
+            InstantiateMeleeIndicator(angle, direction);
+        }
+
+        RunAnimator();
+    }
+
+    private void InstantiateMeleeIndicator(float angle, Vector3 direction)
+    {
+        transform.parent.GetComponent<UnitAnimator>()
+            .UseItem(UnitAnimationState.MeleeSwing,
+                new Vector2(Mathf.Sin(angle * Mathf.Deg2Rad + Mathf.PI / 2),
+                    -Mathf.Cos(angle * Mathf.Deg2Rad + Mathf.PI / 2)), _attackFlag);
+
+        _firePoint.position = _lastAttackPosition;
+        GameObject indicator = Instantiate(_projectileReference, _lastAttackPosition,
+            Quaternion.Euler(new Vector3(0, 0, angle + _meleeSlashRotationOffset)), _firePoint);
+
+        indicator.GetComponent<DamageIndicator>().Initialise(_attackFlag, _playerReference, direction);
+        indicator.GetComponent<HitUnit>().Initialise(_playerReference, direction);
+        _attackFlag = !_attackFlag;
+    }
+
+    private Vector3 GetPlayerInput()
+    {
+        _slashCooldown = _controller.GetCurrentItem().AttackRate;
+        Vector3 playerInput;
+
+        var position = new Vector3(transform.position.x, transform.position.y + 0.5f, transform.position.z);
+
+
+        if (_playerReference.GetPlayerInput().currentControlScheme == "Gamepad")
+        {
+            if (_isJoystickNeutral) _rotation = _animator.IsLookingLeft ? Vector2.left : Vector2.right;
+        }
+
+        playerInput = _rotation;
+        _lastAttackPosition = position + (Vector3) playerInput * _offset;
+        return playerInput;
+    }
+
+    private void RunAnimator()
+    {
+        transform.parent.GetComponent<UnitAnimator>()
+            .UseItem(UnitAnimationState.Throw, _cursor.transform.position, false);
+    }
+
+    private void GenerateLineRenderers()
+    {
+        for (int i = 0; i < (CurrentItem.ProjectileAmount == 0 ? 1 : CurrentItem.ProjectileAmount); i++)
+        {
+            GameObject instance = new GameObject();
+
+            instance.transform.parent = transform.parent;
+            LineRenderer renderer = instance.AddComponent(typeof(LineRenderer)) as LineRenderer;
+            renderer.sortingOrder = 100;
+            _lineRenderers.Add(renderer);
+
+            renderer.material = Resources.Load<Material>("Sprites/lineRendererMaterial");
+
+            renderer.startWidth = 0.2f;
+            renderer.endWidth = 0.2f;
+
+            Gradient gradient = new Gradient();
+            gradient.SetKeys(
+                new GradientColorKey[]
+                {
+                    new GradientColorKey(Color.red, 0.0f), new GradientColorKey(Color.red, 1.0f)
+                }, new GradientAlphaKey[] {new GradientAlphaKey(1, 0.0f), new GradientAlphaKey(1, 1.0f)});
+
+            renderer.colorGradient = gradient;
+        }
+    }
+
+    private void UpdateLineRenderers()
+    {
+        if (_lineRenderers.Count > 0)
+        {
+            for (var i = 0; i < _lineRenderers.Count; i++)
+            {
+                LineRenderer lr = _lineRenderers[i];
+                lr.transform.localPosition = Vector3.zero;
+
+                var direction = (_cursor.transform.position - transform.position).normalized;
+
+                float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+
+                if (angle < 0) angle = 360 - angle * -1;
+
+                angle += _lineRenderers.Count == 1 ? 0 : (i == 0 ? 0 : 20f) * (i + 1);
+
+                var radians = angle * Mathf.Deg2Rad;
+
+                var x = Mathf.Cos(radians);
+                var y = Mathf.Sin(radians);
+                var targetPos = transform.position + new Vector3(x, y, 0f) * _cursor.CurrentRad;
+
+                Vector3[] otherPositions = new[] {targetPos, _playerReference.transform.position,};
+
+                _multiShotTargets[i] = targetPos;
+                lr.positionCount = 2;
+                lr.SetPositions(otherPositions);
+            }
+        }
+    }
 }

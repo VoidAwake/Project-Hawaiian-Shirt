@@ -1,14 +1,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Hawaiian.Unit;
 using UnityEngine;
 
-public class Throwable : MonoBehaviour
+public class Throwable : ItemBehaviour
 {
     
-    [SerializeField] internal float _speed;
     [SerializeField] internal bool _canStickOnWalls;
-    [SerializeField] internal float _damage;
 
     private SpriteRenderer _renderer;
     private float _currentDistance;
@@ -17,16 +16,14 @@ public class Throwable : MonoBehaviour
     
     public float Speed => _speed;
     public bool CanStickOnWalls => _canStickOnWalls;
-    public float Damage => _damage;
     public Vector2 LastPosition => _positions[^1]; // ^1 
-    
 
-        
-    public virtual void Initialise(Vector2 [] targets, Sprite newSprite,float speed = 5, float damage = 5,bool canStickOnWalls = false)
+
+   
+
+    public override void Initialise(Vector2 [] targets, Sprite newSprite,bool canStickOnWalls = false)
     {
         _positions = targets;
-        _speed = speed;
-        _damage = damage;
         _canStickOnWalls = canStickOnWalls;
         positionIndex = 0;
         _renderer.sprite = newSprite;
