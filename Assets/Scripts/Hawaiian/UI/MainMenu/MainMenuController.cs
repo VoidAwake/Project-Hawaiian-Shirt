@@ -29,7 +29,7 @@ namespace Hawaiian.UI.MainMenu
         [SerializeField] Sprite[] cursorSprites;
         bool cursorActive;
         int selected;
-        bool disabled;
+        public bool disabled;
 
         public PauseController pausePlayer;
 
@@ -118,6 +118,11 @@ namespace Hawaiian.UI.MainMenu
             cursor.rectTransform.anchoredPosition = buttons[selected].GetComponent<RectTransform>().anchoredPosition;
             cursor.enabled = false;
             cursorActive = false;
+            disabled = false;
+        }
+
+        public void EnableCursor()
+        {
             disabled = false;
         }
     }
