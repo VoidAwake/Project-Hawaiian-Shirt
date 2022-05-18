@@ -15,7 +15,7 @@ namespace Hawaiian.UI.Game
         {
             base.OnComponentStart();
             
-            inventory.itemchange.AddListener(UpdateText);
+            inventory.currentItemChanged.AddListener(UpdateText);
             
             UpdateText();
         }

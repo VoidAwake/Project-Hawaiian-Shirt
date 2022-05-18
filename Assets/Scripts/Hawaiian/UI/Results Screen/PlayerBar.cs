@@ -75,19 +75,14 @@ namespace Hawaiian.UI.Results_Screen
             {
                 case 0:
                     return new Color(0.764706f, 0.2627451f, 0.3607843f);
-                    break;
                 case 1:
                     return new Color(0.2039216f, 0.4f, 0.6901961f);
-                    break;
                 case 2:
                     return new Color(0.9450981f, 0.7607844f, 0.3372549f);
-                    break;
                 case 3:
                     return new Color(0.5803922f, 0.8000001f, 0.2784314f);
-                    break;
                 default:
                     throw new Exception("no");
-                    break;
             }
         }
     }

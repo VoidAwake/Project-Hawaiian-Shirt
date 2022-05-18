@@ -21,8 +21,6 @@ public class ItemInteractor : MonoBehaviour
     [SerializeField] private float _meleeSlashRotationOffset;
     [SerializeField] private SpriteRenderer _handHelder;
     [SerializeField] private UnitAnimator _animator;
-    [SerializeField] private bool isHoldingKey = false;
-    [SerializeField] private bool canUnlock;
 
     //Components
     private InventoryController _controller;
@@ -42,13 +40,6 @@ public class ItemInteractor : MonoBehaviour
     private GameObject _projectileReference; //TODO: Get from item
 
     public bool IsAttacking => _isHoldingAttack;
-    public bool IsHoldingKey => isHoldingKey;
-
-    public bool CanUnlock
-    {
-        get => canUnlock;
-        set => canUnlock = value;
-    }
 
     public Vector2 Rotation
     {
@@ -58,8 +49,6 @@ public class ItemInteractor : MonoBehaviour
 
     public bool CanMeleeAttack() => _slashCooldown <= 0;
     
-    public bool signal = false;
-
     #region Monobehaviour
 
     private void Awake()
@@ -69,20 +58,22 @@ public class ItemInteractor : MonoBehaviour
         _playerReference.GetPlayerInput().actions["Attack"].performed += StartAttack;
         _playerReference.GetPlayerInput().actions["Attack"].canceled += StartAttack;
         _lineRenderers = new List<LineRenderer>();
+        // TODO: Unlisten?
+        _controller.currentItemChanged.AddListener(OnCurrentItemChanged);
     }
 
     private void FixedUpdate()
     {
         if (_isHoldingAttack)
         {
-            if (_controller.GetCurrentItem().Type == ItemType.Projectile)
+            if (_controller.CurrentItem.Type == ItemType.Projectile)
             {
                 Vector3[] positions = new[] {transform.position, _cursor.transform.position};
 
                 _renderer.positionCount = 2;
                 _renderer.SetPositions(positions);
 
-                if (_controller.GetCurrentItem().IsMultiShot)
+                if (_controller.CurrentItem.IsMultiShot)
                 {
                     if (_lineRenderers.Count > 0)
                     {
@@ -161,30 +152,30 @@ public class ItemInteractor : MonoBehaviour
     //Handles when the player holds the attack for throwables and projectiles
     public void HoldAttack(InputAction.CallbackContext value)
     {
-        // if (_controller.GetCurrentItem().Type != ItemType.Projectile ||
-        //     _controller.GetCurrentItem().Type != ItemType.Throwable)
+        // if (_controller.GetCurrentItem.Type != ItemType.Projectile ||
+        //     _controller.GetCurrentItem.Type != ItemType.Throwable)
         //     return;
         //
         if (_projectileInstance != null &&
-            _controller.GetCurrentItem()
+            _controller.CurrentItem
                 .ReturnsToPlayer) //Guard statement for returnable projectiles to not allow for them to attack while the projectile is still active
             return;
 
-        if (_projectileInstance != null && _controller.GetCurrentItem().Type == ItemType.Throwable)
+        if (_projectileInstance != null && _controller.CurrentItem.Type == ItemType.Throwable)
             return;
 
         if (value.performed)
         {
             _isHoldingAttack = true;
 
-            if (_controller.GetCurrentItem().IsMultiShot)
+            if (_controller.CurrentItem.IsMultiShot)
             {
                 _multiShotTargets =
-                    new Vector3[_controller.GetCurrentItem().ProjectileAmount -
+                    new Vector3[_controller.CurrentItem.ProjectileAmount -
                                 1]; // -1 since the first one is not counted
                 _lineRenderers = new List<LineRenderer>();
 
-                for (int i = 0; i < _controller.GetCurrentItem().ProjectileAmount - 1; i++)
+                for (int i = 0; i < _controller.CurrentItem.ProjectileAmount - 1; i++)
                 {
                     GameObject instance = new GameObject();
 
@@ -216,45 +207,45 @@ public class ItemInteractor : MonoBehaviour
         var position = _cursor.transform.position;
         var projectiles = new List<GameObject>();
 
-        if (_controller.GetCurrentItem().Type is ItemType.Projectile && _controller.GetCurrentItem().IsMultiShot)
+        if (_controller.CurrentItem.Type is ItemType.Projectile && _controller.CurrentItem.IsMultiShot)
         {
-            for (int i = 0; i < _controller.GetCurrentItem().ProjectileAmount - 1; i++)
-                projectiles.Add(Instantiate(_controller.GetCurrentItem().ProjectileInstance, transform.position,
+            for (int i = 0; i < _controller.CurrentItem.ProjectileAmount - 1; i++)
+                projectiles.Add(Instantiate(_controller.CurrentItem.ProjectileInstance, transform.position,
                     Quaternion.identity));
         }
 
-        _projectileInstance = Instantiate(_controller.GetCurrentItem().ProjectileInstance, transform.position,
+        _projectileInstance = Instantiate(_controller.CurrentItem.ProjectileInstance, transform.position,
             Quaternion.identity);
 
-        if (_controller.GetCurrentItem().Type == ItemType.Throwable)
+        if (_controller.CurrentItem.Type == ItemType.Throwable)
         {
             List<Vector2> positions = new List<Vector2>();
 
             for (int i = 0; i < _renderer.positionCount; i++) positions.Add((Vector2) _renderer.GetPosition(i));
 
             _projectileInstance.GetComponent<Throwable>()
-                .Initialise(positions.ToArray(), _controller.GetCurrentItem().ItemSprite,
-                    _controller.GetCurrentItem().DrawSpeed, _controller.GetCurrentItem().ItemDamage,
-                    _controller.GetCurrentItem().SticksOnWall);
+                .Initialise(positions.ToArray(), _controller.CurrentItem.ItemSprite,
+                    _controller.CurrentItem.DrawSpeed, _controller.CurrentItem.ItemDamage,
+                    _controller.CurrentItem.SticksOnWall);
             transform.parent.GetComponent<UnitAnimator>()
                 .UseItem(UnitAnimationState.Throw, _cursor.transform.position, false);
         }
         else
         {
             _projectileInstance.GetComponent<Projectile>()
-                .Initialise(_playerReference, position, _controller.GetCurrentItem().DrawSpeed,
-                    _controller.GetCurrentItem().ItemDamage, _controller.GetCurrentItem().SticksOnWall,
-                    _controller.GetCurrentItem().ReturnsToPlayer,_controller.GetCurrentItem().IsRicochet,_controller.GetCurrentItem().MaximumBounces);
+                .Initialise(_playerReference, position, _controller.CurrentItem.DrawSpeed,
+                    _controller.CurrentItem.ItemDamage, _controller.CurrentItem.SticksOnWall,
+                    _controller.CurrentItem.ReturnsToPlayer,_controller.CurrentItem.IsRicochet,_controller.CurrentItem.MaximumBounces);
 
-            if (_controller.GetCurrentItem().Type is ItemType.Projectile && _controller.GetCurrentItem().IsMultiShot)
+            if (_controller.CurrentItem.Type is ItemType.Projectile && _controller.CurrentItem.IsMultiShot)
             {
                 for (var i = 0; i < projectiles.Count; i++)
                 {
                     GameObject projectile = projectiles[i];
                     projectile.GetComponent<Projectile>()
-                        .Initialise(_playerReference, _multiShotTargets[i], _controller.GetCurrentItem().DrawSpeed,
-                            _controller.GetCurrentItem().ItemDamage, _controller.GetCurrentItem().SticksOnWall,
-                            _controller.GetCurrentItem().ReturnsToPlayer,_controller.GetCurrentItem().IsRicochet,_controller.GetCurrentItem().MaximumBounces);
+                        .Initialise(_playerReference, _multiShotTargets[i], _controller.CurrentItem.DrawSpeed,
+                            _controller.CurrentItem.ItemDamage, _controller.CurrentItem.SticksOnWall,
+                            _controller.CurrentItem.ReturnsToPlayer,_controller.CurrentItem.IsRicochet,_controller.CurrentItem.MaximumBounces);
 
                     projectile.GetComponent<HitUnit>().Initialise(_playerReference, _multiShotTargets[i] - transform.position);  
                 }
@@ -286,33 +277,21 @@ public class ItemInteractor : MonoBehaviour
     //*MAIN ITEM INTERACTION FUNCTION* Handles the initial processing of item interactions
     public void StartAttack(InputAction.CallbackContext value)
     {
-        if (_controller.GetCurrentItem() == null) return;
+        if (_controller.CurrentItem == null) return;
 
-        if (_controller.GetCurrentItem().Type is ItemType.Other or ItemType.Objective) 
-        { 
-            if(_controller.GetCurrentItem().IsKey && canUnlock) 
-            { 
-                signal = true; 
-            } 
-            else 
-            { 
-                signal = false; 
-            } 
-            return; 
-        } 
-
+        if (_controller.CurrentItem.Type is ItemType.Other or ItemType.Objective) return;
 
         //NEEDS TO BE A CHECK IF USING PROJECTILES TO ALLOW FOR ON HOLD ACTIONS AND IGNORE THIS
 
         #region Ranged Attack
 
-        if (_controller.GetCurrentItem().Type is ItemType.Projectile or ItemType.Throwable)
+        if (_controller.CurrentItem.Type is ItemType.Projectile or ItemType.Throwable)
         {
             HoldAttack(value);
             return;
         }
 
-        if (_controller.GetCurrentItem().Type == ItemType.Trap)
+        if (_controller.CurrentItem.Type == ItemType.Trap)
         {
             BeginTrapHighlighting();
             return;
@@ -326,7 +305,7 @@ public class ItemInteractor : MonoBehaviour
 
         if (!CanMeleeAttack()) return;
 
-        _slashCooldown = _controller.GetCurrentItem().AttackRate;
+        _slashCooldown = _controller.CurrentItem.AttackRate;
 
         Vector3 playerInput;
         float angle;
@@ -355,7 +334,7 @@ public class ItemInteractor : MonoBehaviour
         GameObject indicator = Instantiate(_projectileReference, _lastAttackPosition,
             Quaternion.Euler(new Vector3(0, 0, angle + _meleeSlashRotationOffset)), _firePoint);
 
-        indicator.GetComponent<DamageIndicator>().Initialise(5, _attackFlag, _playerReference,direction, _controller.GetCurrentItem().KnockbackDistance);
+        indicator.GetComponent<DamageIndicator>().Initialise(5, _attackFlag, _playerReference,direction, _controller.CurrentItem.KnockbackDistance);
         indicator.GetComponent<HitUnit>().Initialise(_playerReference, direction);  
    //     indicator.GetComponent<DealKnockback>().Initialise(2, _playerReference, direction);
       //  indicator.GetComponent<DropItem>().Initialise(_playerReference);
@@ -368,7 +347,7 @@ public class ItemInteractor : MonoBehaviour
 
     private void BeginTrapHighlighting()
     {
-        _cursor.CurrentRad = _controller.GetCurrentItem().PlacementRadius;
+        _cursor.CurrentRad = _controller.CurrentItem.PlacementRadius;
 
         GameObject instanceCircle = new GameObject();
         SpriteRenderer renderer = instanceCircle.AddComponent(typeof(SpriteRenderer)) as SpriteRenderer;
@@ -376,14 +355,13 @@ public class ItemInteractor : MonoBehaviour
         var o = renderer.gameObject;
         o.transform.parent = _playerReference.transform;
         o.transform.localPosition = Vector3.zero;
-        renderer.gameObject.transform.localScale = new Vector3(_controller.GetCurrentItem().PlacementRadius,
-            _controller.GetCurrentItem().PlacementRadius, 0);
+        renderer.gameObject.transform.localScale = new Vector3(_controller.CurrentItem.PlacementRadius,
+            _controller.CurrentItem.PlacementRadius, 0);
         renderer.color = new Color32(255, 109, 114, 170);
         renderer.sortingOrder = 1;
     }
 
     void UpdateHoldAttackCursor() => _cursor.CurrentRad += _currentHoldTime / 2;
-    
 
     void CancelRotation()
     {
@@ -391,26 +369,12 @@ public class ItemInteractor : MonoBehaviour
         _isJoystickNeutral = true;
     }
 
-    public void UpdateItem()
+    public void OnCurrentItemChanged()
     {
-
-        if (_controller.GetCurrentItem() == null) { 
-            isHoldingKey = false;
-            signal = false;
-            return; 
-        }
-
-        if (_controller.GetCurrentItem().IsKey)
-            isHoldingKey = true;
-        else
-        {
-            isHoldingKey = false;
-        }
+        if (_controller.CurrentItem == null) return;
         
-
-        _projectileReference = _controller.GetCurrentItem().ProjectileInstance;
-        _handHelder.sprite = _controller.GetCurrentItem().ItemSprite;
-        _cursor.MaxRadius = _controller.GetCurrentItem().DrawDistance;
+        _projectileReference = _controller.CurrentItem.ProjectileInstance;
+        _handHelder.sprite = _controller.CurrentItem.ItemSprite;
+        _cursor.MaxRadius = _controller.CurrentItem.DrawDistance;
     }
-
 }
