@@ -1,9 +1,11 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Hawaiian.Game;
 using Hawaiian.Inventory;
 using Hawaiian.Utilities;
+using MoreLinq;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
@@ -39,6 +41,7 @@ namespace Hawaiian.UI.CharacterSelect
                 return;
             }
             
+            inputManager.onPlayerJoined += OnPlayerJoined;
             inputManager.playerPrefab = playerPrefab;
 
             foreach (LobbyGameManager.PlayerConfig config in playerData.playerConfigs)
@@ -90,7 +93,6 @@ namespace Hawaiian.UI.CharacterSelect
         {
             if (gameManager.Phase != GameManager.GamePhase.GameOver) return;
             
-            // TODO: For each player, get the score and save it to the PlayerConfig
             foreach (var VARIABLE in inventoryControllers)
             {
                 var inventoryController = VARIABLE.Value;
@@ -117,6 +119,20 @@ namespace Hawaiian.UI.CharacterSelect
         private void OnPlayerJoined(PlayerInput playerInput)
         {
             playersJoined.Raise();
+        }
+        
+        public Transform WinningPlayer { get; private set; }
+
+        private void Update()
+        {
+            if (inventoryControllers.Count == 0) return;
+            
+            WinningPlayer = inventoryControllers.MaxBy(i => InventoryScore(i.Value)).Value.transform;
+        }
+
+        private static float InventoryScore(InventoryController inventoryController)
+        {
+            return inventoryController._inv.inv.Where(i => i != null).Sum(i => i.Points);
         }
     }
 }

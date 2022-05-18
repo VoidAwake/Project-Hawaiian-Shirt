@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using Hawaiian.UI.MainMenu;
 using UI.Core;
 using UnityEngine;
 
@@ -10,13 +12,19 @@ namespace Hawaiian.UI.Game
         [SerializeField] private Transform uiParent;
         [SerializeField] private Transform uiParentForFourPlayers;
         [SerializeField] private GameObject controlsInstructionsDialoguePrefab;
+        [SerializeField] private MainMenuController mainMenuController;
+        [SerializeField] private MainMenuButtonFunctions pauseMenuController;
 
         private int _inventoryCount = 0;
         private List<GameObject> inventoryGameObjects = new();
         
         protected override void OnClose() { }
 
-        protected override void OnPromote() { }
+        protected override void OnPromote()
+        {
+            if (mainMenuController.enabled)
+                mainMenuController.CursorToStartingState();
+        }
 
         protected override void OnDemote() { }
 
@@ -34,6 +42,21 @@ namespace Hawaiian.UI.Game
         {
             base.Awake();
             
+            DisplayControls();
+        }
+
+        private void OnEnable()
+        {
+            pauseMenuController.displayControlsSelected.AddListener(DisplayControls);
+        }
+
+        private void OnDisable()
+        {
+            pauseMenuController.displayControlsSelected.RemoveListener(DisplayControls);
+        }
+
+        private void DisplayControls()
+        {
             Instantiate(controlsInstructionsDialoguePrefab, transform.parent); 
         }
     }
