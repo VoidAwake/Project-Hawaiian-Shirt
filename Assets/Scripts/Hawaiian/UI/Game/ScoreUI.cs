@@ -15,14 +15,14 @@ namespace Hawaiian.UI.Game
         {
             base.OnComponentStart();
             
-            inventory.itemchange.AddListener(UpdateText);
+            inventory.currentItemChanged.AddListener(UpdateText);
             
             UpdateText();
         }
 
         private void UpdateText()
         {
-            text.text = "Score: " + inventory.inv.Where(i => i != null).Sum(i => i.Points);
+            text.text = "" + inventory.inv.Where(i => i != null).Sum(i => i.Points);
         }
 
         protected override void Subscribe() { }

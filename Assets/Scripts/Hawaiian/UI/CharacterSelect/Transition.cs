@@ -70,8 +70,19 @@ namespace Hawaiian.UI.CharacterSelect
                                     if (config.isPlayer) config.SetInputInfo(config.inputComponent);
                                 }
 
-                                Destroy(manager.GetComponent<LobbyManager>());
+                                //Destroy(manager.GetComponent<LobbyManager>());
                                 //Destroy(manager.GetComponent<PlayerInputManager>());
+                            }
+
+                            // Destroy persistent gameobject if going to main menu or character select scenes
+                            if (buildIndexOfNextScene <= 1)
+                            {
+                                LobbyGameManager[] lobbyGameManagers = FindObjectsOfType<LobbyGameManager>();
+                                foreach (LobbyGameManager lobbyGameManager in lobbyGameManagers)
+                                {
+                                    Destroy(lobbyGameManager.gameObject);
+                                    Debug.Log("I killed the game manager. There can only be one.");
+                                }
                             }
 
                             // Then, load the next scene

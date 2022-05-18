@@ -12,9 +12,9 @@ namespace Hawaiian.UI.MainMenu
         [SerializeField] ScriptableFloat gameTime;
         MainMenuController menuController;
 
-        public void OnMove(InputValue value)
+        public void OnMenuSelect(InputValue value)
         {
-            if (menuController != null) menuController.OnMove(value);
+            if (menuController != null) menuController.OnMenuSelect(value);
         }
         public void OnActionA(InputValue value)
         {

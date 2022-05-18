@@ -5,7 +5,6 @@ using UnityEngine;
 
 namespace Hawaiian.Unit
 {
-    [RequireComponent(typeof(DealKnockback))]
     public class DamageIndicator : ItemBehaviour
     {
 
@@ -26,8 +25,9 @@ namespace Hawaiian.Unit
             transform.localPosition = Vector3.zero;
         }
 
-        public override void Initialise( bool flag, IUnit user, Vector2 knockbackDirection) 
+        public override void Initialise(float speed, int knockbackDistance,  bool flag, IUnit user, Vector2 knockbackDirection) 
         {
+            BaseInitialise(user,speed,knockbackDistance);
             _animator = GetComponent<Animator>();
             _animator.SetTrigger(flag ? _alternateSlash : _slash);
             _user = user;

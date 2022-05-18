@@ -10,9 +10,9 @@ namespace Hawaiian.UI.MainMenu
     {
         int actionA = 0;    // INPUT STATUSES:
         int actionB = 0;    // 0 - Up
-        Vector2 move = new Vector2();
+        private float move = 0;
 
-        public void OnMove(InputValue value) { move = value.Get<Vector2>(); }
+        public void OnMenuSelect(InputValue value) { move = value.Get<float>(); }
         public void OnActionA(InputValue value) { HandleButtonInput(value.Get<float>(), ref actionA); }
         public void OnActionB(InputValue value) { HandleButtonInput(value.Get<float>(), ref actionB); }
 
@@ -29,7 +29,7 @@ namespace Hawaiian.UI.MainMenu
         [SerializeField] Sprite[] cursorSprites;
         bool cursorActive;
         int selected;
-        bool disabled;
+        public bool disabled;
 
         public PauseController pausePlayer;
 
@@ -59,11 +59,11 @@ namespace Hawaiian.UI.MainMenu
                 {
                     //if (moveBuffer > 0 && move.x < 0.1f) moveBuffer = 0;
                     //if (moveBuffer < 0 && move.x > -0.1f) moveBuffer = 0;
-                    if (move.y > -0.1f && move.y < 0.1f) moveBuffer = 0;
+                    if (move > -0.1f && move < 0.1f) moveBuffer = 0;
                 }
                 else //  Send stick input
                 {
-                    if (move.y > 0.15f)
+                    if (move > 0.15f)
                     {
                         if (!cursorActive) { cursor.enabled = true; cursorActive = true; }
                         else
@@ -75,7 +75,7 @@ namespace Hawaiian.UI.MainMenu
                         }
                         moveBuffer = 1;
                     }
-                    if (move.y < -0.15f)
+                    if (move < -0.15f)
                     {
                         if (!cursorActive) { cursor.enabled = true; cursorActive = true; }
                         else
@@ -118,6 +118,11 @@ namespace Hawaiian.UI.MainMenu
             cursor.rectTransform.anchoredPosition = buttons[selected].GetComponent<RectTransform>().anchoredPosition;
             cursor.enabled = false;
             cursorActive = false;
+            disabled = false;
+        }
+
+        public void EnableCursor()
+        {
             disabled = false;
         }
     }

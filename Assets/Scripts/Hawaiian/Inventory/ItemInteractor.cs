@@ -18,8 +18,6 @@ public class ItemInteractor : MonoBehaviour
     [SerializeField] private float _meleeSlashRotationOffset;
     [SerializeField] private SpriteRenderer _handHelder;
     [SerializeField] private UnitAnimator _animator;
-    [SerializeField] private bool isHoldingKey = false;
-    [SerializeField] private bool canUnlock;
 
     //Components
     private InventoryController _controller;
@@ -39,15 +37,9 @@ public class ItemInteractor : MonoBehaviour
     private GameObject _projectileReference; //TODO: Get from item
 
     public bool IsAttacking => _isHoldingAttack;
-    public bool IsHoldingKey => isHoldingKey;
 
-    public bool CanUnlock
-    {
-        get => canUnlock;
-        set => canUnlock = value;
-    }
 
-    public Item CurrentItem => _controller.GetCurrentItem();
+    public Item CurrentItem => _controller.CurrentItem;
 
     public Vector2 Rotation
     {
@@ -68,13 +60,15 @@ public class ItemInteractor : MonoBehaviour
         _playerReference.GetPlayerInput().actions["Attack"].performed += StartAttack;
         _playerReference.GetPlayerInput().actions["Attack"].canceled += StartAttack;
         _lineRenderers = new List<LineRenderer>();
+        // TODO: Unlisten?
+        _controller.currentItemChanged.AddListener(OnCurrentItemChanged);
     }
 
     private void FixedUpdate()
     {
         if (_isHoldingAttack)
         {
-            if (_controller.GetCurrentItem().Type == ItemType.Projectile)
+            if (_controller.CurrentItem.Type == ItemType.Projectile)
                 UpdateLineRenderers();
             else
                 _renderer = BezierCurve.DrawQuadraticBezierCurve(_renderer, transform.position,
@@ -120,11 +114,11 @@ public class ItemInteractor : MonoBehaviour
     public void HoldAttack(InputAction.CallbackContext value)
     {
         if (_projectileInstance != null &&
-            _controller.GetCurrentItem()
+            _controller.CurrentItem
                 .ReturnsToPlayer) //Guard statement for returnable projectiles to not allow for them to attack while the projectile is still active
             return;
 
-        if (_projectileInstance != null && _controller.GetCurrentItem().Type == ItemType.Throwable)
+        if (_projectileInstance != null && _controller.CurrentItem.Type == ItemType.Throwable)
             return;
 
         if (value.performed)
@@ -141,11 +135,11 @@ public class ItemInteractor : MonoBehaviour
 
         var projectiles = new List<GameObject>();
 
-        for (int i = _controller.GetCurrentItem().ProjectileAmount == 0 ? -1 : 0;
-             i < _controller.GetCurrentItem().ProjectileAmount;
+        for (int i = _controller.CurrentItem.ProjectileAmount == 0 ? -1 : 0;
+             i < _controller.CurrentItem.ProjectileAmount;
              i++)
         {
-            projectiles.Add(Instantiate(_controller.GetCurrentItem().ProjectileInstance, transform.position,
+            projectiles.Add(Instantiate(_controller.CurrentItem.ProjectileInstance, transform.position,
                 Quaternion.identity));
 
             if (i == -1)
@@ -162,9 +156,6 @@ public class ItemInteractor : MonoBehaviour
                 break;
         }
 
-
-        transform.parent.GetComponent<UnitAnimator>()
-            .UseItem(UnitAnimationState.Throw, _cursor.transform.position, false);
 
         if (_lineRenderers.Count > 0)
         {
@@ -185,26 +176,20 @@ public class ItemInteractor : MonoBehaviour
     //*MAIN ITEM INTERACTION FUNCTION* Handles the initial processing of item interactions
     public void StartAttack(InputAction.CallbackContext value)
     {
-        if (_controller.GetCurrentItem() == null) return;
+        if (_controller.CurrentItem == null) return;
 
-        if (_controller.GetCurrentItem().Type is ItemType.Other or ItemType.Objective)
-        {
-            if (_controller.GetCurrentItem().IsKey && canUnlock)
-                signal = true;
-            else
-                signal = false;
-            return;
-        }
+        if (_controller.CurrentItem.Type is ItemType.Other or ItemType.Objective) return;
+
 
         #region Ranged Attack
 
-        if (_controller.GetCurrentItem().Type is ItemType.Projectile or ItemType.Throwable)
+        if (_controller.CurrentItem.Type is ItemType.Projectile or ItemType.Throwable)
         {
             HoldAttack(value);
             return;
         }
 
-        if (_controller.GetCurrentItem().Type == ItemType.Trap)
+        if (_controller.CurrentItem.Type == ItemType.Trap)
         {
             BeginTrapHighlighting();
             return;
@@ -225,7 +210,7 @@ public class ItemInteractor : MonoBehaviour
 
     private void BeginTrapHighlighting()
     {
-        _cursor.CurrentRad = _controller.GetCurrentItem().PlacementRadius;
+        _cursor.CurrentRad = _controller.CurrentItem.PlacementRadius;
 
         GameObject instanceCircle = new GameObject();
         SpriteRenderer renderer = instanceCircle.AddComponent(typeof(SpriteRenderer)) as SpriteRenderer;
@@ -233,8 +218,8 @@ public class ItemInteractor : MonoBehaviour
         var o = renderer.gameObject;
         o.transform.parent = _playerReference.transform;
         o.transform.localPosition = Vector3.zero;
-        renderer.gameObject.transform.localScale = new Vector3(_controller.GetCurrentItem().PlacementRadius,
-            _controller.GetCurrentItem().PlacementRadius, 0);
+        renderer.gameObject.transform.localScale = new Vector3(_controller.CurrentItem.PlacementRadius,
+            _controller.CurrentItem.PlacementRadius, 0);
         renderer.color = new Color32(255, 109, 114, 170);
         renderer.sortingOrder = 1;
     }
@@ -248,26 +233,14 @@ public class ItemInteractor : MonoBehaviour
         _isJoystickNeutral = true;
     }
 
-    public void UpdateItem()
+    public void OnCurrentItemChanged()
     {
-        if (_controller.GetCurrentItem() == null)
-        {
-            isHoldingKey = false;
-            signal = false;
-            return;
-        }
-
-        if (_controller.GetCurrentItem().IsKey)
-            isHoldingKey = true;
-        else
-        {
-            isHoldingKey = false;
-        }
+        if (_controller.CurrentItem == null) return;
 
 
-        _projectileReference = _controller.GetCurrentItem().ProjectileInstance;
-        _handHelder.sprite = _controller.GetCurrentItem().ItemSprite;
-        _cursor.MaxRadius = _controller.GetCurrentItem().DrawDistance;
+        _projectileReference = _controller.CurrentItem.ProjectileInstance;
+        _handHelder.sprite = _controller.CurrentItem.ItemSprite;
+        _cursor.MaxRadius = _controller.CurrentItem.DrawDistance;
     }
 
     private void UseItem<T>(List<GameObject> projectiles = null) where T : ItemBehaviour
@@ -279,7 +252,7 @@ public class ItemInteractor : MonoBehaviour
 
         int index = 0;
 
-        if (projectiles == null)
+        if (projectiles != null)
         {
             projectiles.ForEach(p =>
             {
@@ -303,10 +276,13 @@ public class ItemInteractor : MonoBehaviour
                     p.GetComponent<HitUnit>()
                         .Initialise(_playerReference, _cursor.transform.position - transform.position);
 
+                transform.parent.GetComponent<UnitAnimator>()
+                    .UseItem(UnitAnimationState.Throw, _cursor.transform.position, false);
+
                 index++;
             });
         }
-        else 
+        else
         {
             //Begin melee 
             Vector3 input = GetPlayerInput();
@@ -315,28 +291,28 @@ public class ItemInteractor : MonoBehaviour
             InstantiateMeleeIndicator(angle, direction);
         }
 
-        RunAnimator();
     }
 
     private void InstantiateMeleeIndicator(float angle, Vector3 direction)
     {
+        _firePoint.position = _lastAttackPosition;
+
         transform.parent.GetComponent<UnitAnimator>()
             .UseItem(UnitAnimationState.MeleeSwing,
                 new Vector2(Mathf.Sin(angle * Mathf.Deg2Rad + Mathf.PI / 2),
                     -Mathf.Cos(angle * Mathf.Deg2Rad + Mathf.PI / 2)), _attackFlag);
 
-        _firePoint.position = _lastAttackPosition;
         GameObject indicator = Instantiate(_projectileReference, _lastAttackPosition,
             Quaternion.Euler(new Vector3(0, 0, angle + _meleeSlashRotationOffset)), _firePoint);
 
-        indicator.GetComponent<DamageIndicator>().Initialise(_attackFlag, _playerReference, direction);
-        indicator.GetComponent<HitUnit>().Initialise(_playerReference, direction);
+        indicator.GetComponent<DamageIndicator>().Initialise(CurrentItem.DrawSpeed,CurrentItem.KnockbackDistance,_attackFlag, _playerReference, direction);
+        indicator.GetComponent<HitUnit>().Initialise(_playerReference, _cursor.transform.position - transform.position);
         _attackFlag = !_attackFlag;
     }
 
     private Vector3 GetPlayerInput()
     {
-        _slashCooldown = _controller.GetCurrentItem().AttackRate;
+        _slashCooldown = _controller.CurrentItem.AttackRate;
         Vector3 playerInput;
 
         var position = new Vector3(transform.position.x, transform.position.y + 0.5f, transform.position.z);
@@ -352,11 +328,6 @@ public class ItemInteractor : MonoBehaviour
         return playerInput;
     }
 
-    private void RunAnimator()
-    {
-        transform.parent.GetComponent<UnitAnimator>()
-            .UseItem(UnitAnimationState.Throw, _cursor.transform.position, false);
-    }
 
     private void GenerateLineRenderers()
     {
@@ -415,5 +386,10 @@ public class ItemInteractor : MonoBehaviour
                 lr.SetPositions(otherPositions);
             }
         }
+    }
+
+    public void OnDrop()
+    {
+        _controller.DropItLikeItsHot(_rotation);
     }
 }

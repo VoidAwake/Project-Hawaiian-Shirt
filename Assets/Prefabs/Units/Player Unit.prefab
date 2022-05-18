@@ -1,5 +1,50 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &2425514219015514682
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2362120024548217779}
+  - component: {fileID: 2583645872938131686}
+  m_Layer: 0
+  m_Name: Item Holder
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2362120024548217779
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2425514219015514682}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.5, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2635515794497460195}
+  m_RootOrder: 12
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2583645872938131686
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2425514219015514682}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1cdaee44e333491daca2236f9abbb277, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inventoryController: {fileID: 2465565676560978990}
 --- !u!1 &6550718957222180552
 GameObject:
   m_ObjectHideFlags: 0
@@ -88,6 +133,9 @@ MonoBehaviour:
   addedInventory: {fileID: 11400000, guid: 2220e64b52956274a8ac1a529699a2d4, type: 2}
   hand: {fileID: 937560079924309396}
   droppedItem: {fileID: 3056942884218095950, guid: 37132a09f5d1c4046a4bb460892afc47, type: 3}
+  itemUpdated:
+    m_PersistentCalls:
+      m_Calls: []
   _inv: {fileID: 0}
 --- !u!58 &121433996737073732
 CircleCollider2D:
@@ -140,9 +188,6 @@ MonoBehaviour:
   _meleeSlashRotationOffset: -90
   _handHelder: {fileID: 937560079924309396}
   _animator: {fileID: 6074339650475639767}
-  isHoldingKey: 0
-  canUnlock: 0
-  signal: 0
 --- !u!120 &5706338390592453364
 LineRenderer:
   m_ObjectHideFlags: 0
@@ -440,19 +485,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1165009643540554491, guid: fe93fd4b04ca3d340865789a7d27cade, type: 3}
       propertyPath: m_Bounds.m_Center.x
-      value: 0.0076681376
+      value: 0.0036213994
       objectReference: {fileID: 0}
     - target: {fileID: 1165009643540554491, guid: fe93fd4b04ca3d340865789a7d27cade, type: 3}
       propertyPath: m_Bounds.m_Center.y
-      value: 0.08882406
+      value: 0.021226317
       objectReference: {fileID: 0}
     - target: {fileID: 1165009643540554491, guid: fe93fd4b04ca3d340865789a7d27cade, type: 3}
       propertyPath: m_Bounds.m_Extent.x
-      value: 0.6377739
+      value: 0.6070341
       objectReference: {fileID: 0}
     - target: {fileID: 1165009643540554491, guid: fe93fd4b04ca3d340865789a7d27cade, type: 3}
       propertyPath: m_Bounds.m_Extent.y
-      value: 0.536656
+      value: 0.50774914
       objectReference: {fileID: 0}
     - target: {fileID: 1368306678967345592, guid: fe93fd4b04ca3d340865789a7d27cade, type: 3}
       propertyPath: m_Layer
@@ -504,19 +549,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4075481484501139696, guid: fe93fd4b04ca3d340865789a7d27cade, type: 3}
       propertyPath: m_Bounds.m_Center.x
-      value: 0.0037112236
+      value: 0.0043694973
       objectReference: {fileID: 0}
     - target: {fileID: 4075481484501139696, guid: fe93fd4b04ca3d340865789a7d27cade, type: 3}
       propertyPath: m_Bounds.m_Center.y
-      value: -0.006710589
+      value: -0.002296716
       objectReference: {fileID: 0}
     - target: {fileID: 4075481484501139696, guid: fe93fd4b04ca3d340865789a7d27cade, type: 3}
       propertyPath: m_Bounds.m_Extent.x
-      value: 0.3612623
+      value: 0.3632192
       objectReference: {fileID: 0}
     - target: {fileID: 4075481484501139696, guid: fe93fd4b04ca3d340865789a7d27cade, type: 3}
       propertyPath: m_Bounds.m_Extent.y
-      value: 0.32747728
+      value: 0.32876056
       objectReference: {fileID: 0}
     - target: {fileID: 4153188563775757182, guid: fe93fd4b04ca3d340865789a7d27cade, type: 3}
       propertyPath: m_RootOrder

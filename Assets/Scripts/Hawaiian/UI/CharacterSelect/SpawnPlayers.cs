@@ -1,9 +1,11 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Hawaiian.Game;
 using Hawaiian.Inventory;
 using Hawaiian.Utilities;
+using MoreLinq;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
@@ -22,68 +24,75 @@ namespace Hawaiian.UI.CharacterSelect
 
         private Dictionary<LobbyGameManager.PlayerConfig, InventoryController> inventoryControllers = new();
 
-        // Start is called before the first frame update
         void Start()
         {
             LobbyGameManager playerData = FindObjectOfType<LobbyGameManager>();
             PlayerInputManager inputManager = GetComponent<PlayerInputManager>();
 
-            if (playerData != null && inputManager != null)
+            if (playerData == null || inputManager == null)
             {
-                inputManager.playerPrefab = playerPrefab;
-
-                foreach (LobbyGameManager.PlayerConfig config in playerData.playerConfigs)
+                if (inputManager != null)
                 {
-                    if (config.isPlayer)
+                    inputManager.joinBehavior = PlayerJoinBehavior.JoinPlayersWhenButtonIsPressed;
+
+                    inputManager.onPlayerJoined += OnPlayerJoined;
+                }
+
+                return;
+            }
+            
+            inputManager.onPlayerJoined += OnPlayerJoined;
+            inputManager.playerPrefab = playerPrefab;
+
+            foreach (LobbyGameManager.PlayerConfig config in playerData.playerConfigs)
+            {
+                if (!config.isPlayer) continue;
+                
+                PlayerInput newPlayer = inputManager.JoinPlayer(config.playerIndex, config.splitScreenIndex,
+                    config.controlScheme, config.deviceIds.Select(InputSystem.GetDeviceById).ToArray());
+
+                // Update player character
+                //Debug.Log("Spawn in player! charNo = " + config.characterNumber + ", charName = " + ((CharacterNames)config.characterNumber).ToString()
+                //+ ". playNo = " + config.playerNumber + ", playColour = " + ((PlayerColours)config.playerNumber).ToString());
+                newPlayer.GetComponent<Unit.Unit>().SetSpriteResolvers(
+                    ((CharacterNames)config.characterNumber).ToString(),
+                    ((PlayerColours)config.playerNumber).ToString());
+
+                // Update inventory UI
+                // Find inventory referenced by inventory controller contained by player prefab
+                for (int i = 0; i < newPlayer.transform.childCount; i++)
+                {
+                    Inventory.InventoryController temp = newPlayer.transform.GetChild(i)
+                        .GetComponent<Inventory.InventoryController>();
+
+                    if (temp == null) continue;
+                    
+                    inventoryControllers.Add(config, temp);
+
+                    Inventory.Inventory inv = temp._inv;
+
+                    // Search for inventory UIs, and find the one that matches our inventory
+                    Game.InventoryUI[] inventoryUIs = FindObjectsOfType<Game.InventoryUI>();
+                    foreach (Game.InventoryUI inventoryUI in inventoryUIs)
                     {
-                        PlayerInput newPlayer = inputManager.JoinPlayer(config.playerIndex, config.splitScreenIndex, config.controlScheme, config.deviceIds.Select(InputSystem.GetDeviceById).ToArray());
-
-                        // Update player character
-                        //Debug.Log("Spawn in player! charNo = " + config.characterNumber + ", charName = " + ((CharacterNames)config.characterNumber).ToString()
-                            //+ ". playNo = " + config.playerNumber + ", playColour = " + ((PlayerColours)config.playerNumber).ToString());
-                        newPlayer.GetComponent<Unit.Unit>().SetSpriteResolvers(((CharacterNames)config.characterNumber).ToString(), ((PlayerColours)config.playerNumber).ToString());
-
-                        // Update inventory UI
-                        // Find inventory referenced by inventory controller contained by player prefab
-                        for (int i = 0; i < newPlayer.transform.childCount; i++)
+                        if (inventoryUI.inv == inv)
                         {
-                            Inventory.InventoryController temp = newPlayer.transform.GetChild(i).GetComponent<Inventory.InventoryController>();
-                            if (temp != null)
-                            {
-                                inventoryControllers.Add(config, temp);
-                                
-                                Inventory.Inventory inv = temp._inv;
-
-                                // Search for inventory UIs, and find the one that matches our inventory
-                                Game.InventoryUI[] inventoryUIs = FindObjectsOfType<Game.InventoryUI>();
-                                foreach (Game.InventoryUI inventoryUI in inventoryUIs)
-                                {
-                                    if (inventoryUI.inv == inv)
-                                    {
-                                        inventoryUI.SetCharacterPortrait(config.characterNumber, config.playerNumber);
-                                    }
-                                }
-                            }
+                            inventoryUI.SetCharacterPortrait(config.characterNumber, config.playerNumber);
                         }
                     }
                 }
+            }
 
-                // Data is still needed for results
-                // Destroy(playerData.gameObject);
-                playersJoined.Raise();
-                inputManager.joinBehavior = PlayerJoinBehavior.JoinPlayersManually;
-            }
-            else if (inputManager != null)
-            {
-                inputManager.joinBehavior = PlayerJoinBehavior.JoinPlayersWhenButtonIsPressed;
-            }
+            // Data is still needed for results
+            // Destroy(playerData.gameObject);
+            playersJoined.Raise();
+            inputManager.joinBehavior = PlayerJoinBehavior.JoinPlayersManually;
         }
 
         public void SaveScores()
         {
             if (gameManager.Phase != GameManager.GamePhase.GameOver) return;
             
-            // TODO: For each player, get the score and save it to the PlayerConfig
             foreach (var VARIABLE in inventoryControllers)
             {
                 var inventoryController = VARIABLE.Value;
@@ -104,6 +113,26 @@ namespace Hawaiian.UI.CharacterSelect
             {
                 SceneManager.LoadScene(buildIndex);
             }
+        }
+
+        // Message from Player Input Manager
+        private void OnPlayerJoined(PlayerInput playerInput)
+        {
+            playersJoined.Raise();
+        }
+        
+        public Transform WinningPlayer { get; private set; }
+
+        private void Update()
+        {
+            if (inventoryControllers.Count == 0) return;
+            
+            WinningPlayer = inventoryControllers.MaxBy(i => InventoryScore(i.Value)).Value.transform;
+        }
+
+        private static float InventoryScore(InventoryController inventoryController)
+        {
+            return inventoryController._inv.inv.Where(i => i != null).Sum(i => i.Points);
         }
     }
 }

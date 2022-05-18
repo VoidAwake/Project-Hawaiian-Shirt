@@ -1,7 +1,10 @@
+using System;
 using UnityEngine;
 
 namespace Hawaiian.Unit
 {
+    
+    [Serializable]
     public abstract class ItemBehaviour : MonoBehaviour
     {
         [Header("Base Item Behaviour")]
@@ -21,7 +24,7 @@ namespace Hawaiian.Unit
 
         public virtual void Initialise(IUnit user, Vector3 target, bool canStickOnWalls = false, bool returnsToPlayer = false, bool ricochet = false, int maximumBounce = 0){}
         
-        public virtual void Initialise(bool flag, IUnit user, Vector2 knockbackDirection) {}
+        public virtual void Initialise(float speed, int knockbackDistance,  bool flag, IUnit user, Vector2 knockbackDirection) {}
 
     }
 }

@@ -151,11 +151,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _speed: 5
+  _knockbackDistance: 10
   _canStickOnWalls: 0
-  _damage: 5
   _returnsToPlayer: 0
   _isRicochet: 0
-  _maximumBounces: 0
+  _maximumBounces: 1
   _speedCurve:
     serializedVersion: 2
     m_Curve:
@@ -266,7 +266,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6bd43b9a334e47efad33d995f0d17efa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  knockbackDistance: 0
+  knockbackDistance: 10
 --- !u!114 &-2898891701924309365
 MonoBehaviour:
   m_ObjectHideFlags: 0

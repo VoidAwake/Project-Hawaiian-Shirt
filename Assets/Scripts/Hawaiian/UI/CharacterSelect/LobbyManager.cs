@@ -1,6 +1,7 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 
 
@@ -257,6 +258,8 @@ namespace Hawaiian.UI.CharacterSelect
                                 {
                                     subState = 1; //transitionTimer = 0; transitionInt = 0; transitionCheckers.enabled = true;
                                     FindObjectOfType<Transition>().BeginTransition(true, true, buildIndexOfNextScene, true);
+                                    Destroy(GetComponent<LobbyManager>());
+                                    Destroy(GetComponent<PlayerInputManager>());
                                 }
                                 ClearInputs();
                             }

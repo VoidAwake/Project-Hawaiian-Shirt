@@ -4,6 +4,7 @@ using System.Linq;
 using Hawaiian.Utilities;
 using MoreLinq;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace Hawaiian.PositionalEvents
 {
@@ -21,6 +22,8 @@ namespace Hawaiian.PositionalEvents
         private List<PositionalEventListener> targets = new();
 
         public PositionalEventToken Token => token;
+
+        [SerializeField] private UnityEvent raisedOnTarget = new UnityEvent();
 
         public List<PositionalEventListener> Targets
         {
@@ -90,10 +93,15 @@ namespace Hawaiian.PositionalEvents
         [ContextMenu("Raise")]
         public void Raise()
         {
-            foreach (var target in Targets.ToList())
+            var currentTargets = Targets.ToList();
+            
+            foreach (var target in currentTargets)
             {
                 target.response.Invoke();
             }
+            
+            if (currentTargets.Count > 0)
+                raisedOnTarget.Invoke();
         }
 
         public void Raise(PositionalEventListener target)
@@ -101,6 +109,8 @@ namespace Hawaiian.PositionalEvents
             if (!Targets.Contains(target)) throw new ArgumentException($"Target {target} is not in {nameof(Targets)}");
             
             target.response.Invoke();
+            
+            raisedOnTarget.Invoke();
         }
 
         private void UpdateTargets()
