@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using UnityEditor.Experimental.GraphView;
+using UnityEngine;
 
 namespace Hawaiian.Unit
 {
@@ -42,7 +43,13 @@ namespace Hawaiian.Unit
                 if (useDefaultDirection)
                     direction = defaultDirection;
                 else if (rigidbody2D == null)
-                    direction = GetComponent<Projectile>().Direction;
+                {
+                    if (GetComponent<Projectile>())
+                        direction = GetComponent<Projectile>().Direction;
+                    else
+                        direction = defaultDirection;
+
+                }
                 else
                 {
                     direction = rigidbody2D.velocity.normalized;

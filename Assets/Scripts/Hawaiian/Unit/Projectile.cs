@@ -4,14 +4,15 @@ using Vector3 = UnityEngine.Vector3;
 
 namespace Hawaiian.Unit
 {
-    public class Projectile : MonoBehaviour
+    public class Projectile : ItemBehaviour
     {
-        [SerializeField] private float _speed;
         [SerializeField] private bool _canStickOnWalls;
-        [SerializeField] private float _damage;
         [SerializeField] private bool _returnsToPlayer;
         [SerializeField] private bool _isRicochet;
         [SerializeField] private int _maximumBounces;
+        [SerializeField] private AnimationCurve _speedCurve;
+        [SerializeField] private AnimationCurve _returnToPlayerCurve;
+        
 
         private bool hasReachedDestination;
 
@@ -20,10 +21,10 @@ namespace Hawaiian.Unit
         private IUnit _user;
         private bool hasCollided = false;
         private int _currentBounces;
-
+        private float  totalDistance;
+        private float maxSpeed;
         public float Speed => _speed;
         public bool CanStickOnWalls => _canStickOnWalls;
-        public float Damage => _damage;
         public Vector2 Direction { get; private set; }
 
         public void Initialise(Vector3 target)
@@ -31,20 +32,17 @@ namespace Hawaiian.Unit
             _targetLocation = target;
         }
 
-        public void Initialise(IUnit user, Vector3 target, float speed = 5, float damage = 5,
-            bool canStickOnWalls = false, bool returnsToPlayer = false, bool ricochet = false, int maximumBounce = 0)
+        public override void Initialise(IUnit user, Vector3 target, bool canStickOnWalls = false, bool returnsToPlayer = false, bool ricochet = false, int maximumBounce = 0)
         {
             _targetLocation = target;
-            _speed = speed;
-            _damage = damage;
+            maxSpeed = _speed;
             _canStickOnWalls = canStickOnWalls;
             _returnsToPlayer = returnsToPlayer;
             _user = user;
             hasReachedDestination = false;
             _isRicochet = ricochet;
             _maximumBounces = maximumBounce;
-
-
+            totalDistance = Vector3.Distance(transform.position, _targetLocation);
             Direction = _targetLocation - (Vector2) transform.position;
         }
 
@@ -70,27 +68,36 @@ namespace Hawaiian.Unit
                 _targetLocation = Direction * 1.5f;
             }
 
+            var distance = Vector3.Distance(transform.position, _targetLocation);
+            var calculatedDistance = distance / totalDistance;
+            
+            _speed = !hasReachedDestination
+                ? _speedCurve.Evaluate(1 - calculatedDistance) * maxSpeed
+                : _returnToPlayerCurve.Evaluate(1 - calculatedDistance) * maxSpeed;
+  
             var step = _speed * Time.deltaTime;
-
+            
             if (hasReachedDestination)
             {
-                transform.position = Vector3.MoveTowards(transform.position, _user.GetPosition(), step);
-
-                if (Vector3.Distance(transform.position, _user.GetPosition()) < 0.01f)
+                transform.position = Vector3.MoveTowards(transform.position, _user.GetPosition(), step * 2);
+            
+                if (Vector3.Distance(transform.position, _user.GetPosition()) < 0.1f)
                 {
                     Destroy(this.gameObject);
                 }
-
+            
                 return;
             }
 
             transform.position = Vector3.MoveTowards(transform.position, _targetLocation, step);
 
-            if (Vector3.Distance(transform.position, _targetLocation) < 0.01f)
+            if (Vector3.Distance(transform.position, _targetLocation) < 0.1f)
             {
                 if (_returnsToPlayer)
                 {
                     hasReachedDestination = true;
+                    _targetLocation = _user.GetPosition();
+                    totalDistance  =  Vector3.Distance(transform.position, _targetLocation);
                     return;
                 }
 

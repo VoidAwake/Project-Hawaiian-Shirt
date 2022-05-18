@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 2387493150576276819}
   - component: {fileID: 1726984037084381513}
   - component: {fileID: 950186398}
-  - component: {fileID: 1101175532}
+  - component: {fileID: 6250164837340820167}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -132,13 +132,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 43b9228e346b0da4db113057c466db5f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _camera: {fileID: 0}
+  _camera: {fileID: 2387493150576276816}
   _smoothTime: 1
   _offset: {x: 0, y: 0}
   _maxZoom: 6
-  _minZoom: 28
-  _maximumDistance: 165.6
---- !u!114 &1101175532
+  _minZoom: 30
+  _maximumDistance: 130
+  players: []
+--- !u!114 &6250164837340820167
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

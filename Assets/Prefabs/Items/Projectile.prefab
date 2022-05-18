@@ -151,11 +151,77 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _speed: 5
+  _knockbackDistance: 10
   _canStickOnWalls: 0
-  _damage: 5
   _returnsToPlayer: 0
   _isRicochet: 0
-  _maximumBounces: 0
+  _maximumBounces: 1
+  _speedCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0.0012207031
+      value: 0.9953613
+      inSlope: -2.0506263
+      outSlope: -2.0506263
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.067654565
+    - serializedVersion: 3
+      time: 0.011847235
+      value: 0.97389644
+      inSlope: -1.1371135
+      outSlope: -1.1371135
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.04630767
+    - serializedVersion: 3
+      time: 0.99406433
+      value: 0.60235596
+      inSlope: 0.033014055
+      outSlope: 0.033014055
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.06702064
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  _returnToPlayerCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0.008541514
+      value: 0.6000734
+      inSlope: -0.05453857
+      outSlope: -0.05453857
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.06470046
+    - serializedVersion: 3
+      time: 0.9907753
+      value: 0.9909848
+      inSlope: 0.47568193
+      outSlope: 0.47568193
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 1
+    - serializedVersion: 3
+      time: 1
+      value: 1.0091515
+      inSlope: 2
+      outSlope: 2
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!210 &2669586785488496362
 SortingGroup:
   m_ObjectHideFlags: 0
@@ -200,7 +266,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6bd43b9a334e47efad33d995f0d17efa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  knockbackDistance: 0
+  knockbackDistance: 10
 --- !u!114 &-2898891701924309365
 MonoBehaviour:
   m_ObjectHideFlags: 0

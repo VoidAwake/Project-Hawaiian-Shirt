@@ -157,6 +157,30 @@ MonoBehaviour:
   _returnsToPlayer: 0
   _isRicochet: 0
   _maximumBounces: 0
+  _speedCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: -0.008326739
+      value: 0.98349
+      inSlope: -1.4223416
+      outSlope: -1.4223416
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.08107397
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!210 &4683394194832133929
 SortingGroup:
   m_ObjectHideFlags: 0
