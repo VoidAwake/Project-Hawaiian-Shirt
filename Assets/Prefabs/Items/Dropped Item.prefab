@@ -189,9 +189,9 @@ MonoBehaviour:
   physicsCollider: {fileID: 1430297532305513475}
   gameTimeScale: {fileID: 11400000, guid: a7999ebb747644c42b10ad44fd3b305b, type: 2}
   rigidbody: {fileID: -3662267645802054264}
-  moving: 1
-  speed: 20
-  deceleration: 1
+  moving: 0
+  speed: 10
+  deceleration: 20
 --- !u!61 &1430297532305513475
 BoxCollider2D:
   m_ObjectHideFlags: 0

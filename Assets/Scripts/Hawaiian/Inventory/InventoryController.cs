@@ -26,6 +26,8 @@ namespace Hawaiian.Inventory
 
         public UnityEvent currentItemChanged = new UnityEvent();
 
+        private int tempPos;
+
        
         //[SerializeField] private int invSize;a
 
@@ -125,6 +127,42 @@ namespace Hawaiian.Inventory
             _inv.InvPosition--;
             Parse();
         }
+    
+        public void OnParseOne()
+        {
+            OnNumParse(0);
+        }
+        
+        public void OnParseTwo()
+        {
+            OnNumParse(1);
+        }
+        
+        public void OnParseThree()
+        {
+            OnNumParse(2);
+        }
+        
+        public void OnParseFour()
+        {
+            OnNumParse(3);
+        }
+        
+        public void OnParseFive()
+        {
+            OnNumParse(4);
+        }
+
+
+        public void OnNumParse(int x)
+        {
+            // TODO: Two way dependency.
+            // TODO: Replace with a cancel attack function
+            if (GetComponent<ItemInteractor>().IsAttacking) // makes sure that they cant change their items while attacking since that make it go brokey
+                return;
+            _inv.invPosition = x;
+            Parse();
+        }
         
         private void Parse()
         {
@@ -152,7 +190,7 @@ namespace Hawaiian.Inventory
             
             //how do i call an event c:
 
-
+            currentItemChanged.Invoke();
 
             parse.Raise();
             
@@ -183,7 +221,7 @@ namespace Hawaiian.Inventory
 
             var randomItemIndex = itemIndexes[UnityEngine.Random.Range(0, itemIndexes.Count)];
 
-            DropItem(randomItemIndex, dir*-1f);
+            DropItem(randomItemIndex, dir);
         }
 
         private void DropItem(int invPosition, Vector2 dir)

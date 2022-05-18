@@ -33,11 +33,11 @@ public class ItemUnit : UnitPhysics
     {
         if (moving)
         {
-            Debug.Log(moving);
+            //Debug.Log(moving);
             //timer -= Time.deltaTime;
             bool epic = velocity.x > 0f;
-                //velocity -= velocity.normalized * (deceleration * gameTimeScale.Value * Time.deltaTime);
-                velocity *= 0.95f*deceleration;
+                velocity -= velocity.normalized * (deceleration * gameTimeScale.Value * Time.deltaTime);
+                //velocity *= 0.95f*deceleration;
                 Debug.Log(velocity);
                 //im reset to 0
                 if (velocity.x > 0f != epic)
