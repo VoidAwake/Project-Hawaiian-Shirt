@@ -104,7 +104,11 @@ namespace Hawaiian.PositionalEvents
                 spriteRenderer.sprite = controlSpriteMappings.controlSpriteMappings[controlPath];
 
             if (image != null)
+            {
                 image.sprite = controlSpriteMappings.controlSpriteMappings[controlPath];
+
+                image.SetNativeSize();
+            }
         }
     }
 }
