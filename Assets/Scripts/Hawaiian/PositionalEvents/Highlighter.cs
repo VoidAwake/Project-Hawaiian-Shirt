@@ -17,10 +17,15 @@ namespace Hawaiian.PositionalEvents
         private void Awake()
         {
             spriteRenderer = GetComponent<SpriteRenderer>();
+            
             targetSpriteRenderer = transform.parent.GetComponent<SpriteRenderer>();
 
             if (!targetSpriteRenderer)
+            {
+                enabled = false;
+                
                 throw new Exception($"Could not highlight. Parent object does not have a {nameof(SpriteRenderer)}");
+            }
 
             spriteRenderer.sprite = targetSpriteRenderer.sprite;
             spriteRenderer.sortingOrder = targetSpriteRenderer.sortingOrder + 1;

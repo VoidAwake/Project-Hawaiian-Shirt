@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 8438924235777187685}
   - component: {fileID: 1131716109}
   - component: {fileID: 1131716108}
+  - component: {fileID: 1497012018}
   m_Layer: 0
   m_Name: Target Highlighter
   m_TagString: Untagged
@@ -48,6 +49,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   highlighterPrefab: {fileID: 2065759647219533693, guid: 72b964431f279f84a9dfe4bc9375930e, type: 3}
+  playersData: {fileID: 11400000, guid: c756a91a5c590f049a3da8c1bacc8e21, type: 2}
 --- !u!114 &8438924235777187685
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -88,6 +90,19 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1497012018}
+        m_TargetAssemblyTypeName: Hawaiian.PositionalEvents.TargetControlPrompt,
+          PositionalEvents
+        m_MethodName: OnTargetsChanged
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!210 &1131716109
 SortingGroup:
   m_ObjectHideFlags: 0
@@ -114,3 +129,18 @@ MonoBehaviour:
   controlPromptPrefab: {fileID: 863757022267649085, guid: dfed0489b330811449510e739f1f6872, type: 3}
   token: {fileID: 11400000, guid: 3b0ff5f6a462e6044b143ac5460cd59c, type: 2}
   actionName: PickUp
+--- !u!114 &1497012018
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8438924235777187681}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f5e1e2a3f40e425ebdc706f1cf406276, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  controlPromptPrefab: {fileID: 863757022267649085, guid: dfed0489b330811449510e739f1f6872, type: 3}
+  token: {fileID: 11400000, guid: 9f1d3cb3ed1f98a428d06c27ad583779, type: 2}
+  actionName: Attack

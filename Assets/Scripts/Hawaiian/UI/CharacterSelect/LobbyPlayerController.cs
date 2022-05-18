@@ -9,9 +9,9 @@ namespace Hawaiian.UI.CharacterSelect
         int actionB = 0;    // 0 - Up
         int actionL = 0;    // 1 - Down, Action Buffered
         int actionR = 0;    // 2 - Down, Action Recieved
-        Vector2 move = new Vector2();
+        private float move = 0;
 
-        public void OnMove(InputValue value) { move = value.Get<Vector2>(); }
+        public void OnCharacterSelect(InputValue value) { move = value.Get<float>(); }
         public void OnActionA(InputValue value) { HandleButtonInput(value.Get<float>(), ref actionA); }
         public void OnActionB(InputValue value) { HandleButtonInput(value.Get<float>(), ref actionB); }
         public void OnActionL(InputValue value) { HandleButtonInput(value.Get<float>(), ref actionL); }
@@ -36,10 +36,11 @@ namespace Hawaiian.UI.CharacterSelect
         {
             mainMenuManager = FindObjectOfType<LobbyManager>();
             gameManager = FindObjectOfType<LobbyGameManager>();
-            if (gameManager != null)
+            if (gameManager != null && mainMenuManager != null)
             {
                 playerConfig = gameManager.AddPlayer(this);
             }
+            else Destroy(gameObject);
 
             inputBirthTimer = 0.1f;
             moveBuffer = 1;
@@ -56,12 +57,12 @@ namespace Hawaiian.UI.CharacterSelect
                     {
                         //if (moveBuffer > 0 && move.x < 0.1f) moveBuffer = 0;
                         //if (moveBuffer < 0 && move.x > -0.1f) moveBuffer = 0;
-                        if (move.x > -0.1f && move.x < 0.1f) moveBuffer = 0;
+                        if (move > -0.1f && move < 0.1f) moveBuffer = 0;
                     }
                     else //  Send stick input
                     {
-                        if (move.x > 0.15f) { mainMenuManager.playerStickInputs[playerConfig.playerNumber] = 1; moveBuffer = 1; }
-                        if (move.x < -0.15f) { mainMenuManager.playerStickInputs[playerConfig.playerNumber] = -1; moveBuffer = -1; }
+                        if (move > 0.15f) { mainMenuManager.playerStickInputs[playerConfig.playerNumber] = 1; moveBuffer = 1; }
+                        if (move < -0.15f) { mainMenuManager.playerStickInputs[playerConfig.playerNumber] = -1; moveBuffer = -1; }
                     }
                     if (actionA == 1) { mainMenuManager.playerButtonInputs[playerConfig.playerNumber] = 1; actionA++; }
                     if (actionB == 1) { mainMenuManager.playerButtonInputs[playerConfig.playerNumber] = -1; actionB++; }
