@@ -15,11 +15,11 @@ namespace Hawaiian.Unit
         [SerializeField] private GameEvent OnTakeDamage;
         [SerializeField] private Vector2 _knockbackDirection;
 
-        public int _knockbackDistance;
         private Animator _animator;
         private bool _flag;
         private IUnit _user;
-        
+
+        public int KnockbackDistance => _knockbackDistance;
         
         void Update()
         {

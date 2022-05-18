@@ -14,7 +14,7 @@ namespace Hawaiian.Inventory
             // TODO: Move knockback to IUnit
 
             if (GetComponent<DamageIndicator>())
-                knockbackDistance = GetComponent<DamageIndicator>()._knockbackDistance;
+                knockbackDistance = GetComponent<DamageIndicator>().KnockbackDistance;
             
             unit.GetComponent<UnitPlayer>().KnockBack(direction, knockbackDistance);
         }
