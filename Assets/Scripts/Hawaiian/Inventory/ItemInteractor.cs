@@ -377,4 +377,11 @@ public class ItemInteractor : MonoBehaviour
         _handHelder.sprite = _controller.CurrentItem.ItemSprite;
         _cursor.MaxRadius = _controller.CurrentItem.DrawDistance;
     }
+
+
+    public void OnDrop()
+    {
+        _controller.DropItLikeItsHot(_rotation);
+    }
+
 }
