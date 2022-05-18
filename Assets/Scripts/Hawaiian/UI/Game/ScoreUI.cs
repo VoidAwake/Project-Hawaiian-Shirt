@@ -22,7 +22,7 @@ namespace Hawaiian.UI.Game
 
         private void UpdateText()
         {
-            text.text = "Score: " + inventory.inv.Where(i => i != null).Sum(i => i.Points);
+            text.text = "" + inventory.inv.Where(i => i != null).Sum(i => i.Points);
         }
 
         protected override void Subscribe() { }

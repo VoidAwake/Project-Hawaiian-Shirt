@@ -14,7 +14,13 @@ namespace Hawaiian.UI.CharacterSelect
         // Start is called before the first frame update
         void Start()
         {
-            // Check that this is the one and only GameManager // Also look at preload scene for creating the GameManager
+            // Ensure that this is the one and only GameManager
+            LobbyGameManager[] lobbyGameManagers = FindObjectsOfType<LobbyGameManager>();
+            foreach (LobbyGameManager lobbyGameManager in lobbyGameManagers)
+            {
+                if (lobbyGameManager != this) Destroy(lobbyGameManager.gameObject);
+            }
+
             DontDestroyOnLoad(this);
             playerConfigs = new PlayerConfig[4];
             for (int i = 0; i < 4; i++)

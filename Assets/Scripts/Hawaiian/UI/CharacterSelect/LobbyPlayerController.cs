@@ -36,10 +36,11 @@ namespace Hawaiian.UI.CharacterSelect
         {
             mainMenuManager = FindObjectOfType<LobbyManager>();
             gameManager = FindObjectOfType<LobbyGameManager>();
-            if (gameManager != null)
+            if (gameManager != null && mainMenuManager != null)
             {
                 playerConfig = gameManager.AddPlayer(this);
             }
+            else Destroy(gameObject);
 
             inputBirthTimer = 0.1f;
             moveBuffer = 1;
