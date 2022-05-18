@@ -24,18 +24,8 @@ public class CameraController : MonoBehaviour
     private Vector2 velocity;
 
     private float _size;
-
-
-    private void Start()
-    {
-    }
-
-    private void OnDisable()
-    {
-        
-     
-    }
-
+    
+    
     private bool flag;
 
     public void AddTarget()
@@ -47,6 +37,7 @@ public class CameraController : MonoBehaviour
        {
            this.players.Add(player.transform);
        }
+       
 
     }
     

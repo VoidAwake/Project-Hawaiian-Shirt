@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 2387493150576276819}
   - component: {fileID: 1726984037084381513}
   - component: {fileID: 950186398}
-  - component: {fileID: 1101175532}
+  - component: {fileID: 6250164837340820167}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -138,7 +138,8 @@ MonoBehaviour:
   _maxZoom: 6
   _minZoom: 30
   _maximumDistance: 130
---- !u!114 &1101175532
+  players: []
+--- !u!114 &6250164837340820167
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
