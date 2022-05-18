@@ -82,15 +82,18 @@ namespace Hawaiian.Inventory
 
         private void OnPickUp()
         {
-            foreach (var target in positionalEventCaller.Targets)
+            if (!_player.playerState.Equals(Unit.Unit.PlayerState.Tripped))
             {
-                var item = target.GetComponent<DroppedItem>().item;
-                
-                if (item == null) continue;
+                foreach (var target in positionalEventCaller.Targets)
+                {
+                    var item = target.GetComponent<DroppedItem>().item;
 
-                if (!_inv.PickUp(item)) continue;
-                
-                positionalEventCaller.Raise(target);
+                    if (item == null) continue;
+
+                    if (!_inv.PickUp(item)) continue;
+
+                    positionalEventCaller.Raise(target);
+                }
             }
         }
 
