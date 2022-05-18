@@ -413,4 +413,10 @@ public class ItemInteractor : MonoBehaviour
         _cursor.MaxRadius = _controller.GetCurrentItem().DrawDistance;
     }
 
+
+    public void OnDrop()
+    {
+        _controller.DropItLikeItsHot(_rotation);
+    }
+
 }

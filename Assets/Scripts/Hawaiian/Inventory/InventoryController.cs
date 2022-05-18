@@ -155,9 +155,9 @@ namespace Hawaiian.Inventory
             
         }
         
-        public void OnDrop()
+        public void DropItLikeItsHot(Vector2 rad)
         {
-            DropItem(_inv.invPosition);
+            DropItem(_inv.invPosition, rad);
         }
 
         public void RemoveCurrentItem()
@@ -166,7 +166,7 @@ namespace Hawaiian.Inventory
         }
 
 
-        public void DropRandom()
+        public void DropRandom(Vector2 dir)
         {
             var itemIndexes = new List<int>();
 
@@ -180,16 +180,17 @@ namespace Hawaiian.Inventory
 
             var randomItemIndex = itemIndexes[UnityEngine.Random.Range(0, itemIndexes.Count)];
 
-            DropItem(randomItemIndex);
+            DropItem(randomItemIndex, dir*-1f);
         }
 
-        private void DropItem(int invPosition)
+        private void DropItem(int invPosition, Vector2 dir)
         {
             if (_inv.inv[invPosition] != null)
             {
                 GameObject dp = Instantiate(droppedItem, transform.position, quaternion.identity);
                 dp.GetComponent<DroppedItem>().item = _inv.inv[invPosition];
                 dp.GetComponent<SpriteRenderer>().sprite = _inv.inv[invPosition].DroppedItemSprite;
+                dp.GetComponent<ItemUnit>().OnThrow(dir);
                 _inv.DropItem(invPosition);
                 hand.sprite = null;
             }
