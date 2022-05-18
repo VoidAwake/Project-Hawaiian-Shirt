@@ -62,6 +62,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  destroyed:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!58 &-2464536164248510210
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -94,3 +97,18 @@ MonoBehaviour:
   radius: 2
   interactionTarget: 1
   targetsChanged: {fileID: 11400000, guid: 37e77cbc288b0bb408597b25a3a84f7e, type: 2}
+  raisedOnTarget:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6791643762267471416}
+        m_TargetAssemblyTypeName: Hawaiian.Inventory.HeldItem, Hawaiian.Inventory
+        m_MethodName: Destroy
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2

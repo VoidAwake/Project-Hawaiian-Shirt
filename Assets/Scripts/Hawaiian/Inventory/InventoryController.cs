@@ -188,30 +188,20 @@ namespace Hawaiian.Inventory
 
         private void DropItem(int invPosition)
         {
-            if (_inv.inv[invPosition] != null)
-            {
-                GameObject dp = Instantiate(droppedItem, transform.position, quaternion.identity);
-                dp.GetComponent<DroppedItem>().item = _inv.inv[invPosition];
-                dp.GetComponent<SpriteRenderer>().sprite = _inv.inv[invPosition].DroppedItemSprite;
-                _inv.DropItem(invPosition);
-                hand.sprite = null;
-            }
-            else
-            {
-                Debug.Log("THIS BITCH EMPTY...............................YEET");
-            }
+            if (_inv.inv[invPosition] == null) return;
+            
+            GameObject dp = Instantiate(droppedItem, transform.position, quaternion.identity);
+            dp.GetComponent<DroppedItem>().item = _inv.inv[invPosition];
+            dp.GetComponent<SpriteRenderer>().sprite = _inv.inv[invPosition].DroppedItemSprite;
+            RemoveItemFromIndex(invPosition);
         }
 
         public void RemoveItemFromIndex(int invPosition)
         {
-            if (_inv.inv[invPosition] != null)
-            {
-                _inv.DropItem(_inv.InvPosition);
-                hand.sprite = null;
-            }
-            else
-                Debug.Log("THIS BITCH EMPTY...............................YEET");
+            if (_inv.inv[invPosition] == null) return;
             
+            _inv.DropItem(_inv.InvPosition);
+            hand.sprite = null;
         }
 
         public void UseItem()

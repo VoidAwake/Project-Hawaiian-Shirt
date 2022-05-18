@@ -53,7 +53,7 @@ namespace Hawaiian.Inventory
             return false;
         }
 
-
+        // TODO: Rename. This is just removing an item, dropping is handled by InventoryController.
         public void DropItem(int invPosition)
         {
             //Manager.drop(inv[invPos]);

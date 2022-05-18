@@ -23,9 +23,7 @@ namespace Hawaiian.Inventory
         {
             if (heldItem != null)
             {
-                Destroy(heldItem.gameObject);
-
-                heldItem = null;
+                DestroyHeldItem();
             }
             
             var currentItem = inventoryController.CurrentItem;
@@ -34,9 +32,30 @@ namespace Hawaiian.Inventory
 
             if (currentItem.heldItemPrefab == null) return;
             
+            CreateHeldItem(currentItem);
+        }
+
+        private void CreateHeldItem(Item currentItem)
+        {
             var heldItemObject = Instantiate(currentItem.heldItemPrefab, transform);
 
             heldItem = heldItemObject.GetComponent<HeldItem>();
+
+            heldItem.destroyed.AddListener(OnHeldItemDestroyed);
+        }
+
+        private void DestroyHeldItem()
+        {
+            heldItem.destroyed.RemoveListener(OnHeldItemDestroyed);
+
+            Destroy(heldItem.gameObject);
+
+            heldItem = null;
+        }
+
+        private void OnHeldItemDestroyed()
+        {
+            inventoryController.RemoveCurrentItem();
         }
 
         // Message from Player Input
