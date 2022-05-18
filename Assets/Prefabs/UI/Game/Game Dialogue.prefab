@@ -465,6 +465,8 @@ MonoBehaviour:
   uiParent: {fileID: 2135048521676535366}
   uiParentForFourPlayers: {fileID: 5433760765802800313}
   controlsInstructionsDialoguePrefab: {fileID: 6701680597941144673, guid: ad9da8ae28d5a1446a50507627be2e64, type: 3}
+  mainMenuController: {fileID: 2092102775}
+  pauseMenuController: {fileID: 1893241053}
 --- !u!114 &2135048521545393823
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1188,8 +1190,30 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7a40d0dd9aa7afb4993bc7b484f2ce2f, type: 3}
+--- !u!114 &1893241053 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1000451379410144762, guid: 7a40d0dd9aa7afb4993bc7b484f2ce2f, type: 3}
+  m_PrefabInstance: {fileID: 1000451380740234535}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: af123e572d2028d489491f491aeb9204, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!224 &2092102773 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 1000451379206089042, guid: 7a40d0dd9aa7afb4993bc7b484f2ce2f, type: 3}
   m_PrefabInstance: {fileID: 1000451380740234535}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &2092102775 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1000451379206089040, guid: 7a40d0dd9aa7afb4993bc7b484f2ce2f, type: 3}
+  m_PrefabInstance: {fileID: 1000451380740234535}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 21df38d2562da874b8d188338b2c2707, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

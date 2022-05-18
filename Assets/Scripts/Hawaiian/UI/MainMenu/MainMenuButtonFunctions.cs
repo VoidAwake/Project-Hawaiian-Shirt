@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Hawaiian.UI.CharacterSelect;
+using UnityEngine.Events;
 
 namespace Hawaiian.UI.MainMenu
 {
@@ -10,6 +11,8 @@ namespace Hawaiian.UI.MainMenu
         [SerializeField] ButtonFunction function;
         [SerializeField] int buildIndex;
         [SerializeField] bool callTransition;
+
+        public UnityEvent displayControlsSelected = new UnityEvent();
 
         public void LoadSceneByIndex()
         {
@@ -48,7 +51,7 @@ namespace Hawaiian.UI.MainMenu
 
         public void DisplayControls()
         {
-            Debug.Log("Display the controls!");
+            displayControlsSelected.Invoke();
         }
 
         public void CallSerializedFunction()
