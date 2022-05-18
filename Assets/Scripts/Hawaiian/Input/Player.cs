@@ -163,6 +163,51 @@ namespace Hawaiian.Input
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ParseOne"",
+                    ""type"": ""Button"",
+                    ""id"": ""a9bbbc5f-a5e0-4d3b-b829-cde1d48cd109"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""ParseTwo"",
+                    ""type"": ""Button"",
+                    ""id"": ""3c055b96-da76-473d-8b2d-368c4506853d"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ParseThree"",
+                    ""type"": ""Button"",
+                    ""id"": ""8a3e2be3-072b-4cf8-bbb6-aca6eef1dd92"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ParseFour"",
+                    ""type"": ""Button"",
+                    ""id"": ""cbba4dab-4f11-4e8e-a37e-c2508e5b78b1"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ParseFive"",
+                    ""type"": ""Button"",
+                    ""id"": ""66e8094e-cdb3-43c7-9ab3-3024a64caf25"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -938,6 +983,61 @@ namespace Hawaiian.Input
                 },
                 {
                     ""name"": """",
+                    ""id"": ""2045dab0-248b-48ae-92b4-1ae2a365cb5b"",
+                    ""path"": ""<Keyboard>/1"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard1"",
+                    ""action"": ""ParseOne"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""df355a3b-3023-4004-aa69-3b2d5ff3bec9"",
+                    ""path"": ""<Keyboard>/2"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard1"",
+                    ""action"": ""ParseTwo"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""3dbc362c-3cde-47c5-96c6-6f2f0b119ec1"",
+                    ""path"": ""<Keyboard>/3"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard1"",
+                    ""action"": ""ParseThree"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ea3bb40b-5dda-4095-aaed-09326c6f5bba"",
+                    ""path"": ""<Keyboard>/4"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard1"",
+                    ""action"": ""ParseFour"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""23f36895-da63-4e79-ad9e-efe199d158c9"",
+                    ""path"": ""<Keyboard>/5"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard1"",
+                    ""action"": ""ParseFive"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""5efab6b0-7ee6-4acb-aae1-9a6973274b31"",
                     ""path"": ""<Gamepad>/leftStick/y"",
                     ""interactions"": """",
@@ -1419,6 +1519,11 @@ namespace Hawaiian.Input
             m_Player_MoveCursor = m_Player.FindAction("MoveCursor", throwIfNotFound: true);
             m_Player_Drop = m_Player.FindAction("Drop", throwIfNotFound: true);
             m_Player_Menu = m_Player.FindAction("Menu", throwIfNotFound: true);
+            m_Player_ParseOne = m_Player.FindAction("ParseOne", throwIfNotFound: true);
+            m_Player_ParseTwo = m_Player.FindAction("ParseTwo", throwIfNotFound: true);
+            m_Player_ParseThree = m_Player.FindAction("ParseThree", throwIfNotFound: true);
+            m_Player_ParseFour = m_Player.FindAction("ParseFour", throwIfNotFound: true);
+            m_Player_ParseFive = m_Player.FindAction("ParseFive", throwIfNotFound: true);
             // Lobby Player
             m_LobbyPlayer = asset.FindActionMap("Lobby Player", throwIfNotFound: true);
             m_LobbyPlayer_Ready = m_LobbyPlayer.FindAction("Ready", throwIfNotFound: true);
@@ -1500,6 +1605,11 @@ namespace Hawaiian.Input
         private readonly InputAction m_Player_MoveCursor;
         private readonly InputAction m_Player_Drop;
         private readonly InputAction m_Player_Menu;
+        private readonly InputAction m_Player_ParseOne;
+        private readonly InputAction m_Player_ParseTwo;
+        private readonly InputAction m_Player_ParseThree;
+        private readonly InputAction m_Player_ParseFour;
+        private readonly InputAction m_Player_ParseFive;
         public struct PlayerActions
         {
             private @PlayerAction m_Wrapper;
@@ -1519,6 +1629,11 @@ namespace Hawaiian.Input
             public InputAction @MoveCursor => m_Wrapper.m_Player_MoveCursor;
             public InputAction @Drop => m_Wrapper.m_Player_Drop;
             public InputAction @Menu => m_Wrapper.m_Player_Menu;
+            public InputAction @ParseOne => m_Wrapper.m_Player_ParseOne;
+            public InputAction @ParseTwo => m_Wrapper.m_Player_ParseTwo;
+            public InputAction @ParseThree => m_Wrapper.m_Player_ParseThree;
+            public InputAction @ParseFour => m_Wrapper.m_Player_ParseFour;
+            public InputAction @ParseFive => m_Wrapper.m_Player_ParseFive;
             public InputActionMap Get() { return m_Wrapper.m_Player; }
             public void Enable() { Get().Enable(); }
             public void Disable() { Get().Disable(); }
@@ -1573,6 +1688,21 @@ namespace Hawaiian.Input
                     @Menu.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMenu;
                     @Menu.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMenu;
                     @Menu.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMenu;
+                    @ParseOne.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnParseOne;
+                    @ParseOne.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnParseOne;
+                    @ParseOne.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnParseOne;
+                    @ParseTwo.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnParseTwo;
+                    @ParseTwo.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnParseTwo;
+                    @ParseTwo.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnParseTwo;
+                    @ParseThree.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnParseThree;
+                    @ParseThree.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnParseThree;
+                    @ParseThree.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnParseThree;
+                    @ParseFour.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnParseFour;
+                    @ParseFour.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnParseFour;
+                    @ParseFour.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnParseFour;
+                    @ParseFive.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnParseFive;
+                    @ParseFive.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnParseFive;
+                    @ParseFive.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnParseFive;
                 }
                 m_Wrapper.m_PlayerActionsCallbackInterface = instance;
                 if (instance != null)
@@ -1622,6 +1752,21 @@ namespace Hawaiian.Input
                     @Menu.started += instance.OnMenu;
                     @Menu.performed += instance.OnMenu;
                     @Menu.canceled += instance.OnMenu;
+                    @ParseOne.started += instance.OnParseOne;
+                    @ParseOne.performed += instance.OnParseOne;
+                    @ParseOne.canceled += instance.OnParseOne;
+                    @ParseTwo.started += instance.OnParseTwo;
+                    @ParseTwo.performed += instance.OnParseTwo;
+                    @ParseTwo.canceled += instance.OnParseTwo;
+                    @ParseThree.started += instance.OnParseThree;
+                    @ParseThree.performed += instance.OnParseThree;
+                    @ParseThree.canceled += instance.OnParseThree;
+                    @ParseFour.started += instance.OnParseFour;
+                    @ParseFour.performed += instance.OnParseFour;
+                    @ParseFour.canceled += instance.OnParseFour;
+                    @ParseFive.started += instance.OnParseFive;
+                    @ParseFive.performed += instance.OnParseFive;
+                    @ParseFive.canceled += instance.OnParseFive;
                 }
             }
         }
@@ -1780,6 +1925,11 @@ namespace Hawaiian.Input
             void OnMoveCursor(InputAction.CallbackContext context);
             void OnDrop(InputAction.CallbackContext context);
             void OnMenu(InputAction.CallbackContext context);
+            void OnParseOne(InputAction.CallbackContext context);
+            void OnParseTwo(InputAction.CallbackContext context);
+            void OnParseThree(InputAction.CallbackContext context);
+            void OnParseFour(InputAction.CallbackContext context);
+            void OnParseFive(InputAction.CallbackContext context);
         }
         public interface ILobbyPlayerActions
         {

@@ -14,7 +14,7 @@ namespace Hawaiian.Inventory
         [SerializeField] public Item[] inv;
         [SerializeField] public int size;
         public UnityEvent currentItemChanged = new();
-        private int invPosition = 0;
+        public int invPosition = 0;
 
         public int InvPosition
         {
@@ -22,7 +22,6 @@ namespace Hawaiian.Inventory
             set
             {
                 invPosition = value;
-                currentItemChanged.Invoke();
             }
         }
 

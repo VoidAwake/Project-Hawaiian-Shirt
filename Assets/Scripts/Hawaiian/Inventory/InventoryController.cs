@@ -26,6 +26,8 @@ namespace Hawaiian.Inventory
 
         public UnityEvent currentItemChanged = new UnityEvent();
 
+        private int tempPos;
+
        
         //[SerializeField] private int invSize;a
 
@@ -80,15 +82,18 @@ namespace Hawaiian.Inventory
 
         private void OnPickUp()
         {
-            foreach (var target in positionalEventCaller.Targets)
+            if (!_player.playerState.Equals(Unit.Unit.PlayerState.Tripped))
             {
-                var item = target.GetComponent<DroppedItem>().item;
-                
-                if (item == null) continue;
+                foreach (var target in positionalEventCaller.Targets)
+                {
+                    var item = target.GetComponent<DroppedItem>().item;
 
-                if (!_inv.PickUp(item)) continue;
-                
-                positionalEventCaller.Raise(target);
+                    if (item == null) continue;
+
+                    if (!_inv.PickUp(item)) continue;
+
+                    positionalEventCaller.Raise(target);
+                }
             }
         }
 
@@ -125,6 +130,42 @@ namespace Hawaiian.Inventory
             _inv.InvPosition--;
             Parse();
         }
+    
+        public void OnParseOne()
+        {
+            OnNumParse(0);
+        }
+        
+        public void OnParseTwo()
+        {
+            OnNumParse(1);
+        }
+        
+        public void OnParseThree()
+        {
+            OnNumParse(2);
+        }
+        
+        public void OnParseFour()
+        {
+            OnNumParse(3);
+        }
+        
+        public void OnParseFive()
+        {
+            OnNumParse(4);
+        }
+
+
+        public void OnNumParse(int x)
+        {
+            // TODO: Two way dependency.
+            // TODO: Replace with a cancel attack function
+            if (GetComponent<ItemInteractor>().IsAttacking) // makes sure that they cant change their items while attacking since that make it go brokey
+                return;
+            _inv.invPosition = x;
+            Parse();
+        }
         
         private void Parse()
         {
@@ -152,15 +193,15 @@ namespace Hawaiian.Inventory
             
             //how do i call an event c:
 
-
+            currentItemChanged.Invoke();
 
             parse.Raise();
             
         }
         
-        public void OnDrop()
+        public void DropItLikeItsHot(Vector2 rad)
         {
-            DropItem(_inv.InvPosition);
+            DropItem(_inv.invPosition, rad);
         }
 
         public void RemoveCurrentItem()
@@ -169,7 +210,7 @@ namespace Hawaiian.Inventory
         }
 
 
-        public void DropRandom()
+        public void DropRandom(Vector2 dir)
         {
             var itemIndexes = new List<int>();
 
@@ -183,17 +224,24 @@ namespace Hawaiian.Inventory
 
             var randomItemIndex = itemIndexes[UnityEngine.Random.Range(0, itemIndexes.Count)];
 
-            DropItem(randomItemIndex);
+            DropItem(randomItemIndex, dir);
         }
 
-        private void DropItem(int invPosition)
+        private void DropItem(int invPosition, Vector2 dir)
         {
-            if (_inv.inv[invPosition] == null) return;
-            
-            GameObject dp = Instantiate(droppedItem, transform.position, quaternion.identity);
-            dp.GetComponent<DroppedItem>().item = _inv.inv[invPosition];
-            dp.GetComponent<SpriteRenderer>().sprite = _inv.inv[invPosition].DroppedItemSprite;
-            RemoveItemFromIndex(invPosition);
+            if (_inv.inv[invPosition] != null)
+            {
+                GameObject dp = Instantiate(droppedItem, transform.position, quaternion.identity);
+                dp.GetComponent<DroppedItem>().item = _inv.inv[invPosition];
+                dp.GetComponent<SpriteRenderer>().sprite = _inv.inv[invPosition].DroppedItemSprite;
+                dp.GetComponent<ItemUnit>().OnThrow(dir);
+                _inv.DropItem(invPosition);
+                hand.sprite = null;
+            }
+            else
+            {
+                Debug.Log("THIS BITCH EMPTY...............................YEET");
+            }
         }
 
         public void RemoveItemFromIndex(int invPosition)
