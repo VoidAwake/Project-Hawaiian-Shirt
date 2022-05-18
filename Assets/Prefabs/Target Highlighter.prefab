@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 8438924235777187687}
   - component: {fileID: 8438924235777187684}
   - component: {fileID: 8438924235777187685}
-  - component: {fileID: 1131716109}
   - component: {fileID: 1131716108}
   - component: {fileID: 1497012018}
   m_Layer: 0
@@ -103,17 +102,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!210 &1131716109
-SortingGroup:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8438924235777187681}
-  m_Enabled: 1
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 1
 --- !u!114 &1131716108
 MonoBehaviour:
   m_ObjectHideFlags: 0

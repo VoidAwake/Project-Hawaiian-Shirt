@@ -48,6 +48,15 @@ namespace Hawaiian.Input
                     ""initialStateCheck"": false
                 },
                 {
+                    ""name"": ""MenuSelect"",
+                    ""type"": ""PassThrough"",
+                    ""id"": ""0ca17709-dfac-4f73-ad98-6f46905a5f68"",
+                    ""expectedControlType"": ""Axis"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
                     ""name"": ""ActionA"",
                     ""type"": ""Value"",
                     ""id"": ""eb5fc80f-30ab-4fa0-820b-d1b30b590205"",
@@ -1026,6 +1035,116 @@ namespace Hawaiian.Input
                     ""action"": ""ParseFive"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""5efab6b0-7ee6-4acb-aae1-9a6973274b31"",
+                    ""path"": ""<Gamepad>/leftStick/y"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""MenuSelect"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""WASD"",
+                    ""id"": ""91707aad-cbfb-4ac3-aaba-637420ae07cc"",
+                    ""path"": ""1DAxis"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MenuSelect"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""Positive"",
+                    ""id"": ""52ee830f-63d7-4376-aa1e-d00fe78634df"",
+                    ""path"": ""<Keyboard>/w"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard1"",
+                    ""action"": ""MenuSelect"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""Negative"",
+                    ""id"": ""d7905edc-5b8e-4fb1-ad0d-ff0a8ee14ffb"",
+                    ""path"": ""<Keyboard>/s"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard1"",
+                    ""action"": ""MenuSelect"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""Arrow Keys"",
+                    ""id"": ""233a78d5-ebc7-45a7-805c-c8d34706c043"",
+                    ""path"": ""1DAxis"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MenuSelect"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""Positive"",
+                    ""id"": ""ba037db2-f2bd-46b3-9aaa-88599bf6fcc1"",
+                    ""path"": ""<Keyboard>/upArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MenuSelect"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""Negative"",
+                    ""id"": ""650bae87-3163-40d4-b8f2-ce73b097ae7b"",
+                    ""path"": ""<Keyboard>/downArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MenuSelect"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""D-Pad"",
+                    ""id"": ""19615d48-339a-4867-8843-564c8076632c"",
+                    ""path"": ""1DAxis"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MenuSelect"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""Positive"",
+                    ""id"": ""5679200e-c8d2-4304-ae2f-01ed40730be4"",
+                    ""path"": ""<Gamepad>/dpad/up"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""MenuSelect"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""Negative"",
+                    ""id"": ""ca188b6a-f42c-4667-b49a-62ba57cce511"",
+                    ""path"": ""<Gamepad>/dpad/down"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""MenuSelect"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
                 }
             ]
         },
@@ -1387,6 +1506,7 @@ namespace Hawaiian.Input
             m_Player = asset.FindActionMap("Player", throwIfNotFound: true);
             m_Player_Move = m_Player.FindAction("Move", throwIfNotFound: true);
             m_Player_CharacterSelect = m_Player.FindAction("CharacterSelect", throwIfNotFound: true);
+            m_Player_MenuSelect = m_Player.FindAction("MenuSelect", throwIfNotFound: true);
             m_Player_ActionA = m_Player.FindAction("ActionA", throwIfNotFound: true);
             m_Player_ActionB = m_Player.FindAction("ActionB", throwIfNotFound: true);
             m_Player_Attack = m_Player.FindAction("Attack", throwIfNotFound: true);
@@ -1472,6 +1592,7 @@ namespace Hawaiian.Input
         private IPlayerActions m_PlayerActionsCallbackInterface;
         private readonly InputAction m_Player_Move;
         private readonly InputAction m_Player_CharacterSelect;
+        private readonly InputAction m_Player_MenuSelect;
         private readonly InputAction m_Player_ActionA;
         private readonly InputAction m_Player_ActionB;
         private readonly InputAction m_Player_Attack;
@@ -1495,6 +1616,7 @@ namespace Hawaiian.Input
             public PlayerActions(@PlayerAction wrapper) { m_Wrapper = wrapper; }
             public InputAction @Move => m_Wrapper.m_Player_Move;
             public InputAction @CharacterSelect => m_Wrapper.m_Player_CharacterSelect;
+            public InputAction @MenuSelect => m_Wrapper.m_Player_MenuSelect;
             public InputAction @ActionA => m_Wrapper.m_Player_ActionA;
             public InputAction @ActionB => m_Wrapper.m_Player_ActionB;
             public InputAction @Attack => m_Wrapper.m_Player_Attack;
@@ -1527,6 +1649,9 @@ namespace Hawaiian.Input
                     @CharacterSelect.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnCharacterSelect;
                     @CharacterSelect.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnCharacterSelect;
                     @CharacterSelect.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnCharacterSelect;
+                    @MenuSelect.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMenuSelect;
+                    @MenuSelect.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMenuSelect;
+                    @MenuSelect.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMenuSelect;
                     @ActionA.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnActionA;
                     @ActionA.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnActionA;
                     @ActionA.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnActionA;
@@ -1588,6 +1713,9 @@ namespace Hawaiian.Input
                     @CharacterSelect.started += instance.OnCharacterSelect;
                     @CharacterSelect.performed += instance.OnCharacterSelect;
                     @CharacterSelect.canceled += instance.OnCharacterSelect;
+                    @MenuSelect.started += instance.OnMenuSelect;
+                    @MenuSelect.performed += instance.OnMenuSelect;
+                    @MenuSelect.canceled += instance.OnMenuSelect;
                     @ActionA.started += instance.OnActionA;
                     @ActionA.performed += instance.OnActionA;
                     @ActionA.canceled += instance.OnActionA;
@@ -1784,6 +1912,7 @@ namespace Hawaiian.Input
         {
             void OnMove(InputAction.CallbackContext context);
             void OnCharacterSelect(InputAction.CallbackContext context);
+            void OnMenuSelect(InputAction.CallbackContext context);
             void OnActionA(InputAction.CallbackContext context);
             void OnActionB(InputAction.CallbackContext context);
             void OnAttack(InputAction.CallbackContext context);
