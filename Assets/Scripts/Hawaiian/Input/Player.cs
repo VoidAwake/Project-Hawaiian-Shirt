@@ -39,6 +39,15 @@ namespace Hawaiian.Input
                     ""initialStateCheck"": false
                 },
                 {
+                    ""name"": ""CharacterSelect"",
+                    ""type"": ""PassThrough"",
+                    ""id"": ""e0e65e3a-9571-49c0-b525-9c627abab01a"",
+                    ""expectedControlType"": ""Axis"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
                     ""name"": ""ActionA"",
                     ""type"": ""Value"",
                     ""id"": ""eb5fc80f-30ab-4fa0-820b-d1b30b590205"",
@@ -807,6 +816,116 @@ namespace Hawaiian.Input
                     ""action"": ""Menu"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""bd22a7df-f508-456d-a547-2a54e9cf3666"",
+                    ""path"": ""<Gamepad>/leftStick/x"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""CharacterSelect"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""WASD"",
+                    ""id"": ""39e065e7-0447-4b50-a8a8-e395ff888f42"",
+                    ""path"": ""1DAxis"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""CharacterSelect"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""Negative"",
+                    ""id"": ""10ce5fc6-9231-4a4f-a5c2-08ddf02335bf"",
+                    ""path"": ""<Keyboard>/a"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard1"",
+                    ""action"": ""CharacterSelect"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""Positive"",
+                    ""id"": ""8af3bb40-aba9-4ed2-91e8-1220221b68fe"",
+                    ""path"": ""<Keyboard>/d"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard1"",
+                    ""action"": ""CharacterSelect"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""Arrow Keys"",
+                    ""id"": ""82c0bdf0-6832-4a55-b8b6-17c5dd9cd36c"",
+                    ""path"": ""1DAxis"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""CharacterSelect"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""Negative"",
+                    ""id"": ""5eb43c3d-c872-412d-a0b6-f207bfdde26e"",
+                    ""path"": ""<Keyboard>/leftArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""CharacterSelect"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""Positive"",
+                    ""id"": ""1c4e91d4-81b5-4042-b1b1-0dcdcf32ef84"",
+                    ""path"": ""<Keyboard>/rightArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""CharacterSelect"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""D-Pad"",
+                    ""id"": ""8f56d2ff-583e-4be9-bae3-cb60f10f7338"",
+                    ""path"": ""1DAxis"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""CharacterSelect"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""Negative"",
+                    ""id"": ""9888cd12-c451-42de-bd15-dd73f4232af8"",
+                    ""path"": ""<Gamepad>/dpad/left"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""CharacterSelect"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""Positive"",
+                    ""id"": ""cd0de5b4-f275-49bf-9afc-4ecb97990688"",
+                    ""path"": ""<Gamepad>/dpad/right"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""CharacterSelect"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
                 }
             ]
         },
@@ -1167,6 +1286,7 @@ namespace Hawaiian.Input
             // Player
             m_Player = asset.FindActionMap("Player", throwIfNotFound: true);
             m_Player_Move = m_Player.FindAction("Move", throwIfNotFound: true);
+            m_Player_CharacterSelect = m_Player.FindAction("CharacterSelect", throwIfNotFound: true);
             m_Player_ActionA = m_Player.FindAction("ActionA", throwIfNotFound: true);
             m_Player_ActionB = m_Player.FindAction("ActionB", throwIfNotFound: true);
             m_Player_Attack = m_Player.FindAction("Attack", throwIfNotFound: true);
@@ -1246,6 +1366,7 @@ namespace Hawaiian.Input
         private readonly InputActionMap m_Player;
         private IPlayerActions m_PlayerActionsCallbackInterface;
         private readonly InputAction m_Player_Move;
+        private readonly InputAction m_Player_CharacterSelect;
         private readonly InputAction m_Player_ActionA;
         private readonly InputAction m_Player_ActionB;
         private readonly InputAction m_Player_Attack;
@@ -1263,6 +1384,7 @@ namespace Hawaiian.Input
             private @PlayerAction m_Wrapper;
             public PlayerActions(@PlayerAction wrapper) { m_Wrapper = wrapper; }
             public InputAction @Move => m_Wrapper.m_Player_Move;
+            public InputAction @CharacterSelect => m_Wrapper.m_Player_CharacterSelect;
             public InputAction @ActionA => m_Wrapper.m_Player_ActionA;
             public InputAction @ActionB => m_Wrapper.m_Player_ActionB;
             public InputAction @Attack => m_Wrapper.m_Player_Attack;
@@ -1287,6 +1409,9 @@ namespace Hawaiian.Input
                     @Move.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMove;
                     @Move.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMove;
                     @Move.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMove;
+                    @CharacterSelect.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnCharacterSelect;
+                    @CharacterSelect.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnCharacterSelect;
+                    @CharacterSelect.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnCharacterSelect;
                     @ActionA.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnActionA;
                     @ActionA.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnActionA;
                     @ActionA.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnActionA;
@@ -1330,6 +1455,9 @@ namespace Hawaiian.Input
                     @Move.started += instance.OnMove;
                     @Move.performed += instance.OnMove;
                     @Move.canceled += instance.OnMove;
+                    @CharacterSelect.started += instance.OnCharacterSelect;
+                    @CharacterSelect.performed += instance.OnCharacterSelect;
+                    @CharacterSelect.canceled += instance.OnCharacterSelect;
                     @ActionA.started += instance.OnActionA;
                     @ActionA.performed += instance.OnActionA;
                     @ActionA.canceled += instance.OnActionA;
@@ -1510,6 +1638,7 @@ namespace Hawaiian.Input
         public interface IPlayerActions
         {
             void OnMove(InputAction.CallbackContext context);
+            void OnCharacterSelect(InputAction.CallbackContext context);
             void OnActionA(InputAction.CallbackContext context);
             void OnActionB(InputAction.CallbackContext context);
             void OnAttack(InputAction.CallbackContext context);

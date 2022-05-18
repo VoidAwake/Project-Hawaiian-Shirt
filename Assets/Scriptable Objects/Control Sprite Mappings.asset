@@ -53,3 +53,13 @@ MonoBehaviour:
     sprite: {fileID: 492977730, guid: d8502a59f79703847b043f2f26cbf536, type: 3}
   - controlPath: <Gamepad>/leftTrigger
     sprite: {fileID: -1789817043, guid: d8502a59f79703847b043f2f26cbf536, type: 3}
+  - controlPath: <Keyboard>/t
+    sprite: {fileID: 1274476086, guid: d8502a59f79703847b043f2f26cbf536, type: 3}
+  - controlPath: <Gamepad>/buttonSouth
+    sprite: {fileID: 265190886, guid: d8502a59f79703847b043f2f26cbf536, type: 3}
+  - controlPath: <Keyboard>/r
+    sprite: {fileID: 1944045676, guid: d8502a59f79703847b043f2f26cbf536, type: 3}
+  - controlPath: <Gamepad>/buttonEast
+    sprite: {fileID: 1465937538, guid: d8502a59f79703847b043f2f26cbf536, type: 3}
+  - controlPath: <Gamepad>/leftStick/x
+    sprite: {fileID: 10634985, guid: d8502a59f79703847b043f2f26cbf536, type: 3}
