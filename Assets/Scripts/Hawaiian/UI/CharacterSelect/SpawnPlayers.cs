@@ -21,15 +21,19 @@ namespace Hawaiian.UI.CharacterSelect
         [SerializeField] private int buildIndex;
         [SerializeField] private GameManager gameManager;
         [SerializeField] private GameEvent playersJoined;
-
+        [SerializeField] private List<SpawnPoint> spawnPoints;
+        
         private Dictionary<LobbyGameManager.PlayerConfig, InventoryController> inventoryControllers = new();
+
+        private LobbyGameManager lobbyManager;
+        private PlayerInputManager inputManager;
 
         void Start()
         {
-            LobbyGameManager playerData = FindObjectOfType<LobbyGameManager>();
-            PlayerInputManager inputManager = GetComponent<PlayerInputManager>();
+            lobbyManager = FindObjectOfType<LobbyGameManager>();
+             inputManager = GetComponent<PlayerInputManager>();
 
-            if (playerData == null || inputManager == null)
+            if (lobbyManager == null || inputManager == null)
             {
                 if (inputManager != null)
                 {
@@ -41,10 +45,18 @@ namespace Hawaiian.UI.CharacterSelect
                 return;
             }
             
+            
             inputManager.onPlayerJoined += OnPlayerJoined;
             inputManager.playerPrefab = playerPrefab;
 
-            foreach (LobbyGameManager.PlayerConfig config in playerData.playerConfigs)
+          
+            inputManager.joinBehavior = PlayerJoinBehavior.JoinPlayersManually;
+        }
+
+
+        public void BeginSpawn()
+        {
+            foreach (LobbyGameManager.PlayerConfig config in lobbyManager.playerConfigs)
             {
                 if (!config.isPlayer) continue;
                 
@@ -57,6 +69,8 @@ namespace Hawaiian.UI.CharacterSelect
                 newPlayer.GetComponent<Unit.Unit>().SetSpriteResolvers(
                     ((CharacterNames)config.characterNumber).ToString(),
                     ((PlayerColours)config.playerNumber).ToString());
+
+                newPlayer.transform.position = spawnPoints[newPlayer.playerIndex].GetSpawnPosition();
 
                 // Update inventory UI
                 // Find inventory referenced by inventory controller contained by player prefab
@@ -86,8 +100,12 @@ namespace Hawaiian.UI.CharacterSelect
             // Data is still needed for results
             // Destroy(playerData.gameObject);
             playersJoined.Raise();
-            inputManager.joinBehavior = PlayerJoinBehavior.JoinPlayersManually;
+
         }
+        
+        
+        
+        
 
         public void SaveScores()
         {

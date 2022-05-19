@@ -21,16 +21,17 @@ MonoBehaviour:
   ProjectileInstance: {fileID: 8484802503941745754, guid: 6ccdae3489326844c9b49b012c477987, type: 3}
   Rarity: 3
   ItemWeight: 10
+  heldItemPrefab: {fileID: 0}
   ProbabilityRangeFrom: 0
-  ProbabilityRangeTo: 0
+  ProbabilityRangeTo: 10
   ItemDamage: 10
-  DrawSpeed: 10
+  DrawSpeed: 13
   DrawDistance: 12
   SticksOnWall: 0
   ReturnsToPlayer: 1
   IsMultiShot: 1
   ProjectileAmount: 3
-  IsRicochet: 1
+  IsRicochet: 0
   MaximumBounces: 3
   AttackRate: 0
   KnockbackDistance: 0

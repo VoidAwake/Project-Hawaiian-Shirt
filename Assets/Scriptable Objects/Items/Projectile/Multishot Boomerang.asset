@@ -21,10 +21,11 @@ MonoBehaviour:
   ProjectileInstance: {fileID: 8484802503941745754, guid: 6ccdae3489326844c9b49b012c477987, type: 3}
   Rarity: 1
   ItemWeight: 50
-  ProbabilityRangeFrom: 0
-  ProbabilityRangeTo: 0
+  heldItemPrefab: {fileID: 0}
+  ProbabilityRangeFrom: 100
+  ProbabilityRangeTo: 150
   ItemDamage: 10
-  DrawSpeed: 5
+  DrawSpeed: 9
   DrawDistance: 8
   SticksOnWall: 0
   ReturnsToPlayer: 0

@@ -51,10 +51,10 @@ namespace Hawaiian.Game
             timerActive = false;
         }
 
-        public void OnPhaseChanged()
-        {
-            if (gameManager.Phase == GameManager.GamePhase.Stealth)
-                StartTimer();
-        }
+        // public void OnPhaseChanged()
+        // {
+        //     if (gameManager.Phase == GameManager.GamePhase.Stealth)
+        //         StartTimer();
+        // }
     }
 }

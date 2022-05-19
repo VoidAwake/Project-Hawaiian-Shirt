@@ -9,6 +9,7 @@ namespace Hawaiian.UI.Game
     {
         [SerializeField] private GameManager gameManager;
         [SerializeField] private ScriptableFloat gameTimeScale;
+        
 
         public override void OnClick()
         {
