@@ -139,8 +139,9 @@ public class ItemInteractor : MonoBehaviour
              i < _controller.CurrentItem.ProjectileAmount;
              i++)
         {
-            projectiles.Add(Instantiate(_controller.CurrentItem.ProjectileInstance, transform.position,
-                Quaternion.identity));
+
+             _projectileInstance = Instantiate(_controller.CurrentItem.ProjectileInstance, transform.position, Quaternion.identity);
+            projectiles.Add(_projectileInstance);
 
             if (i == -1)
                 break;
