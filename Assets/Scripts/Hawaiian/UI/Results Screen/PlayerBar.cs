@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using Hawaiian.UI.CharacterSelect;
+using TMPro;
 using UI.Core;
 using UnityEngine;
 using UnityEngine.Events;
@@ -13,6 +14,7 @@ namespace Hawaiian.UI.Results_Screen
         [SerializeField] private RectTransform rectTransform;
         [SerializeField] private Image barImage;
         [SerializeField] private Image playerHeadImage;
+        [SerializeField] private TMP_Text scoreText;
         [SerializeField] private Animator animator;
         [SerializeField] private float spacing;
         [SerializeField] [Range(0, 1)] private float fill;
@@ -20,6 +22,7 @@ namespace Hawaiian.UI.Results_Screen
         public UnityEvent animationCompleted = new UnityEvent();
 
         private float targetHeight;
+        private float score;
 
         protected override void Subscribe() { }
 
@@ -40,6 +43,8 @@ namespace Hawaiian.UI.Results_Screen
             playerHeadImage.rectTransform.anchoredPosition = new Vector2(0, fill * targetHeight + spacing);
 
             barImage.rectTransform.sizeDelta = new Vector2(100, fill * targetHeight);
+
+            scoreText.text = Mathf.CeilToInt(fill * score).ToString();
         }
 
         private void OnAnimationCompleted()
@@ -67,7 +72,9 @@ namespace Hawaiian.UI.Results_Screen
 
             var maxBarHeight = maxHeight - playerHeadImage.rectTransform.rect.height - spacing;
             
-            targetHeight = player.score / maxScore * maxBarHeight;
+            score = player.score;
+            
+            targetHeight = score / maxScore * maxBarHeight;
 
             barImage.color = GetColor(player.playerNumber);
             playerHeadImage.sprite = GetSprite(player.characterNumber);
