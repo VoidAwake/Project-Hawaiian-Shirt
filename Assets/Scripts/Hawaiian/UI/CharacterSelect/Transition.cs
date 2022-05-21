@@ -67,7 +67,7 @@ namespace Hawaiian.UI.CharacterSelect
 
                                 foreach (LobbyGameManager.PlayerConfig config in manager.playerConfigs)
                                 {
-                                    if (config.isPlayer) config.SetInputInfo(config.inputComponent);
+                                    if (config.IsPlayer) config.SetInputInfo(config.inputComponent);
                                 }
 
                                 //Destroy(manager.GetComponent<LobbyManager>());

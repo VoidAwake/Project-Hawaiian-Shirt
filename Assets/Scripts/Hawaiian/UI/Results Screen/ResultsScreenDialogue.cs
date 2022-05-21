@@ -11,14 +11,15 @@ namespace Hawaiian.UI.Results_Screen
         [SerializeField] private BarChart barChart;
         [SerializeField] private Animator animator;
         [SerializeField] private float startDelayDuration;
-        
-        private LobbyGameManager.PlayerConfig playersData;
+        [SerializeField] private LobbyGameManager.PlayerConfig[] defaultPlayerConfigs;
 
         private void Start()
         {
-            LobbyGameManager playerData = FindObjectOfType<LobbyGameManager>();
-            
-            barChart.Initialise(playerData);
+            LobbyGameManager lobbyGameManager = FindObjectOfType<LobbyGameManager>();
+
+            var playerConfigs = lobbyGameManager != null ? lobbyGameManager.playerConfigs : defaultPlayerConfigs;
+
+            barChart.Initialise(playerConfigs);
             
             StartCoroutine(Animate());
         }

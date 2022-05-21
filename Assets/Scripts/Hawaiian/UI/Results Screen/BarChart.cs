@@ -61,31 +61,33 @@ namespace Hawaiian.UI.Results_Screen
             }
         }
 
-        private void CreatePlayerBar(LobbyGameManager.PlayerConfig player)
+        private void CreatePlayerBar(LobbyGameManager.PlayerConfig player, float maxScore)
         {
-            if (!player.isPlayer) return;
+            if (!player.IsPlayer) return;
             
             var playerBarObject = Instantiate(playerBarPrefab, transform);
 
             var playerBar = playerBarObject.GetComponent<PlayerBar>();
 
-            if (playerBar == null) throw new Exception($"Player Bar prefab does not have a {nameof(PlayerBar)} component.");
+            if (playerBar == null) throw new Exception($"{playerBarPrefab.name} prefab does not have a {nameof(PlayerBar)} component.");
 
-            playerBar.Initialise(player);
+            playerBar.Initialise(player, maxScore);
 
             bars.Add(playerBar);
         }
 
-        public void Initialise(LobbyGameManager playersData)
+        public void Initialise(LobbyGameManager.PlayerConfig[] playersData)
         {
-            var sortedPlayers = playersData.playerConfigs.ToList();
+            var sortedPlayers = playersData.ToList();
             
             // TODO: Won't work for some float scores
             sortedPlayers.Sort((a, b) => Mathf.CeilToInt(a.score - b.score));
             
+            float maxScore = sortedPlayers.Count > 0 ? sortedPlayers.Last().score : 0;
+            
             foreach (var player in sortedPlayers)
             {
-                CreatePlayerBar(player);
+                CreatePlayerBar(player, maxScore);
             }
         }
     }

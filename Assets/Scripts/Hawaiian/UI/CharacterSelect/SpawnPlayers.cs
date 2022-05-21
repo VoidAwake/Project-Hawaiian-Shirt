@@ -58,7 +58,7 @@ namespace Hawaiian.UI.CharacterSelect
         {
             foreach (LobbyGameManager.PlayerConfig config in lobbyManager.playerConfigs)
             {
-                if (!config.isPlayer) continue;
+                if (!config.IsPlayer) continue;
                 
                 PlayerInput newPlayer = inputManager.JoinPlayer(config.playerIndex, config.splitScreenIndex,
                     config.controlScheme, config.deviceIds.Select(InputSystem.GetDeviceById).ToArray());
