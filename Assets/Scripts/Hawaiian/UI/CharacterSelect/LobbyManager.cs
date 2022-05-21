@@ -161,7 +161,7 @@ namespace Hawaiian.UI.CharacterSelect
                 {
                     foreach (LobbyGameManager.PlayerConfig player in LobbyGameManager.playerConfigs)                              // For each player...
                     {
-                        if ((playerStatus[player.playerNumber] == 0) && player.isPlayer)                                    // If they are a person and not yet loaded in, load them in.
+                        if ((playerStatus[player.playerNumber] == 0) && player.IsPlayer)                                    // If they are a person and not yet loaded in, load them in.
                         {
                             int number = player.playerNumber;
                             windows[number].SetUnselected();
@@ -274,7 +274,7 @@ namespace Hawaiian.UI.CharacterSelect
         {
             foreach (LobbyGameManager.PlayerConfig playerConfig in LobbyGameManager.playerConfigs)
             {
-                if (!onlyPlayers || playerConfig.isPlayer) // If only checking human players, and player is not a human, then don't check
+                if (!onlyPlayers || playerConfig.IsPlayer) // If only checking human players, and player is not a human, then don't check
                 {
                     if (playerConfig.characterNumber == characterNumber) return false;
                 }

@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
@@ -54,7 +55,7 @@ namespace Hawaiian.UI.CharacterSelect
         {
             for (int i = 0; i < 4; i++)
             {
-                if (!playerConfigs[i].isPlayer)
+                if (!playerConfigs[i].IsPlayer)
                 {
                     playerConfigs[i].SetPlayer(LobbyPlayerController);
                     return playerConfigs[i];
@@ -63,10 +64,17 @@ namespace Hawaiian.UI.CharacterSelect
             return null;
         }
 
+        [Serializable]
         public class PlayerConfig
         {
             public LobbyPlayerController manager { get; set; }
-            public bool isPlayer { get; set; }
+
+            public bool IsPlayer
+            {
+                get => isPlayer;
+                set => isPlayer = value;
+            }
+
             public int playerNumber;
             public int characterNumber;
             public float score;
@@ -77,11 +85,12 @@ namespace Hawaiian.UI.CharacterSelect
             public int splitScreenIndex;
             public string controlScheme;
             public List<int> deviceIds;
+            [SerializeField] private bool isPlayer;
 
             public PlayerConfig(int playerNumber)
             {
                 this.manager = null;
-                this.isPlayer = false;
+                this.IsPlayer = false;
                 this.playerNumber = playerNumber;
                 this.characterNumber = -1;
             }
@@ -89,13 +98,13 @@ namespace Hawaiian.UI.CharacterSelect
             {
                 this.manager = LobbyPlayerController;
                 this.inputComponent = LobbyPlayerController.GetComponent<PlayerInput>();
-                this.isPlayer = true;
+                this.IsPlayer = true;
             }
 
             public void Clear()
             {
                 this.manager = null;
-                this.isPlayer = false;
+                this.IsPlayer = false;
                 this.characterNumber = -1;
             }
 

@@ -1,6 +1,6 @@
 ﻿using System;
+using System.Collections;
 using Hawaiian.UI.CharacterSelect;
-using Hawaiian.Unit;
 using UI.Core;
 using UnityEngine;
 using UnityEngine.Events;
@@ -10,15 +10,16 @@ namespace Hawaiian.UI.Results_Screen
 {
     public class PlayerBar : DialogueComponent<ResultsScreenDialogue>
     {
-        [SerializeField] private RectTransform bar;
-        [SerializeField] private RectTransform playerImage;
+        [SerializeField] private RectTransform rectTransform;
+        [SerializeField] private Image barImage;
+        [SerializeField] private Image playerHeadImage;
         [SerializeField] private Animator animator;
-        [SerializeField] private float maxHeight;
         [SerializeField] private float spacing;
+        [SerializeField] [Range(0, 1)] private float fill;
 
         public UnityEvent animationCompleted = new UnityEvent();
-        
-        [Range(0, 1)] [SerializeField] private float fill;
+
+        private float targetHeight;
 
         protected override void Subscribe() { }
 
@@ -36,9 +37,9 @@ namespace Hawaiian.UI.Results_Screen
 
         private void UpdateFill()
         {
-            playerImage.anchoredPosition = new Vector2(0, fill * maxHeight + spacing);
+            playerHeadImage.rectTransform.anchoredPosition = new Vector2(0, fill * targetHeight + spacing);
 
-            bar.sizeDelta = new Vector2(100, fill * maxHeight);
+            barImage.rectTransform.sizeDelta = new Vector2(100, fill * targetHeight);
         }
 
         private void OnAnimationCompleted()
@@ -51,22 +52,33 @@ namespace Hawaiian.UI.Results_Screen
             animator.SetTrigger("ShowBar");
         }
 
-        public void Initialise(LobbyGameManager.PlayerConfig player)
+        public void Initialise(LobbyGameManager.PlayerConfig player, float maxScore)
         {
-            maxHeight = player.score * 10;
-            bar.GetComponent<Image>().color = GetColor(player.playerNumber);
-            playerImage.GetComponent<Image>().sprite = GetSprite(player.characterNumber);
+            StartCoroutine(InitialiseRoutine(player, maxScore));
         }
         
+        private IEnumerator InitialiseRoutine(LobbyGameManager.PlayerConfig player, float maxScore)
+        {
+            // Wait one frame to allow the RectTransform to update
+            yield return null;
+
+            // Height is controlled by the BarChart's Horizontal Layout Group
+            var maxHeight = rectTransform.rect.height;
+
+            var maxBarHeight = maxHeight - playerHeadImage.rectTransform.rect.height - spacing;
+            
+            targetHeight = player.score / maxScore * maxBarHeight;
+
+            barImage.color = GetColor(player.playerNumber);
+            playerHeadImage.sprite = GetSprite(player.characterNumber);
+        }
+
         // TODO: Duplicate code. See InventoryUI.
         
         [SerializeField] private Sprite[] headSprites;
 
         public Sprite GetSprite(int characterNo)
         {
-            // TODO: Can be removed
-            if (characterNo == -1) return headSprites[0];
-            Debug.Log(characterNo);
             return headSprites[characterNo];
         }
         
