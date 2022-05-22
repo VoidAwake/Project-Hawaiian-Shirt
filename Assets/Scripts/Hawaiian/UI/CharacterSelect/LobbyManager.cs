@@ -42,7 +42,6 @@ namespace Hawaiian.UI.CharacterSelect
             public PlayerStatus status;
             public LobbyWindow lobbyWindow;
             public int stickInput;
-            public int buttonInput;
             public GameObject characterSelect;
             public PlayerConfig playerConfig;
 
@@ -190,7 +189,6 @@ namespace Hawaiian.UI.CharacterSelect
                     UpdateCharacterSelection(lobbyPlayer, nextCharacter);
                     lobbyPlayer.status = PlayerStatus.LoadedIn;
                     nextReady = false; ready.SetActive(false);
-                    lobbyPlayer.buttonInput = 0;
                     lobbyPlayer.stickInput = 0;
                 }
             }
@@ -203,41 +201,7 @@ namespace Hawaiian.UI.CharacterSelect
                     case PlayerStatus.LoadedIn:
                         LoadedInPlayerInputHandling(lobbyPlayer);
                         break;
-                    case PlayerStatus.LoadedInAndSelected:
-                        LoadedInAndSelectedPlayerInputHandling(lobbyPlayer);
-                        break;
                 }
-            }
-        }
-
-        private void LoadedInAndSelectedPlayerInputHandling(LobbyPlayer lobbyPlayer)
-        {
-            if (lobbyPlayer.buttonInput == -1) // Deselect character
-            {
-                lobbyPlayer.lobbyWindow.SetUnselected();
-                portraits[lobbyPlayer.playerConfig.characterNumber].alpha = 1.0f;
-                lobbyPlayer.status = PlayerStatus.LoadedIn;
-                nextReady = false;
-                ready.SetActive(false);
-                lobbyPlayer.buttonInput = 0;
-                lobbyPlayer.stickInput = 0;
-            }
-            else if (lobbyPlayer.buttonInput == 1) // Progress to computer player selection OR straight to main menu
-            {
-                if (nextReady)
-                {
-                    if (AllPlayersSelected(false)) // Transition to next menu state
-                    {
-                        subState = 1; //transitionTimer = 0; transitionInt = 0; transitionCheckers.enabled = true;
-                        FindObjectOfType<Transition>().BeginTransition(true, true, buildIndexOfNextScene, true);
-                        Destroy(GetComponent<LobbyManager>());
-                        Destroy(GetComponent<PlayerInputManager>());
-                    }
-
-                    ClearInputs();
-                }
-
-                lobbyPlayer.buttonInput = 0;
             }
         }
 
@@ -255,46 +219,6 @@ namespace Hawaiian.UI.CharacterSelect
 
                 UpdateCharacterSelection(lobbyPlayer, nextCharacter);
                 lobbyPlayer.stickInput = 0;
-            }
-            else if (lobbyPlayer.buttonInput != 0) // Handle button input...
-            {
-                if (lobbyPlayer.buttonInput == 1) // Confirm character selection...
-                {
-                    lobbyPlayer.lobbyWindow.SetSelected();
-                    portraits[lobbyPlayer.playerConfig.characterNumber].alpha = 0.2f;
-                    lobbyPlayer.status = PlayerStatus.LoadedInAndSelected;
-                    if (AllPlayersSelected(false))
-                    {
-                        nextReady = true;
-                        ready.SetActive(true);
-                    }
-
-                    lobbyPlayer.buttonInput = 0;
-                }
-
-                if (lobbyPlayer.buttonInput == -1) // Eject player (deconstruct playerconfig and prefab)...
-                {
-                    // Reset visuals for current player to unloaded in versions
-                    lobbyPlayer.lobbyWindow.SetEmpty();
-                    lobbyPlayer.characterSelect.SetActive(false);
-                    portraits[lobbyPlayer.playerConfig.characterNumber].alpha = 1.0f;
-
-                    // Unload player
-                    lobbyPlayer.status = PlayerStatus.NotLoadedIn;
-                    lobbyPlayer.playerConfig.manager.UnloadPlayer();
-                    lobbyPlayer.buttonInput = 0;
-
-                    //// If no more players in the game, reset text
-                    //int count = 0;
-                    //for (int j = 0; j < 4; j++) if (playerStatus[i] > 0) count++;
-                    //if (count == 1) description.text = "Press any button to join the game.";
-
-                    if (AllPlayersSelected(false))
-                    {
-                        nextReady = true;
-                        ready.SetActive(true);
-                    }
-                }
             }
         }
 
@@ -330,7 +254,6 @@ namespace Hawaiian.UI.CharacterSelect
         {
             foreach (var lobbyPlayer in lobbyPlayers)
             {
-                lobbyPlayer.buttonInput = 0;
                 lobbyPlayer.stickInput = 0;
             }
         }
@@ -343,6 +266,7 @@ namespace Hawaiian.UI.CharacterSelect
             lobbyPlayer.lobbyWindow.UpdateHead(charNumber);
         }
 
+        // TODO: Needs to be hooked up again
         public void UnloadOrReturnToMainMenu()
         {
             int counter = 0;
@@ -379,6 +303,74 @@ namespace Hawaiian.UI.CharacterSelect
         public void IncrementSubState()
         {
             subState++;
+        }
+
+        public void OnPlayerActionA(int playerConfigPlayerNumber, InputValue value)
+        {
+            if (value.Get<float>() < 0.55f) return;
+            
+            var lobbyPlayer = lobbyPlayers[playerConfigPlayerNumber];
+
+            if (lobbyPlayer.status == PlayerStatus.LoadedInAndSelected)
+            {
+                if (nextReady)
+                {
+                    if (AllPlayersSelected(false)) // Transition to next menu state
+                    {
+                        subState = 1; //transitionTimer = 0; transitionInt = 0; transitionCheckers.enabled = true;
+                        FindObjectOfType<Transition>().BeginTransition(true, true, buildIndexOfNextScene, true);
+                        Destroy(GetComponent<LobbyManager>());
+                        Destroy(GetComponent<PlayerInputManager>());
+                    }
+            
+                    ClearInputs();
+                }
+            }
+            else if (lobbyPlayer.status == PlayerStatus.LoadedIn)
+            {
+                lobbyPlayer.lobbyWindow.SetSelected();
+                portraits[lobbyPlayer.playerConfig.characterNumber].alpha = 0.2f;
+                lobbyPlayer.status = PlayerStatus.LoadedInAndSelected;
+                if (AllPlayersSelected(false))
+                {
+                    nextReady = true;
+                    ready.SetActive(true);
+                }
+            }
+        }
+
+        public void OnPlayerActionB(int playerConfigPlayerNumber, InputValue value)
+        {
+            if (value.Get<float>() < 0.55f) return;
+            
+            var lobbyPlayer = lobbyPlayers[playerConfigPlayerNumber];
+
+            if (lobbyPlayer.status == PlayerStatus.LoadedInAndSelected)
+            {
+                lobbyPlayer.lobbyWindow.SetUnselected();
+                portraits[lobbyPlayer.playerConfig.characterNumber].alpha = 1.0f;
+                lobbyPlayer.status = PlayerStatus.LoadedIn;
+                nextReady = false;
+                ready.SetActive(false);
+                lobbyPlayer.stickInput = 0;
+            }
+            else if (lobbyPlayer.status == PlayerStatus.LoadedIn)
+            {
+                // Reset visuals for current player to unloaded in versions
+                lobbyPlayer.lobbyWindow.SetEmpty();
+                lobbyPlayer.characterSelect.SetActive(false);
+                portraits[lobbyPlayer.playerConfig.characterNumber].alpha = 1.0f;
+
+                // Unload player
+                lobbyPlayer.status = PlayerStatus.NotLoadedIn;
+                lobbyPlayer.playerConfig.manager.UnloadPlayer();
+
+                if (AllPlayersSelected(false))
+                {
+                    nextReady = true;
+                    ready.SetActive(true);
+                }
+            }
         }
     }
 }

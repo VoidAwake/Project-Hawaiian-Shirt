@@ -5,17 +5,24 @@ namespace Hawaiian.UI.CharacterSelect
 {
     public class LobbyPlayerController : MonoBehaviour
     {
-        int actionA = 0;    // INPUT STATUSES:
-        int actionB = 0;    // 0 - Up
-        int actionL = 0;    // 1 - Down, Action Buffered
-        int actionR = 0;    // 2 - Down, Action Recieved
         private float move = 0;
+        private bool inputEnabled;
 
         public void OnCharacterSelect(InputValue value) { move = value.Get<float>(); }
-        public void OnActionA(InputValue value) { HandleButtonInput(value.Get<float>(), ref actionA); }
-        public void OnActionB(InputValue value) { HandleButtonInput(value.Get<float>(), ref actionB); }
-        public void OnActionL(InputValue value) { HandleButtonInput(value.Get<float>(), ref actionL); }
-        public void OnActionR(InputValue value) { HandleButtonInput(value.Get<float>(), ref actionR); }
+        
+        public void OnActionA(InputValue value)
+        {
+            if (!inputEnabled) return;
+            
+            mainMenuManager.OnPlayerActionA(playerConfig.playerNumber, value);
+        }
+        
+        public void OnActionB(InputValue value)
+        {
+            if (!inputEnabled) return;
+            
+            mainMenuManager.OnPlayerActionB(playerConfig.playerNumber, value);
+        }
 
         void HandleButtonInput(float value, ref int status)
         {
@@ -31,7 +38,6 @@ namespace Hawaiian.UI.CharacterSelect
         float selfDestructTimer;
         float inputBirthTimer;
 
-        // Start is called before the first frame update
         void Start()
         {
             mainMenuManager = FindObjectOfType<LobbyManager>();
@@ -44,9 +50,9 @@ namespace Hawaiian.UI.CharacterSelect
 
             inputBirthTimer = 0.1f;
             moveBuffer = 1;
+            inputEnabled = true;
         }
 
-        // Update is called once per frame
         void Update()
         {
             if (inputBirthTimer <= 0.0f)
@@ -72,34 +78,11 @@ namespace Hawaiian.UI.CharacterSelect
                             moveBuffer = -1;
                         }
                     }
-
-                    if (actionA == 1)
-                    {
-                        mainMenuManager.lobbyPlayers[playerConfig.playerNumber].buttonInput = 1;
-                        actionA++;
-                    }
-
-                    if (actionB == 1)
-                    {
-                        mainMenuManager.lobbyPlayers[playerConfig.playerNumber].buttonInput = -1;
-                        actionB++;
-                    }
                 }
             }
             else
             {
                 inputBirthTimer -= Time.deltaTime;
-
-                // Send exit signal to lobby manager
-                if (actionB > 0) mainMenuManager.UnloadOrReturnToMainMenu();
-
-                // Exit birth state, zero inputs
-                if (inputBirthTimer < 0.0f)
-                {
-                    inputBirthTimer = 0.0f;
-                    actionA = 0;
-                    actionB = 0;
-                }
             }
 
             if (playerConfig == null)
