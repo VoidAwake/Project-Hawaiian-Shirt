@@ -26,7 +26,7 @@ namespace Hawaiian.UI.CharacterSelect
         int moveBuffer;
         LobbyManager mainMenuManager;
         LobbyGameManager gameManager;
-        LobbyGameManager.PlayerConfig playerConfig;
+        PlayerConfig playerConfig;
 
         float selfDestructTimer;
         float inputBirthTimer;
@@ -61,11 +61,29 @@ namespace Hawaiian.UI.CharacterSelect
                     }
                     else //  Send stick input
                     {
-                        if (move > 0.15f) { mainMenuManager.playerStickInputs[playerConfig.playerNumber] = 1; moveBuffer = 1; }
-                        if (move < -0.15f) { mainMenuManager.playerStickInputs[playerConfig.playerNumber] = -1; moveBuffer = -1; }
+                        if (move > 0.15f)
+                        {
+                            mainMenuManager.lobbyPlayers[playerConfig.playerNumber].stickInput = 1;
+                            moveBuffer = 1;
+                        }
+                        if (move < -0.15f)
+                        {
+                            mainMenuManager.lobbyPlayers[playerConfig.playerNumber].stickInput = -1;
+                            moveBuffer = -1;
+                        }
                     }
-                    if (actionA == 1) { mainMenuManager.playerButtonInputs[playerConfig.playerNumber] = 1; actionA++; }
-                    if (actionB == 1) { mainMenuManager.playerButtonInputs[playerConfig.playerNumber] = -1; actionB++; }
+
+                    if (actionA == 1)
+                    {
+                        mainMenuManager.lobbyPlayers[playerConfig.playerNumber].buttonInput = 1;
+                        actionA++;
+                    }
+
+                    if (actionB == 1)
+                    {
+                        mainMenuManager.lobbyPlayers[playerConfig.playerNumber].buttonInput = -1;
+                        actionB++;
+                    }
                 }
             }
             else
@@ -73,7 +91,7 @@ namespace Hawaiian.UI.CharacterSelect
                 inputBirthTimer -= Time.deltaTime;
 
                 // Send exit signal to lobby manager
-                if (actionB > 0) mainMenuManager.ReturnToMainMenu();
+                if (actionB > 0) mainMenuManager.UnloadOrReturnToMainMenu();
 
                 // Exit birth state, zero inputs
                 if (inputBirthTimer < 0.0f)
@@ -91,7 +109,7 @@ namespace Hawaiian.UI.CharacterSelect
             }
         }
 
-        public void SetPlayerConfig(LobbyGameManager.PlayerConfig playerConfig)
+        public void SetPlayerConfig(PlayerConfig playerConfig)
         {
             this.playerConfig = playerConfig;
         }

@@ -2,8 +2,6 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.InputSystem;
-using UnityEngine.SceneManagement;
-
 
 namespace Hawaiian.UI.CharacterSelect
 {
@@ -22,10 +20,6 @@ namespace Hawaiian.UI.CharacterSelect
         //[SerializeField] Image transitionCheckers;
         //[SerializeField] Sprite[] transitionCheckersSprites;
 
-        // Character Select Variables
-        public int[] playerStickInputs = new int[4];
-        public int[] playerButtonInputs = new int[4];
-
         [Header("Character Select")]
         [SerializeField] LobbyWindow[] windows;
         [SerializeField] CanvasGroup[] portraits;
@@ -35,23 +29,46 @@ namespace Hawaiian.UI.CharacterSelect
         [SerializeField] TextMeshProUGUI readyText;
         [SerializeField] GameObject ready;
 
-        int[] playerStatus = new int[4]; // 0 means not in, 1 means loaded in, 2 means loaded in and selected, 3 means a computer player who is selected
-        //int firstPlayer;
+        public enum PlayerStatus
+        {
+            NotLoadedIn,
+            LoadedIn,
+            LoadedInAndSelected,
+            SelectedComputerPlayer
+        }
 
-        // Start is called before the first frame update
+        public class LobbyPlayer
+        {
+            public PlayerStatus status;
+            public LobbyWindow lobbyWindow;
+            public int stickInput;
+            public int buttonInput;
+            public GameObject characterSelect;
+            public PlayerConfig playerConfig;
+
+            public LobbyPlayer(LobbyWindow lobbyWindow, GameObject characterSelect, PlayerConfig playerConfig)
+            {
+                this.lobbyWindow = lobbyWindow;
+                this.characterSelect = characterSelect;
+                this.playerConfig = playerConfig;
+                
+                status = PlayerStatus.NotLoadedIn;
+                lobbyWindow.SetEmpty();
+                characterSelect.gameObject.SetActive(false);
+            }
+        }
+
+        public readonly LobbyPlayer[] lobbyPlayers = new LobbyPlayer[4];
+
         void Start()
         {
-            //LobbyGameManager = FindObjectOfType<LobbyGameManager>();
             LobbyGameManager = GetComponent<LobbyGameManager>();
 
-            // Set up character select screen
-            for (int i = 0; i < 4; i++)
+            for (int i = 0; i < lobbyPlayers.Length; i++)
             {
-                playerStatus[i] = 0;
+                lobbyPlayers[i] = new LobbyPlayer(windows[i], characterSelects[i], LobbyGameManager.playerConfigs[i]);
             }
 
-            foreach (LobbyWindow window in windows) window.SetEmpty();
-            foreach (GameObject characterSelect in characterSelects) characterSelect.gameObject.SetActive(false);
             ready.SetActive(false);
             //transitionCheckers.enabled = true;
             //transitionCheckers.sprite = transitionCheckersSprites[transitionCheckersSprites.Length - 1];
@@ -71,13 +88,12 @@ namespace Hawaiian.UI.CharacterSelect
             if (menuState == MenuState.CharacterSelect) HandleCharacterSelect();
 
             // Animate cursors
-            for (int i = 0; i < 4; i++)
+            foreach (var lobbyPlayer in lobbyPlayers)
             {
-
-                if (playerStatus[i] == 1)
+                if (lobbyPlayer.status == PlayerStatus.LoadedIn)
                 {
                     // Animate cursor
-                    characterSelects[i].GetComponent<Image>().sprite = characterSelectSprites
+                    lobbyPlayer.characterSelect.GetComponent<Image>().sprite = characterSelectSprites
                         [
                             Mathf.FloorToInt((Time.time % 0.39999f) * 10.0f) - (Mathf.FloorToInt((Time.time % 0.39999f) * 10.0f) > 2 ? 2 : 0)
                         ];
@@ -85,7 +101,7 @@ namespace Hawaiian.UI.CharacterSelect
                 else
                 {
                     // Set to still cursor
-                    characterSelects[i].GetComponent<Image>().sprite = characterSelectSprites[1];
+                    lobbyPlayer.characterSelect.GetComponent<Image>().sprite = characterSelectSprites[1];
                 }
             }
 
@@ -154,117 +170,129 @@ namespace Hawaiian.UI.CharacterSelect
 
             //    if (subState == -1 || subState == 1) transitionTimer += Time.deltaTime;
             //}
-            if (subState == 0)
+            if (subState != 0) return;
+            
+            // Handle loading in connected players
+            foreach (PlayerConfig player in LobbyGameManager.playerConfigs)                              // For each player...
             {
-                // Handle loading in connected players
-                if (playerStatus[0] == 0 || playerStatus[1] == 0 || playerStatus[2] == 0 || playerStatus[3] == 0)   // If there aren't 4 players in...
+                var lobbyPlayer = lobbyPlayers[player.playerNumber];
+                if (lobbyPlayer.status == PlayerStatus.NotLoadedIn && player.IsPlayer)                                    // If they are a person and not yet loaded in, load them in.
                 {
-                    foreach (LobbyGameManager.PlayerConfig player in LobbyGameManager.playerConfigs)                              // For each player...
+                    lobbyPlayer.lobbyWindow.SetUnselected();
+                    lobbyPlayer.characterSelect.SetActive(true);
+                    int count = 0;
+                    int nextCharacter = player.characterNumber;
+                    while (nextCharacter < 0)
                     {
-                        if ((playerStatus[player.playerNumber] == 0) && player.IsPlayer)                                    // If they are a person and not yet loaded in, load them in.
-                        {
-                            int number = player.playerNumber;
-                            windows[number].SetUnselected();
-                            characterSelects[number].SetActive(true);
-                            int count = 0;
-                            int nextCharacter = player.characterNumber;
-                            while (nextCharacter < 0)
-                            {
-                                if (CharacterNotChosen(count, true)) nextCharacter = count;
-                                count++;
-                            }
-                            UpdateCharacterSelection(number, nextCharacter);
-                            playerStatus[number] = 1;
-                            nextReady = false; ready.SetActive(false);
-                            playerButtonInputs[number] = 0;
-                            playerStickInputs[number] = 0;
-
-                            //// Update text if this is the first player loaded in
-                            //count = 0;
-                            //for (int i = 0; i < 4; i++) if (playerStatus[i] > 0) count++;
-                            //if (count == 1) description.text = "Choose a character to play as.";
-                        }
+                        if (CharacterNotChosen(count, true)) nextCharacter = count;
+                        count++;
                     }
+                    UpdateCharacterSelection(lobbyPlayer, nextCharacter);
+                    lobbyPlayer.status = PlayerStatus.LoadedIn;
+                    nextReady = false; ready.SetActive(false);
+                    lobbyPlayer.buttonInput = 0;
+                    lobbyPlayer.stickInput = 0;
+                }
+            }
+
+            // Handle player inputs
+            foreach (var lobbyPlayer in lobbyPlayers)
+            {
+                switch (lobbyPlayer.status)
+                {
+                    case PlayerStatus.LoadedIn:
+                        LoadedInPlayerInputHandling(lobbyPlayer);
+                        break;
+                    case PlayerStatus.LoadedInAndSelected:
+                        LoadedInAndSelectedPlayerInputHandling(lobbyPlayer);
+                        break;
+                }
+            }
+        }
+
+        private void LoadedInAndSelectedPlayerInputHandling(LobbyPlayer lobbyPlayer)
+        {
+            if (lobbyPlayer.buttonInput == -1) // Deselect character
+            {
+                lobbyPlayer.lobbyWindow.SetUnselected();
+                portraits[lobbyPlayer.playerConfig.characterNumber].alpha = 1.0f;
+                lobbyPlayer.status = PlayerStatus.LoadedIn;
+                nextReady = false;
+                ready.SetActive(false);
+                lobbyPlayer.buttonInput = 0;
+                lobbyPlayer.stickInput = 0;
+            }
+            else if (lobbyPlayer.buttonInput == 1) // Progress to computer player selection OR straight to main menu
+            {
+                if (nextReady)
+                {
+                    if (AllPlayersSelected(false)) // Transition to next menu state
+                    {
+                        subState = 1; //transitionTimer = 0; transitionInt = 0; transitionCheckers.enabled = true;
+                        FindObjectOfType<Transition>().BeginTransition(true, true, buildIndexOfNextScene, true);
+                        Destroy(GetComponent<LobbyManager>());
+                        Destroy(GetComponent<PlayerInputManager>());
+                    }
+
+                    ClearInputs();
                 }
 
-                // Handle player inputs
-                for (int i = 0; i < 4; i++)         // For each player...
+                lobbyPlayer.buttonInput = 0;
+            }
+        }
+
+        private void LoadedInPlayerInputHandling(LobbyPlayer lobbyPlayer)
+        {
+            if (lobbyPlayer.stickInput != 0) // Handle stick movement...
+            {
+                // Find the next available character to select
+                int nextCharacter = (int)Mathf.Repeat(lobbyPlayer.playerConfig.characterNumber + lobbyPlayer.stickInput,
+                    portraits.Length);
+                while (!CharacterNotChosen(nextCharacter, true))
                 {
-                    if (playerStatus[i] == 1)           // If status 1 (loaded in)...
+                    nextCharacter = (int)Mathf.Repeat(nextCharacter + lobbyPlayer.stickInput, portraits.Length);
+                }
+
+                UpdateCharacterSelection(lobbyPlayer, nextCharacter);
+                lobbyPlayer.stickInput = 0;
+            }
+            else if (lobbyPlayer.buttonInput != 0) // Handle button input...
+            {
+                if (lobbyPlayer.buttonInput == 1) // Confirm character selection...
+                {
+                    lobbyPlayer.lobbyWindow.SetSelected();
+                    portraits[lobbyPlayer.playerConfig.characterNumber].alpha = 0.2f;
+                    lobbyPlayer.status = PlayerStatus.LoadedInAndSelected;
+                    if (AllPlayersSelected(false))
                     {
-                        if (playerStickInputs[i] != 0)      // Handle stick movement...
-                        {
-                            // Find the next available character to select
-                            int nextCharacter = (int)Mathf.Repeat(LobbyGameManager.playerConfigs[i].characterNumber + playerStickInputs[i], portraits.Length);
-                            while (!CharacterNotChosen(nextCharacter, true))
-                            {
-                                nextCharacter = (int)Mathf.Repeat(nextCharacter + playerStickInputs[i], portraits.Length);
-                            }
-                            UpdateCharacterSelection(i, nextCharacter);
-                            playerStickInputs[i] = 0;
-                        }
-                        else if (playerButtonInputs[i] != 0)     // Handle button input...
-                        {
-                            if (playerButtonInputs[i] == 1)     // Confirm character selection...
-                            {
-                                windows[i].SetSelected();
-                                portraits[LobbyGameManager.playerConfigs[i].characterNumber].alpha = 0.2f;
-                                playerStatus[i] = 2;
-                                if (AllPlayersSelected(false)) { nextReady = true; ready.SetActive(true); }
-                                playerButtonInputs[i] = 0;
-
-                            }
-                            if (playerButtonInputs[i] == -1)    // Eject player (deconstruct playerconfig and prefab)...
-                            {
-                                // Reset visuals for current player to unloaded in versions
-                                windows[i].SetEmpty();
-                                characterSelects[i].SetActive(false);
-                                portraits[LobbyGameManager.playerConfigs[i].characterNumber].alpha = 1.0f;
-
-                                // Unload player
-                                playerStatus[i] = 0;
-                                LobbyGameManager.playerConfigs[i].manager.UnloadPlayer();
-                                playerButtonInputs[i] = 0;
-
-                                //// If no more players in the game, reset text
-                                //int count = 0;
-                                //for (int j = 0; j < 4; j++) if (playerStatus[i] > 0) count++;
-                                //if (count == 1) description.text = "Press any button to join the game.";
-
-                                if (AllPlayersSelected(false))
-                                {
-                                    nextReady = true;
-                                    ready.SetActive(true);
-                                }
-                            }
-                        }
+                        nextReady = true;
+                        ready.SetActive(true);
                     }
-                    else if (playerStatus[i] == 2)      // If status 2 (selected)...
+
+                    lobbyPlayer.buttonInput = 0;
+                }
+
+                if (lobbyPlayer.buttonInput == -1) // Eject player (deconstruct playerconfig and prefab)...
+                {
+                    // Reset visuals for current player to unloaded in versions
+                    lobbyPlayer.lobbyWindow.SetEmpty();
+                    lobbyPlayer.characterSelect.SetActive(false);
+                    portraits[lobbyPlayer.playerConfig.characterNumber].alpha = 1.0f;
+
+                    // Unload player
+                    lobbyPlayer.status = PlayerStatus.NotLoadedIn;
+                    lobbyPlayer.playerConfig.manager.UnloadPlayer();
+                    lobbyPlayer.buttonInput = 0;
+
+                    //// If no more players in the game, reset text
+                    //int count = 0;
+                    //for (int j = 0; j < 4; j++) if (playerStatus[i] > 0) count++;
+                    //if (count == 1) description.text = "Press any button to join the game.";
+
+                    if (AllPlayersSelected(false))
                     {
-                        if (playerButtonInputs[i] == -1)    // Deselect character
-                        {
-                            windows[i].SetUnselected();
-                            portraits[LobbyGameManager.playerConfigs[i].characterNumber].alpha = 1.0f;
-                            playerStatus[i] = 1;
-                            nextReady = false; ready.SetActive(false);
-                            playerButtonInputs[i] = 0;
-                            playerStickInputs[i] = 0;
-                        }
-                        else if (playerButtonInputs[i] == 1)   // Progress to computer player selection OR straight to main menu
-                        {
-                            if (nextReady)
-                            {
-                                if (AllPlayersSelected(false)) // Transition to next menu state
-                                {
-                                    subState = 1; //transitionTimer = 0; transitionInt = 0; transitionCheckers.enabled = true;
-                                    FindObjectOfType<Transition>().BeginTransition(true, true, buildIndexOfNextScene, true);
-                                    Destroy(GetComponent<LobbyManager>());
-                                    Destroy(GetComponent<PlayerInputManager>());
-                                }
-                                ClearInputs();
-                            }
-                            playerButtonInputs[i] = 0;
-                        }
+                        nextReady = true;
+                        ready.SetActive(true);
                     }
                 }
             }
@@ -272,7 +300,7 @@ namespace Hawaiian.UI.CharacterSelect
 
         bool CharacterNotChosen(int characterNumber, bool onlyPlayers) // SOMEWHERE, WHEN TRANSITIONING/SETTING UP CHARACTER SELECT, YOU MUST SET characterNumber TO -1 FOR EACH playerConfig WHO !isPlayer // Is this still true?
         {
-            foreach (LobbyGameManager.PlayerConfig playerConfig in LobbyGameManager.playerConfigs)
+            foreach (PlayerConfig playerConfig in LobbyGameManager.playerConfigs)
             {
                 if (!onlyPlayers || playerConfig.IsPlayer) // If only checking human players, and player is not a human, then don't check
                 {
@@ -285,10 +313,10 @@ namespace Hawaiian.UI.CharacterSelect
         bool AllPlayersSelected(bool allFour) // Use all four when checking that there are four players (human or not) with characters selected
         {
             int counter = 0;
-            foreach (int i in playerStatus)
+            foreach (LobbyPlayer lobbyPlayer in lobbyPlayers)
             {
-                if (i == 1) return false;
-                if (i == 0)
+                if (lobbyPlayer.status == PlayerStatus.LoadedIn) return false;
+                if (lobbyPlayer.status == PlayerStatus.NotLoadedIn)
                 {
                     if (allFour) return false;
                     counter++;
@@ -300,51 +328,52 @@ namespace Hawaiian.UI.CharacterSelect
 
         void ClearInputs()
         {
-            for (int i = 0; i < 4; i++)
+            foreach (var lobbyPlayer in lobbyPlayers)
             {
-                playerButtonInputs[i] = 0;
-                playerStickInputs[i] = 0;
+                lobbyPlayer.buttonInput = 0;
+                lobbyPlayer.stickInput = 0;
             }
         }
 
-        void UpdateCharacterSelection(int playerNumber, int charNumber)
+        void UpdateCharacterSelection(LobbyPlayer lobbyPlayer, int charNumber)
         {
-            LobbyGameManager.PlayerConfig player = LobbyGameManager.playerConfigs[playerNumber];
-            characterSelects[playerNumber].GetComponent<RectTransform>().anchoredPosition = new Vector2(portraits[charNumber].GetComponent<RectTransform>().anchoredPosition.x, portraits[charNumber].GetComponent<RectTransform>().anchoredPosition.y);
+            PlayerConfig player = lobbyPlayer.playerConfig;
+            lobbyPlayer.characterSelect.GetComponent<RectTransform>().anchoredPosition = new Vector2(portraits[charNumber].GetComponent<RectTransform>().anchoredPosition.x, portraits[charNumber].GetComponent<RectTransform>().anchoredPosition.y);
             player.characterNumber = charNumber;
-            windows[playerNumber].UpdateHead(charNumber);
+            lobbyPlayer.lobbyWindow.UpdateHead(charNumber);
         }
 
-        public void ReturnToMainMenu()
+        public void UnloadOrReturnToMainMenu()
         {
             int counter = 0;
             int index = -1;
-            foreach (int i in playerStatus)
+            foreach (LobbyPlayer lobbyPlayer in lobbyPlayers)
             {
-                if (i == 0) counter++;
-                else index = i;
+                if (lobbyPlayer.status == PlayerStatus.NotLoadedIn) counter++;
+                // else index = i;
             }
-            if (counter >= 3)
-            {
-                if (index >= 0)
-                {
-                    // Reset visuals for current player to unloaded in versions
-                    windows[index].SetEmpty();
-                    characterSelects[index].SetActive(false);
-                    portraits[LobbyGameManager.playerConfigs[index].characterNumber].alpha = 1.0f;
 
-                    // Unload player
-                    playerStatus[index] = 0;
-                    LobbyGameManager.playerConfigs[index].manager.UnloadPlayer();
-                    playerButtonInputs[index] = 0;
-                }
+            if (counter < 3) return;
+            
+            // TODO: Commented, because I can't work out what this code is meant to do
+            // if (index >= 0)
+            // {
+            //     // Reset visuals for current player to unloaded in versions
+            //     windows[index].SetEmpty();
+            //     characterSelects[index].SetActive(false);
+            //     portraits[LobbyGameManager.playerConfigs[index].characterNumber].alpha = 1.0f;
+            //
+            //     // Unload player
+            //     playerStatuses[index] = 0;
+            //     LobbyGameManager.playerConfigs[index].manager.UnloadPlayer();
+            //     playerButtonInputs[index] = 0;
+            // }
 
-                // Exit this scene
-                subState = 1;
-                //returningToMainMenu = true;
-                //transitionTimer = 0; transitionInt = 0; transitionCheckers.enabled = true;
-                FindObjectOfType<Transition>().BeginTransition(true, true, 0, false);
-            }
+            // Exit this scene
+            subState = 1;
+            //returningToMainMenu = true;
+            //transitionTimer = 0; transitionInt = 0; transitionCheckers.enabled = true;
+            FindObjectOfType<Transition>().BeginTransition(true, true, 0, false);
         }
 
         public void IncrementSubState()
