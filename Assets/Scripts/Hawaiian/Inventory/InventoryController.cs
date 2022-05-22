@@ -5,9 +5,7 @@ using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine.Events;
-
 
 namespace Hawaiian.Inventory
 {
@@ -28,10 +26,6 @@ namespace Hawaiian.Inventory
         public UnityEvent currentItemChanged = new UnityEvent();
 
         private int tempPos;
-
-       
-        //[SerializeField] private int invSize;a
-
 
         public Inventory _inv;
         private PositionalEventCaller positionalEventCaller;
@@ -73,33 +67,25 @@ namespace Hawaiian.Inventory
         {
             if (!addinv) return;
             
-            _inv.PickUp(item);
+            _inv.AddItem(item);
             addinv = !addinv;
         }
-        //
-        // void UpdateRotation(Vector2 newValue)
-        // {
-        //     _rotation = newValue;
-        //     _isJoystickNeutral = false;
-        // }
 
         private void OnPickUp()
         {
-            if (!_player.playerState.Equals(Unit.Unit.PlayerState.Tripped))
+            if (_player.playerState.Equals(Unit.Unit.PlayerState.Tripped)) return;
+            
+            foreach (var target in positionalEventCaller.Targets)
             {
-                foreach (var target in positionalEventCaller.Targets)
-                {
-                    var item = target.GetComponent<DroppedItem>().item;
+                var item = target.GetComponent<DroppedItem>().item;
 
-                    if (item == null) continue;
+                if (item == null) continue;
 
-                    if (!_inv.PickUp(item)) continue;
+                if (!_inv.AddItem(item)) continue;
 
-                    positionalEventCaller.Raise(target);
-                }
+                positionalEventCaller.Raise(target);
             }
         }
-
 
         public void SwitchItem(InputAction.CallbackContext value)
         {
@@ -238,7 +224,7 @@ namespace Hawaiian.Inventory
                 dp.GetComponent<DroppedItem>().item = _inv.inv[invPosition];
                 dp.GetComponent<SpriteRenderer>().sprite = _inv.inv[invPosition].DroppedItemSprite;
                 dp.GetComponent<ItemUnit>().OnThrow(dir);
-                _inv.DropItem(invPosition);
+                _inv.RemoveItemAt(invPosition);
                 hand.sprite = null;
             }
             else
@@ -251,7 +237,7 @@ namespace Hawaiian.Inventory
         {
             if (_inv.inv[invPosition] == null) return;
             
-            _inv.DropItem(_inv.InvPosition);
+            _inv.RemoveItemAt(_inv.InvPosition);
             hand.sprite = null;
         }
 

@@ -21,7 +21,7 @@ namespace Hawaiian.UI.CharacterSelect
         [SerializeField] private GameEvent playersJoined;
         [SerializeField] private List<SpawnPoint> spawnPoints;
         
-        private Dictionary<LobbyGameManager.PlayerConfig, InventoryController> inventoryControllers = new();
+        private Dictionary<PlayerConfig, InventoryController> inventoryControllers = new();
 
         private LobbyGameManager lobbyManager;
         private PlayerInputManager inputManager;
@@ -54,7 +54,7 @@ namespace Hawaiian.UI.CharacterSelect
 
         public void BeginSpawn()
         {
-            foreach (LobbyGameManager.PlayerConfig config in lobbyManager.playerConfigs)
+            foreach (PlayerConfig config in lobbyManager.playerConfigs)
             {
                 if (!config.IsPlayer) continue;
                 

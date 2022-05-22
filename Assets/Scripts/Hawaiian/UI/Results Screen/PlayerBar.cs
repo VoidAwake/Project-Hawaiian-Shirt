@@ -59,12 +59,12 @@ namespace Hawaiian.UI.Results_Screen
             animator.SetTrigger("ShowBar");
         }
 
-        public void Initialise(LobbyGameManager.PlayerConfig player, float maxScore)
+        public void Initialise(PlayerConfig player, float maxScore)
         {
             StartCoroutine(InitialiseRoutine(player, maxScore));
         }
         
-        private IEnumerator InitialiseRoutine(LobbyGameManager.PlayerConfig player, float maxScore)
+        private IEnumerator InitialiseRoutine(PlayerConfig player, float maxScore)
         {
             // Wait one frame to allow the RectTransform to update
             yield return null;

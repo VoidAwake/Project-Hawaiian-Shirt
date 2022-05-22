@@ -61,7 +61,7 @@ namespace Hawaiian.UI.Results_Screen
             }
         }
 
-        private void CreatePlayerBar(LobbyGameManager.PlayerConfig player, float maxScore)
+        private void CreatePlayerBar(PlayerConfig player, float maxScore)
         {
             if (!player.IsPlayer) return;
             
@@ -76,7 +76,7 @@ namespace Hawaiian.UI.Results_Screen
             bars.Add(playerBar);
         }
 
-        public void Initialise(LobbyGameManager.PlayerConfig[] playersData)
+        public void Initialise(PlayerConfig[] playersData)
         {
             var sortedPlayers = playersData.ToList();
             
