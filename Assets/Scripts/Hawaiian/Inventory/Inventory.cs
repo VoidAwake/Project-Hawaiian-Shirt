@@ -1,6 +1,6 @@
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
-using Hawaiian.Utilities;
 
 namespace Hawaiian.Inventory
 {
@@ -26,6 +26,8 @@ namespace Hawaiian.Inventory
         }
 
         public Item CurrentItem => inv[InvPosition];
+        
+        public float Score => inv.Where(i => i != null).Sum(i => i.Points);
 
         public Inventory()
         {

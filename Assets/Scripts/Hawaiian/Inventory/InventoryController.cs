@@ -5,6 +5,7 @@ using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine.Events;
 
 
@@ -36,6 +37,8 @@ namespace Hawaiian.Inventory
         private PositionalEventCaller positionalEventCaller;
 
         public Item CurrentItem => _inv.CurrentItem;
+        
+        public float Score => _inv.Score;
     
         private void Awake()
         {

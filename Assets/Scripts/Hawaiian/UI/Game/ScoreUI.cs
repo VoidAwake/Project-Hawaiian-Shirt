@@ -1,4 +1,4 @@
-﻿using System.Linq;
+﻿using System.Globalization;
 using TMPro;
 using UI.Core;
 using UnityEngine;
@@ -22,7 +22,7 @@ namespace Hawaiian.UI.Game
 
         private void UpdateText()
         {
-            text.text = "" + inventory.inv.Where(i => i != null).Sum(i => i.Points);
+            text.text = inventory.Score.ToString(CultureInfo.InvariantCulture);
         }
 
         protected override void Subscribe() { }
