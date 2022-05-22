@@ -1,6 +1,6 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using Hawaiian.UI.CharacterSelect;
+using Hawaiian.Unit;
 using TMPro;
 using UI.Core;
 using UnityEngine;
@@ -18,6 +18,8 @@ namespace Hawaiian.UI.Results_Screen
         [SerializeField] private Animator animator;
         [SerializeField] private float spacing;
         [SerializeField] [Range(0, 1)] private float fill;
+        [SerializeField] private PlayerSprites playerSprites;
+        [SerializeField] private PlayerColors playerColors;
 
         public UnityEvent animationCompleted = new UnityEvent();
 
@@ -76,33 +78,8 @@ namespace Hawaiian.UI.Results_Screen
             
             targetHeight = score / maxScore * maxBarHeight;
 
-            barImage.color = GetColor(player.playerNumber);
-            playerHeadImage.sprite = GetSprite(player.characterNumber);
-        }
-
-        // TODO: Duplicate code. See InventoryUI.
-        
-        [SerializeField] private Sprite[] headSprites;
-
-        public Sprite GetSprite(int characterNo)
-        {
-            return headSprites[characterNo];
-        }
-        
-        public Color GetColor(int playerNo) {
-            switch (playerNo)
-            {
-                case 0:
-                    return new Color(0.764706f, 0.2627451f, 0.3607843f);
-                case 1:
-                    return new Color(0.2039216f, 0.4f, 0.6901961f);
-                case 2:
-                    return new Color(0.9450981f, 0.7607844f, 0.3372549f);
-                case 3:
-                    return new Color(0.5803922f, 0.8000001f, 0.2784314f);
-                default:
-                    throw new Exception("no");
-            }
+            barImage.color = playerColors.GetColor(player.playerNumber);
+            playerHeadImage.sprite = playerSprites.GetSprite(player.characterNumber);
         }
     }
 }
