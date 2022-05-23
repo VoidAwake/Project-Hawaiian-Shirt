@@ -55,7 +55,7 @@ namespace Hawaiian.UI.CharacterSelect
                             // Do a thing
                             if (itIsTheCharacterSelectScreenAndYouShouldIncrementTheLobbySubstateOnTransitionConclusion)
                             {
-                                FindObjectOfType<LobbyManager>().IncrementSubState();
+                                // FindObjectOfType<LobbyManager>().IncrementSubState();
                             }
                         }
                         else
