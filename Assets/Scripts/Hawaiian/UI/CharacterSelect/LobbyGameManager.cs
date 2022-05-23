@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace Hawaiian.UI.CharacterSelect
 {
@@ -43,13 +44,13 @@ namespace Hawaiian.UI.CharacterSelect
             }*/
         }
 
-        public PlayerConfig AddPlayer(LobbyPlayerController lobbyPlayerController)
+        public PlayerConfig AddPlayer(PlayerInput playerInput)
         {
             for (int i = 0; i < 4; i++)
             {
                 if (!playerConfigs[i].IsPlayer)
                 {
-                    playerConfigs[i].SetPlayer(lobbyPlayerController);
+                    playerConfigs[i].SetPlayer(playerInput);
                     return playerConfigs[i];
                 }
             }

@@ -44,6 +44,7 @@ namespace Hawaiian.UI.CharacterSelect
             public int stickInput;
             public GameObject characterSelect;
             public PlayerConfig playerConfig;
+            public LobbyPlayerController lobbyPlayerController;
 
             public LobbyPlayer(LobbyWindow lobbyWindow, GameObject characterSelect, PlayerConfig playerConfig)
             {
@@ -170,28 +171,6 @@ namespace Hawaiian.UI.CharacterSelect
             //    if (subState == -1 || subState == 1) transitionTimer += Time.deltaTime;
             //}
             if (subState != 0) return;
-            
-            // Handle loading in connected players
-            foreach (PlayerConfig player in LobbyGameManager.playerConfigs)                              // For each player...
-            {
-                var lobbyPlayer = lobbyPlayers[player.playerNumber];
-                if (lobbyPlayer.status == PlayerStatus.NotLoadedIn && player.IsPlayer)                                    // If they are a person and not yet loaded in, load them in.
-                {
-                    lobbyPlayer.lobbyWindow.SetUnselected();
-                    lobbyPlayer.characterSelect.SetActive(true);
-                    int count = 0;
-                    int nextCharacter = player.characterNumber;
-                    while (nextCharacter < 0)
-                    {
-                        if (CharacterNotChosen(count, true)) nextCharacter = count;
-                        count++;
-                    }
-                    UpdateCharacterSelection(lobbyPlayer, nextCharacter);
-                    lobbyPlayer.status = PlayerStatus.LoadedIn;
-                    nextReady = false; ready.SetActive(false);
-                    lobbyPlayer.stickInput = 0;
-                }
-            }
 
             // Handle player inputs
             foreach (var lobbyPlayer in lobbyPlayers)
@@ -261,7 +240,8 @@ namespace Hawaiian.UI.CharacterSelect
         void UpdateCharacterSelection(LobbyPlayer lobbyPlayer, int charNumber)
         {
             PlayerConfig player = lobbyPlayer.playerConfig;
-            lobbyPlayer.characterSelect.GetComponent<RectTransform>().anchoredPosition = new Vector2(portraits[charNumber].GetComponent<RectTransform>().anchoredPosition.x, portraits[charNumber].GetComponent<RectTransform>().anchoredPosition.y);
+            var portraitTransform = portraits[charNumber].GetComponent<RectTransform>();
+            lobbyPlayer.characterSelect.GetComponent<RectTransform>().anchoredPosition = portraitTransform.anchoredPosition;
             player.characterNumber = charNumber;
             lobbyPlayer.lobbyWindow.UpdateHead(charNumber);
         }
@@ -362,8 +342,9 @@ namespace Hawaiian.UI.CharacterSelect
                 portraits[lobbyPlayer.playerConfig.characterNumber].alpha = 1.0f;
 
                 // Unload player
-                lobbyPlayer.status = PlayerStatus.NotLoadedIn;
-                lobbyPlayer.playerConfig.manager.UnloadPlayer();
+                lobbyPlayer.status = PlayerStatus.NotLoadedIn; 
+                Destroy(lobbyPlayer.lobbyPlayerController.gameObject);
+                lobbyPlayer.playerConfig.Clear();
 
                 if (AllPlayersSelected(false))
                 {
@@ -371,6 +352,37 @@ namespace Hawaiian.UI.CharacterSelect
                     ready.SetActive(true);
                 }
             }
+        }
+
+        // Message from PlayerInputManager
+        private void OnPlayerJoined(PlayerInput playerInput)
+        {
+            var playerConfig = LobbyGameManager.AddPlayer(playerInput);
+            
+            var lobbyPlayer = lobbyPlayers[playerConfig.playerNumber];
+            
+            if (lobbyPlayer.status != PlayerStatus.NotLoadedIn || !playerConfig.IsPlayer) return;
+            
+            lobbyPlayer.lobbyWindow.SetUnselected();
+            lobbyPlayer.characterSelect.SetActive(true);
+
+            UpdateCharacterSelection(lobbyPlayer, FirstUnselectedCharacter());
+            lobbyPlayer.status = PlayerStatus.LoadedIn;
+            nextReady = false; ready.SetActive(false);
+            lobbyPlayer.stickInput = -1;
+            var lobbyPlayerController = playerInput.GetComponent<LobbyPlayerController>();
+            lobbyPlayer.lobbyPlayerController = lobbyPlayerController;
+            lobbyPlayerController.Initialise(this, playerConfig.playerNumber);
+        }
+
+        private int FirstUnselectedCharacter()
+        {
+            for (var index = 0; index < portraits.Length; index++)
+            {
+                if (CharacterNotChosen(index, true)) return index;
+            }
+
+            return -1;
         }
     }
 }

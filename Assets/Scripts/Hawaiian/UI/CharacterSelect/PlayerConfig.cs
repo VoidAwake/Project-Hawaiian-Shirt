@@ -9,8 +9,6 @@ namespace Hawaiian.UI.CharacterSelect
     [Serializable]
     public class PlayerConfig
     {
-        public LobbyPlayerController manager { get; set; }
-
         public bool IsPlayer
         {
             get => isPlayer;
@@ -31,22 +29,19 @@ namespace Hawaiian.UI.CharacterSelect
 
         public PlayerConfig(int playerNumber)
         {
-            this.manager = null;
             this.IsPlayer = false;
             this.playerNumber = playerNumber;
             this.characterNumber = -1;
         }
 
-        public void SetPlayer(LobbyPlayerController LobbyPlayerController)
+        public void SetPlayer(PlayerInput playerInput)
         {
-            this.manager = LobbyPlayerController;
-            this.inputComponent = LobbyPlayerController.GetComponent<PlayerInput>();
+            this.inputComponent = playerInput;
             this.IsPlayer = true;
         }
 
         public void Clear()
         {
-            this.manager = null;
             this.IsPlayer = false;
             this.characterNumber = -1;
         }
