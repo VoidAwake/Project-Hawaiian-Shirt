@@ -10,6 +10,22 @@ namespace Hawaiian.UI.CharacterSelect
         private int playerNumber;
         int moveBuffer;
         LobbyManager lobbyManager;
+        
+        // From LobbyManager.LobbyPlayer
+        
+        public enum PlayerStatus
+        {
+            NotLoadedIn,
+            LoadedIn,
+            LoadedInAndSelected,
+            SelectedComputerPlayer
+        }
+        
+        public PlayerStatus status;
+        public LobbyWindow lobbyWindow;
+        public GameObject characterSelect;
+        public PlayerConfig playerConfig;
+        public LobbyPlayerController lobbyPlayerController;
 
         public void OnCharacterSelect(InputValue value) { move = value.Get<float>(); }
         
@@ -27,10 +43,17 @@ namespace Hawaiian.UI.CharacterSelect
             lobbyManager.OnPlayerActionB(playerNumber, value);
         }
 
-        public void Initialise(LobbyManager lobbyManager, int playerNumber)
+        public void Initialise(LobbyManager lobbyManager, int playerNumber, LobbyWindow lobbyWindow, GameObject characterSelect, PlayerConfig playerConfig)
         {
             this.lobbyManager = lobbyManager;
             this.playerNumber = playerNumber;
+            this.lobbyWindow = lobbyWindow;
+            this.characterSelect = characterSelect;
+            this.playerConfig = playerConfig;
+            
+            status = PlayerStatus.NotLoadedIn;
+            lobbyWindow.SetEmpty();
+            characterSelect.gameObject.SetActive(false);
 
             moveBuffer = 1;
             inputEnabled = true;

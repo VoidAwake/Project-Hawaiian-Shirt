@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -29,44 +30,11 @@ namespace Hawaiian.UI.CharacterSelect
         [SerializeField] TextMeshProUGUI readyText;
         [SerializeField] GameObject ready;
 
-        public enum PlayerStatus
-        {
-            NotLoadedIn,
-            LoadedIn,
-            LoadedInAndSelected,
-            SelectedComputerPlayer
-        }
-
-        public class LobbyPlayer
-        {
-            public PlayerStatus status;
-            public LobbyWindow lobbyWindow;
-            public GameObject characterSelect;
-            public PlayerConfig playerConfig;
-            public LobbyPlayerController lobbyPlayerController;
-
-            public LobbyPlayer(LobbyWindow lobbyWindow, GameObject characterSelect, PlayerConfig playerConfig)
-            {
-                this.lobbyWindow = lobbyWindow;
-                this.characterSelect = characterSelect;
-                this.playerConfig = playerConfig;
-                
-                status = PlayerStatus.NotLoadedIn;
-                lobbyWindow.SetEmpty();
-                characterSelect.gameObject.SetActive(false);
-            }
-        }
-
-        public readonly LobbyPlayer[] lobbyPlayers = new LobbyPlayer[4];
+        private readonly List<LobbyPlayerController> lobbyPlayerControllers = new();
 
         void Start()
         {
             LobbyGameManager = GetComponent<LobbyGameManager>();
-
-            for (int i = 0; i < lobbyPlayers.Length; i++)
-            {
-                lobbyPlayers[i] = new LobbyPlayer(windows[i], characterSelects[i], LobbyGameManager.playerConfigs[i]);
-            }
 
             ready.SetActive(false);
             //transitionCheckers.enabled = true;
@@ -84,12 +52,12 @@ namespace Hawaiian.UI.CharacterSelect
             if (prevMenuState != menuState) HandleTransition();
 
             // Animate cursors
-            foreach (var lobbyPlayer in lobbyPlayers)
+            foreach (var lobbyPlayerController in lobbyPlayerControllers)
             {
-                if (lobbyPlayer.status == PlayerStatus.LoadedIn)
+                if (lobbyPlayerController.status == LobbyPlayerController.PlayerStatus.LoadedIn)
                 {
                     // Animate cursor
-                    lobbyPlayer.characterSelect.GetComponent<Image>().sprite = characterSelectSprites
+                    lobbyPlayerController.characterSelect.GetComponent<Image>().sprite = characterSelectSprites
                         [
                             Mathf.FloorToInt((Time.time % 0.39999f) * 10.0f) - (Mathf.FloorToInt((Time.time % 0.39999f) * 10.0f) > 2 ? 2 : 0)
                         ];
@@ -97,7 +65,7 @@ namespace Hawaiian.UI.CharacterSelect
                 else
                 {
                     // Set to still cursor
-                    lobbyPlayer.characterSelect.GetComponent<Image>().sprite = characterSelectSprites[1];
+                    lobbyPlayerController.characterSelect.GetComponent<Image>().sprite = characterSelectSprites[1];
                 }
             }
 
@@ -137,10 +105,10 @@ namespace Hawaiian.UI.CharacterSelect
         bool AllPlayersSelected(bool allFour) // Use all four when checking that there are four players (human or not) with characters selected
         {
             int counter = 0;
-            foreach (LobbyPlayer lobbyPlayer in lobbyPlayers)
+            foreach (LobbyPlayerController lobbyPlayerController in lobbyPlayerControllers)
             {
-                if (lobbyPlayer.status == PlayerStatus.LoadedIn) return false;
-                if (lobbyPlayer.status == PlayerStatus.NotLoadedIn)
+                if (lobbyPlayerController.status == LobbyPlayerController.PlayerStatus.LoadedIn) return false;
+                if (lobbyPlayerController.status == LobbyPlayerController.PlayerStatus.NotLoadedIn)
                 {
                     if (allFour) return false;
                     counter++;
@@ -150,13 +118,13 @@ namespace Hawaiian.UI.CharacterSelect
             return true;
         }
 
-        void UpdateCharacterSelection(LobbyPlayer lobbyPlayer, int charNumber)
+        void UpdateCharacterSelection(LobbyPlayerController lobbyPlayerController, int charNumber)
         {
-            PlayerConfig player = lobbyPlayer.playerConfig;
+            PlayerConfig player = lobbyPlayerController.playerConfig;
             var portraitTransform = portraits[charNumber].GetComponent<RectTransform>();
-            lobbyPlayer.characterSelect.GetComponent<RectTransform>().anchoredPosition = portraitTransform.anchoredPosition;
+            lobbyPlayerController.characterSelect.GetComponent<RectTransform>().anchoredPosition = portraitTransform.anchoredPosition;
             player.characterNumber = charNumber;
-            lobbyPlayer.lobbyWindow.UpdateHead(charNumber);
+            lobbyPlayerController.lobbyWindow.UpdateHead(charNumber);
         }
 
         // TODO: Needs to be hooked up again
@@ -164,9 +132,9 @@ namespace Hawaiian.UI.CharacterSelect
         {
             int counter = 0;
             int index = -1;
-            foreach (LobbyPlayer lobbyPlayer in lobbyPlayers)
+            foreach (LobbyPlayerController lobbyPlayerController in lobbyPlayerControllers)
             {
-                if (lobbyPlayer.status == PlayerStatus.NotLoadedIn) counter++;
+                if (lobbyPlayerController.status == LobbyPlayerController.PlayerStatus.NotLoadedIn) counter++;
                 // else index = i;
             }
 
@@ -202,9 +170,9 @@ namespace Hawaiian.UI.CharacterSelect
         {
             if (value.Get<float>() < 0.55f) return;
             
-            var lobbyPlayer = lobbyPlayers[playerConfigPlayerNumber];
+            var lobbyPlayerController = lobbyPlayerControllers[playerConfigPlayerNumber];
 
-            if (lobbyPlayer.status == PlayerStatus.LoadedInAndSelected)
+            if (lobbyPlayerController.status == LobbyPlayerController.PlayerStatus.LoadedInAndSelected)
             {
                 if (nextReady)
                 {
@@ -217,11 +185,11 @@ namespace Hawaiian.UI.CharacterSelect
                     }
                 }
             }
-            else if (lobbyPlayer.status == PlayerStatus.LoadedIn)
+            else if (lobbyPlayerController.status == LobbyPlayerController.PlayerStatus.LoadedIn)
             {
-                lobbyPlayer.lobbyWindow.SetSelected();
-                portraits[lobbyPlayer.playerConfig.characterNumber].alpha = 0.2f;
-                lobbyPlayer.status = PlayerStatus.LoadedInAndSelected;
+                lobbyPlayerController.lobbyWindow.SetSelected();
+                portraits[lobbyPlayerController.playerConfig.characterNumber].alpha = 0.2f;
+                lobbyPlayerController.status = LobbyPlayerController.PlayerStatus.LoadedInAndSelected;
                 if (AllPlayersSelected(false))
                 {
                     nextReady = true;
@@ -234,27 +202,27 @@ namespace Hawaiian.UI.CharacterSelect
         {
             if (value.Get<float>() < 0.55f) return;
             
-            var lobbyPlayer = lobbyPlayers[playerConfigPlayerNumber];
+            var lobbyPlayerController = lobbyPlayerControllers[playerConfigPlayerNumber];
 
-            if (lobbyPlayer.status == PlayerStatus.LoadedInAndSelected)
+            if (lobbyPlayerController.status == LobbyPlayerController.PlayerStatus.LoadedInAndSelected)
             {
-                lobbyPlayer.lobbyWindow.SetUnselected();
-                portraits[lobbyPlayer.playerConfig.characterNumber].alpha = 1.0f;
-                lobbyPlayer.status = PlayerStatus.LoadedIn;
+                lobbyPlayerController.lobbyWindow.SetUnselected();
+                portraits[lobbyPlayerController.playerConfig.characterNumber].alpha = 1.0f;
+                lobbyPlayerController.status = LobbyPlayerController.PlayerStatus.LoadedIn;
                 nextReady = false;
                 ready.SetActive(false);
             }
-            else if (lobbyPlayer.status == PlayerStatus.LoadedIn)
+            else if (lobbyPlayerController.status == LobbyPlayerController.PlayerStatus.LoadedIn)
             {
                 // Reset visuals for current player to unloaded in versions
-                lobbyPlayer.lobbyWindow.SetEmpty();
-                lobbyPlayer.characterSelect.SetActive(false);
-                portraits[lobbyPlayer.playerConfig.characterNumber].alpha = 1.0f;
+                lobbyPlayerController.lobbyWindow.SetEmpty();
+                lobbyPlayerController.characterSelect.SetActive(false);
+                portraits[lobbyPlayerController.playerConfig.characterNumber].alpha = 1.0f;
 
                 // Unload player
-                lobbyPlayer.status = PlayerStatus.NotLoadedIn; 
-                Destroy(lobbyPlayer.lobbyPlayerController.gameObject);
-                lobbyPlayer.playerConfig.Clear();
+                lobbyPlayerController.status = LobbyPlayerController.PlayerStatus.NotLoadedIn; 
+                Destroy(lobbyPlayerController.lobbyPlayerController.gameObject);
+                lobbyPlayerController.playerConfig.Clear();
 
                 if (AllPlayersSelected(false))
                 {
@@ -269,19 +237,20 @@ namespace Hawaiian.UI.CharacterSelect
         {
             var playerConfig = LobbyGameManager.AddPlayer(playerInput);
             
-            var lobbyPlayer = lobbyPlayers[playerConfig.playerNumber];
-            
-            if (lobbyPlayer.status != PlayerStatus.NotLoadedIn || !playerConfig.IsPlayer) return;
-            
-            lobbyPlayer.lobbyWindow.SetUnselected();
-            lobbyPlayer.characterSelect.SetActive(true);
-
-            UpdateCharacterSelection(lobbyPlayer, FirstUnselectedCharacter());
-            lobbyPlayer.status = PlayerStatus.LoadedIn;
-            nextReady = false; ready.SetActive(false);
             var lobbyPlayerController = playerInput.GetComponent<LobbyPlayerController>();
-            lobbyPlayer.lobbyPlayerController = lobbyPlayerController;
-            lobbyPlayerController.Initialise(this, playerConfig.playerNumber);
+            lobbyPlayerController.Initialise(this, playerConfig.playerNumber, windows[playerConfig.playerNumber], characterSelects[playerConfig.playerNumber], playerConfig);
+            lobbyPlayerControllers.Add(lobbyPlayerController);
+            
+            if (!playerConfig.IsPlayer) return;
+            
+            lobbyPlayerController.lobbyWindow.SetUnselected();
+            lobbyPlayerController.characterSelect.SetActive(true);
+
+            UpdateCharacterSelection(lobbyPlayerController, FirstUnselectedCharacter());
+            lobbyPlayerController.status = LobbyPlayerController.PlayerStatus.LoadedIn;
+            nextReady = false; ready.SetActive(false);
+            
+            lobbyPlayerController.lobbyPlayerController = lobbyPlayerController;
         }
 
         private int FirstUnselectedCharacter()
@@ -298,16 +267,16 @@ namespace Hawaiian.UI.CharacterSelect
         {
             if (direction == 0) return;
             
-            var lobbyPlayer = lobbyPlayers[playerConfigPlayerNumber];
+            var lobbyPlayerController = lobbyPlayerControllers[playerConfigPlayerNumber];
             // Find the next available character to select
-            int nextCharacter = (int)Mathf.Repeat(lobbyPlayer.playerConfig.characterNumber + direction,
+            int nextCharacter = (int)Mathf.Repeat(lobbyPlayerController.playerConfig.characterNumber + direction,
                 portraits.Length);
             while (!CharacterNotChosen(nextCharacter, true))
             {
                 nextCharacter = (int)Mathf.Repeat(nextCharacter + direction, portraits.Length);
             }
 
-            UpdateCharacterSelection(lobbyPlayer, nextCharacter);
+            UpdateCharacterSelection(lobbyPlayerController, nextCharacter);
         }
     }
 }
