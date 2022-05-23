@@ -41,7 +41,6 @@ namespace Hawaiian.UI.CharacterSelect
         {
             public PlayerStatus status;
             public LobbyWindow lobbyWindow;
-            public int stickInput;
             public GameObject characterSelect;
             public PlayerConfig playerConfig;
             public LobbyPlayerController lobbyPlayerController;
@@ -84,9 +83,6 @@ namespace Hawaiian.UI.CharacterSelect
             // Transition to next menu screen
             if (prevMenuState != menuState) HandleTransition();
 
-            // Handle character select screen
-            if (menuState == MenuState.CharacterSelect) HandleCharacterSelect();
-
             // Animate cursors
             foreach (var lobbyPlayer in lobbyPlayers)
             {
@@ -126,81 +122,6 @@ namespace Hawaiian.UI.CharacterSelect
             prevMenuState = menuState;
         }
 
-        void HandleCharacterSelect()
-        {
-            //if (subState == -1 || subState == 1)
-            //{
-            //    if (transitionTimer > 0.15f)
-            //    {
-            //        transitionTimer -= 0.15f;
-            //        transitionInt++;
-
-            //        if (transitionInt >= transitionCheckersSprites.Length)
-            //        {
-            //            // Transition out of this... transition.
-            //            if (subState == -1)
-            //            {
-            //                transitionCheckers.enabled = false;
-            //                transitionTimer = 0.0f;
-            //                transitionInt = 0;
-            //                subState++;
-            //            }
-            //            else
-            //            {
-            //                if (returningToMainMenu)
-            //                {
-            //                    SceneManager.LoadScene(0);
-            //                }
-            //                else
-            //                {
-            //                    // TODO: Grab player information from this class and LobbyGameManager (which has a PlayerConfig class) and pass it into the next scene
-
-            //                    // Then, load the next scene
-            //                    SceneManager.LoadScene(buildIndexOfNextScene);
-            //                }
-            //            }
-            //        }
-            //        else
-            //        {
-            //            // Update the checkers' sprites
-            //            if (subState == 1) transitionCheckers.sprite = transitionCheckersSprites[transitionInt];
-            //            else transitionCheckers.sprite = transitionCheckersSprites[transitionCheckersSprites.Length - 1 - transitionInt];
-            //        }
-            //    }
-
-            //    if (subState == -1 || subState == 1) transitionTimer += Time.deltaTime;
-            //}
-            if (subState != 0) return;
-
-            // Handle player inputs
-            foreach (var lobbyPlayer in lobbyPlayers)
-            {
-                switch (lobbyPlayer.status)
-                {
-                    case PlayerStatus.LoadedIn:
-                        LoadedInPlayerInputHandling(lobbyPlayer);
-                        break;
-                }
-            }
-        }
-
-        private void LoadedInPlayerInputHandling(LobbyPlayer lobbyPlayer)
-        {
-            if (lobbyPlayer.stickInput != 0) // Handle stick movement...
-            {
-                // Find the next available character to select
-                int nextCharacter = (int)Mathf.Repeat(lobbyPlayer.playerConfig.characterNumber + lobbyPlayer.stickInput,
-                    portraits.Length);
-                while (!CharacterNotChosen(nextCharacter, true))
-                {
-                    nextCharacter = (int)Mathf.Repeat(nextCharacter + lobbyPlayer.stickInput, portraits.Length);
-                }
-
-                UpdateCharacterSelection(lobbyPlayer, nextCharacter);
-                lobbyPlayer.stickInput = 0;
-            }
-        }
-
         bool CharacterNotChosen(int characterNumber, bool onlyPlayers) // SOMEWHERE, WHEN TRANSITIONING/SETTING UP CHARACTER SELECT, YOU MUST SET characterNumber TO -1 FOR EACH playerConfig WHO !isPlayer // Is this still true?
         {
             foreach (PlayerConfig playerConfig in LobbyGameManager.playerConfigs)
@@ -227,14 +148,6 @@ namespace Hawaiian.UI.CharacterSelect
             }
             if (counter >= 4) return false;
             return true;
-        }
-
-        void ClearInputs()
-        {
-            foreach (var lobbyPlayer in lobbyPlayers)
-            {
-                lobbyPlayer.stickInput = 0;
-            }
         }
 
         void UpdateCharacterSelection(LobbyPlayer lobbyPlayer, int charNumber)
@@ -302,8 +215,6 @@ namespace Hawaiian.UI.CharacterSelect
                         Destroy(GetComponent<LobbyManager>());
                         Destroy(GetComponent<PlayerInputManager>());
                     }
-            
-                    ClearInputs();
                 }
             }
             else if (lobbyPlayer.status == PlayerStatus.LoadedIn)
@@ -332,7 +243,6 @@ namespace Hawaiian.UI.CharacterSelect
                 lobbyPlayer.status = PlayerStatus.LoadedIn;
                 nextReady = false;
                 ready.SetActive(false);
-                lobbyPlayer.stickInput = 0;
             }
             else if (lobbyPlayer.status == PlayerStatus.LoadedIn)
             {
@@ -369,7 +279,6 @@ namespace Hawaiian.UI.CharacterSelect
             UpdateCharacterSelection(lobbyPlayer, FirstUnselectedCharacter());
             lobbyPlayer.status = PlayerStatus.LoadedIn;
             nextReady = false; ready.SetActive(false);
-            lobbyPlayer.stickInput = -1;
             var lobbyPlayerController = playerInput.GetComponent<LobbyPlayerController>();
             lobbyPlayer.lobbyPlayerController = lobbyPlayerController;
             lobbyPlayerController.Initialise(this, playerConfig.playerNumber);
@@ -383,6 +292,22 @@ namespace Hawaiian.UI.CharacterSelect
             }
 
             return -1;
+        }
+
+        public void OnPlayerCharacterSelect(int playerConfigPlayerNumber, int direction)
+        {
+            if (direction == 0) return;
+            
+            var lobbyPlayer = lobbyPlayers[playerConfigPlayerNumber];
+            // Find the next available character to select
+            int nextCharacter = (int)Mathf.Repeat(lobbyPlayer.playerConfig.characterNumber + direction,
+                portraits.Length);
+            while (!CharacterNotChosen(nextCharacter, true))
+            {
+                nextCharacter = (int)Mathf.Repeat(nextCharacter + direction, portraits.Length);
+            }
+
+            UpdateCharacterSelection(lobbyPlayer, nextCharacter);
         }
     }
 }

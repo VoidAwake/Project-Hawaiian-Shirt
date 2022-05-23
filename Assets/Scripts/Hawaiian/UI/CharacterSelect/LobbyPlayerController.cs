@@ -48,12 +48,12 @@ namespace Hawaiian.UI.CharacterSelect
             {
                 if (move > 0.15f)
                 {
-                    lobbyManager.lobbyPlayers[playerNumber].stickInput = 1;
+                    lobbyManager.OnPlayerCharacterSelect(playerNumber, 1);
                     moveBuffer = 1;
                 }
                 if (move < -0.15f)
                 {
-                    lobbyManager.lobbyPlayers[playerNumber].stickInput = -1;
+                    lobbyManager.OnPlayerCharacterSelect(playerNumber, -1);
                     moveBuffer = -1;
                 }
             }
