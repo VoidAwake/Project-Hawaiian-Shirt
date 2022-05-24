@@ -77,6 +77,8 @@ namespace Hawaiian.UI.CharacterSelect
         public void OnCharacterSelect(InputValue value)
         {
             if (!inputEnabled) return;
+
+            if (Status != PlayerStatus.LoadedIn) return;
             
             move = value.Get<float>();
         }
@@ -163,8 +165,6 @@ namespace Hawaiian.UI.CharacterSelect
             this.playerConfig = playerConfig;
 
             moveBuffer = 1;
-            
-            
             
             StartCoroutine(EnableInput());
             

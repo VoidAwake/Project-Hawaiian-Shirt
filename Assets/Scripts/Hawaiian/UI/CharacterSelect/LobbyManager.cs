@@ -88,24 +88,6 @@ namespace Hawaiian.UI.CharacterSelect
             return true;
         }
 
-        private bool AllPlayersReady(bool allFour) // Use all four when checking that there are four players (human or not) with characters selected
-        {
-            if (lobbyPlayerControllers.Count == 0) return false;
-            
-            int counter = 0;
-            foreach (LobbyPlayerController lobbyPlayerController in lobbyPlayerControllers)
-            {
-                if (lobbyPlayerController.Status == LobbyPlayerController.PlayerStatus.LoadedIn) return false;
-                if (lobbyPlayerController.Status == LobbyPlayerController.PlayerStatus.NotLoadedIn)
-                {
-                    if (allFour) return false;
-                    counter++;
-                }
-            }
-            if (counter >= 4) return false;
-            return true;
-        }
-
         public int FirstUnselectedCharacter()
         {
             return FirstUnselectedCharacterFrom(-1, 1);
@@ -139,13 +121,20 @@ namespace Hawaiian.UI.CharacterSelect
 
         public void UpdateReadyToStart()
         {
-            var readyBool = AllPlayersReady(false);
+            var readyBool = AllPlayersReady();
             
             readyToStartGame = readyBool;
             
             ready.SetActive(readyBool);
         }
-        
+
+        private bool AllPlayersReady()
+        {
+            if (lobbyPlayerControllers.Count == 0) return false;
+
+            return lobbyPlayerControllers.All(l => l.Status == LobbyPlayerController.PlayerStatus.Ready);
+        }
+
         // TODO: Make the buildIndex a variable.
         public void RequestMainMenu()
         {
