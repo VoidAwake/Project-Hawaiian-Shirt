@@ -1,12 +1,10 @@
 using System;
 using System.Collections;
 using System.Linq;
-using Hawaiian.UI.General;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Controls;
 using UnityEngine.InputSystem.LowLevel;
-using UnityEngine.InputSystem.Utilities;
 
 namespace Hawaiian.UI.CharacterSelect
 {
@@ -108,9 +106,9 @@ namespace Hawaiian.UI.CharacterSelect
         public void OnActionB(InputValue value)
         {
             if (!inputEnabled) return;
-            
+
             if (value.Get<float>() < 0.55f) return;
-            
+
             switch (Status)
             {
                 case PlayerStatus.NotLoadedIn:
@@ -218,15 +216,20 @@ namespace Hawaiian.UI.CharacterSelect
 
                 if (!control.ReadValueFromEvent(eventPtr, out var value) || !(value >= buttonPressPoint)) continue;
 
-                LoadIn();
+                StartCoroutine(LoadIn());
 
                 break;
             }
         }
 
-        private void LoadIn()
+        // TODO: This needs another look. We're delaying this by a frame so that the OnAction functions occur before OnAnyButtonPressed
+        private IEnumerator LoadIn()
         {
-            if (Status != PlayerStatus.NotLoadedIn) return;
+            if (Status != PlayerStatus.NotLoadedIn) yield break;
+            
+            yield return null;
+            
+            if (Status != PlayerStatus.NotLoadedIn) yield break;
     
             UpdateCharacterSelection(lobbyManager.FirstUnselectedCharacterFrom(playerConfig.characterNumber, 1));
             Status = PlayerStatus.LoadedIn;

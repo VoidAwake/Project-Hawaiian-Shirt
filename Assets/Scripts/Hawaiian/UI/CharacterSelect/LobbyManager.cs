@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -145,12 +146,13 @@ namespace Hawaiian.UI.CharacterSelect
             ready.SetActive(readyBool);
         }
         
+        // TODO: Make the buildIndex a variable.
         public void RequestMainMenu()
         {
-            // TODO: Update this condition
-            if (lobbyPlayerControllers.Count > -1) return;
-            
-            FindObjectOfType<Transition>().BeginTransition(true, true, -1, false);
+            if (lobbyPlayerControllers.All(l => l.Status == LobbyPlayerController.PlayerStatus.NotLoadedIn))
+            {
+                FindObjectOfType<Transition>().BeginTransition(true, true, 0, false);
+            }
         }
     }
 }
