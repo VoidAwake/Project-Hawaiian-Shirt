@@ -1,6 +1,12 @@
+using System;
 using System.Collections;
+using System.Linq;
+using Hawaiian.UI.General;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.Controls;
+using UnityEngine.InputSystem.LowLevel;
+using UnityEngine.InputSystem.Utilities;
 
 namespace Hawaiian.UI.CharacterSelect
 {
@@ -17,11 +23,21 @@ namespace Hawaiian.UI.CharacterSelect
             LoadedIn,
             Ready
         }
-        
-        public PlayerStatus status;
+
+        public PlayerStatus Status
+        {
+            get => status;
+            private set
+            {
+                status = value;
+                OnStatusChanged();
+            }
+        }
+
         public LobbyWindow lobbyWindow;
         public GameObject characterSelect;
         public PlayerConfig playerConfig;
+        private PlayerStatus status;
 
         #region MonoBehaviour Functions
 
@@ -46,6 +62,16 @@ namespace Hawaiian.UI.CharacterSelect
             }
         }
 
+        private void OnEnable()
+        {
+            InputSystem.onEvent += OnAnyButtonPressed;
+        }
+
+        private void OnDisable()
+        {
+            InputSystem.onEvent -= OnAnyButtonPressed;
+        }
+
         #endregion
 
         #region PlayerInput Messages
@@ -63,16 +89,19 @@ namespace Hawaiian.UI.CharacterSelect
             
             if (value.Get<float>() < 0.55f) return;
             
-            if (status == PlayerStatus.Ready)
+            switch (Status)
             {
-                lobbyManager.RequestStartGame();
-            }
-            else if (status == PlayerStatus.LoadedIn)
-            {
-                lobbyWindow.SetSelected();
-                lobbyManager.GetPortrait(playerConfig.characterNumber).alpha = 0.2f;
-                status = PlayerStatus.Ready;
-                lobbyManager.UpdateReadyToStart();
+                case PlayerStatus.NotLoadedIn:
+                    // Handled by OnAnyButtonPressed
+                    break;
+                case PlayerStatus.LoadedIn:
+                    Status = PlayerStatus.Ready;
+                    break;
+                case PlayerStatus.Ready:
+                    lobbyManager.RequestStartGame();
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
             }
         }
         
@@ -82,28 +111,51 @@ namespace Hawaiian.UI.CharacterSelect
             
             if (value.Get<float>() < 0.55f) return;
             
-            if (status == PlayerStatus.Ready)
+            switch (Status)
             {
-                lobbyWindow.SetUnselected();
-                lobbyManager.GetPortrait(playerConfig.characterNumber).alpha = 1.0f;
-                status = PlayerStatus.LoadedIn;
-                lobbyManager.UpdateReadyToStart();
-            }
-            else if (status == PlayerStatus.LoadedIn)
-            {
-                // Reset visuals for current player to unloaded in versions
-                lobbyWindow.SetEmpty();
-                characterSelect.SetActive(false);
-                lobbyManager.GetPortrait(playerConfig.characterNumber).alpha = 1.0f;
-                status = PlayerStatus.NotLoadedIn;
-                playerConfig.Clear();
-                lobbyManager.UpdateReadyToStart();
-
-                lobbyManager.UnloadPlayer(this);
+                case PlayerStatus.NotLoadedIn:
+                    lobbyManager.RequestMainMenu();
+                    break;
+                case PlayerStatus.LoadedIn:
+                    UpdateCharacterSelection(-1);
+                    Status = PlayerStatus.NotLoadedIn;
+                    break;
+                case PlayerStatus.Ready:
+                    Status = PlayerStatus.LoadedIn;
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
             }
         }
 
         #endregion
+
+        // TODO: Invert the dependencies of these UI elements
+        private void OnStatusChanged()
+        {
+            switch (Status)
+            {
+                case PlayerStatus.NotLoadedIn:
+                    lobbyWindow.SetEmpty();
+                    characterSelect.SetActive(false);
+                    // lobbyManager.GetPortrait(playerConfig.characterNumber).alpha = 1.0f;
+                    break;
+                case PlayerStatus.LoadedIn:
+                    lobbyWindow.SetUnselected();
+                    characterSelect.SetActive(true);
+                    lobbyManager.GetPortrait(playerConfig.characterNumber).alpha = 1.0f;
+                    break;
+                case PlayerStatus.Ready:
+                    lobbyWindow.SetSelected();
+                    characterSelect.SetActive(true);
+                    lobbyManager.GetPortrait(playerConfig.characterNumber).alpha = 0.2f;
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+            
+            lobbyManager.UpdateReadyToStart();
+        }
 
         public void Initialise(LobbyManager lobbyManager, LobbyWindow lobbyWindow, GameObject characterSelect, PlayerConfig playerConfig)
         {
@@ -111,24 +163,15 @@ namespace Hawaiian.UI.CharacterSelect
             this.lobbyWindow = lobbyWindow;
             this.characterSelect = characterSelect;
             this.playerConfig = playerConfig;
-            
-            // TODO: Overridden here, but a good reference for what need to be set
-            // status = PlayerStatus.NotLoadedIn;
-            // lobbyWindow.SetEmpty();
-            // characterSelect.gameObject.SetActive(false);
 
             moveBuffer = 1;
+            
+            
+            
             StartCoroutine(EnableInput());
             
-            if (!playerConfig.IsPlayer) return;
-            
-            lobbyWindow.SetUnselected();
-            characterSelect.SetActive(true);
-
             UpdateCharacterSelection(lobbyManager.FirstUnselectedCharacter());
-            status = PlayerStatus.LoadedIn;
-            
-            lobbyManager.UpdateReadyToStart();
+            Status = PlayerStatus.LoadedIn;
         }
 
         // When players join with the ready button this prevents them from immediately being ready.
@@ -141,9 +184,12 @@ namespace Hawaiian.UI.CharacterSelect
 
         private void UpdateCharacterSelection(int charNumber)
         {
+            playerConfig.characterNumber = charNumber;
+            
+            if (charNumber == -1) return;
+
             var portraitTransform = lobbyManager.GetPortrait(charNumber).GetComponent<RectTransform>();
             characterSelect.GetComponent<RectTransform>().anchoredPosition = portraitTransform.anchoredPosition;
-            playerConfig.characterNumber = charNumber;
             lobbyWindow.UpdateHead(charNumber);
         }
 
@@ -152,6 +198,38 @@ namespace Hawaiian.UI.CharacterSelect
             if (direction == 0) return;
 
             UpdateCharacterSelection(lobbyManager.FirstUnselectedCharacterFrom(playerConfig.characterNumber, direction));
+        }
+        
+        private void OnAnyButtonPressed(InputEventPtr eventPtr, InputDevice device)
+        {
+            if (!eventPtr.IsA<StateEvent>() && !eventPtr.IsA<DeltaStateEvent>()) return;
+
+            if (!GetComponent<PlayerInput>().devices.Contains(device)) return;
+
+            var controls = device.allControls;
+
+            var buttonPressPoint = InputSystem.settings.defaultButtonPressPoint;
+
+            for (var i = 0; i < controls.Count; ++i)
+            {
+                var control = controls[i] as ButtonControl;
+
+                if (control == null || control.synthetic || control.noisy) continue;
+
+                if (!control.ReadValueFromEvent(eventPtr, out var value) || !(value >= buttonPressPoint)) continue;
+
+                LoadIn();
+
+                break;
+            }
+        }
+
+        private void LoadIn()
+        {
+            if (Status != PlayerStatus.NotLoadedIn) return;
+    
+            UpdateCharacterSelection(lobbyManager.FirstUnselectedCharacterFrom(playerConfig.characterNumber, 1));
+            Status = PlayerStatus.LoadedIn;
         }
     }
 }
