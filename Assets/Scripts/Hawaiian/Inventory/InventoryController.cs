@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using System.Collections.Generic;
 using UnityEngine.Events;
-
+using System.Linq;
 
 namespace Hawaiian.Inventory
 {
@@ -28,6 +28,7 @@ namespace Hawaiian.Inventory
 
         private int tempPos;
 
+        private int prevScore = 0;
        
         //[SerializeField] private int invSize;a
 
@@ -36,12 +37,15 @@ namespace Hawaiian.Inventory
         private PositionalEventCaller positionalEventCaller;
 
         public Item CurrentItem => _inv.CurrentItem;
+        
+        public float Score => _inv.Score;
     
         private void Awake()
         {
             _inv = ScriptableObject.CreateInstance<Inventory>();
             _inv.SetInventory(size.Value);
             _inv.currentItemChanged.AddListener(OnCurrentItemChanged);
+            _inv.currentItemChanged.AddListener(CreateScorePopUp);
             
             addedInventory.Raise(_inv);
             _player = GetComponentInParent<UnitPlayer>();
@@ -70,33 +74,25 @@ namespace Hawaiian.Inventory
         {
             if (!addinv) return;
             
-            _inv.PickUp(item);
+            _inv.AddItem(item);
             addinv = !addinv;
         }
-        //
-        // void UpdateRotation(Vector2 newValue)
-        // {
-        //     _rotation = newValue;
-        //     _isJoystickNeutral = false;
-        // }
 
         private void OnPickUp()
         {
-            if (!_player.playerState.Equals(Unit.Unit.PlayerState.Tripped))
+            if (_player.playerState.Equals(Unit.Unit.PlayerState.Tripped)) return;
+            
+            foreach (var target in positionalEventCaller.Targets)
             {
-                foreach (var target in positionalEventCaller.Targets)
-                {
-                    var item = target.GetComponent<DroppedItem>().item;
+                var item = target.GetComponent<DroppedItem>().item;
 
-                    if (item == null) continue;
+                if (item == null) continue;
 
-                    if (!_inv.PickUp(item)) continue;
+                if (!_inv.AddItem(item)) continue;
 
-                    positionalEventCaller.Raise(target);
-                }
+                positionalEventCaller.Raise(target);
             }
         }
-
 
         public void SwitchItem(InputAction.CallbackContext value)
         {
@@ -235,7 +231,7 @@ namespace Hawaiian.Inventory
                 dp.GetComponent<DroppedItem>().item = _inv.inv[invPosition];
                 dp.GetComponent<SpriteRenderer>().sprite = _inv.inv[invPosition].DroppedItemSprite;
                 dp.GetComponent<ItemUnit>().OnThrow(dir);
-                _inv.DropItem(invPosition);
+                _inv.RemoveItemAt(invPosition);
                 hand.sprite = null;
             }
             else
@@ -248,7 +244,7 @@ namespace Hawaiian.Inventory
         {
             if (_inv.inv[invPosition] == null) return;
             
-            _inv.DropItem(_inv.InvPosition);
+            _inv.RemoveItemAt(_inv.InvPosition);
             hand.sprite = null;
         }
 
@@ -260,6 +256,18 @@ namespace Hawaiian.Inventory
         private void SelectionUpdate()
         {
             
+        }
+
+        private void CreateScorePopUp()
+        {
+            int newScore = (int)_inv.inv.Where(i => i != null).Sum(i => i.Points);
+
+            if (newScore != prevScore)
+            {
+                FindObjectOfType<ScorePopUpManager>().InstantiateScorePopUp(transform.parent, newScore - prevScore);
+            }
+
+            prevScore = newScore;
         }
     }
 }

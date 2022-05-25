@@ -30,15 +30,7 @@ namespace Hawaiian.Game
 
             if (gameTime.Value > 0) return;
 
-            gameTime.Value = 0;
-
-            StopTimer();
-            
-            // TODO: Move this to a dedicated script, possibly the game manager
-            gameTimeScale.Value = 0;
-            gameManager.Phase = GameManager.GamePhase.GameOver;
-
-            // TODO: Change to the results screen
+            TimesUp();
         }
 
         public void StartTimer()
@@ -56,5 +48,19 @@ namespace Hawaiian.Game
         //     if (gameManager.Phase == GameManager.GamePhase.Stealth)
         //         StartTimer();
         // }
+
+        [ContextMenu("TimesUp")]
+        private void TimesUp()
+        {
+            gameTime.Value = 0;
+
+            StopTimer();
+            
+            // TODO: Move this to a dedicated script, possibly the game manager
+            gameTimeScale.Value = 0;
+            gameManager.Phase = GameManager.GamePhase.GameOver;
+
+            // TODO: Change to the results screen
+        }
     }
 }
