@@ -47,7 +47,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _controller: {fileID: 2465565676560978990}
   text: {fileID: 4207172013415990270}
-  speed: 1.5
+  speed: 3
   color: {r: 0.9529412, g: 1, b: 0, a: 1}
   fade: {r: 0, g: 0, b: 0, a: 0}
 --- !u!1 &2425514219015514682
