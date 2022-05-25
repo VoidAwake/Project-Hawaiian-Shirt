@@ -4630,6 +4630,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6180cefe05035654aa54a1f3e194283e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerConfigs: []
 --- !u!114 &2142100494
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4642,11 +4643,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a57af34e6e383434f960151a56e1699f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  menuState: 0
-  subState: 0
   buildIndexOfNextScene: 2
-  playerStickInputs: 00000000000000000000000000000000
-  playerButtonInputs: 00000000000000000000000000000000
   windows:
   - {fileID: 1618283299}
   - {fileID: 1923667998}
