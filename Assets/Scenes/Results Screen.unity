@@ -362,6 +362,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2064617178, guid: 533b84e2b76db2a438dfb5719ea9d53a, type: 3}
+      propertyPath: disabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1448644550722796832, guid: 533b84e2b76db2a438dfb5719ea9d53a, type: 3}
       propertyPath: m_Name
       value: Results Screen Dialogue
