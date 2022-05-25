@@ -11092,7 +11092,7 @@ TextureImporter:
         serializedVersion: 2
         x: 272
         y: 128
-        width: 16
+        width: 32
         height: 16
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
@@ -11103,27 +11103,6 @@ TextureImporter:
       bones: []
       spriteID: 904a7ca02b9bc934aba6f45f5953c562
       internalID: 1832558648
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Kenney Control Prompts_528
-      rect:
-        serializedVersion: 2
-        x: 288
-        y: 128
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 36ff999107a0a27448b7385fff8eb7ad
-      internalID: 2082927420
       vertices: []
       indices: 
       edges: []

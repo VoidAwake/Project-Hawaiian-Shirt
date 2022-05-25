@@ -198,8 +198,8 @@
             "bindings": [
                 {
                     "name": "",
-                    "id": "fccf5e2a-da0e-477c-8cf8-110e5ee34dcc",
-                    "path": "<Keyboard>/r",
+                    "id": "2b83aef0-d12e-49e7-a72f-44bc9ca0a5b9",
+                    "path": "<Keyboard>/space",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard1",
@@ -209,11 +209,11 @@
                 },
                 {
                     "name": "",
-                    "id": "11473482-2c7b-4c60-9d6a-bcd67b7be1fd",
-                    "path": "<Gamepad>/buttonEast",
+                    "id": "fccf5e2a-da0e-477c-8cf8-110e5ee34dcc",
+                    "path": "<Keyboard>/r",
                     "interactions": "",
                     "processors": "",
-                    "groups": "Gamepad",
+                    "groups": "Keyboard1",
                     "action": "ActionA",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -243,7 +243,7 @@
                 {
                     "name": "",
                     "id": "e49416fa-f81f-4820-a088-504874099850",
-                    "path": "<Gamepad>/buttonNorth",
+                    "path": "<Gamepad>/buttonSouth",
                     "interactions": "",
                     "processors": "",
                     "groups": "Gamepad",
@@ -440,8 +440,8 @@
                 },
                 {
                     "name": "",
-                    "id": "ecdabce9-4916-420b-9b77-0754142dc787",
-                    "path": "<Keyboard>/t",
+                    "id": "e5e22e7b-1b53-4337-8c33-f88d56198a92",
+                    "path": "<Keyboard>/leftShift",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard1",
@@ -451,11 +451,11 @@
                 },
                 {
                     "name": "",
-                    "id": "a75af240-f082-4555-ae5c-d96f8ee6aec1",
-                    "path": "<Gamepad>/buttonSouth",
+                    "id": "ecdabce9-4916-420b-9b77-0754142dc787",
+                    "path": "<Keyboard>/t",
                     "interactions": "",
                     "processors": "",
-                    "groups": "Gamepad",
+                    "groups": "Keyboard1",
                     "action": "ActionB",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -485,11 +485,22 @@
                 {
                     "name": "",
                     "id": "f6ea0a2e-ad59-4d56-a73d-c8a2c725f932",
-                    "path": "<Gamepad>/buttonWest",
+                    "path": "<Gamepad>/buttonEast",
                     "interactions": "",
                     "processors": "",
                     "groups": "Gamepad",
                     "action": "ActionB",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "d46ed84c-9b04-4e71-8a1d-807a90d11b16",
+                    "path": "<Gamepad>/buttonSouth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "Attack",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -672,7 +683,7 @@
                 {
                     "name": "",
                     "id": "5b844866-dd44-49a2-ae31-08381ee9076f",
-                    "path": "<Gamepad>/buttonNorth",
+                    "path": "<Gamepad>/buttonWest",
                     "interactions": "",
                     "processors": "",
                     "groups": "Gamepad",
@@ -803,11 +814,33 @@
                 },
                 {
                     "name": "",
+                    "id": "45ff288b-8c6b-47a7-b580-5b78af0b8e85",
+                    "path": "<Keyboard>/leftShift",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard1",
+                    "action": "Drop",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "b759c435-d0ba-4448-bd1c-5815f0bd9761",
                     "path": "<Keyboard>/z",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard1",
+                    "action": "Drop",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "31ac4e01-1dd1-4523-852c-8e69ccb5d4a6",
+                    "path": "<Gamepad>/buttonEast",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
                     "action": "Drop",
                     "isComposite": false,
                     "isPartOfComposite": false
