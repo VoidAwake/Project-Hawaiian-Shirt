@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using System.Collections.Generic;
 using UnityEngine.Events;
-
+using System.Linq;
 
 namespace Hawaiian.Inventory
 {
@@ -28,6 +28,7 @@ namespace Hawaiian.Inventory
 
         private int tempPos;
 
+        private int prevScore = 0;
        
         //[SerializeField] private int invSize;a
 
@@ -42,6 +43,7 @@ namespace Hawaiian.Inventory
             _inv = ScriptableObject.CreateInstance<Inventory>();
             _inv.SetInventory(size.Value);
             _inv.currentItemChanged.AddListener(OnCurrentItemChanged);
+            _inv.currentItemChanged.AddListener(CreateScorePopUp);
             
             addedInventory.Raise(_inv);
             _player = GetComponentInParent<UnitPlayer>();
@@ -260,6 +262,18 @@ namespace Hawaiian.Inventory
         private void SelectionUpdate()
         {
             
+        }
+
+        private void CreateScorePopUp()
+        {
+            int newScore = (int)_inv.inv.Where(i => i != null).Sum(i => i.Points);
+
+            if (newScore != prevScore)
+            {
+                FindObjectOfType<ScorePopUpManager>().InstantiateScorePopUp(transform.parent, newScore - prevScore);
+            }
+
+            prevScore = newScore;
         }
     }
 }

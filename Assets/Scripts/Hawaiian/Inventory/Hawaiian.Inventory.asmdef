@@ -8,7 +8,8 @@
         "Hawaiian.Unit",
         "PositionalEvents",
         "Unity.InputSystem",
-        "Hawaiian.Input"
+        "Hawaiian.Input",
+        "Unity.TextMeshPro"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
