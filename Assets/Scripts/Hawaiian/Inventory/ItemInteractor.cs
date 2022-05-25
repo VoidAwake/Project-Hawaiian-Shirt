@@ -33,6 +33,8 @@ public class ItemInteractor : MonoBehaviour
     private float _offset = 1.1f;
     private float _slashCooldown;
 
+   [SerializeField] private GameEvent _removeItem;
+
     private GameObject _projectileInstance;
     private GameObject _projectileReference; //TODO: Get from item
 
@@ -139,8 +141,9 @@ public class ItemInteractor : MonoBehaviour
              i < _controller.CurrentItem.ProjectileAmount;
              i++)
         {
-            projectiles.Add(Instantiate(_controller.CurrentItem.ProjectileInstance, transform.position,
-                Quaternion.identity));
+
+             _projectileInstance = Instantiate(_controller.CurrentItem.ProjectileInstance, transform.position, Quaternion.identity);
+            projectiles.Add(_projectileInstance);
 
             if (i == -1)
                 break;
@@ -264,6 +267,7 @@ public class ItemInteractor : MonoBehaviour
                     case Throwable:
                         p.GetComponent<T>().Initialise(positions.ToArray(), CurrentItem.ItemSprite,
                             CurrentItem.SticksOnWall);
+                        _removeItem.Raise();
                         break;
                     case Projectile:
                         p.GetComponent<T>().Initialise(_playerReference, _multiShotTargets[index],
