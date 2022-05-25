@@ -55,7 +55,7 @@ namespace Hawaiian.UI.CharacterSelect
                             // Do a thing
                             if (itIsTheCharacterSelectScreenAndYouShouldIncrementTheLobbySubstateOnTransitionConclusion)
                             {
-                                FindObjectOfType<LobbyManager>().IncrementSubState();
+                                // FindObjectOfType<LobbyManager>().IncrementSubState();
                             }
                         }
                         else
@@ -65,7 +65,7 @@ namespace Hawaiian.UI.CharacterSelect
                             {
                                 LobbyGameManager manager = FindObjectOfType<LobbyGameManager>();
 
-                                foreach (LobbyGameManager.PlayerConfig config in manager.playerConfigs)
+                                foreach (PlayerConfig config in manager.playerConfigs)
                                 {
                                     if (config.IsPlayer) config.SetInputInfo(config.inputComponent);
                                 }

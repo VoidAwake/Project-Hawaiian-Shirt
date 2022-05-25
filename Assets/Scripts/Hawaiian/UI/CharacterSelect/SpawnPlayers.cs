@@ -1,5 +1,3 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Hawaiian.Game;
@@ -23,7 +21,7 @@ namespace Hawaiian.UI.CharacterSelect
         [SerializeField] private GameEvent playersJoined;
         [SerializeField] private List<SpawnPoint> spawnPoints;
         
-        private Dictionary<LobbyGameManager.PlayerConfig, InventoryController> inventoryControllers = new();
+        private Dictionary<PlayerConfig, InventoryController> inventoryControllers = new();
 
         private LobbyGameManager lobbyManager;
         private PlayerInputManager inputManager;
@@ -56,7 +54,7 @@ namespace Hawaiian.UI.CharacterSelect
 
         public void BeginSpawn()
         {
-            foreach (LobbyGameManager.PlayerConfig config in lobbyManager.playerConfigs)
+            foreach (PlayerConfig config in lobbyManager.playerConfigs)
             {
                 if (!config.IsPlayer) continue;
                 
@@ -76,8 +74,8 @@ namespace Hawaiian.UI.CharacterSelect
                 // Find inventory referenced by inventory controller contained by player prefab
                 for (int i = 0; i < newPlayer.transform.childCount; i++)
                 {
-                    Inventory.InventoryController temp = newPlayer.transform.GetChild(i)
-                        .GetComponent<Inventory.InventoryController>();
+                    InventoryController temp = newPlayer.transform.GetChild(i)
+                        .GetComponent<InventoryController>();
 
                     if (temp == null) continue;
                     
@@ -102,24 +100,14 @@ namespace Hawaiian.UI.CharacterSelect
             playersJoined.Raise();
 
         }
-        
-        
-        
-        
 
         public void SaveScores()
         {
             if (gameManager.Phase != GameManager.GamePhase.GameOver) return;
             
-            foreach (var VARIABLE in inventoryControllers)
+            foreach (var (playerConfig, inventoryController) in inventoryControllers)
             {
-                var inventoryController = VARIABLE.Value;
-                var playerConfig = VARIABLE.Key;
-
-                // TODO: Duplicate code. See ScoreUI.
-                var score = inventoryController._inv.inv.Where(i => i != null).Sum(i => i.Points);
-
-                playerConfig.score = score;
+                playerConfig.score = inventoryController.Score;
             }
             
             Transition transition = FindObjectOfType<Transition>();

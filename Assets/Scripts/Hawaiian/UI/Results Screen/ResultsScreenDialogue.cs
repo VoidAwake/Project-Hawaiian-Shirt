@@ -11,7 +11,7 @@ namespace Hawaiian.UI.Results_Screen
         [SerializeField] private BarChart barChart;
         [SerializeField] private Animator animator;
         [SerializeField] private float startDelayDuration;
-        [SerializeField] private LobbyGameManager.PlayerConfig[] defaultPlayerConfigs;
+        [SerializeField] private PlayerConfig[] defaultPlayerConfigs;
 
         private void Start()
         {

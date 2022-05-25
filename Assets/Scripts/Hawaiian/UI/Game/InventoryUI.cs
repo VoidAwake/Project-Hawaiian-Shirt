@@ -1,10 +1,10 @@
 using System.Collections.Generic;
 using System.Collections;
+using Hawaiian.Unit;
 using Hawaiian.Utilities;
 using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.Events;
 
 namespace Hawaiian.UI.Game
 {
@@ -25,7 +25,8 @@ namespace Hawaiian.UI.Game
         // Updating UI to match player loaded in
         [SerializeField] private Image head;
         [SerializeField] private Image backdrop;
-        [SerializeField] private Sprite[] headSprites;
+        [SerializeField] private PlayerSprites playerSprites;
+        [SerializeField] private PlayerColors playerColors;
 
         private void Start()
         {
@@ -127,27 +128,10 @@ namespace Hawaiian.UI.Game
             highlightCoroutine = null;
         }
 
-
         public void SetCharacterPortrait(int characterNo, int playerNo)
         {
-            if (characterNo < headSprites.Length) head.sprite = headSprites[characterNo];
-            switch (playerNo)
-            {
-                case 0:
-                    backdrop.color = new Color(0.764706f, 0.2627451f, 0.3607843f);
-                    break;
-                case 1:
-                    backdrop.color = new Color(0.2039216f, 0.4f, 0.6901961f);
-                    break;
-                case 2:
-                    backdrop.color = new Color(0.9450981f, 0.7607844f, 0.3372549f);
-                    break;
-                case 3:
-                    backdrop.color = new Color(0.5803922f, 0.8000001f, 0.2784314f);
-                    break;
-                default:
-                    break;
-            }
+            head.sprite = playerSprites.GetSprite(characterNo);
+            backdrop.color = playerColors.GetColor(playerNo);
         }
     }
 }

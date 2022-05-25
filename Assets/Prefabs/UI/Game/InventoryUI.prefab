@@ -367,15 +367,8 @@ MonoBehaviour:
   - {fileID: -1959829100, guid: a3627312065ae844b926aec3d48b7f5a, type: 3}
   head: {fileID: 7308255843757163693}
   backdrop: {fileID: 6198990866434898890}
-  headSprites:
-  - {fileID: -1082135578, guid: 7e590c97eac2c4f4aa98580729e4b759, type: 3}
-  - {fileID: -1370121563, guid: 7e590c97eac2c4f4aa98580729e4b759, type: 3}
-  - {fileID: -1057007253, guid: 7e590c97eac2c4f4aa98580729e4b759, type: 3}
-  - {fileID: 1402687085, guid: 7e590c97eac2c4f4aa98580729e4b759, type: 3}
-  - {fileID: -1232166184, guid: 7e590c97eac2c4f4aa98580729e4b759, type: 3}
-  - {fileID: -2054229679, guid: 7e590c97eac2c4f4aa98580729e4b759, type: 3}
-  - {fileID: 21300000, guid: 46842bf53a9f853438e991a3f63c67e4, type: 3}
-  - {fileID: 21300000, guid: 937a0f333c38fd8448ec72319e2ad217, type: 3}
+  playerSprites: {fileID: 11400000, guid: e5f723693f574a24299316641ccb42aa, type: 2}
+  playerColors: {fileID: 11400000, guid: c18c22b93a97a954ca8ab46031e350bd, type: 2}
 --- !u!114 &8936476180212163816
 MonoBehaviour:
   m_ObjectHideFlags: 0
