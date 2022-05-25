@@ -3,7 +3,6 @@ using System.Collections;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.InputSystem.Controls;
 using UnityEngine.InputSystem.LowLevel;
 
 namespace Hawaiian.UI.CharacterSelect
@@ -139,16 +138,19 @@ namespace Hawaiian.UI.CharacterSelect
                     lobbyWindow.SetEmpty();
                     characterSelect.SetActive(false);
                     // lobbyManager.GetPortrait(playerConfig.characterNumber).alpha = 1.0f;
+                    inputEnabled = false;
                     break;
                 case PlayerStatus.LoadedIn:
                     lobbyWindow.SetUnselected();
                     characterSelect.SetActive(true);
                     lobbyManager.GetPortrait(playerConfig.characterNumber).alpha = 1.0f;
+                    StartCoroutine(EnableInput());
                     break;
                 case PlayerStatus.Ready:
                     lobbyWindow.SetSelected();
                     characterSelect.SetActive(true);
                     lobbyManager.GetPortrait(playerConfig.characterNumber).alpha = 0.2f;
+                    StartCoroutine(EnableInput());
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
@@ -200,37 +202,34 @@ namespace Hawaiian.UI.CharacterSelect
         
         private void OnAnyButtonPressed(InputEventPtr eventPtr, InputDevice device)
         {
+            if (Status != PlayerStatus.NotLoadedIn) return;
+            
             if (!eventPtr.IsA<StateEvent>() && !eventPtr.IsA<DeltaStateEvent>()) return;
 
             if (!GetComponent<PlayerInput>().devices.Contains(device)) return;
 
-            var controls = device.allControls;
-
-            var buttonPressPoint = InputSystem.settings.defaultButtonPressPoint;
-
-            for (var i = 0; i < controls.Count; ++i)
+            // Copied from InputUser, works somehow.
+            foreach (var control in eventPtr.EnumerateChangedControls(device: device, magnitudeThreshold: 0.0001f))
             {
-                var control = controls[i] as ButtonControl;
-
                 if (control == null || control.synthetic || control.noisy) continue;
 
-                if (!control.ReadValueFromEvent(eventPtr, out var value) || !(value >= buttonPressPoint)) continue;
+                // If the button pressed was the ActionB button, request to return to the main menu
+                if (GetComponent<PlayerInput>().actions.FindAction("ActionB", true).controls.Contains(control))
+                {
+                    var requestGranted = lobbyManager.RequestMainMenu();
 
-                StartCoroutine(LoadIn());
+                    if (requestGranted)
+                        break;
+                }
 
+                LoadIn();
+                
                 break;
             }
         }
 
-        // TODO: This needs another look. We're delaying this by a frame so that the OnAction functions occur before OnAnyButtonPressed
-        private IEnumerator LoadIn()
+        private void LoadIn()
         {
-            if (Status != PlayerStatus.NotLoadedIn) yield break;
-            
-            yield return null;
-            
-            if (Status != PlayerStatus.NotLoadedIn) yield break;
-    
             UpdateCharacterSelection(lobbyManager.FirstUnselectedCharacterFrom(playerConfig.characterNumber, 1));
             Status = PlayerStatus.LoadedIn;
         }

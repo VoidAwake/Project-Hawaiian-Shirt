@@ -132,16 +132,23 @@ namespace Hawaiian.UI.CharacterSelect
         {
             if (lobbyPlayerControllers.Count == 0) return false;
 
-            return lobbyPlayerControllers.All(l => l.Status == LobbyPlayerController.PlayerStatus.Ready);
+            return AllPlayersHaveStatus(LobbyPlayerController.PlayerStatus.Ready);
+        }
+
+        private bool AllPlayersHaveStatus(LobbyPlayerController.PlayerStatus playerStatus)
+        {
+            return lobbyPlayerControllers.All(l => l.Status == playerStatus);
         }
 
         // TODO: Make the buildIndex a variable.
-        public void RequestMainMenu()
+        public bool RequestMainMenu()
         {
-            if (lobbyPlayerControllers.All(l => l.Status == LobbyPlayerController.PlayerStatus.NotLoadedIn))
-            {
-                FindObjectOfType<Transition>().BeginTransition(true, true, 0, false);
-            }
+            if (!AllPlayersHaveStatus(LobbyPlayerController.PlayerStatus.NotLoadedIn))
+                return false;
+            
+            FindObjectOfType<Transition>().BeginTransition(true, true, 0, false);
+            
+            return true;
         }
     }
 }
