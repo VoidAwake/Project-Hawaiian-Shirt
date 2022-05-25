@@ -133,11 +133,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _camera: {fileID: 2387493150576276816}
-  _smoothTime: 1
+  _smoothTime: 0.6
   _offset: {x: 0, y: 0}
   _maxZoom: 6
-  _minZoom: 30
-  _maximumDistance: 130
+  _minZoom: 40
+  _maximumDistance: 100
   players: []
 --- !u!114 &6250164837340820167
 MonoBehaviour:
