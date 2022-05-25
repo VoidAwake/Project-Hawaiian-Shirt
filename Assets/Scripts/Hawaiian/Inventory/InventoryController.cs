@@ -12,7 +12,7 @@ namespace Hawaiian.Inventory
 {
     public class InventoryController : MonoBehaviour
     {
-        [SerializeField] private UnitPlayer _player;
+        [SerializeField] public UnitPlayer _player;
         [SerializeField] private GameEvent parse;
         [SerializeField] private bool addinv;
         [SerializeField] private Item item;

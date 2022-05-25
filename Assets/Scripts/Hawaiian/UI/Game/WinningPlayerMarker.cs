@@ -1,5 +1,6 @@
-﻿using Hawaiian.UI.CharacterSelect;
-using UI.Core;
+﻿using System.Collections.Generic;
+using System.Linq;
+using Hawaiian.UI.CharacterSelect;
 using UnityEngine;
 
 namespace Hawaiian.UI.Game
@@ -9,14 +10,62 @@ namespace Hawaiian.UI.Game
     public class WinningPlayerMarker : MonoBehaviour
     {
         [SerializeField] private SpawnPlayers playerManager;
-        [SerializeField] private Transform marker;
+        [SerializeField] private GameObject markerPrefab;
         [SerializeField] private Vector3 offset;
-        
+
+        private Dictionary<Transform, Transform> markers = new();
+
+        private void OnEnable()
+        {
+            playerManager.winningPlayersChanged.AddListener(OnWinningPlayersChanged);
+        }
+
+        private void OnDisable()
+        {
+            playerManager.winningPlayersChanged.RemoveListener(OnWinningPlayersChanged);
+        }
+
         private void Update()
         {
-            if (playerManager.WinningPlayer == null) return;
+            foreach (var (source, dest) in markers)
+            {
+                dest.position = source.position + offset;
+            }
+        }
+
+        private void OnWinningPlayersChanged()
+        {
+            var oldWinningPlayers = markers.Keys.ToList();
+            var newWinningPlayers = playerManager.WinningPlayers;
+
+            foreach (var newWinningPlayer in newWinningPlayers)
+            {
+                if (!oldWinningPlayers.Contains(newWinningPlayer))
+                    AddMarker(newWinningPlayer);
+            }
+
+            foreach (var oldWinningPlayer in oldWinningPlayers)
+            {
+                if (!newWinningPlayers.Contains(oldWinningPlayer))
+                    RemoveMarker(oldWinningPlayer);
+            }
+        }
+
+        private void AddMarker(Transform player)
+        {
+            // TODO: Why don't we just put it on the player?
+            // TODO: We would need to make sure it was properly disposed if the player was destroyed.
+            // TODO: That would mean we could also remove the offset.
+            var markerGameObject = Instantiate(markerPrefab, transform);
             
-            marker.position = playerManager.WinningPlayer.position + offset;
+            markers.Add(player, markerGameObject.transform);
+        }
+
+        private void RemoveMarker(Transform player)
+        {
+            Destroy(markers[player].gameObject);
+
+            markers.Remove(player);
         }
     }
 }
