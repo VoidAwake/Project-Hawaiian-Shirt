@@ -12,10 +12,15 @@ public class ItemText : MonoBehaviour
     [SerializeField] private InventoryController _controller;
     [SerializeField] private TextMeshPro text;
     [SerializeField] private float speed;
+    [SerializeField] private Color color;
+    public Color fade;
     void Start()
     {
         //_controller = GetComponent<InventoryController>();
         _controller.currentItemChanged.AddListener(OnCurrentItemChanged);
+        fade = color;
+        fade = new Color(color.r, color.g, color.b, 0);
+
     }
 
     // Update is called once per frame
@@ -26,16 +31,13 @@ public class ItemText : MonoBehaviour
         if (_controller._inv.inv[_controller._inv.invPosition] != null)
         {
             text.text = _controller._inv.inv[_controller._inv.invPosition].ItemName;
-            text.alpha = 255f;
+            text.color = color;
             Debug.Log(_controller._inv.inv[_controller._inv.invPosition].ItemName);
         }
     }
 
     void Update()
     {
-        while (text.alpha > 0)
-        {
-            text.alpha -= Time.deltaTime * speed;
-        }
+        text.color = Color.Lerp(text.color, fade, speed * Time.deltaTime);
     }
 }

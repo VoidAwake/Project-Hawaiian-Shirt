@@ -47,7 +47,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _controller: {fileID: 2465565676560978990}
   text: {fileID: 4207172013415990270}
-  speed: 10
+  speed: 1.5
+  color: {r: 0.9529412, g: 1, b: 0, a: 1}
+  fade: {r: 0, g: 0, b: 0, a: 0}
 --- !u!1 &2425514219015514682
 GameObject:
   m_ObjectHideFlags: 0
@@ -342,7 +344,6 @@ MonoBehaviour:
   _animator: {fileID: 6074339650475639767}
   _removeItem: {fileID: 11400000, guid: cf1f575adfa07164c815adb0bfac6f43, type: 2}
   signal: 0
-  signal: 0
 --- !u!120 &5706338390592453364
 LineRenderer:
   m_ObjectHideFlags: 0
@@ -606,8 +607,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.12, y: -0.87}
-  m_SizeDelta: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: -0.39}
+  m_SizeDelta: {x: 3, y: 1}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!23 &6531843958465363891
 MeshRenderer:
@@ -629,7 +630,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  - {fileID: 8109771248515024507, guid: 5c6fd68caddd8f64dad4214a7ed94fd7, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -673,8 +674,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Gaming
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 5c6fd68caddd8f64dad4214a7ed94fd7, type: 2}
+  m_sharedMaterial: {fileID: 8109771248515024507, guid: 5c6fd68caddd8f64dad4214a7ed94fd7, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -698,15 +699,15 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 2
-  m_fontSizeBase: 2
+  m_fontSize: 3
+  m_fontSizeBase: 3
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 1
-  m_HorizontalAlignment: 1
-  m_VerticalAlignment: 256
+  m_HorizontalAlignment: 2
+  m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_wordSpacing: 0
