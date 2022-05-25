@@ -30,9 +30,16 @@ public class ItemText : MonoBehaviour
         Debug.Log("called");
         if (_controller._inv.inv[_controller._inv.invPosition] != null)
         {
-            text.text = _controller._inv.inv[_controller._inv.invPosition].ItemName;
-            text.color = color;
-            Debug.Log(_controller._inv.inv[_controller._inv.invPosition].ItemName);
+            if(text.text != _controller._inv.inv[_controller._inv.invPosition].ItemName)
+            {
+                text.text = _controller._inv.inv[_controller._inv.invPosition].ItemName;
+                text.color = color;
+                Debug.Log(_controller._inv.inv[_controller._inv.invPosition].ItemName);
+            }
+        }
+        else
+        {
+            text.text = "empty";
         }
     }
 
