@@ -279,6 +279,8 @@ public class ItemInteractor : MonoBehaviour
                 if (p.GetComponent<HitUnit>())
                     p.GetComponent<HitUnit>()
                         .Initialise(_playerReference, _cursor.transform.position - transform.position);
+                
+                
 
                 transform.parent.GetComponent<UnitAnimator>()
                     .UseItem(UnitAnimationState.Throw, _cursor.transform.position, false);

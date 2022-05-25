@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 4656649990868721079}
   - component: {fileID: 959576132401526846}
   - component: {fileID: 6305992027160832399}
-  - component: {fileID: 6007889600083281863}
+  - component: {fileID: 5313269524115035386}
   m_Layer: 0
   m_Name: SmokeBombThrowable
   m_TagString: Untagged
@@ -145,7 +145,7 @@ SortingGroup:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
---- !u!114 &6007889600083281863
+--- !u!114 &5313269524115035386
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -158,7 +158,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _speed: 0
+  _knockbackDistance: 0
   _canStickOnWalls: 0
-  _damage: 0
   _smokeEffectPrefab: {fileID: 5708808547914078901, guid: ccc42288e85ccf445aee0f1108f7cb0f, type: 3}
-  _event: {fileID: 11400000, guid: cf1f575adfa07164c815adb0bfac6f43, type: 2}

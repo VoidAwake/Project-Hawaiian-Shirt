@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Hawaiian.Unit;
 using UnityEngine;
 
@@ -12,12 +13,17 @@ namespace Hawaiian.Inventory
         private IUnit user;
         private Vector2 direction;
 
+        //Just alright it happens
+      [SerializeField]  private bool _overrideDirectionForBombs;
+
         public void Initialise(IUnit user, Vector2 direction) 
         {
             this.user = user;
             this.direction = direction;
         }
-        
+
+      
+
         public void OnTriggerEnter2D(Collider2D col)
         {
             // TODO: Duplicate code. See DamageIndicator.OnTriggerEnter2D
@@ -26,6 +32,11 @@ namespace Hawaiian.Inventory
             {
                 //Yucky 
                 IUnit target = (IUnit) unit;
+
+                if (_overrideDirectionForBombs)
+                {
+                    direction = target.GetPosition() - transform.position;
+                }
 
                 if (target == user || oldTargets.Contains(target))
                     return;

@@ -13,14 +13,15 @@ MonoBehaviour:
   m_Name: Smoke Bomb
   m_EditorClassIdentifier: 
   Type: 2
-  ItemSprite: {fileID: 21300000, guid: 8910701d3f9671d44bcecd8ecd3781a3, type: 3}
-  DroppedItemSprite: {fileID: 21300000, guid: 8910701d3f9671d44bcecd8ecd3781a3, type: 3}
+  ItemSprite: {fileID: 21300000, guid: 546cce52c9e4e3845a87d51e1ac70536, type: 3}
+  DroppedItemSprite: {fileID: 21300000, guid: 546cce52c9e4e3845a87d51e1ac70536, type: 3}
   ItemName: Smoke Bomb
   MaxStack: 0
   DroppedItemBase: {fileID: 3056942884218095950, guid: 37132a09f5d1c4046a4bb460892afc47, type: 3}
   ProjectileInstance: {fileID: 5387373904414807758, guid: 84361e5a6995d564b8208790e37d5c37, type: 3}
   Rarity: 1
   ItemWeight: 50
+  heldItemPrefab: {fileID: 0}
   ProbabilityRangeFrom: 0
   ProbabilityRangeTo: 0
   ItemDamage: 5

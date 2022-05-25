@@ -45,7 +45,10 @@ namespace Hawaiian.Unit
                 {
                     if (GetComponent<Projectile>())
                         direction = GetComponent<Projectile>().Direction;
-                    else
+                    else if (GetComponent<Bomb>())
+                    {
+                        direction = col.gameObject.transform.position - GetComponent<Bomb>().transform.position;
+                    } else
                         direction = defaultDirection;
 
                 }
