@@ -242,7 +242,7 @@ GameObject:
   - component: {fileID: 473664526002343672}
   - component: {fileID: 2023147119661780085}
   - component: {fileID: 5706338390592453364}
-  - component: {fileID: 6321439291829256184}
+  - component: {fileID: 6680228674293283482}
   m_Layer: 7
   m_Name: Inventory
   m_TagString: Untagged
@@ -343,7 +343,7 @@ MonoBehaviour:
   _meleeSlashRotationOffset: -90
   _handHelder: {fileID: 937560079924309396}
   _animator: {fileID: 6074339650475639767}
-  _removeItem: {fileID: 11400000, guid: cf1f575adfa07164c815adb0bfac6f43, type: 2}
+  _removeItem: {fileID: 11400000, guid: 3e4e531c6a7cb484bae0c31a53757702, type: 2}
   signal: 0
 --- !u!120 &5706338390592453364
 LineRenderer:
@@ -444,7 +444,7 @@ LineRenderer:
     generateLightingData: 0
   m_UseWorldSpace: 1
   m_Loop: 0
---- !u!114 &6321439291829256184
+--- !u!114 &6680228674293283482
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -453,17 +453,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 6722766841112063685}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e8beaaee945cf0844ad0f79ee7108362, type: 3}
+  m_Script: {fileID: 11500000, guid: 7cf258db3a2b91e46925f1ac4ae5cbd7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Event: {fileID: 11400000, guid: cf1f575adfa07164c815adb0bfac6f43, type: 2}
+  Event: {fileID: 11400000, guid: 3e4e531c6a7cb484bae0c31a53757702, type: 2}
   Response:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 2465565676560978990}
         m_TargetAssemblyTypeName: Hawaiian.Inventory.InventoryController, Hawaiian.Inventory
         m_MethodName: RemoveCurrentItem
-        m_Mode: 1
+        m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine

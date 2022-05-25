@@ -1,10 +1,6 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using Hawaiian.Inventory;
 using Hawaiian.Unit;
 using TMPro;
-using UnityEditor.UIElements;
 using UnityEngine;
 
 public class ItemText : MonoBehaviour
@@ -16,6 +12,7 @@ public class ItemText : MonoBehaviour
     [SerializeField] private Color color;
     [SerializeField] private PlayerColors options;
     public Color fade;
+
     void Start()
     {
         //_controller = GetComponent<InventoryController>();
@@ -23,7 +20,6 @@ public class ItemText : MonoBehaviour
         color = options.GetColor(_controller._player.PlayerNumber);
         fade = color;
         fade = new Color(color.r, color.g, color.b, 0);
-
     }
 
     // Update is called once per frame
@@ -33,7 +29,7 @@ public class ItemText : MonoBehaviour
         Debug.Log("called");
         if (_controller._inv.inv[_controller._inv.invPosition] != null)
         {
-            if(text.text != _controller._inv.inv[_controller._inv.invPosition].ItemName)
+            if (text.text != _controller._inv.inv[_controller._inv.invPosition].ItemName)
             {
                 text.text = _controller._inv.inv[_controller._inv.invPosition].ItemName;
                 text.color = color;

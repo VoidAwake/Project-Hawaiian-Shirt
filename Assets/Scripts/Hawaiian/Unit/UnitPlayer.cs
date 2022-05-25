@@ -7,11 +7,13 @@ namespace Hawaiian.Unit
 {
     public class UnitPlayer : Unit, IUnit
     {
-        public int playerNumber = -1;
        // [SerializeField] private PlayerInputManager.PlayerJoinedEvent _playerJoined;
         [SerializeField] private PlayerAction _input;
         [SerializeField] private PlayerInput _playerInput;
         [SerializeField] private GameEvent _playerJoined;
+        
+        public int GetPlayer { get; set; }
+
 
         private bool _attackFlag = false;
 
@@ -59,6 +61,7 @@ namespace Hawaiian.Unit
         { 
             move = value.Get<Vector2>();
         }
+
 
         public int PlayerNumber { get; set; }
         public Vector3 GetPosition() =>  transform.position;
