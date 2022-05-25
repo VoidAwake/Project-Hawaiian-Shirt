@@ -2,12 +2,18 @@
 using TMPro;
 using UI.Core;
 using UnityEngine;
+using System.Collections;
 
 namespace Hawaiian.UI.Game
 {
     public class ScoreUI : DialogueComponent<GameDialogue>
     {
         [SerializeField] private TMP_Text text;
+
+        Coroutine textCoroutine;
+        int currentScore;
+        int targetScore;
+        // float timer;
         
         public Inventory.Inventory inventory;
 
@@ -22,7 +28,48 @@ namespace Hawaiian.UI.Game
 
         private void UpdateText()
         {
-            text.text = "" + inventory.inv.Where(i => i != null).Sum(i => i.Points);
+            targetScore = (int)inventory.inv.Where(i => i != null).Sum(i => i.Points);
+
+            if (textCoroutine != null)
+            {
+                StopCoroutine(textCoroutine);
+            }
+            textCoroutine = StartCoroutine(AnimateText());
+        }
+
+        private IEnumerator AnimateText()
+        {
+            bool metTarget = false;
+            int rate = 0;
+
+            if (currentScore < targetScore)
+            {
+                rate = 1;
+                text.rectTransform.localScale = new Vector2(0.85f, 1.0f);
+            }
+            else if (targetScore < currentScore)
+            {
+                rate = -1;
+                text.rectTransform.localScale = new Vector2(1.0f, 0.65f);
+            }
+
+            while (!metTarget)
+            {
+                currentScore += rate;
+                text.text = "" + currentScore;
+
+                if (currentScore != targetScore)
+                {
+                    yield return new WaitForSeconds(0.02f);
+                }
+                else
+                {
+                    metTarget = true;
+                }
+            }
+
+            text.rectTransform.localScale = new Vector2(1,1);
+            textCoroutine = null;
         }
 
         protected override void Subscribe() { }
