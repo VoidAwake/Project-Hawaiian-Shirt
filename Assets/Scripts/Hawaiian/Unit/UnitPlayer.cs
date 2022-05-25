@@ -60,6 +60,7 @@ namespace Hawaiian.Unit
             move = value.Get<Vector2>();
         }
 
+        public int PlayerNumber { get; set; }
         public Vector3 GetPosition() =>  transform.position;
         
         

@@ -49,6 +49,7 @@ MonoBehaviour:
   text: {fileID: 4207172013415990270}
   speed: 3
   color: {r: 0.9529412, g: 1, b: 0, a: 1}
+  options: {fileID: 11400000, guid: c18c22b93a97a954ca8ab46031e350bd, type: 2}
   fade: {r: 0, g: 0, b: 0, a: 0}
 --- !u!1 &2425514219015514682
 GameObject:

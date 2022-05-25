@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Hawaiian.Inventory;
+using Hawaiian.Unit;
 using TMPro;
 using UnityEditor.UIElements;
 using UnityEngine;
@@ -13,11 +14,13 @@ public class ItemText : MonoBehaviour
     [SerializeField] private TextMeshPro text;
     [SerializeField] private float speed;
     [SerializeField] private Color color;
+    [SerializeField] private PlayerColors options;
     public Color fade;
     void Start()
     {
         //_controller = GetComponent<InventoryController>();
         _controller.currentItemChanged.AddListener(OnCurrentItemChanged);
+        color = options.GetColor(_controller._player.PlayerNumber);
         fade = color;
         fade = new Color(color.r, color.g, color.b, 0);
 
@@ -39,7 +42,7 @@ public class ItemText : MonoBehaviour
         }
         else
         {
-            text.text = "empty";
+            text.text = "";
         }
     }
 
