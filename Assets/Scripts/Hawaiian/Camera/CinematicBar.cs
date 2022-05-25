@@ -31,6 +31,7 @@ namespace Hawaiian.Camera
 
         private void Start()
         {
+            
         }
 
         private void GenerateTopBar()
@@ -38,9 +39,11 @@ namespace Hawaiian.Camera
             GameObject gameObject = new GameObject("Top_cinBar", typeof(Image));
 
             gameObject.transform.SetParent(transform, false);
-            gameObject.GetComponent<Image>().color = Color.black;
+            Image bar = gameObject.GetComponent<Image>();
+            bar.color = Color.black;
+            bar.GetComponent<Transform>().transform.SetSiblingIndex(0);
             _topBar = gameObject.GetComponent<RectTransform>();
-
+            
             //Set it to the top area of the camera
             _topBar.anchorMin = new Vector2(0, 1);
             _topBar.anchorMax = new Vector2(1, 1);
@@ -53,7 +56,7 @@ namespace Hawaiian.Camera
             gameObject.transform.SetParent(transform, false);
             gameObject.GetComponent<Image>().color = Color.black;
             _bottomBar = gameObject.GetComponent<RectTransform>();
-
+            gameObject.transform.SetSiblingIndex(0);
             //Set it to the top area of the camera
             _bottomBar.anchorMin = new Vector2(0, 0);
             _bottomBar.anchorMax = new Vector2(1, 0);

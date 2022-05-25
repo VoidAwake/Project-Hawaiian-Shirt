@@ -5,6 +5,7 @@ using Hawaiian.Inventory;
 using Hawaiian.Utilities;
 using MoreLinq;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 
@@ -20,6 +21,8 @@ namespace Hawaiian.UI.CharacterSelect
         [SerializeField] private GameManager gameManager;
         [SerializeField] private GameEvent playersJoined;
         [SerializeField] private List<SpawnPoint> spawnPoints;
+
+        public UnityEvent winningPlayersChanged = new();
         
         private Dictionary<PlayerConfig, InventoryController> inventoryControllers = new();
 
@@ -127,13 +130,41 @@ namespace Hawaiian.UI.CharacterSelect
             playersJoined.Raise();
         }
         
-        public Transform WinningPlayer { get; private set; }
+        public List<Transform> WinningPlayers { get; private set; }
 
         private void Update()
         {
             if (inventoryControllers.Count == 0) return;
             
-            WinningPlayer = inventoryControllers.MaxBy(i => InventoryScore(i.Value)).Value.transform;
+            // TODO: Inefficient to be doing this every frame. Only needs to be updated when scores change.
+            UpdateWinningPlayers();
+        }
+
+        private void UpdateWinningPlayers()
+        {
+            var inventoryScores = new Dictionary<InventoryController, float>();
+
+            var maxScore = 0f;
+
+            foreach (var (_, inventoryController) in inventoryControllers)
+            {
+                var score = InventoryScore(inventoryController);
+
+                inventoryScores.Add(inventoryController, score);
+
+                if (maxScore < score)
+                    maxScore = score;
+            }
+
+            WinningPlayers = inventoryScores
+                .Where(o => o.Value == maxScore)
+                .Select(o => o.Key.transform)
+                .ToList();
+            
+            if (WinningPlayers.Count == inventoryControllers.Count)
+                WinningPlayers.Clear();
+            
+            winningPlayersChanged.Invoke();
         }
 
         private static float InventoryScore(InventoryController inventoryController)

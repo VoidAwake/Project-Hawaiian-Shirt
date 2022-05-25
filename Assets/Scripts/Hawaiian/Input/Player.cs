@@ -208,6 +208,15 @@ namespace Hawaiian.Input
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Skip"",
+                    ""type"": ""Button"",
+                    ""id"": ""ecee8029-caca-4bef-b231-bba8bcc99d50"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -1145,6 +1154,28 @@ namespace Hawaiian.Input
                     ""action"": ""MenuSelect"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""908affcb-3669-4c9b-9073-9f1d88790462"",
+                    ""path"": ""<Gamepad>/buttonNorth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Skip"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a5e87f3c-8f49-4ee7-9bb7-59525e439a7c"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard1"",
+                    ""action"": ""Skip"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -1524,6 +1555,7 @@ namespace Hawaiian.Input
             m_Player_ParseThree = m_Player.FindAction("ParseThree", throwIfNotFound: true);
             m_Player_ParseFour = m_Player.FindAction("ParseFour", throwIfNotFound: true);
             m_Player_ParseFive = m_Player.FindAction("ParseFive", throwIfNotFound: true);
+            m_Player_Skip = m_Player.FindAction("Skip", throwIfNotFound: true);
             // Lobby Player
             m_LobbyPlayer = asset.FindActionMap("Lobby Player", throwIfNotFound: true);
             m_LobbyPlayer_Ready = m_LobbyPlayer.FindAction("Ready", throwIfNotFound: true);
@@ -1610,6 +1642,7 @@ namespace Hawaiian.Input
         private readonly InputAction m_Player_ParseThree;
         private readonly InputAction m_Player_ParseFour;
         private readonly InputAction m_Player_ParseFive;
+        private readonly InputAction m_Player_Skip;
         public struct PlayerActions
         {
             private @PlayerAction m_Wrapper;
@@ -1634,6 +1667,7 @@ namespace Hawaiian.Input
             public InputAction @ParseThree => m_Wrapper.m_Player_ParseThree;
             public InputAction @ParseFour => m_Wrapper.m_Player_ParseFour;
             public InputAction @ParseFive => m_Wrapper.m_Player_ParseFive;
+            public InputAction @Skip => m_Wrapper.m_Player_Skip;
             public InputActionMap Get() { return m_Wrapper.m_Player; }
             public void Enable() { Get().Enable(); }
             public void Disable() { Get().Disable(); }
@@ -1703,6 +1737,9 @@ namespace Hawaiian.Input
                     @ParseFive.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnParseFive;
                     @ParseFive.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnParseFive;
                     @ParseFive.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnParseFive;
+                    @Skip.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSkip;
+                    @Skip.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSkip;
+                    @Skip.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSkip;
                 }
                 m_Wrapper.m_PlayerActionsCallbackInterface = instance;
                 if (instance != null)
@@ -1767,6 +1804,9 @@ namespace Hawaiian.Input
                     @ParseFive.started += instance.OnParseFive;
                     @ParseFive.performed += instance.OnParseFive;
                     @ParseFive.canceled += instance.OnParseFive;
+                    @Skip.started += instance.OnSkip;
+                    @Skip.performed += instance.OnSkip;
+                    @Skip.canceled += instance.OnSkip;
                 }
             }
         }
@@ -1930,6 +1970,7 @@ namespace Hawaiian.Input
             void OnParseThree(InputAction.CallbackContext context);
             void OnParseFour(InputAction.CallbackContext context);
             void OnParseFive(InputAction.CallbackContext context);
+            void OnSkip(InputAction.CallbackContext context);
         }
         public interface ILobbyPlayerActions
         {

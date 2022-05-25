@@ -1,9 +1,12 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics.SymbolStore;
+using Hawaiian.Input;
 using Hawaiian.Utilities;
 using TMPro;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace Hawaiian.Camera
 {
@@ -14,6 +17,7 @@ namespace Hawaiian.Camera
         [SerializeField] private Waypoint _waypointTwo;
 
         public Waypoint[] GetWaypoints() => new[] {_waypointOne, _waypointTwo};
+
     }
 
     public class CinematicCamera : MonoBehaviour
@@ -32,21 +36,54 @@ namespace Hawaiian.Camera
 
         [SerializeField] private float _endSize;
         [SerializeField] private TextMeshProUGUI _countdown;
+        
+        private PlayerAction _action;
+        private PlayerInput _input;
 
+        private bool hasStartedCountdown;
+        private IEnumerator currentCoroutine;
 
         public void Awake()
         {
+            hasStartedCountdown = false;
             _countdown.text = "";
             _camera = GetComponent<UnityEngine.Camera>();
+            _action = new PlayerAction();
+        }
+
+        private void OnEnable()
+        {
+            _action.Enable();
+            _action.Player.Skip.performed += OnSkip;
+        }
+
+        private void OnDisable()
+        {
+            _action.Disable();
         }
 
         public void StartIntroCinematic() => StartCoroutine(RunLevelPreviewCinematic());
 
+        public void OnSkip(InputAction.CallbackContext ctx)
+        {
+            if (!hasStartedCountdown)
+            {
+                StopCoroutine(currentCoroutine);
+                StartCoroutine(LerpCameraSize(_sizeStep));
+            }
+        }
+        
+        
 
         IEnumerator RunLevelPreviewCinematic()
         {
             foreach (WaypointPair _pair in waypointPairs)
-                yield return StartCoroutine(LerpCameraToWaypointPairs(_pair, _step));
+            {
+                currentCoroutine = LerpCameraToWaypointPairs(_pair, _step);
+               yield return  StartCoroutine(currentCoroutine);
+
+
+            }
 
             yield return RunGameStart();
         }
@@ -69,9 +106,11 @@ namespace Hawaiian.Camera
 
         IEnumerator LerpCameraSize(float time)
         {
+            hasStartedCountdown = true;
             float elapsedTime = 0;
             float startSize = _camera.orthographicSize - 2;
             float endSize = _endSize;
+            transform.position = _outroWaypoint.GetWaypointPosition;
 
 
             while (elapsedTime < time)
