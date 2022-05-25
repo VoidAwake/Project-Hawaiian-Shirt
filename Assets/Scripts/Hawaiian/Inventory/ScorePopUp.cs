@@ -30,14 +30,14 @@ namespace Hawaiian.Inventory
         {
             if (rectTransform != null)
             {
-                float scale = 1.075f + 0.15f * Mathf.Sin(timer * 5.0f);
+                float scale = 1.075f + 0.15f * Mathf.Sin(timer * 20.0f);
                 rectTransform.localScale = new Vector2(scale, scale);
             }
 
             timer -= Time.deltaTime;
             if (timer < 0.0f)
             {
-                Destroy(gameObject);
+                transform.parent.GetComponent<ScorePopUpManager>().RemoveAndDestroy(this);
             }
         }
 
@@ -45,12 +45,13 @@ namespace Hawaiian.Inventory
         {
             if (parent != null && rectTransform != null)
             {
-                rectTransform.position = parent.position + Vector3.up * 1.0f;
+                rectTransform.position = parent.position + Vector3.up * 1.75f;
             }
         }
 
         public void SetUp(int scoreChange, Transform playerTransform)
         {
+            rectTransform = GetComponent<RectTransform>();
             parent = playerTransform;
             SetPosition();
 
@@ -60,6 +61,21 @@ namespace Hawaiian.Inventory
             {
                 text.color = new Color(0.9f, 0.2f, 0.3f);
             }
+
+            //// Delete existing pop ups for this player
+            //if (rectTransform != null)
+            //{
+            //    ScorePopUp[] existingPopUps = GetComponents<ScorePopUp>();
+            //    for (int i = existingPopUps.Length - 1; i >= 0; i--)
+            //    {
+            //        ScorePopUp popUp = existingPopUps[i];
+
+            //        if (popUp.parent == parent && popUp != this)
+            //        {
+            //            Destroy(popUp);
+            //        }
+            //    }
+            //}
         }
     }
 }
