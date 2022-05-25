@@ -71,6 +71,8 @@ namespace Hawaiian.UI.CharacterSelect
                     ((CharacterNames)config.characterNumber).ToString(),
                     ((PlayerColours)config.playerNumber).ToString());
 
+                newPlayer.GetComponent<Unit.IUnit>().PlayerNumber = config.playerNumber;
+
                 newPlayer.transform.position = spawnPoints[newPlayer.playerIndex].GetSpawnPosition();
 
                 // Update inventory UI
