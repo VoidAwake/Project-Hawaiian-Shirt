@@ -1,8 +1,8 @@
-﻿using System.Globalization;
-using TMPro;
+﻿using TMPro;
 using UI.Core;
 using UnityEngine;
 using System.Collections;
+using System.Linq;
 
 namespace Hawaiian.UI.Game
 {
