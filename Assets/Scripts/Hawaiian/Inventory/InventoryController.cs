@@ -12,7 +12,7 @@ namespace Hawaiian.Inventory
 {
     public class InventoryController : MonoBehaviour
     {
-        [SerializeField] private UnitPlayer _player;
+        [SerializeField] public UnitPlayer _player;
         [SerializeField] private GameEvent parse;
         [SerializeField] private bool addinv;
         [SerializeField] private Item item;
@@ -29,7 +29,7 @@ namespace Hawaiian.Inventory
         private int tempPos;
 
         private int prevScore = 0;
-       
+
         //[SerializeField] private int invSize;a
 
 
@@ -37,19 +37,19 @@ namespace Hawaiian.Inventory
         private PositionalEventCaller positionalEventCaller;
 
         public Item CurrentItem => _inv.CurrentItem;
-        
+
         public float Score => _inv.Score;
-    
+
         private void Awake()
         {
             _inv = ScriptableObject.CreateInstance<Inventory>();
             _inv.SetInventory(size.Value);
             _inv.currentItemChanged.AddListener(OnCurrentItemChanged);
             _inv.currentItemChanged.AddListener(CreateScorePopUp);
-            
+
             addedInventory.Raise(_inv);
             _player = GetComponentInParent<UnitPlayer>();
-          
+
             addinv = false;
             positionalEventCaller = GetComponent<PositionalEventCaller>();
         }
@@ -73,7 +73,7 @@ namespace Hawaiian.Inventory
         public void InitialiseHighlight()
         {
             if (!addinv) return;
-            
+
             _inv.AddItem(item);
             addinv = !addinv;
         }
@@ -81,7 +81,7 @@ namespace Hawaiian.Inventory
         private void OnPickUp()
         {
             if (_player.playerState.Equals(Unit.Unit.PlayerState.Tripped)) return;
-            
+
             foreach (var target in positionalEventCaller.Targets)
             {
                 var item = target.GetComponent<DroppedItem>().item;
@@ -98,20 +98,21 @@ namespace Hawaiian.Inventory
         {
             if (!value.performed)
                 return;
-            
+
             if (value.ReadValue<float>() > 0f)
                 OnCycleBackward();
             else
                 OnCycleForward();
         }
-        
+
         public void OnCycleForward()
         {
             // TODO: Two way dependency.
             // TODO: Replace with a cancel attack function
-            if (GetComponent<ItemInteractor>().IsAttacking) // makes sure that they cant change their items while attacking since that make it go brokey
+            if (GetComponent<ItemInteractor>()
+                .IsAttacking) // makes sure that they cant change their items while attacking since that make it go brokey
                 return;
-            
+
             _inv.InvPosition++;
             Parse();
         }
@@ -120,33 +121,34 @@ namespace Hawaiian.Inventory
         {
             // TODO: Two way dependency.
             // TODO: Replace with a cancel attack function
-            if (GetComponent<ItemInteractor>().IsAttacking) // makes sure that they cant change their items while attacking since that make it go brokey
+            if (GetComponent<ItemInteractor>()
+                .IsAttacking) // makes sure that they cant change their items while attacking since that make it go brokey
                 return;
-            
+
             _inv.InvPosition--;
             Parse();
         }
-    
+
         public void OnParseOne()
         {
             OnNumParse(0);
         }
-        
+
         public void OnParseTwo()
         {
             OnNumParse(1);
         }
-        
+
         public void OnParseThree()
         {
             OnNumParse(2);
         }
-        
+
         public void OnParseFour()
         {
             OnNumParse(3);
         }
-        
+
         public void OnParseFive()
         {
             OnNumParse(4);
@@ -157,16 +159,16 @@ namespace Hawaiian.Inventory
         {
             // TODO: Two way dependency.
             // TODO: Replace with a cancel attack function
-            if (GetComponent<ItemInteractor>().IsAttacking) // makes sure that they cant change their items while attacking since that make it go brokey
+            if (GetComponent<ItemInteractor>()
+                .IsAttacking) // makes sure that they cant change their items while attacking since that make it go brokey
                 return;
             _inv.invPosition = x;
             Parse();
         }
-        
+
         private void Parse()
         {
-            
-             //_inv.invPosition += i;
+            //_inv.invPosition += i;
             if (_inv.InvPosition > _inv.inv.Length - 1)
             {
                 _inv.InvPosition = 0;
@@ -176,35 +178,42 @@ namespace Hawaiian.Inventory
             {
                 _inv.InvPosition = _inv.inv.Length - 1;
             }
+
             //SelectionUpdate();
             if (_inv.inv[_inv.InvPosition] != null)
             {
                 hand.sprite = _inv.inv[_inv.InvPosition].ItemSprite;
-                
             }
             else
             {
                 hand.sprite = null;
             }
-            
+
             //how do i call an event c:
 
             currentItemChanged.Invoke();
 
             parse.Raise();
-            
         }
-        
+
         public void DropItLikeItsHot(Vector2 rad)
         {
             DropItem(_inv.invPosition, rad);
         }
 
+        public void RemoveCurrentItem(IUnit unit)
+        {
+            if (_player.PlayerNumber != unit.PlayerNumber)
+                return;
+
+            RemoveItemFromIndex(_inv.InvPosition);
+        }
+
+        
         public void RemoveCurrentItem()
         {
             RemoveItemFromIndex(_inv.InvPosition);
         }
-
 
         public void DropRandom(Vector2 dir)
         {
@@ -243,24 +252,22 @@ namespace Hawaiian.Inventory
         public void RemoveItemFromIndex(int invPosition)
         {
             if (_inv.inv[invPosition] == null) return;
-            
+
             _inv.RemoveItemAt(_inv.InvPosition);
             hand.sprite = null;
         }
 
         public void UseItem()
         {
-            
         }
 
         private void SelectionUpdate()
         {
-            
         }
 
         private void CreateScorePopUp()
         {
-            int newScore = (int)_inv.inv.Where(i => i != null).Sum(i => i.Points);
+            int newScore = (int) _inv.inv.Where(i => i != null).Sum(i => i.Points);
 
             if (newScore != prevScore)
             {

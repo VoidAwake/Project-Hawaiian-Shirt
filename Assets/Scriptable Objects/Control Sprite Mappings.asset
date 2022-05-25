@@ -65,3 +65,7 @@ MonoBehaviour:
     sprite: {fileID: 10634985, guid: d8502a59f79703847b043f2f26cbf536, type: 3}
   - controlPath: <Gamepad>/leftStick/y
     sprite: {fileID: -1776531482, guid: d8502a59f79703847b043f2f26cbf536, type: 3}
+  - controlPath: <Gamepad>/buttonWest
+    sprite: {fileID: -1910776877, guid: d8502a59f79703847b043f2f26cbf536, type: 3}
+  - controlPath: <Keyboard>/leftShift
+    sprite: {fileID: 1832558648, guid: d8502a59f79703847b043f2f26cbf536, type: 3}
