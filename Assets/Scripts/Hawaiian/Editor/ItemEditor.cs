@@ -38,7 +38,10 @@ namespace Hawaiian.Editor
         SerializedProperty MaximumBounces;
         SerializedProperty Rarity;
         SerializedProperty KnockbackDistance;
-        private SerializedProperty heldItemPrefab;
+        SerializedProperty heldItemPrefab;
+        SerializedProperty ParryWindow;
+        SerializedProperty TimeTillParry;
+        SerializedProperty ParryPercentage;
 
 
         private void OnEnable()
@@ -69,6 +72,10 @@ namespace Hawaiian.Editor
             Rarity = serializedObject.FindProperty("Rarity");
             KnockbackDistance = serializedObject.FindProperty("KnockbackDistance");
             heldItemPrefab = serializedObject.FindProperty("heldItemPrefab");
+            ParryWindow = serializedObject.FindProperty("ParryWindow");
+            TimeTillParry = serializedObject.FindProperty("TimeTillParry");
+            ParryPercentage = serializedObject.FindProperty("ParryPercentage");
+
         }
 
         public override void OnInspectorGUI()
@@ -100,6 +107,9 @@ namespace Hawaiian.Editor
                     break;
                 case ItemType.Other:
                     ShowOtherComponent();
+                    break;
+                case ItemType.Shield:
+                    ShowShieldComponents();
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
@@ -140,6 +150,19 @@ namespace Hawaiian.Editor
             EditorGUILayout.Space();
             EditorGUILayout.PropertyField(trapPlacementIcon, new GUIContent("Placement Icon"));
             EditorGUILayout.PropertyField(trapInstance, new GUIContent("Trap Instance "));
+        }
+
+        private void ShowShieldComponents()
+        {
+            GUILayout.Label("Shield Stats", EditorStyles.boldLabel);
+            EditorGUILayout.Space();
+            EditorGUILayout.PropertyField(ParryWindow, new GUIContent("Parry Window", "How long the shield parry will activate for, the longer the easier it is to parry"));
+            EditorGUILayout.IntSlider(ParryPercentage, 0, 100, new GUIContent("Parry Percentage",
+                "Refers to the percentage difference needed between a perfect and standard parry for example, " +
+                "a parry percentage of 20% means that the parry much be activated within the first 20% of the parry window time to be considered a perfect parry. Reccomended between 5-30%"));
+            EditorGUILayout.PropertyField(TimeTillParry, new GUIContent("Time Until Next Parry", "How long the shield is ready again after being used"));
+
+
         }
 
         private void ShowMeleeComponents()

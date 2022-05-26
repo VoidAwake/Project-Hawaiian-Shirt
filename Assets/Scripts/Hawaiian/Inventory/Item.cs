@@ -13,7 +13,8 @@ namespace Hawaiian.Inventory
         Throwable,
         Objective,
         Other,
-        Trap
+        Trap,
+        Shield
     }
 
     public enum ItemRarity
@@ -56,6 +57,11 @@ namespace Hawaiian.Inventory
         [HideInInspector] public int ProjectileAmount;
         [HideInInspector] public bool IsRicochet;
         [HideInInspector] public int MaximumBounces;
+
+        //Shield Specific Stats
+        [HideInInspector] public float ParryWindow;
+        [HideInInspector] public int ParryPercentage;
+        [HideInInspector] public float TimeTillParry;
 
 
         //Melee Specific Stats

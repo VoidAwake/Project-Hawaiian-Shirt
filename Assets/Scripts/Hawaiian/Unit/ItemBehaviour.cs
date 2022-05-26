@@ -19,6 +19,8 @@ namespace Hawaiian.Unit
             _speed = speed;
             _knockbackDistance = knockbackDistance;
         }
+        
+        public virtual void Initialise(float parryWindow, int parryPercentage, SpriteRenderer spriteReference){}
 
         public virtual void Initialise(Vector2[] targets, Sprite newSprite, bool canStickOnWalls = false) {}
 
