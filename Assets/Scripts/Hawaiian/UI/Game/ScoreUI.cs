@@ -41,16 +41,19 @@ namespace Hawaiian.UI.Game
         {
             bool metTarget = false;
             int rate = 0;
+            float fontSize = text.fontSize;
 
             if (currentScore < targetScore)
             {
                 rate = 1;
-                text.rectTransform.localScale = new Vector2(0.85f, 1.0f);
+                //text.rectTransform.localScale = new Vector2(0.85f, 1.0f);
+                text.fontSize = fontSize * 1.2f;
             }
             else if (targetScore < currentScore)
             {
                 rate = -1;
-                text.rectTransform.localScale = new Vector2(1.0f, 0.65f);
+                //text.rectTransform.localScale = new Vector2(1.0f, 0.65f);
+                text.fontSize = fontSize * 0.8f;
             }
 
             while (!metTarget)
@@ -68,7 +71,8 @@ namespace Hawaiian.UI.Game
                 }
             }
 
-            text.rectTransform.localScale = new Vector2(1,1);
+            //text.rectTransform.localScale = new Vector2(1,1);
+            text.fontSize = fontSize;
             textCoroutine = null;
         }
 

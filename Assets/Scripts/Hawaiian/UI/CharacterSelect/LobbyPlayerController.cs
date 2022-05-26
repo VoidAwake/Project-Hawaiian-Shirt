@@ -97,7 +97,10 @@ namespace Hawaiian.UI.CharacterSelect
                     Status = PlayerStatus.Ready;
                     break;
                 case PlayerStatus.Ready:
-                    lobbyManager.RequestStartGame();
+                    if (lobbyManager != null)
+                    {
+                        lobbyManager.RequestStartGame();
+                    }
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
@@ -120,7 +123,10 @@ namespace Hawaiian.UI.CharacterSelect
                     Status = PlayerStatus.NotLoadedIn;
                     break;
                 case PlayerStatus.Ready:
-                    Status = PlayerStatus.LoadedIn;
+                    if (lobbyManager != null)
+                    {
+                        Status = PlayerStatus.LoadedIn;
+                    }
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();

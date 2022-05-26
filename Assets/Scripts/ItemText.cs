@@ -8,18 +8,22 @@ public class ItemText : MonoBehaviour
     // Start is called before the first frame update
     [SerializeField] private InventoryController _controller;
     [SerializeField] private TextMeshPro text;
+    [SerializeField] private float duration;
     [SerializeField] private float speed;
     [SerializeField] private Color color;
     [SerializeField] private PlayerColors options;
     public Color fade;
+    private float timer;
 
     void Start()
     {
         //_controller = GetComponent<InventoryController>();
         _controller.currentItemChanged.AddListener(OnCurrentItemChanged);
-        color = options.GetColor(_controller._player.PlayerNumber);
+        color = new Color(1,1,1,1); //options.GetColor(_controller._player.PlayerNumber);
         fade = color;
         fade = new Color(color.r, color.g, color.b, 0);
+        text.color = fade;
+        text.text = "";
     }
 
     // Update is called once per frame
@@ -33,6 +37,7 @@ public class ItemText : MonoBehaviour
             {
                 text.text = _controller._inv.inv[_controller._inv.invPosition].ItemName;
                 text.color = color;
+                timer = duration;
                 Debug.Log(_controller._inv.inv[_controller._inv.invPosition].ItemName);
             }
         }
@@ -44,6 +49,13 @@ public class ItemText : MonoBehaviour
 
     void Update()
     {
-        text.color = Color.Lerp(text.color, fade, speed * Time.deltaTime);
+        if (timer > 0)
+        {
+            timer -= Time.deltaTime;
+        }
+        else
+        {
+            text.color = Color.Lerp(text.color, fade, speed * Time.deltaTime);
+        }
     }
 }
