@@ -47,7 +47,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _controller: {fileID: 2465565676560978990}
   text: {fileID: 4207172013415990270}
-  speed: 3
+  duration: 1
+  speed: 2
   color: {r: 0.9529412, g: 1, b: 0, a: 1}
   options: {fileID: 11400000, guid: c18c22b93a97a954ca8ab46031e350bd, type: 2}
   fade: {r: 0, g: 0, b: 0, a: 0}
@@ -546,8 +547,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 92b204cca46037444ab18ba6701f86f7, type: 3}
-  m_Color: {r: 1, g: 0, b: 0, a: 1}
+  m_Sprite: {fileID: 21300000, guid: 7b37c8fdbb22dd849809433623b42640, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -700,8 +701,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 3
-  m_fontSizeBase: 3
+  m_fontSize: 3.5
+  m_fontSizeBase: 3.5
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -716,7 +717,7 @@ MonoBehaviour:
   m_lineSpacingMax: 0
   m_paragraphSpacing: 0
   m_charWidthMaxAdj: 0
-  m_enableWordWrapping: 1
+  m_enableWordWrapping: 0
   m_wordWrappingRatios: 0.4
   m_overflowMode: 0
   m_linkedTextComponent: {fileID: 0}
@@ -1081,6 +1082,7 @@ MonoBehaviour:
   testFloat: 0
   head: {fileID: 7237116040329313408}
   torso: {fileID: 6508653587361009964}
+  playerColors: {fileID: 11400000, guid: c18c22b93a97a954ca8ab46031e350bd, type: 2}
   playerState: 0
   _maxHealth: 20
   tripTime: 0.75
@@ -1089,7 +1091,6 @@ MonoBehaviour:
   maxSpeed: 6.5
   tweenRate: 15
   runMultiplier: 1.75
-  playerNumber: -1
   _playerInput: {fileID: 6432945937749252037}
   _playerJoined: {fileID: 11400000, guid: 2a2ac177cfbc4ee44a6355e7378dddb1, type: 2}
 --- !u!114 &6432945937749252037

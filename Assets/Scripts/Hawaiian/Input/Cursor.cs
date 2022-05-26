@@ -24,6 +24,7 @@ namespace Hawaiian.Input
         private PlayerAction action;
         private float _currentRadius;
         private Vector2 _rotation;
+        private Vector2 _move;
 
         public float BaseRadius => _baseRadius;
 
@@ -50,6 +51,11 @@ namespace Hawaiian.Input
         {
             get => _maxRadius;
             set => _maxRadius = value;
+        }
+
+        public void OnMove(InputValue value)
+        {
+            _move = value.Get<Vector2>();
         }
 
         public void OnRotate(InputValue value)
@@ -90,32 +96,49 @@ namespace Hawaiian.Input
         {
 
             Vector3 playerInput;
-            var position = new Vector3(_player.transform.position.x, _player.transform.position.y + 0.5f , _player.transform.position.z);
+            //var position = new Vector3(_player.transform.position.x, _player.transform.position.y + 0.5f , _player.transform.position.z);
 
-            if (_input.currentControlScheme == "Gamepad")
+            //if (_input.currentControlScheme == "Gamepad")
+            //{
+            if (_rotation.magnitude > 0.05f)
             {
-                playerInput = _rotation;
-                if (transform.parent.localScale.x < 0)
-                {
-                    playerInput = new Vector3(-playerInput.x, playerInput.y, playerInput.z);
-                }
-                transform.localPosition = playerInput * _currentRadius + Vector3.up * 0.5f;
+                playerInput = _rotation.normalized;
+            }
+            //else if (_keyboardPosition.magnitude > 0.05f) // _keyboardPosition is never set back to zero you let go of an arrow key, so reticle will never default to movement direction
+            //{
+            //    playerInput = _keyboardPosition.normalized;
+            //}
+            else if (_move.magnitude > 0.05f)
+            {
+                playerInput = _move.normalized;
             }
             else
             {
-                transform.localPosition = _keyboardPosition * _currentRadius;
-                // playerInput =  UnityEngine.Input.mousePosition;
-                //
-                // Vector3 worldPosition = Camera.main.ScreenToWorldPoint(playerInput);
-                // // Debug.Log(worldPosition);
-                // worldPosition.z = 0f; // set to zero since its a 2d game
-                // var mouseDirection = (worldPosition - position).normalized;
-                // _mousePosition = position + mouseDirection * _currentRadius;
-                // // Debug.Log("current radius: " + _currentRadius);
-                // transform.position = _mousePosition;
-
-                // Debug.Log("current transform" + transform.position);
+                Vector3 prevInput = ((transform.localPosition - Vector3.up * 0.5f) / _currentRadius);
+                playerInput = prevInput.magnitude == 0 ? Vector2.right.normalized : prevInput.normalized;
             }
+
+            if (transform.parent.localScale.x < 0)
+            {
+                playerInput = new Vector3(-playerInput.x, playerInput.y, playerInput.z);
+            }
+            transform.localPosition = playerInput * _currentRadius + Vector3.up * 0.5f;
+            //}
+            //else
+            //{
+            //    transform.localPosition = _keyboardPosition * _currentRadius;
+            //    // playerInput =  UnityEngine.Input.mousePosition;
+            //    //
+            //    // Vector3 worldPosition = Camera.main.ScreenToWorldPoint(playerInput);
+            //    // // Debug.Log(worldPosition);
+            //    // worldPosition.z = 0f; // set to zero since its a 2d game
+            //    // var mouseDirection = (worldPosition - position).normalized;
+            //    // _mousePosition = position + mouseDirection * _currentRadius;
+            //    // // Debug.Log("current radius: " + _currentRadius);
+            //    // transform.position = _mousePosition;
+
+            //    // Debug.Log("current transform" + transform.position);
+            //}
 
             // var  playerInput = UnityEngine.Input.mousePosition;
      

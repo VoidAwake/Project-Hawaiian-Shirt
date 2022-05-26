@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.U2D.Animation;
+using Hawaiian.Input;
 
 namespace Hawaiian.Unit
 {
@@ -12,6 +13,8 @@ namespace Hawaiian.Unit
 
         [SerializeField] SpriteResolver head;
         [SerializeField] SpriteResolver torso;
+
+        [SerializeField] PlayerColors playerColors;
 
         public enum PlayerState { Walking, Tripped }
         public PlayerState playerState = PlayerState.Walking;
@@ -149,6 +152,33 @@ namespace Hawaiian.Unit
         {
             head.SetCategoryAndLabel("Head", headName);
             torso.SetCategoryAndLabel("Torso", torsoName);
+
+            for (int i = 0; i < transform.childCount; i++)
+            {
+                if (transform.GetChild(i).TryGetComponent<Input.Cursor>(out Input.Cursor cursor))
+                {
+                    if (transform.GetChild(i).TryGetComponent<SpriteRenderer>(out SpriteRenderer sprite))
+                    {
+                        switch (torsoName)
+                        {
+                            case "Red":
+                                sprite.color = playerColors.GetColor(0);
+                                break;
+                            case "Blue":
+                                sprite.color = playerColors.GetColor(1);
+                                break;
+                            case "Yellow":
+                                sprite.color = playerColors.GetColor(2);
+                                break;
+                            case "Green":
+                                sprite.color = playerColors.GetColor(3);
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                }
+            }
         }
     }
 }

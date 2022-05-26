@@ -13,8 +13,9 @@ namespace Hawaiian.UI.Game
         Coroutine textCoroutine;
         int currentScore;
         int targetScore;
+        float fontSize;
         // float timer;
-        
+
         public Inventory.Inventory inventory;
 
         protected override void OnComponentStart()
@@ -22,7 +23,8 @@ namespace Hawaiian.UI.Game
             base.OnComponentStart();
             
             inventory.currentItemChanged.AddListener(UpdateText);
-            
+
+            fontSize = text.fontSize;
             UpdateText();
         }
 
@@ -45,12 +47,14 @@ namespace Hawaiian.UI.Game
             if (currentScore < targetScore)
             {
                 rate = 1;
-                text.rectTransform.localScale = new Vector2(0.85f, 1.0f);
+                //text.rectTransform.localScale = new Vector2(0.85f, 1.0f);
+                text.fontSize = fontSize * 1.2f;
             }
             else if (targetScore < currentScore)
             {
                 rate = -1;
-                text.rectTransform.localScale = new Vector2(1.0f, 0.65f);
+                //text.rectTransform.localScale = new Vector2(1.0f, 0.65f);
+                text.fontSize = fontSize * 0.8f;
             }
 
             while (!metTarget)
@@ -68,7 +72,8 @@ namespace Hawaiian.UI.Game
                 }
             }
 
-            text.rectTransform.localScale = new Vector2(1,1);
+            //text.rectTransform.localScale = new Vector2(1,1);
+            text.fontSize = fontSize;
             textCoroutine = null;
         }
 
