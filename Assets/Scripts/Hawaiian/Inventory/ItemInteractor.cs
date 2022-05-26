@@ -49,6 +49,8 @@ public class ItemInteractor : MonoBehaviour
         set => _rotation = value;
     }
 
+    private Vector2 _move;
+
     public bool CanMeleeAttack() => _slashCooldown <= 0;
 
     public bool signal = false;
@@ -111,6 +113,12 @@ public class ItemInteractor : MonoBehaviour
     {
         _rotation = value.Get<Vector2>();
     }
+
+    public void OnMove(InputValue value)
+    {
+        _move = value.Get<Vector2>();
+    }
+
 
     //Handles when the player holds the attack for throwables and projectiles
     public void HoldAttack(InputAction.CallbackContext value)
@@ -322,12 +330,16 @@ public class ItemInteractor : MonoBehaviour
         var position = new Vector3(transform.position.x, transform.position.y + 0.5f, transform.position.z);
 
 
-        if (_playerReference.GetPlayerInput().currentControlScheme == "Gamepad")
-        {
-            if (_isJoystickNeutral) _rotation = _animator.IsLookingLeft ? Vector2.left : Vector2.right;
-        }
+        //if (_playerReference.GetPlayerInput().currentControlScheme == "Gamepad")
+        //{
+        //    if (_isJoystickNeutral) _rotation = _animator.IsLookingLeft ? Vector2.left : Vector2.right;
+        //}
 
-        playerInput = _rotation;
+        //playerInput = _rotation;
+
+        Vector3 prevInput = (_cursor.transform.localPosition - Vector3.up * 0.5f);
+        playerInput = prevInput.magnitude == 0 ? Vector2.right.normalized : prevInput.normalized;
+
         _lastAttackPosition = position + (Vector3) playerInput * _offset;
         return playerInput;
     }
@@ -383,7 +395,7 @@ public class ItemInteractor : MonoBehaviour
                 var y = Mathf.Sin(radians);
                 var targetPos = transform.position + new Vector3(x, y, 0f) * _cursor.CurrentRad;
 
-                Vector3[] otherPositions = new[] {targetPos, _playerReference.transform.position,};
+                Vector3[] otherPositions = new[] {targetPos, _playerReference.transform.position + Vector3.up * 0.5f,};
 
                 _multiShotTargets[i] = targetPos;
                 lr.positionCount = 2;
