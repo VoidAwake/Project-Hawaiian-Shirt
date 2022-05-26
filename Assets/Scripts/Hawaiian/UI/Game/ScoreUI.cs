@@ -13,8 +13,9 @@ namespace Hawaiian.UI.Game
         Coroutine textCoroutine;
         int currentScore;
         int targetScore;
+        float fontSize;
         // float timer;
-        
+
         public Inventory.Inventory inventory;
 
         protected override void OnComponentStart()
@@ -22,7 +23,8 @@ namespace Hawaiian.UI.Game
             base.OnComponentStart();
             
             inventory.currentItemChanged.AddListener(UpdateText);
-            
+
+            fontSize = text.fontSize;
             UpdateText();
         }
 
@@ -41,7 +43,6 @@ namespace Hawaiian.UI.Game
         {
             bool metTarget = false;
             int rate = 0;
-            float fontSize = text.fontSize;
 
             if (currentScore < targetScore)
             {
