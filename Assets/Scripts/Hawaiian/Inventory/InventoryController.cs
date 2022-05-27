@@ -238,7 +238,15 @@ namespace Hawaiian.Inventory
             {
                 GameObject dp = Instantiate(droppedItem, transform.position, quaternion.identity);
                 dp.GetComponent<DroppedItem>().item = _inv.inv[invPosition];
-                dp.GetComponent<SpriteRenderer>().sprite = _inv.inv[invPosition].DroppedItemSprite;
+                //dp.GetComponent<SpriteRenderer>().sprite = _inv.inv[invPosition].DroppedItemSprite;
+                // I'm so sorry
+                for (int i = 0; i < dp.transform.childCount; i++)
+                {
+                    if (transform.parent.GetChild(i).name == "Item Sprite")
+                    {
+                        dp.transform.GetChild(i).GetComponent<SpriteRenderer>().sprite = _inv.inv[invPosition].DroppedItemSprite;
+                    }
+                }
                 dp.GetComponent<ItemUnit>().OnThrow(dir);
                 _inv.RemoveItemAt(invPosition);
                 hand.sprite = null;
