@@ -236,7 +236,7 @@ namespace Hawaiian.Inventory
         {
             if (_inv.inv[invPosition] != null)
             {
-                GameObject dp = Instantiate(droppedItem, transform.position, quaternion.identity);
+                GameObject dp = Instantiate(droppedItem, transform.position + Vector3.up * 0.5f, quaternion.identity);
                 dp.GetComponent<DroppedItem>().item = _inv.inv[invPosition];
                 //dp.GetComponent<SpriteRenderer>().sprite = _inv.inv[invPosition].DroppedItemSprite;
                 // I'm so sorry
