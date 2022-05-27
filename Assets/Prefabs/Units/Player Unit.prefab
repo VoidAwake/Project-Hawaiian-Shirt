@@ -919,6 +919,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 7
       objectReference: {fileID: 0}
+    - target: {fileID: 6102377926319628895, guid: fe93fd4b04ca3d340865789a7d27cade, type: 3}
+      propertyPath: m_Radius
+      value: 0.5
+      objectReference: {fileID: 0}
     - target: {fileID: 6239131887155047939, guid: fe93fd4b04ca3d340865789a7d27cade, type: 3}
       propertyPath: m_Layer
       value: 7
@@ -1086,6 +1090,7 @@ MonoBehaviour:
   torso: {fileID: 6508653587361009964}
   playerColors: {fileID: 11400000, guid: c18c22b93a97a954ca8ab46031e350bd, type: 2}
   playerState: 0
+  OverrideDamage: 0
   _maxHealth: 20
   tripTime: 0.75
   invincibilityTime: 1

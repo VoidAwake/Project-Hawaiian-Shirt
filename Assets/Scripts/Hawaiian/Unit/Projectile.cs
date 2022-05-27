@@ -48,6 +48,21 @@ namespace Hawaiian.Unit
             Direction = _targetLocation - (Vector2) transform.position;
         }
 
+        public void UpdateTarget(Vector2 newDirection, float distance)
+        {
+            Direction = newDirection;
+            _targetLocation = Direction * distance;
+        }
+        
+        //Removes special bonus from boomerangs such as return to player and ricochet etc.
+        public void UpdateTargetToFinalDestination(Vector2 newDirection, float distance)
+        {
+            _isRicochet = false;
+            _returnsToPlayer = false;
+            Direction = newDirection;
+            _targetLocation = Direction * distance;
+        }
+
         private void Update()
         {
             if (hasCollided && _isRicochet)

@@ -17,6 +17,7 @@ namespace Hawaiian.Unit
         public void ApplyKnockback(Vector2 direction, float distance);
         
         public void TripUnit(Vector2 direction, float distance);
+        public UnitPlayer GetUnit();
 
 
     }

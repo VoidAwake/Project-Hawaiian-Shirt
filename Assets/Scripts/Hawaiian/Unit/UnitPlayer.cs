@@ -93,5 +93,8 @@ namespace Hawaiian.Unit
         {
            KnockBack(direction,distance);
         }
+
+        public UnitPlayer GetUnit() => this;
+        
     }
 }
