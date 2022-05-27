@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 877040344599311306}
   - component: {fileID: 3855996227794635073}
   - component: {fileID: 8536377188388579764}
+  - component: {fileID: 3876312821029595878}
   m_Layer: 0
   m_Name: Highlighter
   m_TagString: Untagged
@@ -97,3 +98,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b7d2f2c8198d4978b68500b6070f1548, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &3876312821029595878
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2065759647219533693}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6e52c0d97050984438d4abfcafb2ef7e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animationType: 0
+  animateX: 0
+  boundsX: 0
+  rateX: 0
+  animateY: 1
+  boundsY: 0.035
+  rateY: 5

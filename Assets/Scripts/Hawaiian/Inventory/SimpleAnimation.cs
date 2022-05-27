@@ -15,19 +15,12 @@ namespace Hawaiian.Inventory
         [SerializeField] float boundsY;
         [SerializeField] float rateY;
 
-        // Start is called before the first frame update
-        void Start()
-        {
-
-        }
-
-        // Update is called once per frame
         void Update()
         {
             switch (animationType)
             {
                 case AnimationType.Sine:
-                    transform.localPosition = new Vector2(animateX ? boundsX * Mathf.Sin(Time.time * rateX) : 0, animateY ? boundsY * Mathf.Sin(Time.time * rateY) : 0);
+                    transform.localPosition = new Vector2(animateX ? boundsX * Mathf.Sin(Time.time * rateX) : transform.localPosition.x, animateY ? boundsY * Mathf.Sin(Time.time * rateY) : transform.localPosition.y);
                     break;
                 default:
                     break;
