@@ -42,6 +42,13 @@ namespace Hawaiian.Inventory
                     return;
                 
                 if (unit.isInvincible) return;
+
+                //Used if the user has parried sucessfully
+                if (unit.OverrideDamage)
+                {
+                    unit.OverrideDamage = false;
+                    return;
+                }
                 
                 oldTargets.Add(target);
 

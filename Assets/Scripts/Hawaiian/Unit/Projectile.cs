@@ -25,6 +25,8 @@ namespace Hawaiian.Unit
         private float maxSpeed;
         public float Speed => _speed;
         public bool CanStickOnWalls => _canStickOnWalls;
+
+        public IUnit User => _user;
         public Vector2 Direction { get; private set; }
 
         public void Initialise(Vector3 target)

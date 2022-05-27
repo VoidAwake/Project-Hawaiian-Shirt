@@ -33,9 +33,11 @@ MonoBehaviour:
   ProjectileAmount: 0
   IsRicochet: 0
   MaximumBounces: 0
-  ParryWindow: 2
-  ParryPercentage: 20
+  ParryWindow: 0.2
+  ParryPercentage: 50
   TimeTillParry: 2
+  ShieldUp: {fileID: 21300000, guid: 22c2cfc54d4583a4aa652db53ed43ac0, type: 3}
+  ShieldDown: {fileID: 21300000, guid: 2c226040600412248b0a41c9e8d0735f, type: 3}
   AttackRate: 0
   KnockbackDistance: 0
   IsMainObjective: 0

@@ -42,6 +42,8 @@ namespace Hawaiian.Editor
         SerializedProperty ParryWindow;
         SerializedProperty TimeTillParry;
         SerializedProperty ParryPercentage;
+        SerializedProperty ShieldUp;
+        SerializedProperty ShieldDown;
 
 
         private void OnEnable()
@@ -75,6 +77,8 @@ namespace Hawaiian.Editor
             ParryWindow = serializedObject.FindProperty("ParryWindow");
             TimeTillParry = serializedObject.FindProperty("TimeTillParry");
             ParryPercentage = serializedObject.FindProperty("ParryPercentage");
+            ShieldUp = serializedObject.FindProperty("ShieldUp");
+            ShieldDown = serializedObject.FindProperty("ShieldDown");
 
         }
 
@@ -161,6 +165,10 @@ namespace Hawaiian.Editor
                 "Refers to the percentage difference needed between a perfect and standard parry for example, " +
                 "a parry percentage of 20% means that the parry much be activated within the first 20% of the parry window time to be considered a perfect parry. Reccomended between 5-30%"));
             EditorGUILayout.PropertyField(TimeTillParry, new GUIContent("Time Until Next Parry", "How long the shield is ready again after being used"));
+            EditorGUILayout.Space();
+            EditorGUILayout.PropertyField(ShieldUp, new GUIContent("Shield Up Sprite"));
+            EditorGUILayout.PropertyField(ShieldDown, new GUIContent("Shield Down Sprite"));
+
 
 
         }

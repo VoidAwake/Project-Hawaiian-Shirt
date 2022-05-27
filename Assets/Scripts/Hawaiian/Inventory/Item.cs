@@ -62,6 +62,8 @@ namespace Hawaiian.Inventory
         [HideInInspector] public float ParryWindow;
         [HideInInspector] public int ParryPercentage;
         [HideInInspector] public float TimeTillParry;
+        [HideInInspector] public Sprite ShieldUp;
+        [HideInInspector] public Sprite ShieldDown;
 
 
         //Melee Specific Stats
