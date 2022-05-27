@@ -366,6 +366,14 @@ PrefabInstance:
       propertyPath: disabled
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 261759113610224682, guid: 533b84e2b76db2a438dfb5719ea9d53a, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 261759113610224683, guid: 533b84e2b76db2a438dfb5719ea9d53a, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -20
+      objectReference: {fileID: 0}
     - target: {fileID: 1448644550722796832, guid: 533b84e2b76db2a438dfb5719ea9d53a, type: 3}
       propertyPath: m_Name
       value: Results Screen Dialogue
@@ -412,6 +420,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1448644550722796834, guid: 533b84e2b76db2a438dfb5719ea9d53a, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7144631126848403609, guid: 533b84e2b76db2a438dfb5719ea9d53a, type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

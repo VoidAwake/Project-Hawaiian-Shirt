@@ -408,6 +408,10 @@ public class ItemInteractor : MonoBehaviour
 
     public void OnDrop()
     {
-        _controller.DropItLikeItsHot(_rotation);
+        //_controller.DropItLikeItsHot(_rotation);
+        Vector3 prevInput = (_cursor.transform.localPosition - Vector3.up * 0.5f);
+        Vector3 playerInput = prevInput.magnitude == 0 ? Vector2.right.normalized : prevInput.normalized;
+
+        _controller.DropItLikeItsHot(playerInput);
     }
 }
