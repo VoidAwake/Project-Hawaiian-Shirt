@@ -183,6 +183,7 @@ MonoBehaviour:
   - {fileID: -1959829100, guid: a3627312065ae844b926aec3d48b7f5a, type: 3}
   - {fileID: -1859449190, guid: a3627312065ae844b926aec3d48b7f5a, type: 3}
   - {fileID: 1988936865, guid: a3627312065ae844b926aec3d48b7f5a, type: 3}
+  disabled: 0
   pausePlayer: {fileID: 0}
 --- !u!114 &1000451379206089041
 MonoBehaviour:
@@ -2186,6 +2187,9 @@ MonoBehaviour:
   function: 3
   buildIndex: 0
   callTransition: 1
+  displayControlsSelected:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1001 &1000451380145727129
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2196,6 +2200,10 @@ PrefabInstance:
     - target: {fileID: 1710077090010063034, guid: f18fa49c6379f85439cc2d116ceba0fd, type: 3}
       propertyPath: m_text
       value: PAUSED
+      objectReference: {fileID: 0}
+    - target: {fileID: 1710077090010063034, guid: f18fa49c6379f85439cc2d116ceba0fd, type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1710077090010063034, guid: f18fa49c6379f85439cc2d116ceba0fd, type: 3}
       propertyPath: m_fontStyle
@@ -2288,6 +2296,10 @@ PrefabInstance:
     - target: {fileID: 1710077090010063036, guid: f18fa49c6379f85439cc2d116ceba0fd, type: 3}
       propertyPath: m_Name
       value: Title
+      objectReference: {fileID: 0}
+    - target: {fileID: 8591824294279871497, guid: f18fa49c6379f85439cc2d116ceba0fd, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f18fa49c6379f85439cc2d116ceba0fd, type: 3}
@@ -2434,6 +2446,9 @@ MonoBehaviour:
   function: 0
   buildIndex: 0
   callTransition: 1
+  displayControlsSelected:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &280982533852970315 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1009951023056850495, guid: 8c526f30be7a11c41be8054efdca85ef, type: 3}
@@ -2600,6 +2615,9 @@ MonoBehaviour:
   function: 4
   buildIndex: 0
   callTransition: 0
+  displayControlsSelected:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1001 &2985658605660367112
 PrefabInstance:
   m_ObjectHideFlags: 0

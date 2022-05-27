@@ -7,6 +7,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 71041501583584823, guid: cbb41f2b105532c4a878d6f54f9e31bd, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 962725857412438921, guid: cbb41f2b105532c4a878d6f54f9e31bd, type: 3}
       propertyPath: Response.m_PersistentCalls.m_Calls.Array.size
       value: 2
@@ -34,6 +38,18 @@ PrefabInstance:
     - target: {fileID: 962725857412438921, guid: cbb41f2b105532c4a878d6f54f9e31bd, type: 3}
       propertyPath: Response.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 1140720652213856599, guid: cbb41f2b105532c4a878d6f54f9e31bd, type: 3}
+      propertyPath: m_Bounds.m_Center.x
+      value: -0.14865845
+      objectReference: {fileID: 0}
+    - target: {fileID: 1376790200076439895, guid: cbb41f2b105532c4a878d6f54f9e31bd, type: 3}
+      propertyPath: m_Bounds.m_Center.x
+      value: 0.10695331
+      objectReference: {fileID: 0}
+    - target: {fileID: 1376790200076439895, guid: cbb41f2b105532c4a878d6f54f9e31bd, type: 3}
+      propertyPath: m_Bounds.m_Center.y
+      value: 0.0966212
       objectReference: {fileID: 0}
     - target: {fileID: 2233624662916541967, guid: cbb41f2b105532c4a878d6f54f9e31bd, type: 3}
       propertyPath: Response.m_PersistentCalls.m_Calls.Array.size
@@ -111,9 +127,37 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player Unit Variant
       objectReference: {fileID: 0}
+    - target: {fileID: 4928786974797983379, guid: cbb41f2b105532c4a878d6f54f9e31bd, type: 3}
+      propertyPath: m_Bounds.m_Center.x
+      value: 0.0036213994
+      objectReference: {fileID: 0}
+    - target: {fileID: 4928786974797983379, guid: cbb41f2b105532c4a878d6f54f9e31bd, type: 3}
+      propertyPath: m_Bounds.m_Center.y
+      value: 0.021226317
+      objectReference: {fileID: 0}
+    - target: {fileID: 5177953411346531607, guid: cbb41f2b105532c4a878d6f54f9e31bd, type: 3}
+      propertyPath: m_Bounds.m_Center.x
+      value: 0.15784267
+      objectReference: {fileID: 0}
+    - target: {fileID: 5177953411346531607, guid: cbb41f2b105532c4a878d6f54f9e31bd, type: 3}
+      propertyPath: m_Bounds.m_Center.y
+      value: 0.080866694
+      objectReference: {fileID: 0}
     - target: {fileID: 6432945937749252037, guid: cbb41f2b105532c4a878d6f54f9e31bd, type: 3}
       propertyPath: m_DefaultControlScheme
       value: Keyboard1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7019151694166884182, guid: cbb41f2b105532c4a878d6f54f9e31bd, type: 3}
+      propertyPath: m_Bounds.m_Center.x
+      value: -0.06716007
+      objectReference: {fileID: 0}
+    - target: {fileID: 7837221489322167448, guid: cbb41f2b105532c4a878d6f54f9e31bd, type: 3}
+      propertyPath: m_Bounds.m_Center.x
+      value: 0.0043694973
+      objectReference: {fileID: 0}
+    - target: {fileID: 7837221489322167448, guid: cbb41f2b105532c4a878d6f54f9e31bd, type: 3}
+      propertyPath: m_Bounds.m_Center.y
+      value: -0.002296716
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cbb41f2b105532c4a878d6f54f9e31bd, type: 3}
@@ -240,3 +284,5 @@ MonoBehaviour:
   _meleeSlashRotationOffset: 0
   _handHelder: {fileID: 0}
   _animator: {fileID: 0}
+  _removeItem: {fileID: 0}
+  signal: 0
