@@ -31,7 +31,7 @@ Transform:
   m_Children:
   - {fileID: 2615933096779475130}
   m_Father: {fileID: 2635515794497460195}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &5187691148592346972
 MonoBehaviour:
@@ -82,7 +82,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2635515794497460195}
-  m_RootOrder: 7
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2583645872938131686
 MonoBehaviour:
@@ -227,7 +227,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2635515794497460195}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6722766841112063685
 GameObject:
@@ -264,7 +264,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2635515794497460195}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2465565676560978990
 MonoBehaviour:
@@ -504,7 +504,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2635515794497460195}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &1598933601258987996
 SpriteRenderer:
@@ -899,7 +899,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4153188563775757182, guid: fe93fd4b04ca3d340865789a7d27cade, type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5140635630313659711, guid: fe93fd4b04ca3d340865789a7d27cade, type: 3}
       propertyPath: m_Bounds.m_Center.x
@@ -1021,12 +1021,16 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 7
       objectReference: {fileID: 0}
+    - target: {fileID: 8821063497186762398, guid: fe93fd4b04ca3d340865789a7d27cade, type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 1993500985619104882, guid: fe93fd4b04ca3d340865789a7d27cade, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: fe93fd4b04ca3d340865789a7d27cade, type: 3}
---- !u!58 &71041501583584823 stripped
-CircleCollider2D:
-  m_CorrespondingSourceObject: {fileID: 6102377926319628895, guid: fe93fd4b04ca3d340865789a7d27cade, type: 3}
+--- !u!61 &332035591393372891 stripped
+BoxCollider2D:
+  m_CorrespondingSourceObject: {fileID: 5825339213562619571, guid: fe93fd4b04ca3d340865789a7d27cade, type: 3}
   m_PrefabInstance: {fileID: 6074339651911699560}
   m_PrefabAsset: {fileID: 0}
 --- !u!212 &858650075133827644 stripped
@@ -1078,7 +1082,7 @@ MonoBehaviour:
   minimumDistance: 0.001
   collisionBuffer: 0.01
   isBoundByCamera: 0
-  physicsCollider: {fileID: 71041501583584823}
+  physicsCollider: {fileID: 332035591393372891}
   gameTimeScale: {fileID: 11400000, guid: a7999ebb747644c42b10ad44fd3b305b, type: 2}
   rigidbody: {fileID: 0}
   testBool: 0
