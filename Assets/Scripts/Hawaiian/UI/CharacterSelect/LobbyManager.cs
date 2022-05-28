@@ -22,6 +22,7 @@ namespace Hawaiian.UI.CharacterSelect
         private readonly List<LobbyPlayerController> lobbyPlayerControllers = new();
         private LobbyGameManager lobbyGameManager;
         private bool readyToStartGame;
+        private bool isExiting;
 
         #region MonoBehaviour Functions
 
@@ -109,9 +110,13 @@ namespace Hawaiian.UI.CharacterSelect
         {
             if (!readyToStartGame) return;
 
-            FindObjectOfType<Transition>().BeginTransition(true, true, buildIndexOfNextScene, true);
-            Destroy(GetComponent<LobbyManager>());
-            Destroy(GetComponent<PlayerInputManager>());
+            if (!isExiting)
+            {
+                FindObjectOfType<Transition>().BeginTransition(true, true, buildIndexOfNextScene, true);
+                Destroy(GetComponent<LobbyManager>());
+                Destroy(GetComponent<PlayerInputManager>());
+                isExiting = true;
+            }
         }
 
         public CanvasGroup GetPortrait(int characterNumber)
@@ -143,12 +148,17 @@ namespace Hawaiian.UI.CharacterSelect
         // TODO: Make the buildIndex a variable.
         public bool RequestMainMenu()
         {
-            if (!AllPlayersHaveStatus(LobbyPlayerController.PlayerStatus.NotLoadedIn))
-                return false;
-            
-            FindObjectOfType<Transition>().BeginTransition(true, true, 0, false);
-            
-            return true;
+            if (!isExiting)
+            {
+                if (!AllPlayersHaveStatus(LobbyPlayerController.PlayerStatus.NotLoadedIn))
+                    return false;
+
+                FindObjectOfType<Transition>().BeginTransition(true, true, 0, false);
+                isExiting = true;
+
+                return true;
+            }
+            return false;
         }
     }
 }
