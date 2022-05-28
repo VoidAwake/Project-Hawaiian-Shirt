@@ -14,7 +14,7 @@ namespace Hawaiian.Unit
         None, MeleeSwing, Throw
     }
         
-    [RequireComponent(typeof(Unit))][RequireComponent(typeof(Animator))]
+    [RequireComponent(typeof(Unit))]//[RequireComponent(typeof(Animator))]
     public class UnitAnimator : MonoBehaviour
     {
         private int spriteDirection = -1;
@@ -28,7 +28,7 @@ namespace Hawaiian.Unit
         private float itemUseTimer;
         private Vector2 itemUseDirection;
 
-        private Animator _animator;
+        [SerializeField] private Animator _animator;
         private Unit _unit;
         private bool _isLookingLeft;
         private Unit.PlayerState _playerState = Unit.PlayerState.Walking;
@@ -40,7 +40,7 @@ namespace Hawaiian.Unit
         
         private void Start()
         {
-            _animator = GetComponent<Animator>();
+            //_animator = GetComponent<Animator>();
             _unit = GetComponent<Unit>();
             _isLookingLeft = true;
         }
@@ -136,9 +136,9 @@ namespace Hawaiian.Unit
                     _invincibilityTimer %= 0.1f;
 
                     // Loop through children and enable/disable any sprites
-                    for (int i = 0; i < transform.childCount; i++)
+                    for (int i = 0; i < _animator.transform.childCount; i++)
                     {
-                        SpriteRenderer child = transform.GetChild(i).GetComponent<SpriteRenderer>();
+                        SpriteRenderer child = _animator.transform.GetChild(i).GetComponent<SpriteRenderer>();
                         if (child != null)
                         {
                             if (child.enabled) child.enabled = false;
@@ -153,9 +153,9 @@ namespace Hawaiian.Unit
                 _wasInvincible = false;
 
                 // Loop through children and enable any sprites
-                for (int i = 0; i < transform.childCount; i++)
+                for (int i = 0; i < _animator.transform.childCount; i++)
                 {
-                    SpriteRenderer child = transform.GetChild(i).GetComponent<SpriteRenderer>();
+                    SpriteRenderer child = _animator.transform.GetChild(i).GetComponent<SpriteRenderer>();
                     if (child != null)
                     {
                         child.enabled = true;
@@ -239,13 +239,15 @@ namespace Hawaiian.Unit
                 _isLookingLeft = false;
                 spriteDirection = 1;
                 //Vector2 prevPos = cursor.transform.position;
-             //  transform.localScale = new Vector2(-1.0f, 1.0f);
-                
-                foreach (var renderer in _renderers)
-                    renderer.flipX = true;
-                
-                heldItem.transform.localPosition = new Vector2(0.6f, 0.55f);
+                //  transform.localScale = new Vector2(-1.0f, 1.0f);
 
+                //foreach (var renderer in _renderers)
+                //    renderer.flipX = true;
+
+                heldItem.transform.localPosition = new Vector2(0.6f, 0.55f);
+                heldItem.GetComponent<SpriteRenderer>().flipX = true;
+
+                _animator.transform.localScale = new Vector2(-1, 1);
 
                 //if (cursor != null) cursor.transform.position = prevPos;
             }
@@ -254,11 +256,15 @@ namespace Hawaiian.Unit
                 _isLookingLeft = true;
                 spriteDirection = -1;
                 //Vector2 prevPos = cursor.transform.position;
-               // transform.localScale = new Vector2(1.0f, 1.0f);
-               foreach (var renderer in _renderers)
-                   renderer.flipX = false;
-               
-               heldItem.transform.localPosition = new Vector2(-0.6f, 0.55f);
+                // transform.localScale = new Vector2(1.0f, 1.0f);
+
+                //foreach (var renderer in _renderers)
+                //    renderer.flipX = false;
+
+                heldItem.transform.localPosition = new Vector2(-0.6f, 0.55f);
+                heldItem.GetComponent<SpriteRenderer>().flipX = false;
+
+                _animator.transform.localScale = new Vector2(1, 1);
 
                 //if (cursor != null) cursor.transform.position = prevPos;
             }
