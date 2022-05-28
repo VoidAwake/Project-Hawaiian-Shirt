@@ -18,7 +18,7 @@ namespace Hawaiian.Inventory
                 if (spriteRenderer == null)
                     return;
                 
-                spriteRenderer.sprite = item.ItemSprite;
+                spriteRenderer.sprite = item.DroppedItemSprite;
             }
         }
 
@@ -35,7 +35,7 @@ namespace Hawaiian.Inventory
 
             if (spriteRenderer == null) return;
 
-            spriteRenderer.sprite = item.ItemSprite;
+            spriteRenderer.sprite = item.DroppedItemSprite;
         }
     }
 }

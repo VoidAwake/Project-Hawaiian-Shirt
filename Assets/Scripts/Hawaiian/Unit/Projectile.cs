@@ -26,6 +26,8 @@ namespace Hawaiian.Unit
         public float Speed => _speed;
         public bool CanStickOnWalls => _canStickOnWalls;
 
+        public bool WasParried;
+
         public IUnit User => _user;
         public Vector2 Direction { get; private set; }
 
@@ -36,6 +38,7 @@ namespace Hawaiian.Unit
 
         public override void Initialise(IUnit user, Vector3 target, bool canStickOnWalls = false, bool returnsToPlayer = false, bool ricochet = false, int maximumBounce = 0)
         {
+            WasParried = false;
             _targetLocation = target;
             maxSpeed = _speed;
             _canStickOnWalls = canStickOnWalls;
@@ -50,17 +53,21 @@ namespace Hawaiian.Unit
 
         public void UpdateTarget(Vector2 newDirection, float distance)
         {
-            Direction = newDirection;
+          
+            Direction = -newDirection;
             _targetLocation = Direction * distance;
         }
         
         //Removes special bonus from boomerangs such as return to player and ricochet etc.
         public void UpdateTargetToFinalDestination(Vector2 newDirection, float distance)
         {
+            WasParried = true;
             _isRicochet = false;
             _returnsToPlayer = false;
-            Direction = newDirection;
-            _targetLocation = Direction * distance;
+            Direction = -Direction;
+            _targetLocation = newDirection;
+            _user = null;
+            _speed *= 2;
         }
 
         private void Update()
@@ -96,13 +103,19 @@ namespace Hawaiian.Unit
             
             if (hasReachedDestination)
             {
+                if (_user == null)
+                {
+                    hasReachedDestination = false;
+                    return;
+                }
+                
                 transform.position = Vector3.MoveTowards(transform.position, _user.GetPosition(), step * 2);
-            
+
                 if (Vector3.Distance(transform.position, _user.GetPosition()) < 0.1f)
                 {
                     Destroy(this.gameObject);
                 }
-            
+
                 return;
             }
 

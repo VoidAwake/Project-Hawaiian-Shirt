@@ -3,20 +3,20 @@ using System.Collections;
 using System.Collections.Generic;
 using Hawaiian.Inventory;
 using Hawaiian.Unit;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 [RequireComponent(typeof(BoxCollider2D))]
 public class ShieldCollider : MonoBehaviour
 {
     public Projectile ProjectileInstance;
+    public Throwable ThrowableInstance;
 
 
     [SerializeField] private IUnitGameEvent _parryOccured;
 
     private void OnTriggerEnter2D(Collider2D col)
     {
-        
-        
         //TODO: Update itembehaviour to have a reference to their user
         if (col.gameObject.GetComponent<Projectile>() != null)
         {
@@ -25,5 +25,10 @@ public class ShieldCollider : MonoBehaviour
         }
         else if (col.gameObject.GetComponent<DamageIndicator>() != null)
             _parryOccured.Raise(col.gameObject.GetComponent<DamageIndicator>().User);
+        else if (col.gameObject.GetComponent<Throwable>() != null)
+        {
+            ThrowableInstance = col.gameObject.GetComponent<Throwable>();
+            _parryOccured.Raise(col.gameObject.GetComponent<Throwable>().User);
+        }
     }
 }

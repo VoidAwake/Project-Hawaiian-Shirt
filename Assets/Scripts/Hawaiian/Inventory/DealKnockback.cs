@@ -15,6 +15,10 @@ namespace Hawaiian.Inventory
 
             if (GetComponent<DamageIndicator>())
                 knockbackDistance = GetComponent<DamageIndicator>().KnockbackDistance;
+
+            if (unit.GetComponentInChildren<Shield>())
+                unit.GetComponentInChildren<Shield>().IsHit = true;
+            
             
             unit.GetComponent<UnitPlayer>().KnockBack(direction, knockbackDistance);
         }

@@ -8,21 +8,20 @@ namespace Hawaiian.Inventory
     public class HitUnit : MonoBehaviour
     {
         [SerializeField] private List<HitEffect> hitEffects;
-        
+
         private readonly List<IUnit> oldTargets = new List<IUnit>();
         private IUnit user;
         private Vector2 direction;
 
         //Just alright it happens
-      [SerializeField]  private bool _overrideDirectionForBombs;
+        [SerializeField] private bool _overrideDirectionForBombs;
 
-        public void Initialise(IUnit user, Vector2 direction) 
+        public void Initialise(IUnit user, Vector2 direction)
         {
             this.user = user;
             this.direction = direction;
         }
 
-      
 
         public void OnTriggerEnter2D(Collider2D col)
         {
@@ -38,9 +37,19 @@ namespace Hawaiian.Inventory
                     direction = target.GetPosition() - transform.position;
                 }
 
-                if (target == user || oldTargets.Contains(target))
-                    return;
-                
+                if (gameObject.GetComponent<Projectile>() != null)
+                {
+                    if (!gameObject.GetComponent<Projectile>().WasParried)
+                    {
+                        if (target == user || oldTargets.Contains(target))
+                            return;
+                    }
+                    else
+                    {
+                        direction = -direction;
+                    }
+                }
+
                 if (unit.isInvincible) return;
 
                 //Used if the user has parried sucessfully
@@ -49,12 +58,12 @@ namespace Hawaiian.Inventory
                     unit.OverrideDamage = false;
                     return;
                 }
-                
+
                 oldTargets.Add(target);
 
                 foreach (var hitEffect in hitEffects)
                 {
-                    hitEffect.OnHit(unit, direction);  
+                    hitEffect.OnHit(unit, direction);
                 }
             }
         }

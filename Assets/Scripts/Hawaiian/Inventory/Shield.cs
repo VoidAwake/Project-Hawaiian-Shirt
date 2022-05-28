@@ -1,13 +1,7 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.Security.Cryptography;
-using Codice.Client.Common.GameUI;
 using Hawaiian.Inventory;
 using Hawaiian.Unit;
 using Hawaiian.Utilities;
-using TMPro;
-using UnityEditor.MPE;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -16,30 +10,30 @@ public class Shield : ItemBehaviour
     [SerializeField] [Tooltip("0 is down, 1 is up")]
     private Sprite[] _shieldState;
 
+    public float ParryWindow { get; set; }
+    public float TimeTillParry { get; set; }
+    public int[] ParryPercentage { get; set; }
+
+    private GameEvent parryOccured;
+    private IUnitGameEventListener _listener;
+    private ItemInteractor _itemInteractor;
+    private UnitPlayer _user;
+    private Transform _cursorPos;
+    private Vector3 _lastPosition;
+    private bool _canParry;
+
     private GameObject _shieldCollider;
     private GameObject _shieldColliderInstance;
-
     private SpriteRenderer _shieldSprite;
     private float _duration;
     private bool shieldLifted;
 
-    public float ParryWindow { get; set; }
-    public float TimeTillParry { get; set; }
-
-    public int[] ParryPercentage { get; set; }
-
-    private GameEvent parryOccured;
-
-    private IUnitGameEventListener _listener;
-
-    private ItemInteractor _itemInteractor;
-
-    private bool _canParry;
-    private UnitPlayer _user;
 
     public void Initialise(float parryWindow, int[] parryPercentage, SpriteRenderer spriteReference,
-        Sprite[] shieldStates, IUnitGameEvent parryoccured, GameObject shieldCollider, float timeTillParry, UnitPlayer user)
+        Sprite[] shieldStates, IUnitGameEvent parryoccured, GameObject shieldCollider, float timeTillParry,
+        UnitPlayer user, Transform cursorPos)
     {
+        _cursorPos = cursorPos;
         _user = user;
         TimeTillParry = timeTillParry;
         _shieldCollider = shieldCollider;
@@ -63,14 +57,20 @@ public class Shield : ItemBehaviour
 
     public bool CanParry() => _canParry;
 
+    public bool IsHit = false;
+
+    //Refactor (maybe using generics?)
     public void ProcessParry(IUnit victim)
-    {
-
-        if (GetComponentInParent<UnitPlayer>().playerState == Unit.PlayerState.Tripped)
+    {// Ensures that if the player is in the middle of a trip, if somehow a parry occured, it does not go through
+        if (GetComponentInParent<UnitPlayer>().playerState == Unit.PlayerState.Tripped || IsHit)
+        {
+            IsHit = false;
             return;
-        
-        _itemInteractor.PlayerReference.OverrideDamage = true;
+        } 
 
+        _itemInteractor.PlayerReference.OverrideDamage = true;
+        
+        //Determine if the parry hit the desired window
         if ((_duration / ParryWindow) * 100 <= ParryPercentage[1] &&
             (_duration / ParryWindow) * 100 >= ParryPercentage[0])
         {
@@ -86,38 +86,50 @@ public class Shield : ItemBehaviour
             if (_shieldCollider.GetComponent<ShieldCollider>() != null)
             {
                 ShieldCollider collider = _shieldColliderInstance.GetComponent<ShieldCollider>();
+                
                 if (collider.ProjectileInstance != null)
                 {
                     collider.ProjectileInstance.UpdateTargetToFinalDestination(
-                        victim.GetPosition() - transform.position, 2f);
+                        victim.GetPosition(), 2f);
+                } else if (collider.ThrowableInstance != null)
+                {
+                    collider.ThrowableInstance.UpdateTargetToFinalDestination(
+                        victim.GetPosition() - transform.position);
                 }
-                else
+                else 
                 {
                     victim.TripUnit(victim.GetPosition() - transform.position, 8); //TODO Change distance
                     var inventoryController = victim.GetUnit().GetComponentInChildren<InventoryController>();
 
                     if (inventoryController != null)
                         inventoryController.DropRandom(-(victim.GetPosition() - transform.position));
-                    
                 }
             }
         }
         else
         {
-            
-            Debug.Log("PERFECT PARRY");
+            Debug.Log("PATRIAL PARRY");
 
+            //Made into a switch or generic
             if (_shieldCollider.GetComponent<ShieldCollider>() != null)
             {
                 ShieldCollider collider = _shieldColliderInstance.GetComponent<ShieldCollider>();
                 if (collider.ProjectileInstance != null)
                 {
                     collider.ProjectileInstance.UpdateTargetToFinalDestination(
-                        victim.GetPosition() - transform.position, 2f);
+                        victim.GetPosition(), 2f);
+                }else if (collider.ThrowableInstance != null)
+                {
+                    collider.ThrowableInstance.UpdateTargetToFinalDestination(
+                        victim.GetPosition() - transform.position);
                 }
                 else
                 {
                     victim.TripUnit(victim.GetPosition() - transform.position, 2); //TODO Change distance
+                    var inventoryController = victim.GetUnit().GetComponentInChildren<InventoryController>();
+
+                    if (inventoryController != null)
+                        inventoryController.DropRandom(-(victim.GetPosition() - transform.position));
                 }
             }
         }
@@ -125,14 +137,12 @@ public class Shield : ItemBehaviour
         StartCoroutine(RemoveOverrideDamage());
     }
 
-    
+
     //Makes sure that if a parry is successful synchronous to the player being hit, that the hit will not occur
     IEnumerator RemoveOverrideDamage()
     {
         yield return new WaitForSeconds(Time.deltaTime);
         _itemInteractor.PlayerReference.OverrideDamage = false;
-
-
     }
 
 
@@ -142,9 +152,11 @@ public class Shield : ItemBehaviour
     public void LiftShield()
     {
         Debug.LogWarning("Currently Parrying");
+        _lastPosition = _shieldSprite.gameObject.transform.localPosition;
+        _shieldSprite.gameObject.transform.position = _cursorPos.position;
         shieldLifted = true;
         _canParry = false;
-        _shieldColliderInstance = Instantiate(_shieldCollider, transform);
+        _shieldColliderInstance = Instantiate(_shieldCollider, _cursorPos.transform.position, Quaternion.identity);
         _shieldSprite.sprite = _shieldState[1];
     }
 
@@ -152,13 +164,12 @@ public class Shield : ItemBehaviour
     {
         if (_shieldColliderInstance != null)
             Destroy(_shieldColliderInstance);
-        
+
         StartCoroutine(ShieldCooldown(TimeTillParry));
         shieldLifted = false;
         _shieldSprite.sprite = _shieldState[0];
         _duration = 0;
-
-     
+        _shieldSprite.gameObject.transform.localPosition = _lastPosition;
     }
 
     public void RemoveShieldComponent()

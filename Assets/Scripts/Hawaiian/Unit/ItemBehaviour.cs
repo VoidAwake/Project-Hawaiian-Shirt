@@ -11,11 +11,12 @@ namespace Hawaiian.Unit
         [SerializeField] internal float _speed;
         [SerializeField] internal int _knockbackDistance;
 
-        internal IUnit _user;
+        public IUnit User;
+        
 
         public virtual void BaseInitialise(IUnit user, float speed, int knockbackDistance)
         {
-            _user = user;
+            User  = user;
             _speed = speed;
             _knockbackDistance = knockbackDistance;
         }

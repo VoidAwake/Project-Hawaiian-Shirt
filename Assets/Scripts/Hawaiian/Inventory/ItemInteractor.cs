@@ -49,6 +49,8 @@ public class ItemInteractor : MonoBehaviour
     
     public Item CurrentItem => _controller.CurrentItem;
 
+    public GameObject ProjectileReference => _projectileReference;
+
     public Vector2 Rotation
     {
         get => _rotation;
@@ -270,7 +272,7 @@ public class ItemInteractor : MonoBehaviour
         if (CurrentItem.Type == ItemType.Shield)
         {
             _shieldReference =  gameObject.AddComponent<Shield>();
-            _shieldReference.Initialise(CurrentItem.ParryWindow, new[]{CurrentItem.ParryPercentageUpperLimit, CurrentItem.ParryPercentageLowerLimit}, _handHelder,new[]{CurrentItem.ShieldDown,CurrentItem.ShieldUp}, _parryOccured, shieldColliderPrefab,CurrentItem.TimeTillParry, _playerReference);
+            _shieldReference.Initialise(CurrentItem.ParryWindow, new[]{CurrentItem.ParryPercentageUpperLimit, CurrentItem.ParryPercentageLowerLimit}, _handHelder,new[]{CurrentItem.ShieldDown,CurrentItem.ShieldUp}, _parryOccured, shieldColliderPrefab,CurrentItem.TimeTillParry, _playerReference, _cursor.transform);
         }
         else if (_shieldReference != null)
             _shieldReference.RemoveShieldComponent();

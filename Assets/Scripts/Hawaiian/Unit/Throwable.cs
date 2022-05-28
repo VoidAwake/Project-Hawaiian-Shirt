@@ -1,5 +1,9 @@
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using Hawaiian.Unit;
 using UnityEngine;
+using UnityEngine.InputSystem.UI;
 
 public class Throwable : ItemBehaviour
 {
@@ -24,6 +28,28 @@ public class Throwable : ItemBehaviour
         _canStickOnWalls = canStickOnWalls;
         positionIndex = 0;
         _renderer.sprite = newSprite;
+    }
+
+    public void UpdateTargetToFinalDestination(Vector2 direction)
+    {
+        _positions = null;
+        StartCoroutine(LerpPositionToDestination(direction));
+    }
+
+    IEnumerator LerpPositionToDestination(Vector2 finalPosition)
+    {
+        List<Vector2> positions = _positions.ToList();
+        Vector2 startingPosition = transform.position;
+        Vector2 endPosition = finalPosition;
+
+        while (!startingPosition.Equals(endPosition))
+        {
+            startingPosition = Vector2.Lerp(startingPosition, endPosition, Time.deltaTime);
+            positions.Add(startingPosition);
+            yield return null;
+        }
+
+        _positions = positions.ToArray();
     }
 
     private void Awake()
