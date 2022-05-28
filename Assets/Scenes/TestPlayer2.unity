@@ -728,7 +728,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _renderers: []
+  gameTimeScale: {fileID: 0}
   _currentAnimationState: 0
+  itemHand: {fileID: 0}
+  heldItem: {fileID: 0}
+  cursor: {fileID: 0}
 --- !u!114 &377541585
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -764,20 +768,22 @@ MonoBehaviour:
   physicsCollider: {fileID: 0}
   gameTimeScale: {fileID: 0}
   rigidbody: {fileID: 0}
+  testBool: 0
+  testVector: {x: 0, y: 0}
+  testFloat: 0
+  head: {fileID: 0}
+  torso: {fileID: 0}
+  playerColors: {fileID: 0}
+  playerState: 0
   _maxHealth: 20
+  tripTime: 0.75
+  invincibilityTime: 1
+  isInvincible: 0
   maxSpeed: 5.5
   tweenRate: 15
   runMultiplier: 1.75
-  forward: {fileID: 0}
-  backward: {fileID: 0}
-  _damageReference: {fileID: 1546100782826642891, guid: 6916ca4131234a941b3eb78d5ca707fe, type: 3}
-  _offset: 0
-  _damageIndicatorOffset: 0
-  _firePoint: {fileID: 0}
   _playerInput: {fileID: 0}
-  _playerJoined:
-    m_PersistentCalls:
-      m_Calls: []
+  _playerJoined: {fileID: 0}
 --- !u!114 &377541587
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -856,8 +862,14 @@ MonoBehaviour:
   parse: {fileID: 0}
   addinv: 0
   item: {fileID: 0}
+  size: {fileID: 0}
   addedInventory: {fileID: 0}
   hand: {fileID: 0}
+  droppedItem: {fileID: 0}
+  currentItemChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  _inv: {fileID: 0}
 --- !u!95 &377541589
 Animator:
   serializedVersion: 4
@@ -1468,7 +1480,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1705,8 +1717,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   inv: {fileID: 0}
   size: {fileID: 0}
+  horizontalGroup: {fileID: 0}
+  inventoryBackdrop: {fileID: 0}
   slot: {fileID: 0}
   highlightPrefab: {fileID: 0}
+  highlightSprites: []
+  head: {fileID: 0}
+  backdrop: {fileID: 0}
+  playerSprites: {fileID: 0}
+  playerColors: {fileID: 0}
 --- !u!1 &980851098
 GameObject:
   m_ObjectHideFlags: 0
@@ -1977,7 +1996,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
