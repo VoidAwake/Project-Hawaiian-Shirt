@@ -374,24 +374,26 @@ public class ItemInteractor : MonoBehaviour
         }
     }
 
+    // TODO: Misleading name, also calculates the _multiShotTargets
     private void UpdateLineRenderers()
     {
+        var direction = (_cursor.transform.position - transform.position).normalized;
+
+        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+
+        if (angle < 0) angle = 360 - angle * -1;
+        
         if (_lineRenderers.Count > 0)
         {
             for (var i = 0; i < _lineRenderers.Count; i++)
             {
                 LineRenderer lr = _lineRenderers[i];
                 lr.transform.localPosition = Vector3.zero;
+                
+                // Increment the angle for each line renderer
+                var currentAngle = angle + 20f * i;
 
-                var direction = (_cursor.transform.position - transform.position).normalized;
-
-                float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-
-                if (angle < 0) angle = 360 - angle * -1;
-
-                angle += _lineRenderers.Count == 1 ? 0 : (i == 0 ? 0 : 20f) * (i + 1);
-
-                var radians = angle * Mathf.Deg2Rad;
+                var radians = currentAngle * Mathf.Deg2Rad;
 
                 var x = Mathf.Cos(radians);
                 var y = Mathf.Sin(radians);
