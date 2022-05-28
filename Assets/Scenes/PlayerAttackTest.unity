@@ -656,7 +656,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 295f270a422e40c46bc037c47b6c914a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _renderers: []
+  gameTimeScale: {fileID: 0}
   _currentAnimationState: 0
+  itemHand: {fileID: 0}
+  heldItem: {fileID: 0}
+  cursor: {fileID: 0}
 --- !u!114 &377541585
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -701,12 +706,25 @@ MonoBehaviour:
   minimumDistance: 0.001
   collisionBuffer: 0.01
   isBoundByCamera: 0
+  physicsCollider: {fileID: 0}
+  gameTimeScale: {fileID: 0}
+  rigidbody: {fileID: 0}
+  testBool: 0
+  testVector: {x: 0, y: 0}
+  testFloat: 0
+  head: {fileID: 0}
+  torso: {fileID: 0}
+  playerColors: {fileID: 0}
+  playerState: 0
   _maxHealth: 20
+  tripTime: 0.75
+  invincibilityTime: 1
+  isInvincible: 0
   maxSpeed: 5.5
   tweenRate: 15
   runMultiplier: 1.75
-  _damageReference: {fileID: 1546100782826642891, guid: 6916ca4131234a941b3eb78d5ca707fe, type: 3}
-  firePoint: {fileID: 248725278}
+  _playerInput: {fileID: 0}
+  _playerJoined: {fileID: 0}
 --- !u!114 &377541587
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -781,10 +799,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 66c6441a83f4ea347a2e1d720ada3f61, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  UI: {fileID: 5056236730594589646, guid: 78879c192efd6f842b0a01570510afec, type: 3}
-  uiParent: {fileID: 0}
+  _player: {fileID: 0}
+  parse: {fileID: 0}
   addinv: 0
   item: {fileID: 0}
+  size: {fileID: 0}
+  addedInventory: {fileID: 0}
+  hand: {fileID: 0}
+  droppedItem: {fileID: 0}
+  currentItemChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  _inv: {fileID: 0}
 --- !u!95 &377541589
 Animator:
   serializedVersion: 4
@@ -917,7 +943,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &530981077
 PrefabInstance:
@@ -1467,7 +1493,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1512,7 +1538,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &943479027
 GameObject:
@@ -1770,7 +1796,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1050846936
 GameObject:
@@ -1958,7 +1984,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2003,7 +2029,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1363903892
 GameObject:
@@ -2600,7 +2626,7 @@ RectTransform:
   - {fileID: 632448058}
   - {fileID: 957704627}
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}

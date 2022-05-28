@@ -81,7 +81,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -152,8 +152,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _speed: 5
+  _knockbackDistance: 0
   _canStickOnWalls: 0
-  _damage: 5
   _returnsToPlayer: 0
   _isRicochet: 0
   _maximumBounces: 0
@@ -178,6 +178,12 @@ MonoBehaviour:
       weightedMode: 0
       inWeight: 0
       outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  _returnToPlayerCurve:
+    serializedVersion: 2
+    m_Curve: []
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
@@ -253,6 +259,7 @@ MonoBehaviour:
   hitEffects:
   - {fileID: 3618523993444695880}
   - {fileID: 3395858211575043066}
+  _overrideDirectionForBombs: 0
 --- !u!61 &5120233360191099128
 BoxCollider2D:
   m_ObjectHideFlags: 0
