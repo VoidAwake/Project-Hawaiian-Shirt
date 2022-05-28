@@ -132,7 +132,7 @@ namespace Hawaiian.UI.CharacterSelect
         {
             if (lobbyPlayerControllers.Count == 0) return false;
 
-            return AllPlayersHaveStatus(LobbyPlayerController.PlayerStatus.Ready);
+            return lobbyPlayerControllers.All(l => l.Status != LobbyPlayerController.PlayerStatus.LoadedIn);
         }
 
         private bool AllPlayersHaveStatus(LobbyPlayerController.PlayerStatus playerStatus)

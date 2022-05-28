@@ -138,6 +138,8 @@ namespace Hawaiian.UI.CharacterSelect
         // TODO: Invert the dependencies of these UI elements
         private void OnStatusChanged()
         {
+            playerConfig.IsPlayer = Status != PlayerStatus.NotLoadedIn;
+            
             switch (Status)
             {
                 case PlayerStatus.NotLoadedIn:

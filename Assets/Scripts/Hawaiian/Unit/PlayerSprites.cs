@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace Hawaiian.Unit
 {
@@ -9,6 +10,8 @@ namespace Hawaiian.Unit
         
         public Sprite GetSprite(int characterNo)
         {
+            if (characterNo < 0 || characterNo >= sprites.Length) throw new ArgumentOutOfRangeException($"No sprite for character number {characterNo}.");
+            
             return sprites[characterNo];
         }
     }
