@@ -18,7 +18,7 @@ MonoBehaviour:
   ItemName: Boomerang++
   MaxStack: 0
   DroppedItemBase: {fileID: 3056942884218095950, guid: 37132a09f5d1c4046a4bb460892afc47, type: 3}
-  ProjectileInstance: {fileID: 8484802503941745754, guid: 6ccdae3489326844c9b49b012c477987, type: 3}
+  ProjectileInstance: {fileID: 6197657422121171185, guid: dc5c2504b2bcc6e419d6c5a8b5aea9cf, type: 3}
   Rarity: 2
   ItemWeight: 30
   heldItemPrefab: {fileID: 0}
