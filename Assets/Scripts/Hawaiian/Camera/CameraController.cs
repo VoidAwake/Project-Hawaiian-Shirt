@@ -17,9 +17,9 @@ public class CameraController : MonoBehaviour
 
     [SerializeField] private float _minZoom;
     [SerializeField] private float _maximumDistance;
+    [SerializeField] private float _zoomExponent = 0.65f;
 
-
-  [SerializeField]  private List<Transform> players = new List<Transform>();
+    [SerializeField]  private List<Transform> players = new List<Transform>();
     private Vector2 _center;
     private Vector2 velocity;
 
@@ -86,7 +86,7 @@ public class CameraController : MonoBehaviour
         var newPosition = _center;
         transform.position = Vector2.SmoothDamp(transform.position, newPosition, ref velocity, _smoothTime);
 
-        var zoom = Mathf.Lerp(_maxZoom, _minZoom, GetGreatestDistance() / _maximumDistance);
+        var zoom = Mathf.Lerp(_maxZoom, _minZoom, Mathf.Pow(GetGreatestDistance() / _maximumDistance, _zoomExponent));
         _camera.orthographicSize = Mathf.Lerp(_camera.orthographicSize, zoom, Time.deltaTime);
     }
 
