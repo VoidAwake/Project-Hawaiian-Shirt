@@ -40,7 +40,7 @@ MonoBehaviour:
   KnockbackDistance: 0
   IsMainObjective: 0
   CanBeHeldByEnemies: 0
-  Points: 40
+  Points: 50
   PlacementRadius: 0
   PlacementIcon: {fileID: 0}
   TrapInstance: {fileID: 0}

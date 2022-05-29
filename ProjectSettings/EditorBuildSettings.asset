@@ -17,13 +17,19 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Results Screen.unity
     guid: b0930558751c425429485c00789637e4
-  - enabled: 1
-    path: Assets/Scenes/Eddie Secret Level.unity
+  - enabled: 0
+    path: Assets/Scenes/Old Tests/Eddie Secret Level.unity
     guid: 914691b931490e44a9fc88d7a3c6caa6
   - enabled: 1
+    path: Assets/Scenes/Eddie Secret URP.unity
+    guid: 8e4ef8966e3de0d40a859ea995ac6a92
+  - enabled: 1
+    path: Assets/Scenes/Eddie Second Secret.unity
+    guid: 2261d57602b6c63458a5281ed2fff923
+  - enabled: 0
     path: Assets/Scenes/LevelTest.unity
     guid: a9ffe08fd212b9044bedb3dbd997fe1b
   - enabled: 0
-    path: Assets/Scenes/LocalCoop 3.unity
+    path: Assets/Scenes/Old Tests/LocalCoop 3.unity
     guid: aebc5ae7dee0de0459e10f845a419888
   m_configObjects: {}
