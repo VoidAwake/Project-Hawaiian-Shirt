@@ -5,6 +5,7 @@ using UnityEngine;
 public class AudioManager : MonoBehaviour
 {
     AudioClip[] clips;
+    [SerializeField] AudioSource audioSource;
     public static AudioManager audioManager;
     // Start is called before the first frame update
     void Start()
@@ -24,5 +25,10 @@ public class AudioManager : MonoBehaviour
     void Update()
     {
         
+    }
+
+    void PlayWeapon(AudioClip clip)
+    {
+        audioSource.PlayOneShot(clip);
     }
 }
