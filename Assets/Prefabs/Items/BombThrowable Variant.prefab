@@ -53,7 +53,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5387373904414807758, guid: 84361e5a6995d564b8208790e37d5c37, type: 3}
       propertyPath: m_Name
-      value: BombThrowable
+      value: BombThrowable Variant
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 5313269524115035386, guid: 84361e5a6995d564b8208790e37d5c37, type: 3}
