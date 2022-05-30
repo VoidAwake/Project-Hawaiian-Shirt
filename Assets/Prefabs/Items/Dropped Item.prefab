@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8641308678150702771}
   - component: {fileID: 7740104089399653555}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Shadow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -99,7 +99,7 @@ GameObject:
   - component: {fileID: 3429498943903044509}
   - component: {fileID: -3301818405598661927}
   - component: {fileID: -3662267645802054264}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Dropped Item
   m_TagString: Item
   m_Icon: {fileID: 0}
@@ -257,7 +257,7 @@ GameObject:
   - component: {fileID: 1792255037595789897}
   - component: {fileID: 9063181329469258904}
   - component: {fileID: 4809719518076384285}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Item Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -361,7 +361,7 @@ GameObject:
   - component: {fileID: 2255831384587830954}
   - component: {fileID: 8708529930285168645}
   - component: {fileID: 8935294768153088322}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Lighting
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -413,7 +413,7 @@ MonoBehaviour:
   - {x: 0.0010685697, y: -0.34163448, z: 0}
   m_ShapePathHash: 1570537875
   m_Mesh: {fileID: 0}
-  m_InstanceId: 122216
+  m_InstanceId: 168446
 --- !u!114 &8935294768153088322
 MonoBehaviour:
   m_ObjectHideFlags: 0

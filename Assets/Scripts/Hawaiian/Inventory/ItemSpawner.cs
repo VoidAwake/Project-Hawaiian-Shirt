@@ -1,8 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using Hawaiian.Inventory;
 using Unity.Mathematics;
-using UnityEditor;
 using UnityEngine;
 
 public class ItemSpawner : MonoBehaviour

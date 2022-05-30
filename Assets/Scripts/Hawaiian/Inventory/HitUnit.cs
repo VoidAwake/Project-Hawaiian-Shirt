@@ -8,24 +8,30 @@ namespace Hawaiian.Inventory
     public class HitUnit : MonoBehaviour
     {
         [SerializeField] private List<HitEffect> hitEffects;
-        
+        [SerializeField] private bool _overrideDirectionForBombs;
+
         private readonly List<IUnit> oldTargets = new List<IUnit>();
         private IUnit user;
         private Vector2 direction;
 
         //Just alright it happens
-      [SerializeField]  private bool _overrideDirectionForBombs;
+        public bool isActive { get; set; }
 
-        public void Initialise(IUnit user, Vector2 direction) 
+        public void Initialise(IUnit user, Vector2 direction)
         {
             this.user = user;
             this.direction = direction;
+            isActive = true;
         }
-
-      
 
         public void OnTriggerEnter2D(Collider2D col)
         {
+            if (GetComponent<Projectile>() != null)
+            {
+                if (GetComponent<Projectile>().IsOnWall())
+                    return;
+            }
+
             // TODO: Duplicate code. See DamageIndicator.OnTriggerEnter2D
             var unit = col.gameObject.GetComponent<Unit.Unit>();
             if (unit is IUnit)
@@ -40,14 +46,14 @@ namespace Hawaiian.Inventory
 
                 if (target == user || oldTargets.Contains(target))
                     return;
-                
+
                 if (unit.isInvincible) return;
-                
+
                 oldTargets.Add(target);
 
                 foreach (var hitEffect in hitEffects)
                 {
-                    hitEffect.OnHit(unit, direction);  
+                    hitEffect.OnHit(unit, direction);
                 }
             }
         }
