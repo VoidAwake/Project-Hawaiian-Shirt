@@ -1,7 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using Hawaiian.Inventory;
-using Hawaiian.Utilities;
 using UnityEngine;
 
 public class SmokeBomb : Throwable
