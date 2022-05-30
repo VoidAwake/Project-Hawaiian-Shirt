@@ -464,6 +464,7 @@ MonoBehaviour:
   inventoryUIPrefab: {fileID: 5056236730594589646, guid: 78879c192efd6f842b0a01570510afec, type: 3}
   uiParent: {fileID: 2135048521676535366}
   uiParentForFourPlayers: {fileID: 5433760765802800313}
+  tutorialDialoguePrefab: {fileID: 4814276844058300917, guid: 45769a02522b0c84da70d092cf10c2dc, type: 3}
   controlsInstructionsDialoguePrefab: {fileID: 6701680597941144673, guid: ad9da8ae28d5a1446a50507627be2e64, type: 3}
   mainMenuController: {fileID: 2092102775}
   pauseMenuController: {fileID: 1893241053}

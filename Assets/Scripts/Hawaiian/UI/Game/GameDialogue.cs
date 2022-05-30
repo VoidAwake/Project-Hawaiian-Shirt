@@ -11,6 +11,7 @@ namespace Hawaiian.UI.Game
         [SerializeField] private GameObject inventoryUIPrefab;
         [SerializeField] private Transform uiParent;
         [SerializeField] private Transform uiParentForFourPlayers;
+        [SerializeField] private GameObject tutorialDialoguePrefab;
         [SerializeField] private GameObject controlsInstructionsDialoguePrefab;
         [SerializeField] private MainMenuController mainMenuController;
         [SerializeField] private MainMenuButtonFunctions pauseMenuController;
@@ -57,7 +58,9 @@ namespace Hawaiian.UI.Game
 
         private void DisplayControls()
         {
-            Instantiate(controlsInstructionsDialoguePrefab, transform.parent); 
+            Instantiate(controlsInstructionsDialoguePrefab, transform.parent);
+
+            Instantiate(tutorialDialoguePrefab, transform.parent);
         }
     }
 }
