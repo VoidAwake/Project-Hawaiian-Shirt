@@ -253,7 +253,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 704475197968105185}
+      - m_Target: {fileID: 861173140678485065}
         m_TargetAssemblyTypeName: UnityEngine.Behaviour, UnityEngine
         m_MethodName: set_enabled
         m_Mode: 6
@@ -265,6 +265,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  enabledChanged:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &3920738584847304998
 GameObject:
   m_ObjectHideFlags: 0
