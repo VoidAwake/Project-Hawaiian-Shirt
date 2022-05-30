@@ -10,7 +10,10 @@ namespace Hawaiian.UI.General
         public override void OnClick()
         {
             base.OnClick();
-            DialogueClosed.Raise();
+            
+            if (DialogueClosed != null)
+                DialogueClosed.Raise();
+            
             manager.Pop();
         }
     }
