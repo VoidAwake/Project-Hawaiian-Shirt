@@ -18,12 +18,12 @@ MonoBehaviour:
   ItemName: Boomerang+
   MaxStack: 0
   DroppedItemBase: {fileID: 3056942884218095950, guid: 37132a09f5d1c4046a4bb460892afc47, type: 3}
-  ProjectileInstance: {fileID: 8484802503941745754, guid: 6ccdae3489326844c9b49b012c477987, type: 3}
+  ProjectileInstance: {fileID: 6412322784194826233, guid: a2fd3c2c454b2f3419dd4d967e6ff018, type: 3}
   Rarity: 1
   ItemWeight: 50
   heldItemPrefab: {fileID: 0}
-  ProbabilityRangeFrom: 170
-  ProbabilityRangeTo: 230
+  ProbabilityRangeFrom: 290
+  ProbabilityRangeTo: 340
   ItemDamage: 10
   DrawSpeed: 12
   DrawDistance: 9
