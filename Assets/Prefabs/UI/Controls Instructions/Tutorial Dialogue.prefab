@@ -2023,7 +2023,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7735107941340872585, guid: 44bf9747d0dc0c543b112b10580ad9c2, type: 3}
       propertyPath: m_text
-      value: There are three kinds of items, treasure, weapons, and special.
+      value: 'There are three kinds of items: Treasure, weapons, and special items.'
       objectReference: {fileID: 0}
     - target: {fileID: 7735107941340872585, guid: 44bf9747d0dc0c543b112b10580ad9c2, type: 3}
       propertyPath: m_fontSize
