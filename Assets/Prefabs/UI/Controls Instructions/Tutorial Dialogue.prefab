@@ -161,7 +161,7 @@ MonoBehaviour:
     m_Top: 0
     m_Bottom: 0
   m_ChildAlignment: 4
-  m_Spacing: 0
+  m_Spacing: 10
   m_ChildForceExpandWidth: 1
   m_ChildForceExpandHeight: 1
   m_ChildControlWidth: 1
@@ -366,7 +366,7 @@ MonoBehaviour:
     m_Top: 0
     m_Bottom: 0
   m_ChildAlignment: 4
-  m_Spacing: 0
+  m_Spacing: 10
   m_ChildForceExpandWidth: 1
   m_ChildForceExpandHeight: 1
   m_ChildControlWidth: 1
@@ -1155,7 +1155,7 @@ MonoBehaviour:
     m_Top: 0
     m_Bottom: 0
   m_ChildAlignment: 4
-  m_Spacing: 0
+  m_Spacing: 10
   m_ChildForceExpandWidth: 1
   m_ChildForceExpandHeight: 1
   m_ChildControlWidth: 1
@@ -1326,11 +1326,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7735107941340872585, guid: 44bf9747d0dc0c543b112b10580ad9c2, type: 3}
       propertyPath: m_fontSize
-      value: 20
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 7735107941340872585, guid: 44bf9747d0dc0c543b112b10580ad9c2, type: 3}
       propertyPath: m_fontSizeBase
-      value: 20
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 7735107941340872585, guid: 44bf9747d0dc0c543b112b10580ad9c2, type: 3}
       propertyPath: m_enableAutoSizing
@@ -1791,11 +1791,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7735107941340872585, guid: 44bf9747d0dc0c543b112b10580ad9c2, type: 3}
       propertyPath: m_fontSize
-      value: 20
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 7735107941340872585, guid: 44bf9747d0dc0c543b112b10580ad9c2, type: 3}
       propertyPath: m_fontSizeBase
-      value: 20
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 7735107941340872585, guid: 44bf9747d0dc0c543b112b10580ad9c2, type: 3}
       propertyPath: m_enableAutoSizing
@@ -1909,11 +1909,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7735107941340872585, guid: 44bf9747d0dc0c543b112b10580ad9c2, type: 3}
       propertyPath: m_fontSize
-      value: 20
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 7735107941340872585, guid: 44bf9747d0dc0c543b112b10580ad9c2, type: 3}
       propertyPath: m_fontSizeBase
-      value: 20
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 7735107941340872585, guid: 44bf9747d0dc0c543b112b10580ad9c2, type: 3}
       propertyPath: m_enableAutoSizing
@@ -2027,11 +2027,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7735107941340872585, guid: 44bf9747d0dc0c543b112b10580ad9c2, type: 3}
       propertyPath: m_fontSize
-      value: 20
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 7735107941340872585, guid: 44bf9747d0dc0c543b112b10580ad9c2, type: 3}
       propertyPath: m_fontSizeBase
-      value: 20
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 7735107941340872585, guid: 44bf9747d0dc0c543b112b10580ad9c2, type: 3}
       propertyPath: m_enableAutoSizing
