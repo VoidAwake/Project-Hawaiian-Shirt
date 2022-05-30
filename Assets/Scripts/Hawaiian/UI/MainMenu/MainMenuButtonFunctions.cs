@@ -59,6 +59,7 @@ namespace Hawaiian.UI.MainMenu
             switch (function)
             {
                 case ButtonFunction.LoadSceneByIndex:
+                    AudioManager.audioManager.Confirm();
                     LoadSceneByIndex();
                     break;
                 case ButtonFunction.CloseApp:

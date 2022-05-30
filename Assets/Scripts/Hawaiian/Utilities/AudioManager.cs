@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class AudioManager : MonoBehaviour
 {
-    AudioClip[] clips;
-    [SerializeField] AudioSource audioSource;
+    [SerializeField] AudioClip[] sfxClips;
+    [SerializeField] AudioSource uiSfx;
+    [SerializeField] AudioSource sfx;
     public static AudioManager audioManager;
     // Start is called before the first frame update
     void Start()
@@ -27,8 +28,24 @@ public class AudioManager : MonoBehaviour
         
     }
 
+    public void Swap()
+    {
+        
+            uiSfx.PlayOneShot(sfxClips[1]);
+    }
+
+    public void Confirm()
+    {
+        if (!uiSfx.isPlaying)
+            uiSfx.PlayOneShot(sfxClips[3]);
+    }
+
+    public void PlayerAdd()
+    {
+        uiSfx.PlayOneShot(sfxClips[0]);
+    }
     void PlayWeapon(AudioClip clip)
     {
-        audioSource.PlayOneShot(clip);
+        sfx.PlayOneShot(clip);
     }
 }

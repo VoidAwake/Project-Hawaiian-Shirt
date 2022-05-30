@@ -68,6 +68,7 @@ namespace Hawaiian.UI.MainMenu
                         {
                             selected = (selected - 1) % (buttons.Length);
                             if (selected < 0) selected = buttons.Length + selected;
+                            AudioManager.audioManager.Swap();
                             cursor.rectTransform.anchoredPosition = buttons[selected].GetComponent<RectTransform>().anchoredPosition;
                             //Debug.Log(selected + " " + buttons.Length);
                         }
@@ -78,6 +79,7 @@ namespace Hawaiian.UI.MainMenu
                         if (!cursorActive) { cursor.enabled = true; cursorActive = true; }
                         else
                         {
+                            AudioManager.audioManager.Swap();
                             selected = (selected + 1) % (buttons.Length);
                             cursor.rectTransform.anchoredPosition = buttons[selected].GetComponent<RectTransform>().anchoredPosition;
                             //Debug.Log(selected +" "+ buttons.Length);
