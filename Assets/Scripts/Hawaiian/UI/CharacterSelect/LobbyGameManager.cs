@@ -51,6 +51,7 @@ namespace Hawaiian.UI.CharacterSelect
                 if (!playerConfigs[i].IsPlayer)
                 {
                     playerConfigs[i].SetPlayer(playerInput);
+                    AudioManager.audioManager.PlayerAdd();
                     return playerConfigs[i];
                 }
             }

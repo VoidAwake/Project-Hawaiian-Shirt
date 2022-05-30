@@ -154,6 +154,7 @@ namespace Hawaiian.UI.CharacterSelect
                 case PlayerStatus.Ready:
                     lobbyWindow.SetSelected();
                     characterSelect.SetActive(true);
+                    AudioManager.audioManager.Confirm();
                     lobbyManager.GetPortrait(playerConfig.characterNumber).alpha = 0.2f;
                     StartCoroutine(EnableInput());
                     break;
@@ -192,7 +193,7 @@ namespace Hawaiian.UI.CharacterSelect
             playerConfig.characterNumber = charNumber;
             
             if (charNumber == -1) return;
-
+            AudioManager.audioManager.Swap();
             var portraitTransform = lobbyManager.GetPortrait(charNumber).GetComponent<RectTransform>();
             characterSelect.GetComponent<RectTransform>().anchoredPosition = portraitTransform.anchoredPosition;
             lobbyWindow.UpdateHead(charNumber);
@@ -201,7 +202,6 @@ namespace Hawaiian.UI.CharacterSelect
         private void OnPlayerCharacterSelect(int direction)
         {
             if (direction == 0) return;
-
             UpdateCharacterSelection(lobbyManager.FirstUnselectedCharacterFrom(playerConfig.characterNumber, direction));
         }
         

@@ -1,7 +1,11 @@
 ﻿using System;
+using System.Linq;
+using Hawaiian.UI.CharacterSelect;
 using UI.Core;
+using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.LowLevel;
 using UnityEngine.InputSystem.Utilities;
 
 namespace Hawaiian.UI.General
@@ -12,14 +16,40 @@ namespace Hawaiian.UI.General
 
         private IDisposable eventListener;
 
+        private bool wasDialoguePromotedLastFrame;
+
+        private void Update()
+        {
+            wasDialoguePromotedLastFrame = dialogue.GetComponent<CanvasGroup>().interactable;
+        }
+        
         protected override void Subscribe()
         {
-            eventListener = InputSystem.onAnyButtonPress.CallOnce(ctrl => anyButtonPressed.Invoke());
+            InputSystem.onEvent += OnAnyButtonPressed;
         }
 
         protected override void Unsubscribe()
         {
-            eventListener.Dispose();
+            InputSystem.onEvent -= OnAnyButtonPressed;
+        }
+        
+        // TODO: Duplicate code. See LobbyPlayerController.
+        private void OnAnyButtonPressed(InputEventPtr eventPtr, InputDevice device)
+        {
+            if (!eventPtr.IsA<StateEvent>() && !eventPtr.IsA<DeltaStateEvent>()) return;
+
+            // Copied from InputUser, works somehow.
+            foreach (var control in eventPtr.EnumerateChangedControls(device: device, magnitudeThreshold: 0.0001f))
+            {
+                if (control == null || control.synthetic || control.noisy) continue;
+
+                // TODO: We're on;y having to do this because there's no way to access the promoted state of a dialogue
+                // TODO: Shouldn't all DialogeCompoentns unsubscribe when the dialogue gets demoted?
+                if (wasDialoguePromotedLastFrame)
+                    anyButtonPressed.Invoke();
+                
+                break;
+            }
         }
     }
 }

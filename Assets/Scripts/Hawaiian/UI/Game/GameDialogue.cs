@@ -11,9 +11,11 @@ namespace Hawaiian.UI.Game
         [SerializeField] private GameObject inventoryUIPrefab;
         [SerializeField] private Transform uiParent;
         [SerializeField] private Transform uiParentForFourPlayers;
+        [SerializeField] private GameObject tutorialDialoguePrefab;
         [SerializeField] private GameObject controlsInstructionsDialoguePrefab;
         [SerializeField] private MainMenuController mainMenuController;
         [SerializeField] private MainMenuButtonFunctions pauseMenuController;
+        [SerializeField] private GameObject tutorialBackground;
 
         private int _inventoryCount = 0;
         private List<GameObject> inventoryGameObjects = new();
@@ -22,6 +24,8 @@ namespace Hawaiian.UI.Game
 
         protected override void OnPromote()
         {
+            tutorialBackground.SetActive(false);
+            
             if (mainMenuController.enabled)
                 mainMenuController.CursorToStartingState();
         }
@@ -57,7 +61,11 @@ namespace Hawaiian.UI.Game
 
         private void DisplayControls()
         {
-            Instantiate(controlsInstructionsDialoguePrefab, transform.parent); 
+            tutorialBackground.SetActive(true);
+            
+            Instantiate(controlsInstructionsDialoguePrefab, transform.parent);
+
+            Instantiate(tutorialDialoguePrefab, transform.parent);
         }
     }
 }
