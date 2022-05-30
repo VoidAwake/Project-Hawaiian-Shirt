@@ -391,7 +391,7 @@ public class ItemInteractor : MonoBehaviour
                 lr.transform.localPosition = Vector3.zero;
                 
                 // Increment the angle for each line renderer
-                var currentAngle = angle + 20f * i;
+                var currentAngle = angle + 20f * i - (_lineRenderers.Count - 1) / (float) 2 * 20f;
 
                 var radians = currentAngle * Mathf.Deg2Rad;
 
