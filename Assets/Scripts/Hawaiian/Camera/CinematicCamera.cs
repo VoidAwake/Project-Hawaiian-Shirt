@@ -42,9 +42,11 @@ namespace Hawaiian.Camera
 
         private bool hasStartedCountdown;
         private IEnumerator currentCoroutine;
+        private bool hasStartedCinematic;
 
         public void Awake()
         {
+            hasStartedCinematic = false;
             hasStartedCountdown = false;
             _countdown.text = "";
             _camera = GetComponent<UnityEngine.Camera>();
@@ -62,10 +64,16 @@ namespace Hawaiian.Camera
             _action.Disable();
         }
 
-        public void StartIntroCinematic() => StartCoroutine(RunLevelPreviewCinematic());
+        public void StartIntroCinematic()
+        {
+            hasStartedCinematic = true;
+            StartCoroutine(RunLevelPreviewCinematic());
+        } 
 
         public void OnSkip(InputAction.CallbackContext ctx)
         {
+            if (!hasStartedCountdown) return;
+            
             if (!hasStartedCountdown)
             {
                 StopCoroutine(currentCoroutine);
