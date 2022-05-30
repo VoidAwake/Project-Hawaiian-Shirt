@@ -14,7 +14,8 @@ GameObject:
   - component: {fileID: 959576132401526846}
   - component: {fileID: 6305992027160832399}
   - component: {fileID: 5313269524115035386}
-  m_Layer: 0
+  - component: {fileID: 5362761341628053906}
+  m_Layer: 8
   m_Name: SmokeBombThrowable
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -161,3 +162,24 @@ MonoBehaviour:
   _knockbackDistance: 0
   _canStickOnWalls: 0
   _smokeEffectPrefab: {fileID: 5708808547914078901, guid: ccc42288e85ccf445aee0f1108f7cb0f, type: 3}
+--- !u!50 &5362761341628053906
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5387373904414807758}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
