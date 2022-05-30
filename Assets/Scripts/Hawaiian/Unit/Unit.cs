@@ -155,26 +155,32 @@ namespace Hawaiian.Unit
 
             for (int i = 0; i < transform.childCount; i++)
             {
-                if (transform.GetChild(i).TryGetComponent<Input.Cursor>(out Input.Cursor cursor))
+                if (transform.GetChild(i).name == "Priority") // What have I done...
                 {
-                    if (transform.GetChild(i).TryGetComponent<SpriteRenderer>(out SpriteRenderer sprite))
+                    for (int j = 0; j < transform.GetChild(i).transform.childCount; j++)
                     {
-                        switch (torsoName)
+                        if (transform.GetChild(i).transform.GetChild(j).TryGetComponent<Input.Cursor>(out Input.Cursor cursor))
                         {
-                            case "Red":
-                                sprite.color = playerColors.GetColor(0);
-                                break;
-                            case "Blue":
-                                sprite.color = playerColors.GetColor(1);
-                                break;
-                            case "Yellow":
-                                sprite.color = playerColors.GetColor(2);
-                                break;
-                            case "Green":
-                                sprite.color = playerColors.GetColor(3);
-                                break;
-                            default:
-                                break;
+                            if (transform.GetChild(i).transform.GetChild(j).TryGetComponent<SpriteRenderer>(out SpriteRenderer sprite))
+                            {
+                                switch (torsoName)
+                                {
+                                    case "Red":
+                                        sprite.color = playerColors.GetColor(0);
+                                        break;
+                                    case "Blue":
+                                        sprite.color = playerColors.GetColor(1);
+                                        break;
+                                    case "Yellow":
+                                        sprite.color = playerColors.GetColor(2);
+                                        break;
+                                    case "Green":
+                                        sprite.color = playerColors.GetColor(3);
+                                        break;
+                                    default:
+                                        break;
+                                }
+                            }
                         }
                     }
                 }

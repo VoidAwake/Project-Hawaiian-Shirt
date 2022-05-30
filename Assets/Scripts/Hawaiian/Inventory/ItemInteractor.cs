@@ -291,7 +291,7 @@ public class ItemInteractor : MonoBehaviour
                 
 
                 transform.parent.GetComponent<UnitAnimator>()
-                    .UseItem(UnitAnimationState.Throw, _cursor.transform.position, false);
+                    .UseItem(UnitAnimationState.Throw, _cursor.transform.localPosition, false);
 
                 index++;
             });

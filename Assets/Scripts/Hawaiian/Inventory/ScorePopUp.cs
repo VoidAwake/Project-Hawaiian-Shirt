@@ -45,7 +45,7 @@ namespace Hawaiian.Inventory
         {
             if (parent != null && rectTransform != null)
             {
-                rectTransform.position = parent.position + Vector3.up * 1.75f;
+                rectTransform.position = parent.position + Vector3.up * 1.8f;
             }
         }
 

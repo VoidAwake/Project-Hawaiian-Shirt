@@ -14,7 +14,7 @@ namespace Hawaiian.Unit
         None, MeleeSwing, Throw
     }
         
-    [RequireComponent(typeof(Unit))][RequireComponent(typeof(Animator))]
+    [RequireComponent(typeof(Unit))]//[RequireComponent(typeof(Animator))]
     public class UnitAnimator : MonoBehaviour
     {
         private int spriteDirection = -1;
@@ -28,7 +28,7 @@ namespace Hawaiian.Unit
         private float itemUseTimer;
         private Vector2 itemUseDirection;
 
-        private Animator _animator;
+        [SerializeField] private Animator _animator;
         private Unit _unit;
         private bool _isLookingLeft;
         private Unit.PlayerState _playerState = Unit.PlayerState.Walking;
@@ -40,7 +40,7 @@ namespace Hawaiian.Unit
         
         private void Start()
         {
-            _animator = GetComponent<Animator>();
+            //_animator = GetComponent<Animator>();
             _unit = GetComponent<Unit>();
             _isLookingLeft = true;
         }
@@ -136,9 +136,9 @@ namespace Hawaiian.Unit
                     _invincibilityTimer %= 0.1f;
 
                     // Loop through children and enable/disable any sprites
-                    for (int i = 0; i < transform.childCount; i++)
+                    for (int i = 0; i < _animator.transform.childCount; i++)
                     {
-                        SpriteRenderer child = transform.GetChild(i).GetComponent<SpriteRenderer>();
+                        SpriteRenderer child = _animator.transform.GetChild(i).GetComponent<SpriteRenderer>();
                         if (child != null)
                         {
                             if (child.enabled) child.enabled = false;
@@ -153,9 +153,9 @@ namespace Hawaiian.Unit
                 _wasInvincible = false;
 
                 // Loop through children and enable any sprites
-                for (int i = 0; i < transform.childCount; i++)
+                for (int i = 0; i < _animator.transform.childCount; i++)
                 {
-                    SpriteRenderer child = transform.GetChild(i).GetComponent<SpriteRenderer>();
+                    SpriteRenderer child = _animator.transform.GetChild(i).GetComponent<SpriteRenderer>();
                     if (child != null)
                     {
                         child.enabled = true;
@@ -187,13 +187,14 @@ namespace Hawaiian.Unit
                 targetRadians += (swingBreadth / 2) - swingBreadth * percentage;
 
                 // Set arm position and rotation
-                Vector2 iDontKnowWhyThisWorksButItDoes = itemHand.transform.localPosition = new Vector2((0.5f * swingDepth) * Mathf.Sin(targetRadians) * (transform.localScale.x < 0 ? 1 : -1), 0.5f + (0.4f * swingDepth) * Mathf.Cos(targetRadians) * (transform.localScale.x < 0 ? -1 : 1));
-                itemHand.transform.localPosition = new Vector2((0.5f * swingDepth) * Mathf.Sin(targetRadians) * (transform.localScale.x < 0 ? 1 : -1), 0.5f + (0.4f * swingDepth) * Mathf.Cos(targetRadians));
+                float direction = _animator.transform.localScale.x < 0 ? 1 : -1;
+                Vector2 iDontKnowWhyThisWorksButItDoes = itemHand.transform.localPosition = new Vector2((0.5f * swingDepth) * Mathf.Sin(targetRadians) * direction, 0.5f + (0.4f * swingDepth) * Mathf.Cos(targetRadians) * -direction);
+                itemHand.transform.localPosition = new Vector2((0.5f * swingDepth) * Mathf.Sin(targetRadians) * direction, 0.5f + (0.4f * swingDepth) * Mathf.Cos(targetRadians));
                 itemHand.transform.rotation = Quaternion.Euler(0.0f, 0.0f, Vector2.SignedAngle(Vector2.up, iDontKnowWhyThisWorksButItDoes + Vector2.down * 0.5f) - 30.0f);
-                itemHand.transform.localScale = transform.localScale.x < 0 ? new Vector2(1.0f, -1.0f) : new Vector2(1.0f, 1.0f);
+                itemHand.transform.localScale = new Vector2(1.0f, -direction);
 
                 // Set item position and rotation
-                heldItem.transform.localPosition = new Vector2((0.5f * swingDepth + 0.4f) * Mathf.Sin(targetRadians) * (transform.localScale.x < 0 ? 1 : -1), 0.5f + (0.4f * swingDepth + 0.32f) * Mathf.Cos(targetRadians));
+                heldItem.transform.localPosition = new Vector2((0.5f * swingDepth + 0.4f) * Mathf.Sin(targetRadians) * -1 /*direction*/, 0.5f + (0.4f * swingDepth + 0.32f) * Mathf.Cos(targetRadians));
                 heldItem.transform.rotation = itemHand.transform.rotation;
                 heldItem.transform.localScale = itemHand.transform.localScale;
 
@@ -206,7 +207,7 @@ namespace Hawaiian.Unit
                     itemUseTimer = 0.0f;
                     itemHand.GetComponent<SpriteSkin>().enabled = true;
 
-                    heldItem.transform.localPosition = new Vector2(-0.6f, 0.55f);
+                    heldItem.transform.localPosition = new Vector2(0.6f * direction, 0.55f);
                     heldItem.transform.rotation = Quaternion.Euler(0.0f, 0.0f, 0.0f);
                     heldItem.transform.localScale = new Vector2(1.0f, 1.0f);
                     itemHand.transform.localScale = new Vector2(1.0f, 1.0f);
@@ -239,13 +240,15 @@ namespace Hawaiian.Unit
                 _isLookingLeft = false;
                 spriteDirection = 1;
                 //Vector2 prevPos = cursor.transform.position;
-             //  transform.localScale = new Vector2(-1.0f, 1.0f);
-                
-                foreach (var renderer in _renderers)
-                    renderer.flipX = true;
-                
-                heldItem.transform.localPosition = new Vector2(0.6f, 0.55f);
+                //  transform.localScale = new Vector2(-1.0f, 1.0f);
 
+                //foreach (var renderer in _renderers)
+                //    renderer.flipX = true;
+
+                heldItem.transform.localPosition = new Vector2(0.6f, 0.55f);
+                heldItem.GetComponent<SpriteRenderer>().flipX = true;
+
+                _animator.transform.localScale = new Vector2(-1, 1);
 
                 //if (cursor != null) cursor.transform.position = prevPos;
             }
@@ -254,11 +257,15 @@ namespace Hawaiian.Unit
                 _isLookingLeft = true;
                 spriteDirection = -1;
                 //Vector2 prevPos = cursor.transform.position;
-               // transform.localScale = new Vector2(1.0f, 1.0f);
-               foreach (var renderer in _renderers)
-                   renderer.flipX = false;
-               
-               heldItem.transform.localPosition = new Vector2(-0.6f, 0.55f);
+                // transform.localScale = new Vector2(1.0f, 1.0f);
+
+                //foreach (var renderer in _renderers)
+                //    renderer.flipX = false;
+
+                heldItem.transform.localPosition = new Vector2(-0.6f, 0.55f);
+                heldItem.GetComponent<SpriteRenderer>().flipX = false;
+
+                _animator.transform.localScale = new Vector2(1, 1);
 
                 //if (cursor != null) cursor.transform.position = prevPos;
             }

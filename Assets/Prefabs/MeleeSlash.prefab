@@ -79,7 +79,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -123,9 +123,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ffa29e2b75b18864fbad8d07ab6af2bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _damage: 0
   _speed: 0
+  _knockbackDistance: 0
   OnTakeDamage: {fileID: 11400000, guid: 36d2877f5e90d4a4c968de30d42c3b82, type: 2}
+  _knockbackDirection: {x: 0, y: 0}
 --- !u!61 &5973478539246383931
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -213,3 +214,4 @@ MonoBehaviour:
   hitEffects:
   - {fileID: 1413342130090747480}
   - {fileID: 1337574294931782039}
+  _overrideDirectionForBombs: 0

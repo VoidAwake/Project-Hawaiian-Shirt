@@ -1,0 +1,47 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b80aed388cd62a5479b406e914eb6b8d, type: 3}
+  m_Name: Hawaiian Shirt
+  m_EditorClassIdentifier: 
+  Type: 3
+  ItemSprite: {fileID: 21300000, guid: 153c4f1ef675efc48ae1266be89262ad, type: 3}
+  DroppedItemSprite: {fileID: 21300000, guid: 153c4f1ef675efc48ae1266be89262ad, type: 3}
+  ItemName: Hawaiian Shirt
+  MaxStack: 0
+  DroppedItemBase: {fileID: 3056942884218095950, guid: 37132a09f5d1c4046a4bb460892afc47, type: 3}
+  ProjectileInstance: {fileID: 0}
+  Rarity: 3
+  ItemWeight: 10
+  heldItemPrefab: {fileID: 0}
+  ProbabilityRangeFrom: 0
+  ProbabilityRangeTo: 0
+  ItemDamage: 0
+  DrawSpeed: 0
+  DrawDistance: 0
+  SticksOnWall: 0
+  ReturnsToPlayer: 0
+  IsMultiShot: 0
+  ProjectileAmount: 0
+  IsRicochet: 0
+  MaximumBounces: 0
+  ParryWindow: 0
+  ParryPercentage: 0
+  TimeTillParry: 0
+  AttackRate: 0
+  KnockbackDistance: 0
+  IsMainObjective: 0
+  CanBeHeldByEnemies: 0
+  Points: 100
+  PlacementRadius: 0
+  PlacementIcon: {fileID: 0}
+  TrapInstance: {fileID: 0}
+  IsKey: 0
