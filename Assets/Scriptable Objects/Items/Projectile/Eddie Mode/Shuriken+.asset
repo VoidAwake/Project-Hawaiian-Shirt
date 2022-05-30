@@ -18,7 +18,7 @@ MonoBehaviour:
   ItemName: Shuriken+
   MaxStack: 0
   DroppedItemBase: {fileID: 3056942884218095950, guid: 37132a09f5d1c4046a4bb460892afc47, type: 3}
-  ProjectileInstance: {fileID: 8484802503941745754, guid: 6ccdae3489326844c9b49b012c477987, type: 3}
+  ProjectileInstance: {fileID: 2849575716040918502, guid: 958bd1952bce86b40b08e027a1c6b300, type: 3}
   Rarity: 3
   ItemWeight: 10
   heldItemPrefab: {fileID: 0}

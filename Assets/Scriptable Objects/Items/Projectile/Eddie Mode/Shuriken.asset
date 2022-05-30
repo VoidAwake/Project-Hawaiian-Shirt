@@ -18,12 +18,12 @@ MonoBehaviour:
   ItemName: Shuriken
   MaxStack: 0
   DroppedItemBase: {fileID: 3056942884218095950, guid: 37132a09f5d1c4046a4bb460892afc47, type: 3}
-  ProjectileInstance: {fileID: 8484802503941745754, guid: 6ccdae3489326844c9b49b012c477987, type: 3}
+  ProjectileInstance: {fileID: 2509235695991877619, guid: 537fa44eef9dec941974e89a38f592cb, type: 3}
   Rarity: 1
   ItemWeight: 50
   heldItemPrefab: {fileID: 0}
-  ProbabilityRangeFrom: 100
-  ProbabilityRangeTo: 150
+  ProbabilityRangeFrom: 340
+  ProbabilityRangeTo: 390
   ItemDamage: 10
   DrawSpeed: 8
   DrawDistance: 8
