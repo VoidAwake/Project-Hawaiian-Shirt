@@ -68,7 +68,8 @@ namespace Hawaiian.Camera
         {
             if (!hasStartedCountdown)
             {
-                StopCoroutine(currentCoroutine);
+                if (currentCoroutine != null)
+                    StopCoroutine(currentCoroutine);
                 StartCoroutine(LerpCameraSize(_sizeStep));
             }
         }
