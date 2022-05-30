@@ -400,7 +400,7 @@ TextureImporter:
       bones:
       - name: Head
         guid: 9bc7a06ee3469314fa2bde27623b3ce8
-        position: {x: 23.75328, y: 14.408802, z: 0}
+        position: {x: 22.742332, y: 14.174004, z: 0}
         rotation: {x: 0, y: 0, z: 0.6924263, w: 0.7214886}
         length: 13.673311
         parentId: -1
