@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.UI;
 using UnityEngine.InputSystem;
 
 namespace Hawaiian.UI.CharacterSelect
@@ -14,8 +13,7 @@ namespace Hawaiian.UI.CharacterSelect
         [Header("Character Select")]
         [SerializeField] private LobbyWindow[] windows;
         [SerializeField] private CanvasGroup[] portraits;
-        [SerializeField] private GameObject[] characterSelects;
-        [SerializeField] private Sprite[] characterSelectSprites;
+        [SerializeField] private CharacterPortraitCursor[] portraitCursors;
 
         public UnityEvent readyChanged = new();
 
@@ -41,27 +39,6 @@ namespace Hawaiian.UI.CharacterSelect
             lobbyGameManager = GetComponent<LobbyGameManager>();
         }
 
-        private void Update()
-        {
-            // Animate cursors
-            foreach (var lobbyPlayerController in lobbyPlayerControllers)
-            {
-                if (lobbyPlayerController.Status == LobbyPlayerController.PlayerStatus.LoadedIn)
-                {
-                    // Animate cursor
-                    lobbyPlayerController.characterSelect.GetComponent<Image>().sprite = characterSelectSprites
-                    [
-                        Mathf.FloorToInt((Time.time % 0.39999f) * 10.0f) - (Mathf.FloorToInt((Time.time % 0.39999f) * 10.0f) > 2 ? 2 : 0)
-                    ];
-                }
-                else
-                {
-                    // Set to still cursor
-                    lobbyPlayerController.characterSelect.GetComponent<Image>().sprite = characterSelectSprites[1];
-                }
-            }
-        }
-
         #endregion
 
         #region PlayerInputManager Messages
@@ -72,9 +49,10 @@ namespace Hawaiian.UI.CharacterSelect
             
             var lobbyPlayerController = playerInput.GetComponent<LobbyPlayerController>();
             lobbyPlayerControllers.Add(lobbyPlayerController);
-            lobbyPlayerController.Initialise(this, characterSelects[playerConfig.playerNumber], playerConfig);
+            lobbyPlayerController.Initialise(this, playerConfig);
             
             windows[playerConfig.playerNumber].Initialise(lobbyPlayerController);
+            portraitCursors[playerConfig.playerNumber].Initialise(lobbyPlayerController);
         }
 
         #endregion

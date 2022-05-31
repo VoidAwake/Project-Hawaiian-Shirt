@@ -34,8 +34,9 @@ namespace Hawaiian.UI.CharacterSelect
                 OnStatusChanged();
             }
         }
+        
+        public CanvasGroup Portrait { get; private set; }
 
-        public GameObject characterSelect;
         public PlayerConfig playerConfig;
         private PlayerStatus status;
 
@@ -143,19 +144,16 @@ namespace Hawaiian.UI.CharacterSelect
             switch (Status)
             {
                 case PlayerStatus.NotLoadedIn:
-                    characterSelect.SetActive(false);
-                    // lobbyManager.GetPortrait(playerConfig.characterNumber).alpha = 1.0f;
+                    // Portrait.alpha = 1.0f;
                     inputEnabled = false;
                     break;
                 case PlayerStatus.LoadedIn:
-                    characterSelect.SetActive(true);
-                    lobbyManager.GetPortrait(playerConfig.characterNumber).alpha = 1.0f;
+                    Portrait.alpha = 1.0f;
                     StartCoroutine(EnableInput());
                     break;
                 case PlayerStatus.Ready:
-                    characterSelect.SetActive(true);
                     AudioManager.audioManager.Confirm();
-                    lobbyManager.GetPortrait(playerConfig.characterNumber).alpha = 0.2f;
+                    Portrait.alpha = 0.2f;
                     StartCoroutine(EnableInput());
                     break;
                 default:
@@ -167,10 +165,9 @@ namespace Hawaiian.UI.CharacterSelect
             statusChanged.Invoke();
         }
 
-        public void Initialise(LobbyManager lobbyManager, GameObject characterSelect, PlayerConfig playerConfig)
+        public void Initialise(LobbyManager lobbyManager, PlayerConfig playerConfig)
         {
             this.lobbyManager = lobbyManager;
-            this.characterSelect = characterSelect;
             this.playerConfig = playerConfig;
 
             moveBuffer = 1;
@@ -195,8 +192,7 @@ namespace Hawaiian.UI.CharacterSelect
             
             if (charNumber == -1) return;
             AudioManager.audioManager.Swap();
-            var portraitTransform = lobbyManager.GetPortrait(charNumber).GetComponent<RectTransform>();
-            characterSelect.GetComponent<RectTransform>().anchoredPosition = portraitTransform.anchoredPosition;
+            Portrait = lobbyManager.GetPortrait(charNumber);
             
             characterUpdated.Invoke();
         }
