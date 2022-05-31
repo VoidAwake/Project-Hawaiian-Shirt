@@ -94,7 +94,7 @@ namespace Hawaiian.UI.CharacterSelect
 
             if (!isExiting)
             {
-                FindObjectOfType<Transition>().BeginTransition(true, true, buildIndexOfNextScene, true);
+                FindObjectOfType<Transition>().BeginTransition(true, true, buildIndexOfNextScene);
                 Destroy(GetComponent<LobbyManager>());
                 Destroy(GetComponent<PlayerInputManager>());
                 isExiting = true;
@@ -131,7 +131,7 @@ namespace Hawaiian.UI.CharacterSelect
                 if (!AllPlayersHaveStatus(LobbyPlayerController.PlayerStatus.NotLoadedIn))
                     return false;
 
-                FindObjectOfType<Transition>().BeginTransition(true, true, 0, false);
+                FindObjectOfType<Transition>().BeginTransition(true, true, 0);
                 isExiting = true;
 
                 return true;

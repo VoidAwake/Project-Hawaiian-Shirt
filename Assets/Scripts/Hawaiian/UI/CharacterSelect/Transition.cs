@@ -12,13 +12,10 @@ namespace Hawaiian.UI.CharacterSelect
         public bool loadNextScene;
         public bool fadeOut;
         public bool transitionActive;
-        public bool stashPlayerInfo;
-        public bool itIsTheCharacterSelectScreenAndYouShouldIncrementTheLobbySubstateOnTransitionConclusion;
         private Image image;
         private float transitionTimer;
         private int transitionInt;
 
-        // Start is called before the first frame update
         void Start()
         {
             image = GetComponent<Image>();
@@ -33,7 +30,6 @@ namespace Hawaiian.UI.CharacterSelect
             else image.enabled = false;
         }
 
-        // Update is called once per frame
         void Update()
         {
             if (transitionActive)
@@ -51,29 +47,9 @@ namespace Hawaiian.UI.CharacterSelect
                             image.enabled = false;
                             transitionTimer = 0.0f;
                             transitionInt = 0;
-
-                            // Do a thing
-                            if (itIsTheCharacterSelectScreenAndYouShouldIncrementTheLobbySubstateOnTransitionConclusion)
-                            {
-                                // FindObjectOfType<LobbyManager>().IncrementSubState();
-                            }
                         }
                         else
                         {
-                            // TODO: Grab player information from this class and LobbyGameManager (which has a PlayerConfig class) and pass it into the next scene
-                            if (stashPlayerInfo)
-                            {
-                                LobbyGameManager manager = FindObjectOfType<LobbyGameManager>();
-
-                                foreach (PlayerConfig config in manager.playerConfigs)
-                                {
-                                    if (config.IsPlayer) config.SetInputInfo(config.inputComponent);
-                                }
-
-                                //Destroy(manager.GetComponent<LobbyManager>());
-                                //Destroy(manager.GetComponent<PlayerInputManager>());
-                            }
-
                             // Destroy persistent gameobject if going to main menu or character select scenes
                             if (buildIndexOfNextScene <= 1)
                             {
@@ -102,7 +78,7 @@ namespace Hawaiian.UI.CharacterSelect
             }
         }
 
-        public void BeginTransition(bool fadeOut, bool loadNextScene, int buildIndex, bool stashPlayerInfo)
+        public void BeginTransition(bool fadeOut, bool loadNextScene, int buildIndex)
         {
             transitionActive = true;
             transitionTimer = 0;
@@ -111,7 +87,6 @@ namespace Hawaiian.UI.CharacterSelect
             this.fadeOut = fadeOut;
             this.loadNextScene = loadNextScene;
             buildIndexOfNextScene = buildIndex;
-            this.stashPlayerInfo = stashPlayerInfo;
 
             if (fadeOut) image.sprite = transitionCheckersSprites[0];
             else image.sprite = transitionCheckersSprites[transitionCheckersSprites.Length - 1];

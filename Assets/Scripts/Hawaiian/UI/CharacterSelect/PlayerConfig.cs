@@ -20,7 +20,7 @@ namespace Hawaiian.UI.CharacterSelect
         public float score;
 
         // Player input info
-        public PlayerInput inputComponent;
+        public PlayerInput playerInput;
         public int playerIndex;
         public int splitScreenIndex;
         public string controlScheme;
@@ -36,8 +36,10 @@ namespace Hawaiian.UI.CharacterSelect
 
         public void SetPlayer(PlayerInput playerInput)
         {
-            this.inputComponent = playerInput;
+            this.playerInput = playerInput;
             this.IsPlayer = true;
+            
+            SetInputInfo();
         }
 
         public void Clear()
@@ -46,7 +48,7 @@ namespace Hawaiian.UI.CharacterSelect
             this.characterNumber = -1;
         }
 
-        public void SetInputInfo(PlayerInput playerInput)
+        private void SetInputInfo()
         {
             playerIndex = playerInput.playerIndex;
             splitScreenIndex = playerInput.splitScreenIndex;

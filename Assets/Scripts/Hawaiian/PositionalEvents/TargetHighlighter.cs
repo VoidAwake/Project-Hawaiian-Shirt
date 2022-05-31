@@ -9,7 +9,7 @@ namespace Hawaiian.PositionalEvents
     {
         [SerializeField] private GameObject highlighterPrefab;
         // TODO: Retrieve from PlayerPrefs.
-        [SerializeField] private PlayersData playersData;
+        // [SerializeField] private PlayersData playersData;
         
         private readonly Dictionary<PositionalEventCaller, List<PositionalEventListener>> callerCurrentTargets = new();
         private readonly Dictionary<PositionalEventListener, Highlighter> highlighters = new();

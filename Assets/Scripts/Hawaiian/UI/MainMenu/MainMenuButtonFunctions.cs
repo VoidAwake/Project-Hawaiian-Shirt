@@ -21,7 +21,7 @@ namespace Hawaiian.UI.MainMenu
                 Transition transition = FindObjectOfType<Transition>();
                 if (transition != null)
                 {
-                    transition.BeginTransition(true, true, buildIndex, false);
+                    transition.BeginTransition(true, true, buildIndex);
                 }
                 else
                 {

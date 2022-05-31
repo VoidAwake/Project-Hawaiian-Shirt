@@ -118,7 +118,7 @@ namespace Hawaiian.UI.CharacterSelect
             Transition transition = FindObjectOfType<Transition>();
             if (transition != null)
             {
-                transition.BeginTransition(true, true, buildIndex, false);
+                transition.BeginTransition(true, true, buildIndex);
             }
             else
             {

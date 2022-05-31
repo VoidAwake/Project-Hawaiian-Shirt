@@ -24,26 +24,6 @@ namespace Hawaiian.UI.CharacterSelect
             }
         }
 
-        void Update()
-        {
-            // Load appropriate manager // Or, have this manager exist independently in their own scenes
-            /*if (!loadedManager)
-            {
-                if (gameState == GameState.MainMenu)
-                {
-                    if (gameObject.GetComponent<MainMenuManager>() == null)
-                    {
-                        gameObject.AddComponent<MainMenuManager>();
-                    }
-                    loadedManager = true;
-                }
-                else if (gameState == GameState.Board1)
-                {
-                    loadedManager = true;
-                }
-            }*/
-        }
-
         public PlayerConfig AddPlayer(PlayerInput playerInput)
         {
             for (int i = 0; i < 4; i++)
@@ -51,6 +31,7 @@ namespace Hawaiian.UI.CharacterSelect
                 if (!playerConfigs[i].IsPlayer)
                 {
                     playerConfigs[i].SetPlayer(playerInput);
+                    // TODO: Pretty sure this shouldn't be here
                     AudioManager.audioManager.PlayerAdd();
                     return playerConfigs[i];
                 }
