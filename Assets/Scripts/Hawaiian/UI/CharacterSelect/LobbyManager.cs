@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
-using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 using UnityEngine.InputSystem;
 
@@ -16,8 +16,18 @@ namespace Hawaiian.UI.CharacterSelect
         [SerializeField] private CanvasGroup[] portraits;
         [SerializeField] private GameObject[] characterSelects;
         [SerializeField] private Sprite[] characterSelectSprites;
-        [SerializeField] private TextMeshProUGUI readyText;
-        [SerializeField] private GameObject ready;
+
+        public UnityEvent readyChanged = new();
+
+        public bool ReadyToStartGame
+        {
+            get => readyToStartGame;
+            private set
+            {
+                readyToStartGame = value;
+                readyChanged.Invoke();
+            }
+        }
 
         private readonly List<LobbyPlayerController> lobbyPlayerControllers = new();
         private LobbyGameManager lobbyGameManager;
@@ -29,8 +39,6 @@ namespace Hawaiian.UI.CharacterSelect
         private void Start()
         {
             lobbyGameManager = GetComponent<LobbyGameManager>();
-
-            ready.SetActive(false);
         }
 
         private void Update()
@@ -51,12 +59,6 @@ namespace Hawaiian.UI.CharacterSelect
                     // Set to still cursor
                     lobbyPlayerController.characterSelect.GetComponent<Image>().sprite = characterSelectSprites[1];
                 }
-            }
-
-            // Animate ready text
-            if (readyToStartGame)
-            {
-                readyText.color = new Color(readyText.color.r, readyText.color.g, readyText.color.b, 0.5f + 0.5f * Mathf.Sin(Time.time * 3.0f));
             }
         }
 
@@ -108,7 +110,7 @@ namespace Hawaiian.UI.CharacterSelect
 
         public void RequestStartGame()
         {
-            if (!readyToStartGame) return;
+            if (!ReadyToStartGame) return;
 
             if (!isExiting)
             {
@@ -126,11 +128,7 @@ namespace Hawaiian.UI.CharacterSelect
 
         public void UpdateReadyToStart()
         {
-            var readyBool = AllPlayersReady();
-            
-            readyToStartGame = readyBool;
-            
-            ready.SetActive(readyBool);
+            ReadyToStartGame = AllPlayersReady();
         }
 
         private bool AllPlayersReady()
