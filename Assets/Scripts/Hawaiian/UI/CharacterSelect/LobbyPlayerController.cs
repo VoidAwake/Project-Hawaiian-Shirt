@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.LowLevel;
 
@@ -9,6 +10,9 @@ namespace Hawaiian.UI.CharacterSelect
 {
     public class LobbyPlayerController : MonoBehaviour
     {
+        public UnityEvent statusChanged = new();
+        public UnityEvent characterUpdated = new();
+        
         private float move;
         private bool inputEnabled;
         int moveBuffer;
@@ -31,7 +35,6 @@ namespace Hawaiian.UI.CharacterSelect
             }
         }
 
-        public LobbyWindow lobbyWindow;
         public GameObject characterSelect;
         public PlayerConfig playerConfig;
         private PlayerStatus status;
@@ -140,19 +143,16 @@ namespace Hawaiian.UI.CharacterSelect
             switch (Status)
             {
                 case PlayerStatus.NotLoadedIn:
-                    lobbyWindow.SetEmpty();
                     characterSelect.SetActive(false);
                     // lobbyManager.GetPortrait(playerConfig.characterNumber).alpha = 1.0f;
                     inputEnabled = false;
                     break;
                 case PlayerStatus.LoadedIn:
-                    lobbyWindow.SetUnselected();
                     characterSelect.SetActive(true);
                     lobbyManager.GetPortrait(playerConfig.characterNumber).alpha = 1.0f;
                     StartCoroutine(EnableInput());
                     break;
                 case PlayerStatus.Ready:
-                    lobbyWindow.SetSelected();
                     characterSelect.SetActive(true);
                     AudioManager.audioManager.Confirm();
                     lobbyManager.GetPortrait(playerConfig.characterNumber).alpha = 0.2f;
@@ -163,12 +163,13 @@ namespace Hawaiian.UI.CharacterSelect
             }
             
             lobbyManager.UpdateReadyToStart();
+            
+            statusChanged.Invoke();
         }
 
-        public void Initialise(LobbyManager lobbyManager, LobbyWindow lobbyWindow, GameObject characterSelect, PlayerConfig playerConfig)
+        public void Initialise(LobbyManager lobbyManager, GameObject characterSelect, PlayerConfig playerConfig)
         {
             this.lobbyManager = lobbyManager;
-            this.lobbyWindow = lobbyWindow;
             this.characterSelect = characterSelect;
             this.playerConfig = playerConfig;
 
@@ -196,7 +197,8 @@ namespace Hawaiian.UI.CharacterSelect
             AudioManager.audioManager.Swap();
             var portraitTransform = lobbyManager.GetPortrait(charNumber).GetComponent<RectTransform>();
             characterSelect.GetComponent<RectTransform>().anchoredPosition = portraitTransform.anchoredPosition;
-            lobbyWindow.UpdateHead(charNumber);
+            
+            characterUpdated.Invoke();
         }
 
         private void OnPlayerCharacterSelect(int direction)

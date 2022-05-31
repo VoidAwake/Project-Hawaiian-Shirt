@@ -72,7 +72,9 @@ namespace Hawaiian.UI.CharacterSelect
             
             var lobbyPlayerController = playerInput.GetComponent<LobbyPlayerController>();
             lobbyPlayerControllers.Add(lobbyPlayerController);
-            lobbyPlayerController.Initialise(this, windows[playerConfig.playerNumber], characterSelects[playerConfig.playerNumber], playerConfig);
+            lobbyPlayerController.Initialise(this, characterSelects[playerConfig.playerNumber], playerConfig);
+            
+            windows[playerConfig.playerNumber].Initialise(lobbyPlayerController);
         }
 
         #endregion
