@@ -21,20 +21,19 @@ namespace Hawaiian.UI.CharacterSelect
         [SerializeField] private GameManager gameManager;
         [SerializeField] private GameEvent playersJoined;
         [SerializeField] private List<SpawnPoint> spawnPoints;
+        [SerializeField] private PlayerConfigManager playerConfigManager;
 
         public UnityEvent winningPlayersChanged = new();
         
         private Dictionary<PlayerConfig, InventoryController> inventoryControllers = new();
 
-        private LobbyGameManager lobbyManager;
         private PlayerInputManager inputManager;
 
         void Start()
         {
-            lobbyManager = FindObjectOfType<LobbyGameManager>();
              inputManager = GetComponent<PlayerInputManager>();
 
-            if (lobbyManager == null || inputManager == null)
+            if (playerConfigManager == null || inputManager == null)
             {
                 if (inputManager != null)
                 {
@@ -57,7 +56,7 @@ namespace Hawaiian.UI.CharacterSelect
 
         public void BeginSpawn()
         {
-            foreach (PlayerConfig config in lobbyManager.playerConfigs)
+            foreach (PlayerConfig config in playerConfigManager.playerConfigs)
             {
                 if (!config.IsPlayer) continue;
                 

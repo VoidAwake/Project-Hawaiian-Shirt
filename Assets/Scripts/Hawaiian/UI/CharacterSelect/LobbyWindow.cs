@@ -8,7 +8,6 @@ namespace Hawaiian.UI.CharacterSelect
 {
     public class LobbyWindow : MonoBehaviour
     {
-        [SerializeField] LobbyGameManager manager;
         [SerializeField] TextMeshProUGUI textNumber;
         [SerializeField] TextMeshProUGUI textPrompt;
         [SerializeField] TextMeshProUGUI textReady;

@@ -95,6 +95,12 @@ MonoBehaviour:
   playerPrefab: {fileID: 3772646986385756032, guid: cbb41f2b105532c4a878d6f54f9e31bd, type: 3}
   buildIndex: 3
   gameManager: {fileID: 11400000, guid: c305914e6d352644190ef7ee43a51bbd, type: 2}
+  playersJoined: {fileID: 0}
+  spawnPoints: []
+  playerConfigManager: {fileID: 11400000, guid: 424474a542819c946b03786b7421e196, type: 2}
+  winningPlayersChanged:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &2043199627
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -149,3 +155,9 @@ MonoBehaviour:
   playerPrefab: {fileID: 3772646986385756032, guid: cbb41f2b105532c4a878d6f54f9e31bd, type: 3}
   buildIndex: 0
   gameManager: {fileID: 0}
+  playersJoined: {fileID: 0}
+  spawnPoints: []
+  playerConfigManager: {fileID: 0}
+  winningPlayersChanged:
+    m_PersistentCalls:
+      m_Calls: []

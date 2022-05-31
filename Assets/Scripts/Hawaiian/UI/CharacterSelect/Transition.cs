@@ -50,18 +50,6 @@ namespace Hawaiian.UI.CharacterSelect
                         }
                         else
                         {
-                            // Destroy persistent gameobject if going to main menu or character select scenes
-                            if (buildIndexOfNextScene <= 1)
-                            {
-                                LobbyGameManager[] lobbyGameManagers = FindObjectsOfType<LobbyGameManager>();
-                                foreach (LobbyGameManager lobbyGameManager in lobbyGameManagers)
-                                {
-                                    Destroy(lobbyGameManager.gameObject);
-                                    Debug.Log("I killed the game manager. There can only be one.");
-                                }
-                            }
-
-                            // Then, load the next scene
                             SceneManager.LoadScene(buildIndexOfNextScene);
                         }
 

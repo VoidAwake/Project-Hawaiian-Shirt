@@ -1,20 +1,14 @@
-﻿using System;
-using Hawaiian.Utilities;
+﻿using Hawaiian.Utilities;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 namespace Hawaiian.Game
 {
-    [CreateAssetMenu(menuName = "Hawaiian/Managers/GameManager", fileName = "NewGameManager")]
+    [CreateAssetMenu(menuName = "Hawaiian/Managers/GameManager")]
     public class GameManager : ScriptableObject
     {
         public enum GamePhase { Stealth, HighAlert, GameOver }
 
         private GamePhase phase;
-
-      
-        
-        
 
         public GamePhase Phase
         {

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -11,9 +12,11 @@ namespace Hawaiian.UI.CharacterSelect
         [SerializeField] private int buildIndexOfNextScene;
 
         [Header("Character Select")]
+        // TODO: Separate the responsibilities of lobby management and UI
         [SerializeField] private LobbyWindow[] windows;
         [SerializeField] private CanvasGroup[] portraits;
         [SerializeField] private CharacterPortraitCursor[] portraitCursors;
+        [SerializeField] private PlayerConfigManager playerConfigManager;
 
         public UnityEvent readyChanged = new();
 
@@ -28,24 +31,19 @@ namespace Hawaiian.UI.CharacterSelect
         }
 
         private readonly List<LobbyPlayerController> lobbyPlayerControllers = new();
-        private LobbyGameManager lobbyGameManager;
         private bool readyToStartGame;
         private bool isExiting;
 
-        #region MonoBehaviour Functions
-
         private void Start()
         {
-            lobbyGameManager = GetComponent<LobbyGameManager>();
+            playerConfigManager.Clear();
         }
-
-        #endregion
 
         #region PlayerInputManager Messages
 
         private void OnPlayerJoined(PlayerInput playerInput)
         {
-            var playerConfig = lobbyGameManager.AddPlayer(playerInput);
+            var playerConfig = playerConfigManager.AddPlayer(playerInput);
             
             var lobbyPlayerController = playerInput.GetComponent<LobbyPlayerController>();
             lobbyPlayerControllers.Add(lobbyPlayerController);
