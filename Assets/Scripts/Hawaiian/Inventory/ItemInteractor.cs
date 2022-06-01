@@ -33,7 +33,7 @@ public class ItemInteractor : MonoBehaviour
     private float _offset = 1.1f;
     private float _slashCooldown;
 
-   [SerializeField] private IUnitGameEvent _removeItem;
+    [SerializeField] private IUnitGameEvent _removeItem;
 
     private GameObject _projectileInstance;
     private GameObject _projectileReference; //TODO: Get from item
@@ -123,12 +123,16 @@ public class ItemInteractor : MonoBehaviour
     //Handles when the player holds the attack for throwables and projectiles
     public void HoldAttack(InputAction.CallbackContext value)
     {
-        if (_projectileInstance != null &&
-            _controller.CurrentItem
-                .ReturnsToPlayer) //Guard statement for returnable projectiles to not allow for them to attack while the projectile is still active
-            return;
+        if (!CanUseProjectile()) return;
 
-        if (_projectileInstance != null && _controller.CurrentItem.Type == ItemType.Throwable)
+        if (value.canceled)
+        {
+            if (_lineRenderers.Count <= 0)
+                return;
+        }
+
+
+        if (!CanUseProjectile() && _controller.CurrentItem.Type == ItemType.Throwable)
             return;
 
         if (value.performed)
@@ -149,8 +153,8 @@ public class ItemInteractor : MonoBehaviour
              i < _controller.CurrentItem.ProjectileAmount;
              i++)
         {
-
-             _projectileInstance = Instantiate(_controller.CurrentItem.ProjectileInstance, transform.position, Quaternion.identity);
+            _projectileInstance = Instantiate(_controller.CurrentItem.ProjectileInstance,
+                transform.position + 0.1f * (_cursor.transform.position - transform.position), Quaternion.identity);
             projectiles.Add(_projectileInstance);
 
             if (i == -1)
@@ -197,6 +201,7 @@ public class ItemInteractor : MonoBehaviour
         if (_controller.CurrentItem.Type is ItemType.Projectile or ItemType.Throwable)
         {
             HoldAttack(value);
+
             return;
         }
 
@@ -274,7 +279,7 @@ public class ItemInteractor : MonoBehaviour
                 {
                     case Throwable:
                         p.GetComponent<T>().Initialise(positions.ToArray(), CurrentItem.ItemSprite,
-                            CurrentItem.SticksOnWall);  
+                            CurrentItem.SticksOnWall);
                         _removeItem.Raise(_playerReference);
                         break;
                     case Projectile:
@@ -287,10 +292,9 @@ public class ItemInteractor : MonoBehaviour
                 if (p.GetComponent<HitUnit>())
                     p.GetComponent<HitUnit>()
                         .Initialise(_playerReference, _cursor.transform.position - transform.position);
-                
-                
 
-                transform.parent.GetComponent<UnitAnimator>()
+
+                _playerReference.transform.GetComponent<UnitAnimator>()
                     .UseItem(UnitAnimationState.Throw, _cursor.transform.localPosition, false);
 
                 index++;
@@ -304,14 +308,13 @@ public class ItemInteractor : MonoBehaviour
             var direction = input;
             InstantiateMeleeIndicator(angle, direction);
         }
-
     }
 
     private void InstantiateMeleeIndicator(float angle, Vector3 direction)
     {
         _firePoint.position = _lastAttackPosition;
 
-        transform.parent.GetComponent<UnitAnimator>()
+        _playerReference.transform.GetComponent<UnitAnimator>()
             .UseItem(UnitAnimationState.MeleeSwing,
                 new Vector2(Mathf.Sin(angle * Mathf.Deg2Rad + Mathf.PI / 2),
                     -Mathf.Cos(angle * Mathf.Deg2Rad + Mathf.PI / 2)), _attackFlag);
@@ -319,7 +322,8 @@ public class ItemInteractor : MonoBehaviour
         GameObject indicator = Instantiate(_projectileReference, _lastAttackPosition,
             Quaternion.Euler(new Vector3(0, 0, angle + _meleeSlashRotationOffset)), _firePoint);
 
-        indicator.GetComponent<DamageIndicator>().Initialise(CurrentItem.DrawSpeed,CurrentItem.KnockbackDistance,_attackFlag, _playerReference, direction);
+        indicator.GetComponent<DamageIndicator>().Initialise(CurrentItem.DrawSpeed, CurrentItem.KnockbackDistance,
+            _attackFlag, _playerReference, direction);
         indicator.GetComponent<HitUnit>().Initialise(_playerReference, _cursor.transform.position - transform.position);
         _attackFlag = !_attackFlag;
     }
@@ -354,6 +358,7 @@ public class ItemInteractor : MonoBehaviour
             GameObject instance = new GameObject();
 
             instance.transform.parent = transform.parent;
+
             LineRenderer renderer = instance.AddComponent(typeof(LineRenderer)) as LineRenderer;
             renderer.sortingOrder = 100;
             _lineRenderers.Add(renderer);
@@ -374,7 +379,7 @@ public class ItemInteractor : MonoBehaviour
         }
     }
 
-    // TODO: Misleading name, also calculates the _multiShotTargets
+    // TODO: Misleading name, also calculates the _multiShotTargets 
     private void UpdateLineRenderers()
     {
         var direction = (_cursor.transform.position - transform.position).normalized;
@@ -382,15 +387,15 @@ public class ItemInteractor : MonoBehaviour
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
 
         if (angle < 0) angle = 360 - angle * -1;
-        
+
         if (_lineRenderers.Count > 0)
         {
             for (var i = 0; i < _lineRenderers.Count; i++)
             {
                 LineRenderer lr = _lineRenderers[i];
                 lr.transform.localPosition = Vector3.zero;
-                
-                // Increment the angle for each line renderer
+
+                // Increment the angle for each line renderer 
                 var currentAngle = angle + 20f * i - (_lineRenderers.Count - 1) / (float) 2 * 20f;
 
                 var radians = currentAngle * Mathf.Deg2Rad;
@@ -399,7 +404,9 @@ public class ItemInteractor : MonoBehaviour
                 var y = Mathf.Sin(radians);
                 var targetPos = transform.position + new Vector3(x, y, 0f) * _cursor.CurrentRad;
 
-                Vector3[] otherPositions = new[] {targetPos, _playerReference.transform.position + Vector3.up * 0.5f,};
+                Vector3[] otherPositions = new[] {targetPos, (_playerReference.transform.position + Vector3.up * 0.5f)};
+                List<Vector3> updatedPositions = new List<Vector3>();
+
 
                 _multiShotTargets[i] = targetPos;
                 lr.positionCount = 2;
@@ -407,6 +414,23 @@ public class ItemInteractor : MonoBehaviour
             }
         }
     }
+
+    public bool CanUseProjectile()
+    {
+        if (_projectileInstance != null)
+        {
+            if (_projectileInstance.GetComponent<Projectile>())
+            {
+                if (_projectileInstance.GetComponent<Projectile>().IsOnWall())
+                    return true;
+
+                return false;
+            }
+        }
+
+        return true;
+    }
+
 
     public void OnDrop()
     {

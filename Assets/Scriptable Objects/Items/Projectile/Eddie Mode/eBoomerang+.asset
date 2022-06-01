@@ -22,10 +22,10 @@ MonoBehaviour:
   Rarity: 1
   ItemWeight: 50
   heldItemPrefab: {fileID: 0}
-  ProbabilityRangeFrom: 290
-  ProbabilityRangeTo: 340
+  ProbabilityRangeFrom: 110
+  ProbabilityRangeTo: 160
   ItemDamage: 10
-  DrawSpeed: 12
+  DrawSpeed: 16
   DrawDistance: 9
   SticksOnWall: 0
   ReturnsToPlayer: 1

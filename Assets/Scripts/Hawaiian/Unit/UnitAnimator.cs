@@ -247,8 +247,10 @@ namespace Hawaiian.Unit
 
                 heldItem.transform.localPosition = new Vector2(0.6f, 0.55f);
                 heldItem.GetComponent<SpriteRenderer>().flipX = true;
+                
+                
 
-                _animator.transform.localScale = new Vector2(-1, 1);
+               _animator.transform.localScale = new Vector2(-1, 1);
 
                 //if (cursor != null) cursor.transform.position = prevPos;
             }
