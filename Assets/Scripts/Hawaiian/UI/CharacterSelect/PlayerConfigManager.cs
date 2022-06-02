@@ -19,6 +19,7 @@ namespace Hawaiian.UI.CharacterSelect
                     playerConfigs[i].SetPlayer(playerInput);
                     // TODO: Pretty sure this shouldn't be here
                     AudioManager.audioManager.PlayerAdd();
+                    ForceSerialization();
                     return playerConfigs[i];
                 }
             }
@@ -34,5 +35,12 @@ namespace Hawaiian.UI.CharacterSelect
                 playerConfigs[i] = new PlayerConfig(i);
             }
         }
+        
+        void ForceSerialization()
+        {
+#if UNITY_EDITOR
+            UnityEditor.EditorUtility.SetDirty(this);
+#endif
+        } 
     }
 }
