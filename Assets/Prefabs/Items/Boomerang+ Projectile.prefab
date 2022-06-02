@@ -61,7 +61,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8484802503941745754, guid: 6ccdae3489326844c9b49b012c477987, type: 3}
       propertyPath: m_Name
-      value: Projectile
+      value: Boomerang+ Projectile
+      objectReference: {fileID: 0}
+    - target: {fileID: 8484802503941745754, guid: 6ccdae3489326844c9b49b012c477987, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 9195330741462771491, guid: 6ccdae3489326844c9b49b012c477987, type: 3}
       propertyPath: m_Sprite

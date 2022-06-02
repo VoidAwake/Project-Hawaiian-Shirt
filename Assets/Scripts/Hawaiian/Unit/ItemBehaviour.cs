@@ -11,16 +11,17 @@ namespace Hawaiian.Unit
         [SerializeField] internal float _speed;
         [SerializeField] internal int _knockbackDistance;
 
-        internal IUnit _user;
+        public IUnit User;
+        
 
         public virtual void BaseInitialise(IUnit user, float speed, int knockbackDistance)
         {
-            _user = user;
+            User  = user;
             _speed = speed;
             _knockbackDistance = knockbackDistance;
         }
         
-        public virtual void Initialise(float parryWindow, int parryPercentage, SpriteRenderer spriteReference){}
+      //  public virtual void Initialise(float parryWindow, int parryPercentage, SpriteRenderer spriteReference, Sprite[] shieldStates, GameE){}
 
         public virtual void Initialise(Vector2[] targets, Sprite newSprite, bool canStickOnWalls = false) {}
 

@@ -72,7 +72,7 @@ namespace Hawaiian.Camera
 
         public void OnSkip(InputAction.CallbackContext ctx)
         {
-            if (!hasStartedCountdown) return;
+            if (!hasStartedCinematic) return;
             
             if (!hasStartedCountdown)
             {

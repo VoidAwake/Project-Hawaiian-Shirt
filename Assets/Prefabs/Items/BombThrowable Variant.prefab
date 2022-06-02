@@ -53,7 +53,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5387373904414807758, guid: 84361e5a6995d564b8208790e37d5c37, type: 3}
       propertyPath: m_Name
-      value: BombThrowable
+      value: BombThrowable Variant
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 5313269524115035386, guid: 84361e5a6995d564b8208790e37d5c37, type: 3}
@@ -63,6 +63,27 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 5387373904414807758, guid: 84361e5a6995d564b8208790e37d5c37, type: 3}
   m_PrefabInstance: {fileID: 4544828733030453273}
   m_PrefabAsset: {fileID: 0}
+--- !u!50 &7619676961395658045
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8489766484013106903}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!114 &3751945452011271352
 MonoBehaviour:
   m_ObjectHideFlags: 0

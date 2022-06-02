@@ -25,13 +25,13 @@ MonoBehaviour:
   ProbabilityRangeFrom: 0
   ProbabilityRangeTo: 10
   ItemDamage: 10
-  DrawSpeed: 10
+  DrawSpeed: 13
   DrawDistance: 12
-  SticksOnWall: 0
+  SticksOnWall: 1
   ReturnsToPlayer: 0
   IsMultiShot: 1
   ProjectileAmount: 5
-  IsRicochet: 1
+  IsRicochet: 0
   MaximumBounces: 1
   ParryWindow: 0
   ParryPercentage: 0
