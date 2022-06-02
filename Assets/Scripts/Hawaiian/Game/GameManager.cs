@@ -7,6 +7,7 @@ namespace Hawaiian.Game
     public class GameManager : ScriptableObject
     {
         [SerializeField] private SceneChanger sceneChanger;
+        [SerializeField] private SceneReference resultsScene;
         
         public enum GamePhase { Stealth, GameOver }
 
@@ -29,8 +30,7 @@ namespace Hawaiian.Game
         {
             gameOver.Raise();
             
-            // TODO: Magic number.
-            sceneChanger.ChangeScene(3);
+            sceneChanger.ChangeScene(resultsScene);
         }
 
         public GameEvent phaseChanged;

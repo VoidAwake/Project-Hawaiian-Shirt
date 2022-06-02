@@ -13,5 +13,8 @@ MonoBehaviour:
   m_Name: GameManager
   m_EditorClassIdentifier: 
   sceneChanger: {fileID: 11400000, guid: 3d32adecca106ad4a8e92d019d2654af, type: 2}
+  resultsScene:
+    sceneAsset: {fileID: 102900000, guid: b0930558751c425429485c00789637e4, type: 3}
+    scenePath: Assets/Scenes/Results Screen.unity
   phaseChanged: {fileID: 11400000, guid: d5c9e20f87d81084da0f7a6327a76a25, type: 2}
   gameOver: {fileID: 11400000, guid: 3f166778320e3064188ff102927875f8, type: 2}

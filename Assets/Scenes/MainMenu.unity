@@ -243,9 +243,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   function: 0
-  buildIndex: 1
   callTransition: 1
   sceneChanger: {fileID: 11400000, guid: 3d32adecca106ad4a8e92d019d2654af, type: 2}
+  scene:
+    sceneAsset: {fileID: 102900000, guid: d16a4626545988844af636cf388650df, type: 3}
+    scenePath: Assets/Scenes/CharacterSelect.unity
   displayControlsSelected:
     m_PersistentCalls:
       m_Calls: []
@@ -619,9 +621,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   function: 0
-  buildIndex: 0
   callTransition: 0
   sceneChanger: {fileID: 0}
+  scene:
+    sceneAsset: {fileID: 0}
+    scenePath: 
   displayControlsSelected:
     m_PersistentCalls:
       m_Calls: []
@@ -955,9 +959,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   function: 1
-  buildIndex: 0
   callTransition: 0
   sceneChanger: {fileID: 11400000, guid: 3d32adecca106ad4a8e92d019d2654af, type: 2}
+  scene:
+    sceneAsset: {fileID: 0}
+    scenePath: 
   displayControlsSelected:
     m_PersistentCalls:
       m_Calls: []

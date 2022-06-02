@@ -10,11 +10,11 @@ namespace Hawaiian.Game
     {
         public event Func<object, EventArgs, Task> ChangingScene;
         
-        public async void ChangeScene(int buildIndex)
+        public async void ChangeScene(SceneReference scene)
         {
             await ChangingScene.Raise(this, EventArgs.Empty);
             
-            SceneManager.LoadScene(buildIndex);
+            SceneManager.LoadScene(scene);
         }
     }
 }

@@ -16,7 +16,7 @@ MonoBehaviour:
   playerConfigs:
   - playerNumber: 0
     characterNumber: 0
-    score: 0
+    score: 80
     playerInput: {fileID: 0}
     playerIndex: 0
     splitScreenIndex: 0

@@ -9,8 +9,6 @@ namespace Hawaiian.UI.CharacterSelect
 {
     public class LobbyManager : MonoBehaviour
     {
-        [SerializeField] private int buildIndexOfNextScene;
-
         [Header("Character Select")]
         // TODO: Separate the responsibilities of lobby management and UI
         [SerializeField] private LobbyWindow[] windows;
@@ -18,6 +16,9 @@ namespace Hawaiian.UI.CharacterSelect
         [SerializeField] private CharacterPortraitCursor[] portraitCursors;
         [SerializeField] private PlayerConfigManager playerConfigManager;
         [SerializeField] private SceneChanger sceneChanger;
+        // TODO: UI should not be handling scene references
+        [SerializeField] private SceneReference mainMenuScene;
+        [SerializeField] private SceneReference gameScene;
 
         public UnityEvent readyChanged = new();
 
@@ -93,7 +94,7 @@ namespace Hawaiian.UI.CharacterSelect
 
             if (!isExiting)
             {
-                sceneChanger.ChangeScene(buildIndexOfNextScene);
+                sceneChanger.ChangeScene(gameScene);
                 Destroy(GetComponent<LobbyManager>());
                 Destroy(GetComponent<PlayerInputManager>());
                 isExiting = true;
@@ -130,7 +131,7 @@ namespace Hawaiian.UI.CharacterSelect
                 if (!AllPlayersHaveStatus(LobbyPlayerController.PlayerStatus.NotLoadedIn))
                     return false;
 
-                sceneChanger.ChangeScene(0);
+                sceneChanger.ChangeScene(mainMenuScene);
                 isExiting = true;
 
                 return true;

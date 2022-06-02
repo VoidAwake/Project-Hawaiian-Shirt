@@ -10,9 +10,10 @@ namespace Hawaiian.UI.MainMenu
     {
         enum ButtonFunction { LoadSceneByIndex, CloseApp, DeleteSelf, ResumeGame, DisplayControls }
         [SerializeField] ButtonFunction function;
-        [SerializeField] int buildIndex;
         [SerializeField] bool callTransition;
         [SerializeField] private SceneChanger sceneChanger;
+        // TODO: UI should not be handling scene references
+        [SerializeField] private SceneReference scene;
 
         public UnityEvent displayControlsSelected = new UnityEvent();
 
@@ -21,11 +22,11 @@ namespace Hawaiian.UI.MainMenu
             // TODO: Need to account for this is SceneChanger
             if (callTransition)
             {
-                sceneChanger.ChangeScene(buildIndex);
+                sceneChanger.ChangeScene(scene);
             }
             else
             {
-                SceneManager.LoadScene(buildIndex);
+                SceneManager.LoadScene(scene);
             }
         }
 
