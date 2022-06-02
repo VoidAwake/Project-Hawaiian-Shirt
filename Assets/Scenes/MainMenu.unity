@@ -245,6 +245,7 @@ MonoBehaviour:
   function: 0
   buildIndex: 1
   callTransition: 1
+  sceneChanger: {fileID: 11400000, guid: 3d32adecca106ad4a8e92d019d2654af, type: 2}
   displayControlsSelected:
     m_PersistentCalls:
       m_Calls: []
@@ -620,6 +621,7 @@ MonoBehaviour:
   function: 0
   buildIndex: 0
   callTransition: 0
+  sceneChanger: {fileID: 0}
   displayControlsSelected:
     m_PersistentCalls:
       m_Calls: []
@@ -955,6 +957,7 @@ MonoBehaviour:
   function: 1
   buildIndex: 0
   callTransition: 0
+  sceneChanger: {fileID: 11400000, guid: 3d32adecca106ad4a8e92d019d2654af, type: 2}
   displayControlsSelected:
     m_PersistentCalls:
       m_Calls: []

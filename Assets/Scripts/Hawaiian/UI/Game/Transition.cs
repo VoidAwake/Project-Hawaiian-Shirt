@@ -1,15 +1,17 @@
+using System;
+using System.Threading.Tasks;
+using Cysharp.Threading.Tasks;
+using Hawaiian.Game;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-namespace Hawaiian.Game
+namespace Hawaiian.UI.Game
 {
-    // TODO: This class needs to be split into UI and non-UI
     public class Transition : MonoBehaviour
     {
         [SerializeField] Sprite[] transitionCheckersSprites;
         [SerializeField] float stepDuration;
-        public int buildIndexOfNextScene;
+        [SerializeField] private SceneChanger sceneChanger;
         public bool loadNextScene;
         public bool fadeOut;
         public bool transitionActive;
@@ -49,10 +51,6 @@ namespace Hawaiian.Game
                             transitionTimer = 0.0f;
                             transitionInt = 0;
                         }
-                        else
-                        {
-                            SceneManager.LoadScene(buildIndexOfNextScene);
-                        }
 
                         transitionActive = false;
                     }
@@ -67,7 +65,7 @@ namespace Hawaiian.Game
             }
         }
 
-        public void BeginTransition(bool fadeOut, bool loadNextScene, int buildIndex)
+        public void BeginTransition(bool fadeOut, bool loadNextScene)
         {
             transitionActive = true;
             transitionTimer = 0;
@@ -75,10 +73,26 @@ namespace Hawaiian.Game
             image.enabled = true;
             this.fadeOut = fadeOut;
             this.loadNextScene = loadNextScene;
-            buildIndexOfNextScene = buildIndex;
 
             if (fadeOut) image.sprite = transitionCheckersSprites[0];
             else image.sprite = transitionCheckersSprites[transitionCheckersSprites.Length - 1];
+        }
+
+        private void OnEnable()
+        {
+            sceneChanger.ChangingScene += OnSceneChanging;
+        }
+
+        private void OnDisable()
+        {
+            sceneChanger.ChangingScene -= OnSceneChanging;
+        }
+
+        private async Task OnSceneChanging(object arg1, EventArgs arg2)
+        {
+            BeginTransition(true, true);
+
+            await UniTask.WaitUntil(() => !transitionActive);
         }
     }
 }

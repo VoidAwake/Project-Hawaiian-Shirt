@@ -18,6 +18,7 @@ namespace Hawaiian.Game
         [SerializeField] private List<SpawnPoint> spawnPoints;
         [SerializeField] private PlayerConfigManager playerConfigManager;
         [SerializeField] private BaseGameEvent<Inventory.Inventory> addedInventory;
+        [SerializeField] private SceneChanger sceneChanger;
 
         public UnityEvent winningPlayersChanged = new();
         
@@ -72,15 +73,7 @@ namespace Hawaiian.Game
             
             // TODO: Refactor. A function called SaveScores should not also be handling changing the scene.
             // TODO: Changing the scene should also not be handled by a PlayerManager.
-            Transition transition = FindObjectOfType<Transition>();
-            if (transition != null)
-            {
-                transition.BeginTransition(true, true, buildIndex);
-            }
-            else
-            {
-                SceneManager.LoadScene(buildIndex);
-            }
+            sceneChanger.ChangeScene(buildIndex);
         }
 
         // Message from Player Input Manager

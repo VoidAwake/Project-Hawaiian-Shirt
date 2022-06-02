@@ -12,22 +12,16 @@ namespace Hawaiian.UI.MainMenu
         [SerializeField] ButtonFunction function;
         [SerializeField] int buildIndex;
         [SerializeField] bool callTransition;
+        [SerializeField] private SceneChanger sceneChanger;
 
         public UnityEvent displayControlsSelected = new UnityEvent();
 
         public void LoadSceneByIndex()
         {
+            // TODO: Need to account for this is SceneChanger
             if (callTransition)
             {
-                Transition transition = FindObjectOfType<Transition>();
-                if (transition != null)
-                {
-                    transition.BeginTransition(true, true, buildIndex);
-                }
-                else
-                {
-                    SceneManager.LoadScene(buildIndex);
-                }
+                sceneChanger.ChangeScene(buildIndex);
             }
             else
             {

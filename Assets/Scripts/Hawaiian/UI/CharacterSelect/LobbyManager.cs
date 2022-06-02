@@ -18,6 +18,7 @@ namespace Hawaiian.UI.CharacterSelect
         [SerializeField] private CanvasGroup[] portraits;
         [SerializeField] private CharacterPortraitCursor[] portraitCursors;
         [SerializeField] private PlayerConfigManager playerConfigManager;
+        [SerializeField] private SceneChanger sceneChanger;
 
         public UnityEvent readyChanged = new();
 
@@ -93,7 +94,7 @@ namespace Hawaiian.UI.CharacterSelect
 
             if (!isExiting)
             {
-                FindObjectOfType<Transition>().BeginTransition(true, true, buildIndexOfNextScene);
+                sceneChanger.ChangeScene(buildIndexOfNextScene);
                 Destroy(GetComponent<LobbyManager>());
                 Destroy(GetComponent<PlayerInputManager>());
                 isExiting = true;
@@ -130,7 +131,7 @@ namespace Hawaiian.UI.CharacterSelect
                 if (!AllPlayersHaveStatus(LobbyPlayerController.PlayerStatus.NotLoadedIn))
                     return false;
 
-                FindObjectOfType<Transition>().BeginTransition(true, true, 0);
+                sceneChanger.ChangeScene(0);
                 isExiting = true;
 
                 return true;
