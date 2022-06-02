@@ -133,7 +133,7 @@ namespace Hawaiian.UI.Game
 
         private void SetCharacterPortrait()
         {
-            var playerManager = FindObjectOfType<SpawnPlayers>();
+            var playerManager = FindObjectOfType<PlayerManager>();
 
             if (playerManager == null) return;
 

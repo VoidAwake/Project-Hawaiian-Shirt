@@ -13,4 +13,40 @@ MonoBehaviour:
   m_Name: PlayerConfigManager
   m_EditorClassIdentifier: 
   maxPlayers: 4
-  playerConfigs: []
+  playerConfigs:
+  - playerNumber: 0
+    characterNumber: 3
+    score: 0
+    playerInput: {fileID: 0}
+    playerIndex: 0
+    splitScreenIndex: 0
+    controlScheme: Keyboard1
+    deviceIds: 01000000
+    isPlayer: 1
+  - playerNumber: 1
+    characterNumber: -1
+    score: 0
+    playerInput: {fileID: 0}
+    playerIndex: 0
+    splitScreenIndex: 0
+    controlScheme: 
+    deviceIds: 
+    isPlayer: 0
+  - playerNumber: 2
+    characterNumber: -1
+    score: 0
+    playerInput: {fileID: 0}
+    playerIndex: 0
+    splitScreenIndex: 0
+    controlScheme: 
+    deviceIds: 
+    isPlayer: 0
+  - playerNumber: 3
+    characterNumber: -1
+    score: 0
+    playerInput: {fileID: 0}
+    playerIndex: 0
+    splitScreenIndex: 0
+    controlScheme: 
+    deviceIds: 
+    isPlayer: 0

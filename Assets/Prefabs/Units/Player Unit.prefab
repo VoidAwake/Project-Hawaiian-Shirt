@@ -296,7 +296,6 @@ MonoBehaviour:
   addinv: 0
   item: {fileID: 0}
   size: {fileID: 11400000, guid: d1df78077398a98448d92b549af3857f, type: 2}
-  addedInventory: {fileID: 11400000, guid: 2220e64b52956274a8ac1a529699a2d4, type: 2}
   hand: {fileID: 937560079924309396}
   droppedItem: {fileID: 3056942884218095950, guid: 37132a09f5d1c4046a4bb460892afc47, type: 3}
   currentItemChanged:
@@ -589,6 +588,9 @@ MonoBehaviour:
   _baseRadius: 1.1
   _maxRadius: 20
   _input: {fileID: 6432945937749252037}
+  unit: {fileID: 5588978955059791629}
+  spriteRenderer: {fileID: 1598933601258987996}
+  playerColors: {fileID: 11400000, guid: c18c22b93a97a954ca8ab46031e350bd, type: 2}
 --- !u!1 &7257212948175652388
 GameObject:
   m_ObjectHideFlags: 0
@@ -1015,7 +1017,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6638286123732195131, guid: fe93fd4b04ca3d340865789a7d27cade, type: 3}
       propertyPath: m_InstanceId
-      value: -1410260
+      value: -55736
       objectReference: {fileID: 0}
     - target: {fileID: 6924075283435537384, guid: fe93fd4b04ca3d340865789a7d27cade, type: 3}
       propertyPath: m_Name
@@ -1172,6 +1174,9 @@ MonoBehaviour:
   maxSpeed: 6.5
   tweenRate: 15
   runMultiplier: 1.75
+  initialised:
+    m_PersistentCalls:
+      m_Calls: []
   _playerInput: {fileID: 6432945937749252037}
   _playerJoined: {fileID: 11400000, guid: 2a2ac177cfbc4ee44a6355e7378dddb1, type: 2}
 --- !u!114 &6432945937749252037

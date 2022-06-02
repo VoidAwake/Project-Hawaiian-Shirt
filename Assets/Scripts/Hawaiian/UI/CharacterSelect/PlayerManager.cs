@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Hawaiian.Game;
 using Hawaiian.Inventory;
+using Hawaiian.Unit;
 using Hawaiian.Utilities;
 using UnityEngine;
 using UnityEngine.Events;
@@ -10,11 +11,8 @@ using UnityEngine.SceneManagement;
 
 namespace Hawaiian.UI.CharacterSelect
 {
-    public class SpawnPlayers : MonoBehaviour
+    public class PlayerManager : MonoBehaviour
     {
-        public enum CharacterNames { Fox, Robin, Monkey, Cat, Goose, Soup, Gambit, Bert }
-        enum PlayerColours { Red, Blue, Yellow, Green }
-
         [SerializeField] GameObject playerPrefab;
         [SerializeField] private int buildIndex;
         [SerializeField] private GameManager gameManager;
@@ -44,6 +42,8 @@ namespace Hawaiian.UI.CharacterSelect
             inputManager.playerPrefab = playerPrefab;
 
             inputManager.joinBehavior = PlayerJoinBehavior.JoinPlayersManually;
+            
+            inputManager.onPlayerJoined -= OnPlayerJoined;
         }
 
         public void BeginSpawn()
@@ -96,22 +96,18 @@ namespace Hawaiian.UI.CharacterSelect
         {
             if (playerConfig != null)
             {
-                // Update player character
-                //Debug.Log("Spawn in player! charNo = " + config.characterNumber + ", charName = " + ((CharacterNames)config.characterNumber).ToString()
-                //+ ". playNo = " + config.playerNumber + ", playColour = " + ((PlayerColours)config.playerNumber).ToString());
-                playerInput.GetComponent<Unit.Unit>().SetSpriteResolvers(
-                    ((CharacterNames)playerConfig.characterNumber).ToString(),
-                    ((PlayerColours)playerConfig.playerNumber).ToString());
-
-                playerInput.GetComponent<Unit.IUnit>().PlayerNumber = playerConfig.playerNumber;
+                playerInput.GetComponent<UnitPlayer>().Initialise(playerConfig.characterNumber, playerConfig.playerNumber);
 
                 playerInput.transform.position = spawnPoints[playerInput.playerIndex].GetSpawnPosition();
 
-                var inventoryController = GetComponentInChildren<InventoryController>();
+                var inventoryController = playerInput.GetComponentInChildren<InventoryController>();
 
-                inventoryControllers.Add(playerConfig, inventoryController);
+                if (inventoryController != null)
+                {
+                    inventoryControllers.Add(playerConfig, inventoryController);
 
-                addedInventory.Raise(inventoryController._inv);
+                    addedInventory.Raise(inventoryController._inv);
+                }
             }
             else
             {

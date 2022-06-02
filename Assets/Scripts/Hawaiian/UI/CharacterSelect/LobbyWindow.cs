@@ -1,4 +1,5 @@
 using System;
+using Hawaiian.Unit;
 using UnityEngine;
 using TMPro;
 using UnityEngine.U2D.Animation;
@@ -108,7 +109,7 @@ namespace Hawaiian.UI.CharacterSelect
 
         public void UpdateHead(int characterNumber)
         {
-            head.SetCategoryAndLabel("Head", ((SpawnPlayers.CharacterNames)characterNumber).ToString());
+            head.SetCategoryAndLabel("Head", ((Unit.Unit.HeadLabels)characterNumber).ToString());
         }
     }
 }

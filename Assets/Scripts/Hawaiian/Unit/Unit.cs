@@ -2,6 +2,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.U2D.Animation;
 using Hawaiian.Input;
+using UnityEngine.Events;
 
 namespace Hawaiian.Unit
 {
@@ -15,6 +16,9 @@ namespace Hawaiian.Unit
         [SerializeField] SpriteResolver torso;
 
         [SerializeField] PlayerColors playerColors;
+        
+        enum TorsoLabels { Red, Blue, Yellow, Green }
+        public enum HeadLabels { Fox, Robin, Monkey, Cat, Goose, Soup, Gambit, Bert }
 
         public enum PlayerState { Walking, Tripped }
         public PlayerState playerState = PlayerState.Walking;
@@ -45,6 +49,8 @@ namespace Hawaiian.Unit
         protected Vector2 move = new Vector2(); // for directional input
         protected bool controlsEnabled = true;
         protected bool isRunning = false;
+
+        public UnityEvent initialised = new();
 
         protected virtual void Start()
         {
@@ -154,39 +160,13 @@ namespace Hawaiian.Unit
         {
             head.SetCategoryAndLabel("Head", headName);
             torso.SetCategoryAndLabel("Torso", torsoName);
+        }
 
-            for (int i = 0; i < transform.childCount; i++)
-            {
-                if (transform.GetChild(i).name == "Priority") // What have I done...
-                {
-                    for (int j = 0; j < transform.GetChild(i).transform.childCount; j++)
-                    {
-                        if (transform.GetChild(i).transform.GetChild(j).TryGetComponent<Input.Cursor>(out Input.Cursor cursor))
-                        {
-                            if (transform.GetChild(i).transform.GetChild(j).TryGetComponent<SpriteRenderer>(out SpriteRenderer sprite))
-                            {
-                                switch (torsoName)
-                                {
-                                    case "Red":
-                                        sprite.color = playerColors.GetColor(0);
-                                        break;
-                                    case "Blue":
-                                        sprite.color = playerColors.GetColor(1);
-                                        break;
-                                    case "Yellow":
-                                        sprite.color = playerColors.GetColor(2);
-                                        break;
-                                    case "Green":
-                                        sprite.color = playerColors.GetColor(3);
-                                        break;
-                                    default:
-                                        break;
-                                }
-                            }
-                        }
-                    }
-                }
-            }
+        public virtual void Initialise(int characterNumber, int playerNumber)
+        {
+            SetSpriteResolvers(((HeadLabels) characterNumber).ToString(), ((TorsoLabels) playerNumber).ToString());
+            
+            initialised.Invoke();
         }
     }
 }
