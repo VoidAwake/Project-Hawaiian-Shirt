@@ -41,7 +41,10 @@ namespace Hawaiian.Editor
         SerializedProperty heldItemPrefab;
         SerializedProperty ParryWindow;
         SerializedProperty TimeTillParry;
-        SerializedProperty ParryPercentage;
+        SerializedProperty ParryPercentageUpperLimit;
+        SerializedProperty ParryPercentageLowerLimit;
+        SerializedProperty ShieldUp;
+        SerializedProperty ShieldDown;
 
 
         private void OnEnable()
@@ -74,8 +77,10 @@ namespace Hawaiian.Editor
             heldItemPrefab = serializedObject.FindProperty("heldItemPrefab");
             ParryWindow = serializedObject.FindProperty("ParryWindow");
             TimeTillParry = serializedObject.FindProperty("TimeTillParry");
-            ParryPercentage = serializedObject.FindProperty("ParryPercentage");
-
+            ParryPercentageUpperLimit = serializedObject.FindProperty("ParryPercentageUpperLimit");
+            ParryPercentageLowerLimit = serializedObject.FindProperty("ParryPercentageLowerLimit");
+            ShieldUp = serializedObject.FindProperty("ShieldUp");
+            ShieldDown = serializedObject.FindProperty("ShieldDown");
         }
 
         public override void OnInspectorGUI()
@@ -156,13 +161,20 @@ namespace Hawaiian.Editor
         {
             GUILayout.Label("Shield Stats", EditorStyles.boldLabel);
             EditorGUILayout.Space();
-            EditorGUILayout.PropertyField(ParryWindow, new GUIContent("Parry Window", "How long the shield parry will activate for, the longer the easier it is to parry"));
-            EditorGUILayout.IntSlider(ParryPercentage, 0, 100, new GUIContent("Parry Percentage",
+            EditorGUILayout.PropertyField(ParryWindow,
+                new GUIContent("Parry Window",
+                    "How long the shield parry will activate for, the longer the easier it is to parry"));
+            EditorGUILayout.IntSlider(ParryPercentageUpperLimit, 0, 100, new GUIContent("Parry Percentage",
                 "Refers to the percentage difference needed between a perfect and standard parry for example, " +
-                "a parry percentage of 20% means that the parry much be activated within the first 20% of the parry window time to be considered a perfect parry. Reccomended between 5-30%"));
-            EditorGUILayout.PropertyField(TimeTillParry, new GUIContent("Time Until Next Parry", "How long the shield is ready again after being used"));
-
-
+                "a parry percentage of 20% means that the parry much be activated within the first 20% of the parry window time to be considered a perfect parry. Reccomended between 20-50%"));
+            EditorGUILayout.IntSlider(ParryPercentageLowerLimit, 0, 100, new GUIContent("Parry Percentage",
+                "Refers to the percentage difference needed between a perfect and standard parry for example, " +
+                "a parry percentage of 20% means that the parry much be activated within the first 20% of the parry window time to be considered a perfect parry. Reccomended between 20-50%"));
+            EditorGUILayout.PropertyField(TimeTillParry,
+                new GUIContent("Time Until Next Parry", "How long the shield is ready again after being used"));
+            EditorGUILayout.Space();
+            EditorGUILayout.PropertyField(ShieldUp, new GUIContent("Shield Up Sprite"));
+            EditorGUILayout.PropertyField(ShieldDown, new GUIContent("Shield Down Sprite"));
         }
 
         private void ShowMeleeComponents()

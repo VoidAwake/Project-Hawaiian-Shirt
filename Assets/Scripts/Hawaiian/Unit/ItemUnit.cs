@@ -1,8 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using Hawaiian.Unit;
 using UnityEngine;
-using UnityEngine.PlayerLoop;
 
 public class ItemUnit : UnitPhysics
 {
@@ -44,7 +41,8 @@ public class ItemUnit : UnitPhysics
                 {
                     //velocity = Vector2.zero;
                     Debug.Log("owie suffering");
-                    Destroy(this);
+                    velocity = Vector2.zero;
+                    //  Destroy(this);
                 }
 
                 //Vector2 modifiedMove = move.magnitude * 1.2f > 1.0f ? move.normalized : move.magnitude < 0.05f ? Vector2.zero : move * 1.2f;

@@ -1,48 +1,29 @@
-using System.Collections;
-using System.Collections.Generic;
-using Hawaiian.Inventory;
 using Unity.Mathematics;
-using UnityEditor;
 using UnityEngine;
 
-public class ItemSpawner : MonoBehaviour
+namespace Hawaiian.Inventory
 {
-
-    [SerializeField] private GameObject DroppedItem;
-    [SerializeField] private Item _currentItem;
-    [SerializeField] private ItemPool _pool;
-    [SerializeField] private float SpawnRate;
-    [SerializeField] private float currentSpawnTime;
-
-    [SerializeField] private GameObject _currentItemInstance;
+    public class ItemSpawner : Spawner
+    {
+        [SerializeField] private GameObject DroppedItem;
+        [SerializeField] private float SpawnRate => _spawnRate;
     
-    // Start is called before the first frame update
-    void Start()
-    {
-      SpawnItem();
-      currentSpawnTime = SpawnRate;
-    }
-
-    public void SpawnItem()
-    {
-        _currentItem = _pool.RetrieveRandomItem();
-        _currentItemInstance = Instantiate(DroppedItem, transform.localPosition, quaternion.identity);
-        DroppedItem droppedItem = _currentItemInstance.GetComponent<DroppedItem>();
-        droppedItem.item = _currentItem;
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        if (_currentItemInstance == null)
+        // Start is called before the first frame update
+        void Start()
         {
-            if (currentSpawnTime >= 0.0f)
-                currentSpawnTime -= Time.deltaTime;
-            else
-            {
-                SpawnItem();
-                currentSpawnTime = SpawnRate;
-            }
+            SpawnItem();
+            currentSpawnTime = SpawnRate;
+        }
+
+
+        public override void SpawnItem()
+        {
+            _currentItem = _pool.RetrieveRandomItem();
+            _currentItemInstance = Instantiate(DroppedItem, transform.localPosition, Quaternion.identity);
+            DroppedItem droppedItem = _currentItemInstance.GetComponent<DroppedItem>();
+            droppedItem.item = _currentItem;
+            currentSpawnTime = _spawnRate;
+
         }
     }
 }
