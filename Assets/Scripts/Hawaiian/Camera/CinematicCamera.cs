@@ -72,14 +72,11 @@ namespace Hawaiian.Camera
 
         public void OnSkip(InputAction.CallbackContext ctx)
         {
-            if (!hasStartedCountdown) return;
+            if (hasStartedCountdown) return;
             
-            if (!hasStartedCountdown)
-            {
-                if (currentCoroutine != null)
-                    StopCoroutine(currentCoroutine);
-                StartCoroutine(LerpCameraSize(_sizeStep));
-            }
+            if (currentCoroutine != null)
+                StopCoroutine(currentCoroutine);
+            StartCoroutine(LerpCameraSize(_sizeStep));
         }
         
         
