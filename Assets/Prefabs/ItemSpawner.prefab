@@ -44,13 +44,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b049f7c3a4cf6a48b1dc34b43dcf49f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DroppedItem: {fileID: 3056942884218095950, guid: 37132a09f5d1c4046a4bb460892afc47, type: 3}
-  _currentItem: {fileID: 0}
+  _spawnRate: 60
+  currentSpawnTime: 0
   _pool:
     _pool:
     - {fileID: 0}
     - {fileID: 0}
     - {fileID: 0}
-  SpawnRate: 0
-  currentSpawnTime: 0
   _currentItemInstance: {fileID: 0}
+  DroppedItem: {fileID: 3056942884218095950, guid: 37132a09f5d1c4046a4bb460892afc47, type: 3}
