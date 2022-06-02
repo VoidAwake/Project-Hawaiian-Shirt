@@ -1,7 +1,5 @@
 using Hawaiian.Game;
 using UnityEngine;
-using UnityEngine.SceneManagement;
-using Hawaiian.UI.CharacterSelect;
 using UnityEngine.Events;
 
 namespace Hawaiian.UI.MainMenu
@@ -10,7 +8,6 @@ namespace Hawaiian.UI.MainMenu
     {
         enum ButtonFunction { LoadSceneByIndex, CloseApp, DeleteSelf, ResumeGame, DisplayControls }
         [SerializeField] ButtonFunction function;
-        [SerializeField] bool callTransition;
         [SerializeField] private SceneChanger sceneChanger;
         // TODO: UI should not be handling scene references
         [SerializeField] private SceneReference scene;
@@ -19,15 +16,7 @@ namespace Hawaiian.UI.MainMenu
 
         public void LoadSceneByIndex()
         {
-            // TODO: Need to account for this is SceneChanger
-            if (callTransition)
-            {
-                sceneChanger.ChangeScene(scene);
-            }
-            else
-            {
-                SceneManager.LoadScene(scene);
-            }
+            sceneChanger.ChangeScene(scene);
         }
 
         public void CloseApp()

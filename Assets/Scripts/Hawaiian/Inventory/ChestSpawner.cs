@@ -22,7 +22,7 @@ public class ChestSpawner : Spawner
         _currentItem = _pool.RetrieveRandomItem();
         _currentItemInstance = Instantiate(DroppedItem, transform.localPosition, Quaternion.identity);
         DroppedItem droppedItem = _currentItemInstance.GetComponent<DroppedItem>();
-        droppedItem.item = _currentItem;
+        droppedItem.Item = _currentItem;
     }
 
     protected override void TimerCompleted()

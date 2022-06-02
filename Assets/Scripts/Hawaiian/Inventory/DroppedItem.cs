@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 namespace Hawaiian.Inventory
@@ -7,18 +6,19 @@ namespace Hawaiian.Inventory
     {
         [SerializeField] private SpriteRenderer spriteRenderer;
 
-       [SerializeField] private Item _item;
-        public Item item
+        [SerializeField] private Item item;
+
+        public Item Item
         {
-            get => _item;
+            get => item;
             set
             {
-                _item = value;
-                
+                item = value;
+
                 if (spriteRenderer == null)
                     return;
-                
-                spriteRenderer.sprite = item.DroppedItemSprite;
+
+                spriteRenderer.sprite = Item.DroppedItemSprite;
             }
         }
 
@@ -26,16 +26,16 @@ namespace Hawaiian.Inventory
         {
             Destroy(gameObject);
         }
-        
+
         private void OnValidate()
         {
-            if (item == null) return;
+            if (Item == null) return;
 
-            name = item.name + " Item";
+            name = Item.name + " Item";
 
             if (spriteRenderer == null) return;
 
-            spriteRenderer.sprite = item.DroppedItemSprite;
+            spriteRenderer.sprite = Item.DroppedItemSprite;
         }
     }
 }

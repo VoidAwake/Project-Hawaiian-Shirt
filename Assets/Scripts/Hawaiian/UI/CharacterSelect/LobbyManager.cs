@@ -57,18 +57,12 @@ namespace Hawaiian.UI.CharacterSelect
 
         #endregion
 
-        private bool CharacterNotChosen(int characterNumber, bool onlyPlayers) // SOMEWHERE, WHEN TRANSITIONING/SETTING UP CHARACTER SELECT, YOU MUST SET characterNumber TO -1 FOR EACH playerConfig WHO !isPlayer // Is this still true?
+        private bool CharacterChosen(int characterNumber, bool onlyPlayers) // SOMEWHERE, WHEN TRANSITIONING/SETTING UP CHARACTER SELECT, YOU MUST SET characterNumber TO -1 FOR EACH playerConfig WHO !isPlayer // Is this still true?
         {
-            foreach (var lobbyPlayerController in lobbyPlayerControllers)
-            {
-                if (lobbyPlayerController.Status == LobbyPlayerController.PlayerStatus.NotLoadedIn) continue;
-                
-                if (!onlyPlayers || lobbyPlayerController.playerConfig.IsPlayer) // If only checking human players, and player is not a human, then don't check
-                {
-                    if (lobbyPlayerController.playerConfig.characterNumber == characterNumber) return false;
-                }
-            }
-            return true;
+            return lobbyPlayerControllers
+                .Where(lobbyPlayerController => lobbyPlayerController.Status != LobbyPlayerController.PlayerStatus.NotLoadedIn)
+                .Where(lobbyPlayerController => !onlyPlayers || lobbyPlayerController.playerConfig.IsPlayer)
+                .Any(lobbyPlayerController => lobbyPlayerController.playerConfig.characterNumber == characterNumber);
         }
 
         public int FirstUnselectedCharacter()
@@ -78,12 +72,11 @@ namespace Hawaiian.UI.CharacterSelect
 
         public int FirstUnselectedCharacterFrom(int startIndex, int direction)
         {
-            int index = (int)Mathf.Repeat(startIndex + direction, portraits.Length);
+            int index = startIndex;
+
+            do index = (int) Mathf.Repeat(index + direction, portraits.Length);
             
-            while (!CharacterNotChosen(index, true) && index != startIndex)
-            {
-                index = (int)Mathf.Repeat(index + direction, portraits.Length);
-            }
+            while (CharacterChosen(index, true) && index != startIndex);
 
             return index;
         }

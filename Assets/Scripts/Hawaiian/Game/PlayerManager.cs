@@ -92,7 +92,7 @@ namespace Hawaiian.Game
                     
                     inventoryController.currentItemChanged.AddListener(UpdateWinningPlayers);
 
-                    addedInventory.Raise(inventoryController._inv);
+                    addedInventory.Raise(inventoryController.inv);
                 }
             }
             else
@@ -134,12 +134,12 @@ namespace Hawaiian.Game
 
         private static float InventoryScore(InventoryController inventoryController)
         {
-            return inventoryController._inv.inv.Where(i => i != null).Sum(i => i.Points);
+            return inventoryController.inv.inv.Where(i => i != null).Sum(i => i.Points);
         }
 
         public PlayerConfig GetPlayerConfig(Inventory.Inventory inv)
         {
-            return inventoryControllers.FirstOrDefault(a => a.Value._inv == inv).Key;
+            return inventoryControllers.FirstOrDefault(a => a.Value.inv == inv).Key;
         }
     }
 }
