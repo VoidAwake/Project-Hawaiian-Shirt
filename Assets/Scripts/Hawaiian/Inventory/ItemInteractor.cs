@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using Codice.CM.Common;
 using Hawaiian.Inventory;
 using Hawaiian.Unit;
 using Hawaiian.Utilities;
