@@ -1,4 +1,5 @@
-﻿using Hawaiian.Utilities;
+﻿using System.Collections.Generic;
+using Hawaiian.Utilities;
 using UnityEngine;
 
 namespace Hawaiian.Game
@@ -8,7 +9,8 @@ namespace Hawaiian.Game
     {
         [SerializeField] private SceneChanger sceneChanger;
         [SerializeField] private SceneReference resultsScene;
-        
+        [SerializeField] private List<SceneReference> levels;
+
         public enum GamePhase { Stealth, GameOver }
 
         private GamePhase phase;
@@ -35,5 +37,12 @@ namespace Hawaiian.Game
 
         public GameEvent phaseChanged;
         public GameEvent gameOver;
+
+        public void LoadRandomLevel()
+        {
+            if (levels.Count == 0) return;
+            
+            sceneChanger.ChangeScene(levels[Random.Range(0, levels.Count)]);
+        }
     }
 }

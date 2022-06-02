@@ -12,9 +12,6 @@ EditorBuildSettings:
     path: Assets/Scenes/CharacterSelect.unity
     guid: d16a4626545988844af636cf388650df
   - enabled: 1
-    path: Assets/Scenes/RandomLevel.unity
-    guid: f3bda46ad5d713848a83538c286f6ff6
-  - enabled: 1
     path: Assets/Scenes/Results Screen.unity
     guid: b0930558751c425429485c00789637e4
   - enabled: 1

@@ -18,7 +18,7 @@ namespace Hawaiian.UI.CharacterSelect
         [SerializeField] private SceneChanger sceneChanger;
         // TODO: UI should not be handling scene references
         [SerializeField] private SceneReference mainMenuScene;
-        [SerializeField] private SceneReference gameScene;
+        [SerializeField] private GameManager gameManager;
 
         public UnityEvent readyChanged = new();
 
@@ -94,9 +94,7 @@ namespace Hawaiian.UI.CharacterSelect
 
             if (!isExiting)
             {
-                sceneChanger.ChangeScene(gameScene);
-                Destroy(GetComponent<LobbyManager>());
-                Destroy(GetComponent<PlayerInputManager>());
+                gameManager.LoadRandomLevel();
                 isExiting = true;
             }
         }
