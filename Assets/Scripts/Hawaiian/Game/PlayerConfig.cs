@@ -4,7 +4,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace Hawaiian.UI.CharacterSelect
+namespace Hawaiian.Game
 {
     [Serializable]
     public class PlayerConfig

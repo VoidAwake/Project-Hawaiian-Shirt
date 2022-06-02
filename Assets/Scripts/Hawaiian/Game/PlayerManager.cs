@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using System.Linq;
-using Hawaiian.Game;
 using Hawaiian.Inventory;
 using Hawaiian.Unit;
 using Hawaiian.Utilities;
@@ -9,13 +8,12 @@ using UnityEngine.Events;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 
-namespace Hawaiian.UI.CharacterSelect
+namespace Hawaiian.Game
 {
     public class PlayerManager : MonoBehaviour
     {
         [SerializeField] GameObject playerPrefab;
         [SerializeField] private int buildIndex;
-        [SerializeField] private GameManager gameManager;
         [SerializeField] private GameEvent playersJoined;
         [SerializeField] private List<SpawnPoint> spawnPoints;
         [SerializeField] private PlayerConfigManager playerConfigManager;
@@ -67,13 +65,13 @@ namespace Hawaiian.UI.CharacterSelect
 
         public void SaveScores()
         {
-            if (gameManager.Phase != GameManager.GamePhase.GameOver) return;
-            
             foreach (var (playerConfig, inventoryController) in inventoryControllers)
             {
                 playerConfig.score = inventoryController.Score;
             }
             
+            // TODO: Refactor. A function called SaveScores should not also be handling changing the scene.
+            // TODO: Changing the scene should also not be handled by a PlayerManager.
             Transition transition = FindObjectOfType<Transition>();
             if (transition != null)
             {

@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace Hawaiian.UI.CharacterSelect
+namespace Hawaiian.Game
 {
     [CreateAssetMenu(menuName = "Hawaiian/Managers/PlayerConfigManager")]
     public class PlayerConfigManager : ScriptableObject

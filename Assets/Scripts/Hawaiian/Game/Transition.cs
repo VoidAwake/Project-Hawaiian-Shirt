@@ -1,9 +1,10 @@
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
-namespace Hawaiian.UI.CharacterSelect
+namespace Hawaiian.Game
 {
+    // TODO: This class needs to be split into UI and non-UI
     public class Transition : MonoBehaviour
     {
         [SerializeField] Sprite[] transitionCheckersSprites;

@@ -1,3 +1,4 @@
+using Hawaiian.Game;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Hawaiian.UI.CharacterSelect;

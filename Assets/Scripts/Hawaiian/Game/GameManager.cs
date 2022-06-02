@@ -17,9 +17,13 @@ namespace Hawaiian.Game
             {
                 phase = value;
                 phaseChanged.Raise();
+                
+                if (Phase == GamePhase.GameOver)
+                    gameOver.Raise();
             }
         }
 
         public GameEvent phaseChanged;
+        public GameEvent gameOver;
     }
 }

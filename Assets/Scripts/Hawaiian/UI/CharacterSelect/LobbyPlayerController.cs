@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Linq;
+using Hawaiian.Game;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
