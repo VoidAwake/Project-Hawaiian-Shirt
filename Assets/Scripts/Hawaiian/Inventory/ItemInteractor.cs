@@ -9,6 +9,11 @@ using UnityEngine.InputSystem;
 [RequireComponent(typeof(InventoryController))]
 public class ItemInteractor : MonoBehaviour
 {
+    
+    private static readonly int Rate = Shader.PropertyToID("_Rate");
+    private static readonly int LineColour = Shader.PropertyToID("_lineColour");
+
+    
     [Header("Components")] [SerializeField]
     private LineRenderer _renderer;
 
@@ -62,6 +67,7 @@ public class ItemInteractor : MonoBehaviour
 
     public bool signal = false;
 
+
     #region Monobehaviour
 
     private void Awake()
@@ -82,8 +88,20 @@ public class ItemInteractor : MonoBehaviour
             if (_controller.CurrentItem.Type == ItemType.Projectile)
                 UpdateLineRenderers();
             else
-                _renderer = BezierCurve.DrawQuadraticBezierCurve(_renderer, transform.position,
-                    transform.position + new Vector3(0.5f, 2, 0), _cursor.transform.position);
+            {
+                _renderer = BezierCurve.DrawQuadraticBezierCurve(_renderer, transform.position,      
+                    transform.position + new Vector3(0.5f, 2, 0), _cursor.transform.position);    
+                
+                Gradient gradient = new Gradient();                                                                                                                   
+                gradient.SetKeys(                                                                                                                                     
+                    new GradientColorKey[]                                                                                                                            
+                    {                                                                                                                                                 
+                        new GradientColorKey(_renderer.material.GetColor(LineColour), 0.0f), new GradientColorKey(_renderer.material.GetColor(LineColour), 1.0f)        
+                    }, new GradientAlphaKey[] {new GradientAlphaKey(1, 0.0f), new GradientAlphaKey(1, 1.0f)});
+                _renderer.colorGradient = gradient;
+            }
+            
+            
 
             if (Math.Abs(_cursor.CurrentRad - _cursor.MaxRadius) > 0.01f)
             {
@@ -399,6 +417,9 @@ public class ItemInteractor : MonoBehaviour
             _lineRenderers.Add(renderer);
 
             renderer.material = Resources.Load<Material>("Sprites/lineRendererMaterial");
+            
+            if (CurrentItem.Type == ItemType.Projectile)
+                renderer.material.SetFloat(Rate,renderer.material.GetFloat(Rate) * -1);
 
             renderer.startWidth = 0.2f;
             renderer.endWidth = 0.2f;
@@ -407,7 +428,7 @@ public class ItemInteractor : MonoBehaviour
             gradient.SetKeys(
                 new GradientColorKey[]
                 {
-                    new GradientColorKey(Color.red, 0.0f), new GradientColorKey(Color.red, 1.0f)
+                    new GradientColorKey(renderer.material.GetColor(LineColour), 0.0f), new GradientColorKey(renderer.material.GetColor(LineColour), 1.0f)
                 }, new GradientAlphaKey[] {new GradientAlphaKey(1, 0.0f), new GradientAlphaKey(1, 1.0f)});
 
             renderer.colorGradient = gradient;
