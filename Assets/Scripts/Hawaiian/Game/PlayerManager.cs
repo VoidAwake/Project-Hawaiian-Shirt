@@ -11,7 +11,7 @@ namespace Hawaiian.Game
 {
     public class PlayerManager : MonoBehaviour
     {
-        [SerializeField] GameObject playerPrefab;
+        [SerializeField] private GameObject playerPrefab;
         [SerializeField] private GameEvent playersJoined;
         [SerializeField] private List<SpawnPoint> spawnPoints;
         [SerializeField] private PlayerConfigManager playerConfigManager;
@@ -23,7 +23,7 @@ namespace Hawaiian.Game
 
         private PlayerInputManager inputManager;
 
-        void Start()
+        private void Start()
         {
             inputManager = GetComponent<PlayerInputManager>();
 
@@ -89,6 +89,8 @@ namespace Hawaiian.Game
                 if (inventoryController != null)
                 {
                     inventoryControllers.Add(playerConfig, inventoryController);
+                    
+                    inventoryController.currentItemChanged.AddListener(UpdateWinningPlayers);
 
                     addedInventory.Raise(inventoryController._inv);
                 }
@@ -100,16 +102,8 @@ namespace Hawaiian.Game
 
             playersJoined.Raise();
         }
-        
-        public List<Transform> WinningPlayers { get; private set; }
 
-        private void Update()
-        {
-            if (inventoryControllers.Count == 0) return;
-            
-            // TODO: Inefficient to be doing this every frame. Only needs to be updated when scores change.
-            UpdateWinningPlayers();
-        }
+        public List<Transform> WinningPlayers { get; private set; }
 
         private void UpdateWinningPlayers()
         {
