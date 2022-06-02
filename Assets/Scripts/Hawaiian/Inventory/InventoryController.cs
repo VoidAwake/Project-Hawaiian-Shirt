@@ -18,8 +18,6 @@ namespace Hawaiian.Inventory
         [SerializeField] private Item item;
         [SerializeField] private ScriptableInt size;
 
-        [SerializeField] private BaseGameEvent<Inventory> addedInventory;
-
         [SerializeField] private SpriteRenderer hand;
 
         [SerializeField] private GameObject droppedItem;
@@ -47,7 +45,6 @@ namespace Hawaiian.Inventory
             _inv.currentItemChanged.AddListener(OnCurrentItemChanged);
             _inv.currentItemChanged.AddListener(CreateScorePopUp);
 
-            addedInventory.Raise(_inv);
             _player = GetComponentInParent<UnitPlayer>();
 
             addinv = false;
