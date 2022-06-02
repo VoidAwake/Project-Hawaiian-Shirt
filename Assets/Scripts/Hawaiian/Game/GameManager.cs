@@ -6,7 +6,9 @@ namespace Hawaiian.Game
     [CreateAssetMenu(menuName = "Hawaiian/Managers/GameManager")]
     public class GameManager : ScriptableObject
     {
-        public enum GamePhase { Stealth, HighAlert, GameOver }
+        [SerializeField] private SceneChanger sceneChanger;
+        
+        public enum GamePhase { Stealth, GameOver }
 
         private GamePhase phase;
 
@@ -19,8 +21,16 @@ namespace Hawaiian.Game
                 phaseChanged.Raise();
                 
                 if (Phase == GamePhase.GameOver)
-                    gameOver.Raise();
+                    GameOver();
             }
+        }
+
+        private void GameOver()
+        {
+            gameOver.Raise();
+            
+            // TODO: Magic number.
+            sceneChanger.ChangeScene(3);
         }
 
         public GameEvent phaseChanged;

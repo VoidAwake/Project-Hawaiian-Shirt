@@ -54,8 +54,6 @@ namespace Hawaiian.Game
             // TODO: Move this to a dedicated script, possibly the game manager
             gameTimeScale.Value = 0;
             gameManager.Phase = GameManager.GamePhase.GameOver;
-
-            // TODO: Change to the results screen
         }
 
         private void OnEnable()

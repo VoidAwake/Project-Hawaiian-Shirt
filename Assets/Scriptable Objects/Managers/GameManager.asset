@@ -12,4 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a7ffdc85119449f7be11ddfb404404f2, type: 3}
   m_Name: GameManager
   m_EditorClassIdentifier: 
+  sceneChanger: {fileID: 11400000, guid: 3d32adecca106ad4a8e92d019d2654af, type: 2}
   phaseChanged: {fileID: 11400000, guid: d5c9e20f87d81084da0f7a6327a76a25, type: 2}
+  gameOver: {fileID: 11400000, guid: 3f166778320e3064188ff102927875f8, type: 2}
