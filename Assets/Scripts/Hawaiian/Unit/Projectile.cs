@@ -30,6 +30,10 @@ namespace Hawaiian.Unit
         public bool StuckOnWall => stuckOnWall;
         public float Speed => _speed;
         public bool CanStickOnWalls => _canStickOnWalls;
+
+        public bool WasParried;
+
+        public IUnit User => _user;
         public Vector2 Direction { get; private set; }
 
         public void Initialise(Vector3 target)
@@ -40,6 +44,7 @@ namespace Hawaiian.Unit
         public override void Initialise(IUnit user, Vector3 target, bool canStickOnWalls = false,
             bool returnsToPlayer = false, bool ricochet = false, int maximumBounce = 0)
         {
+            WasParried = false;
             stuckOnWall = false;
             isOnWall = false;
             _targetLocation = target;
@@ -52,6 +57,25 @@ namespace Hawaiian.Unit
             _maximumBounces = maximumBounce;
             totalDistance = Vector3.Distance(transform.position, _targetLocation);
             Direction = _targetLocation - (Vector2) transform.position;
+        }
+
+        public void UpdateTarget(Vector2 newDirection, float distance)
+        {
+          
+            Direction = -newDirection;
+            _targetLocation = Direction * distance;
+        }
+        
+        //Removes special bonus from boomerangs such as return to player and ricochet etc.
+        public void UpdateTargetToFinalDestination(Vector2 newDirection, float distance)
+        {
+            WasParried = true;
+            _isRicochet = false;
+            _returnsToPlayer = false;
+            Direction = -Direction;
+            _targetLocation = newDirection;
+            _user = null;
+            maxSpeed *= 3;
         }
 
         private void Update()
@@ -103,6 +127,12 @@ namespace Hawaiian.Unit
 
             if (hasReachedDestination)
             {
+                if (_user == null)
+                {
+                    hasReachedDestination = false;
+                    return;
+                }
+                
                 transform.position = Vector3.MoveTowards(transform.position, _user.GetPosition(), step * 2);
 
                 if (Vector3.Distance(transform.position, _user.GetPosition()) < 0.1f)
@@ -141,6 +171,7 @@ namespace Hawaiian.Unit
             if (other.gameObject.GetComponent<UnitPlayer>()) return;
             if (other.gameObject.GetComponent<Projectile>()) return;
             if (other.gameObject.GetComponent<ItemUnit>()) return;
+            if (other.gameObject.GetComponent<ShieldCollider>()) return;
         
             Debug.Log(!other.gameObject.GetComponent<UnitPlayer>() + " state of the unit player");
             Debug.Log(!other.gameObject.GetComponent<Projectile>() + " state of the projectile");

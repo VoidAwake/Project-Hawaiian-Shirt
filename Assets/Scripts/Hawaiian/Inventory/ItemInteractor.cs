@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Codice.CM.Common;
 using Hawaiian.Inventory;
 using Hawaiian.Unit;
 using Hawaiian.Utilities;
@@ -18,6 +19,8 @@ public class ItemInteractor : MonoBehaviour
     [SerializeField] private float _meleeSlashRotationOffset;
     [SerializeField] private SpriteRenderer _handHelder;
     [SerializeField] private UnitAnimator _animator;
+    [SerializeField] private IUnitGameEvent _parryOccured;
+    [SerializeField] private GameObject shieldColliderPrefab;
 
     //Components
     private InventoryController _controller;
@@ -32,6 +35,8 @@ public class ItemInteractor : MonoBehaviour
     private float _currentHoldTime;
     private float _offset = 1.1f;
     private float _slashCooldown;
+    private float _parryTimer;
+    private Shield _shieldReference;
 
     [SerializeField] private IUnitGameEvent _removeItem;
 
@@ -40,8 +45,11 @@ public class ItemInteractor : MonoBehaviour
 
     public bool IsAttacking => _isHoldingAttack;
 
-
+    public UnitPlayer PlayerReference => _playerReference;
+    
     public Item CurrentItem => _controller.CurrentItem;
+
+    public GameObject ProjectileReference => _projectileReference;
 
     public Vector2 Rotation
     {
@@ -213,9 +221,17 @@ public class ItemInteractor : MonoBehaviour
 
         #endregion
 
+      
+
         #region MeleeAttack
 
-        if (value.performed) return;
+        if (value.canceled) return;
+        
+        if (CurrentItem.Type == ItemType.Shield)
+        {
+            UseItem<Shield>();
+            return;
+        }
 
         if (!CanMeleeAttack()) return;
 
@@ -251,8 +267,20 @@ public class ItemInteractor : MonoBehaviour
 
     public void OnCurrentItemChanged()
     {
-        if (_controller.CurrentItem == null) return;
+        if (_controller.CurrentItem == null)
+        {
+            if (_shieldReference != null)
+                _shieldReference.RemoveShieldComponent();
+            return;
+        }
 
+        if (CurrentItem.Type == ItemType.Shield)
+        {
+            _shieldReference =  gameObject.AddComponent<Shield>();
+            _shieldReference.Initialise(CurrentItem.ParryWindow, new[]{CurrentItem.ParryPercentageUpperLimit, CurrentItem.ParryPercentageLowerLimit}, _handHelder,new[]{CurrentItem.ShieldDown,CurrentItem.ShieldUp}, _parryOccured, shieldColliderPrefab,CurrentItem.TimeTillParry, _playerReference, _cursor.transform);
+        }
+        else if (_shieldReference != null)
+            _shieldReference.RemoveShieldComponent();
 
         _projectileReference = _controller.CurrentItem.ProjectileInstance;
         _handHelder.sprite = _controller.CurrentItem.ItemSprite;
@@ -287,6 +315,8 @@ public class ItemInteractor : MonoBehaviour
                             CurrentItem.SticksOnWall, CurrentItem.ReturnsToPlayer, CurrentItem.IsRicochet,
                             CurrentItem.MaximumBounces);
                         break;
+                  
+
                 }
 
                 if (p.GetComponent<HitUnit>())
@@ -300,7 +330,7 @@ public class ItemInteractor : MonoBehaviour
                 index++;
             });
         }
-        else
+        else if (CurrentItem.Type == ItemType.Melee)
         {
             //Begin melee 
             Vector3 input = GetPlayerInput();
@@ -308,7 +338,13 @@ public class ItemInteractor : MonoBehaviour
             var direction = input;
             InstantiateMeleeIndicator(angle, direction);
         }
+        else if (CurrentItem.Type == ItemType.Shield && _shieldReference.CanParry())
+           _shieldReference.LiftShield();
+
     }
+
+    
+    
 
     private void InstantiateMeleeIndicator(float angle, Vector3 direction)
     {

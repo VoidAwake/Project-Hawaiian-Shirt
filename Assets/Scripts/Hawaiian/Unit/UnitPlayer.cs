@@ -17,6 +17,7 @@ namespace Hawaiian.Unit
 
         private bool _attackFlag = false;
 
+
         public PlayerAction GetPlayerAction() => _input;
         public PlayerInput GetPlayerInput() => _playerInput;
 
@@ -87,5 +88,13 @@ namespace Hawaiian.Unit
         {
             ApplyKnockbackOnly(direction, distance);
         }
+
+        public void TripUnit(Vector2 direction, float distance)
+        {
+           KnockBack(direction,distance);
+        }
+
+        public UnitPlayer GetUnit() => this;
+        
     }
 }

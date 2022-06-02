@@ -18,6 +18,8 @@ namespace Hawaiian.Unit
 
         public enum PlayerState { Walking, Tripped }
         public PlayerState playerState = PlayerState.Walking;
+        public bool OverrideDamage = false;
+
 
         [Header("Unit Stats")]
         [SerializeField]internal float _maxHealth;

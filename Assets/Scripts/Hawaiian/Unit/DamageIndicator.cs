@@ -18,6 +18,8 @@ namespace Hawaiian.Unit
         private bool _flag;
         private IUnit _user;
 
+        public IUnit User => _user;
+
         public int KnockbackDistance => _knockbackDistance;
         
         void Update()
