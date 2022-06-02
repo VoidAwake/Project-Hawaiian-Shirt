@@ -1,7 +1,7 @@
-using System;
+using Hawaiian.Inventory;
 using UnityEngine;
 
-namespace Hawaiian.Inventory
+namespace Hawaiian.Level
 {
     public abstract class Spawner : MonoBehaviour
     {

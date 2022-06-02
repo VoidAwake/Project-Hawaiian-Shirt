@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Hawaiian.Unit;
 using UnityEngine;
 
 namespace Hawaiian.PositionalEvents

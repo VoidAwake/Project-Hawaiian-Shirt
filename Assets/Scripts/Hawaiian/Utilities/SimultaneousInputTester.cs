@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-namespace Hawaiian.Inventory
+namespace Hawaiian.Utilities
 {
     public class SimultaneousInputTester : MonoBehaviour
     {
