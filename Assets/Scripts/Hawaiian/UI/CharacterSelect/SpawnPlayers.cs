@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Hawaiian.Game;
@@ -54,6 +55,25 @@ namespace Hawaiian.UI.CharacterSelect
             inputManager.joinBehavior = PlayerJoinBehavior.JoinPlayersManually;
         }
 
+        private Color32 GetPlayerColour(PlayerColours color)
+        {
+            switch (color)
+            {
+                case PlayerColours.Blue:
+                    return Color.blue;
+                    break;
+                case PlayerColours.Red:
+                    return Color.red;
+                case PlayerColours.Yellow:
+                    return Color.yellow;
+                case PlayerColours.Green:
+                    return Color.green;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(color), color, null);
+            }
+          
+        }
+
 
         public void BeginSpawn()
         {
@@ -72,6 +92,8 @@ namespace Hawaiian.UI.CharacterSelect
                     ((PlayerColours)config.playerNumber).ToString());
 
                 newPlayer.GetComponent<Unit.IUnit>().PlayerNumber = config.playerNumber;
+                newPlayer.GetComponent<Unit.IUnit>().PlayerColour =
+                    GetPlayerColour((PlayerColours) config.playerNumber);
 
                 newPlayer.transform.position = spawnPoints[newPlayer.playerIndex].GetSpawnPosition();
 

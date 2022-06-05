@@ -96,5 +96,6 @@ namespace Hawaiian.Unit
 
         public UnitPlayer GetUnit() => this;
         
+        public Color32 PlayerColour { get; set; }
     }
 }
