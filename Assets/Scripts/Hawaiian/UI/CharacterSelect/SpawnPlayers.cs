@@ -1,8 +1,11 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Hawaiian.Game;
 using Hawaiian.Inventory;
+using Hawaiian.UI.Game;
+using Hawaiian.Unit;
 using Hawaiian.Utilities;
 using MoreLinq;
 using UnityEngine;
@@ -14,8 +17,25 @@ namespace Hawaiian.UI.CharacterSelect
 {
     public class SpawnPlayers : MonoBehaviour
     {
-        public enum CharacterNames { Fox, Robin, Monkey, Cat, Goose, Soup, Gambit, Bert }
-        enum PlayerColours { Red, Blue, Yellow, Green }
+        public enum CharacterNames
+        {
+            Fox,
+            Robin,
+            Monkey,
+            Cat,
+            Goose,
+            Soup,
+            Gambit,
+            Bert
+        }
+
+        enum PlayerColours
+        {
+            Red,
+            Blue,
+            Yellow,
+            Green
+        }
 
         [SerializeField] GameObject playerPrefab;
         [SerializeField] private int buildIndex;
@@ -23,8 +43,10 @@ namespace Hawaiian.UI.CharacterSelect
         [SerializeField] private GameEvent playersJoined;
         [SerializeField] private List<SpawnPoint> spawnPoints;
 
+        [SerializeField] private GameObject _spawnEffectPrefab;
+
         public UnityEvent winningPlayersChanged = new();
-        
+
         private Dictionary<PlayerConfig, InventoryController> inventoryControllers = new();
 
         private LobbyGameManager lobbyManager;
@@ -33,7 +55,7 @@ namespace Hawaiian.UI.CharacterSelect
         void Start()
         {
             lobbyManager = FindObjectOfType<LobbyGameManager>();
-             inputManager = GetComponent<PlayerInputManager>();
+            inputManager = GetComponent<PlayerInputManager>();
 
             if (lobbyManager == null || inputManager == null)
             {
@@ -46,12 +68,12 @@ namespace Hawaiian.UI.CharacterSelect
 
                 return;
             }
-            
-            
+
+
             inputManager.onPlayerJoined += OnPlayerJoined;
             inputManager.playerPrefab = playerPrefab;
 
-          
+
             inputManager.joinBehavior = PlayerJoinBehavior.JoinPlayersManually;
         }
 
@@ -71,16 +93,33 @@ namespace Hawaiian.UI.CharacterSelect
                 default:
                     throw new ArgumentOutOfRangeException(nameof(color), color, null);
             }
-          
         }
-
 
         public void BeginSpawn()
         {
+            StartCoroutine(BeginSpawnCoroutine());
+        }
+
+        IEnumerator BeginSpawnCoroutine(float delay = 0.4f)
+        {
             foreach (PlayerConfig config in lobbyManager.playerConfigs)
             {
-                if (!config.IsPlayer) continue;
-                
+                yield return StartCoroutine(SpawnPlayerCoroutine(config));
+                yield return new WaitForSeconds(delay);
+            }
+
+            
+            // Data is still needed for results
+            // Destroy(playerData.gameObject);
+            playersJoined.Raise();
+            yield return null;
+        }
+
+        IEnumerator SpawnPlayerCoroutine(PlayerConfig config)
+        {
+                if (!config.IsPlayer)
+                    yield break;
+
                 PlayerInput newPlayer = inputManager.JoinPlayer(config.playerIndex, config.splitScreenIndex,
                     config.controlScheme, config.deviceIds.Select(InputSystem.GetDeviceById).ToArray());
 
@@ -88,15 +127,35 @@ namespace Hawaiian.UI.CharacterSelect
                 //Debug.Log("Spawn in player! charNo = " + config.characterNumber + ", charName = " + ((CharacterNames)config.characterNumber).ToString()
                 //+ ". playNo = " + config.playerNumber + ", playColour = " + ((PlayerColours)config.playerNumber).ToString());
                 newPlayer.GetComponent<Unit.Unit>().SetSpriteResolvers(
-                    ((CharacterNames)config.characterNumber).ToString(),
-                    ((PlayerColours)config.playerNumber).ToString());
+                    ((CharacterNames) config.characterNumber).ToString(),
+                    ((PlayerColours) config.playerNumber).ToString());
 
                 newPlayer.GetComponent<Unit.IUnit>().PlayerNumber = config.playerNumber;
                 newPlayer.GetComponent<Unit.IUnit>().PlayerColour =
                     GetPlayerColour((PlayerColours) config.playerNumber);
 
                 newPlayer.transform.position = spawnPoints[newPlayer.playerIndex].GetSpawnPosition();
+                
+                //Generate SpawnEffect on player spawn location
+                GameObject spawnEffect =Instantiate(_spawnEffectPrefab, newPlayer.transform.position, Quaternion.identity);
+                spawnEffect.GetComponent<AttachGameObjectsToParticles>().LightColour =
+                    GetPlayerColour((PlayerColours) config.playerNumber);
+                
+             ParticleSystem.MainModule settings = spawnEffect.GetComponent<ParticleSystem>().main;
+             settings.startColor = new ParticleSystem.MinMaxGradient(  GetPlayerColour((PlayerColours) config.playerNumber) );
 
+        
+            
+                //Apply the appropriate material to use the dissolve effect
+                UnitAnimator animator = newPlayer.gameObject.GetComponent<UnitAnimator>();
+                
+
+                Material dissolveMaterial  = Resources.Load<Material>($"Materials/Player{config.playerNumber}Dissolve");
+                foreach (SpriteRenderer renderer in animator.Renderers)
+                    renderer.material = dissolveMaterial;
+
+                StartCoroutine(newPlayer.GetComponent<Unit.Unit>().RunDissolveCoroutine(dissolveMaterial));
+            
                 // Update inventory UI
                 // Find inventory referenced by inventory controller contained by player prefab
                 for (int i = 0; i < newPlayer.transform.childCount; i++)
@@ -105,7 +164,7 @@ namespace Hawaiian.UI.CharacterSelect
                         .GetComponent<InventoryController>();
 
                     if (temp == null) continue;
-                    
+
                     inventoryControllers.Add(config, temp);
 
                     Inventory.Inventory inv = temp._inv;
@@ -120,23 +179,20 @@ namespace Hawaiian.UI.CharacterSelect
                         }
                     }
                 }
-            }
-
-            // Data is still needed for results
-            // Destroy(playerData.gameObject);
-            playersJoined.Raise();
-
+                
+                
+                
         }
 
         public void SaveScores()
         {
             if (gameManager.Phase != GameManager.GamePhase.GameOver) return;
-            
+
             foreach (var (playerConfig, inventoryController) in inventoryControllers)
             {
                 playerConfig.score = inventoryController.Score;
             }
-            
+
             Transition transition = FindObjectOfType<Transition>();
             if (transition != null)
             {
@@ -153,13 +209,13 @@ namespace Hawaiian.UI.CharacterSelect
         {
             playersJoined.Raise();
         }
-        
+
         public List<Transform> WinningPlayers { get; private set; }
 
         private void Update()
         {
             if (inventoryControllers.Count == 0) return;
-            
+
             // TODO: Inefficient to be doing this every frame. Only needs to be updated when scores change.
             UpdateWinningPlayers();
         }
@@ -184,10 +240,10 @@ namespace Hawaiian.UI.CharacterSelect
                 .Where(o => o.Value == maxScore)
                 .Select(o => o.Key.transform)
                 .ToList();
-            
+
             if (WinningPlayers.Count == inventoryControllers.Count)
                 WinningPlayers.Clear();
-            
+
             winningPlayersChanged.Invoke();
         }
 

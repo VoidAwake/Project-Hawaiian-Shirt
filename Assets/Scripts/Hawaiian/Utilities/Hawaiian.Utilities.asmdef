@@ -3,7 +3,8 @@
     "rootNamespace": "",
     "references": [
         "Hawaiian.Input",
-        "Unity.InputSystem"
+        "Unity.InputSystem",
+        "Unity.RenderPipelines.Universal.Runtime"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

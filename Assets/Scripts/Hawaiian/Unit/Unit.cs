@@ -150,6 +150,19 @@ namespace Hawaiian.Unit
             else return false;
         }
 
+        public IEnumerator RunDissolveCoroutine(Material reference)
+        {
+            var elapsedTime = 0f;
+            var endTime = 1f;
+
+            while (elapsedTime < endTime)
+            {
+                reference.SetFloat("_Amount",Mathf.Lerp(elapsedTime,endTime,elapsedTime/endTime));
+                elapsedTime += Time.deltaTime;
+                yield return null;
+            }
+        }
+
         public void SetSpriteResolvers(string headName, string torsoName)
         {
             head.SetCategoryAndLabel("Head", headName);

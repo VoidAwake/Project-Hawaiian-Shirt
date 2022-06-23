@@ -25,8 +25,9 @@ public class CameraController : MonoBehaviour
 
     private float _size;
     
-    
     private bool flag;
+
+    public float SmoothTime => _smoothTime;
 
     public void AddTarget()
     {
