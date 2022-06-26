@@ -52,6 +52,8 @@ namespace Hawaiian.UI.CharacterSelect
 
           
             inputManager.joinBehavior = PlayerJoinBehavior.JoinPlayersManually;
+
+            Debug.Log("Lobby manager null? " + (lobbyManager == null) + ". Input manager null? " + (inputManager == null));
         }
 
 
