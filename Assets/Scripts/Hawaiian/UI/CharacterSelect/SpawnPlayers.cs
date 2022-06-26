@@ -83,6 +83,7 @@ namespace Hawaiian.UI.CharacterSelect
             {
                 case PlayerColours.Blue:
                     return Color.blue;
+                    break;
                 case PlayerColours.Red:
                     return Color.red;
                 case PlayerColours.Yellow:

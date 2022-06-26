@@ -1,7 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.InputSystem;
-using Hawaiian.UI.CharacterSelect;
 
 namespace Hawaiian.UI.MainMenu
 {
@@ -9,7 +8,7 @@ namespace Hawaiian.UI.MainMenu
     {
         int actionA = 0;    // INPUT STATUSES:
         int actionB = 0;    // 0 - Up
-        public float move = 0;
+        private float move = 0;
 
         public void OnMenuSelect(InputValue value) { move = value.Get<float>(); }
         public void OnActionA(InputValue value) { HandleButtonInput(value.Get<float>(), ref actionA); }
@@ -23,13 +22,12 @@ namespace Hawaiian.UI.MainMenu
 
         int moveBuffer;
 
-        public Button[] buttons;
-        public Image cursor;
+        [SerializeField] Button[] buttons;
+        [SerializeField] Image cursor;
         [SerializeField] Sprite[] cursorSprites;
         bool cursorActive;
         int selected;
         public bool disabled;
-        public bool rapidInput; // Will automatically zero input and move buffer, enables input to be correctly passed from lobby player controllers more easily
 
         public PauseController pausePlayer;
 
@@ -43,8 +41,6 @@ namespace Hawaiian.UI.MainMenu
         // Update is called once per frame
         void Update()
         {
-            //Debug.Log("Menu. Disabled: " + disabled + ". Move: " + move + ". Current Selected: " + selected + ". Button count: " + buttons.Length);
-
             // Animate cursor
             if (cursorActive)
             {
@@ -56,22 +52,6 @@ namespace Hawaiian.UI.MainMenu
 
             if (!disabled)
             {
-                // Mode select stuff...
-                if (rapidInput)
-                {
-                    if (moveBuffer != 0)
-                    {
-                        moveBuffer = 0;
-                        move = 0.0f;
-                    }
-
-                    if (actionA == 2)
-                        actionA = 0;
-
-                    if (actionB == 2)
-                        actionB = 0;
-                }
-
                 // Handle input
                 if (moveBuffer != 0) // Reset stick input
                 {
@@ -91,10 +71,6 @@ namespace Hawaiian.UI.MainMenu
                             AudioManager.audioManager.Swap();
                             cursor.rectTransform.anchoredPosition = buttons[selected].GetComponent<RectTransform>().anchoredPosition;
                             //Debug.Log(selected + " " + buttons.Length);
-
-                            // Update description of currently selected game mode in lobby
-                            if (buttons[selected].GetComponent<MainMenuButtonFunctions>().isModeSelectButton)
-                                FindObjectOfType<LobbyManager>().UpdateGameModeDescription(selected);
                         }
                         moveBuffer = 1;
                     }
@@ -107,10 +83,6 @@ namespace Hawaiian.UI.MainMenu
                             selected = (selected + 1) % (buttons.Length);
                             cursor.rectTransform.anchoredPosition = buttons[selected].GetComponent<RectTransform>().anchoredPosition;
                             //Debug.Log(selected +" "+ buttons.Length);
-
-                            // Update description of currently selected game mode in lobby
-                            if (buttons[selected].GetComponent<MainMenuButtonFunctions>().isModeSelectButton)
-                                FindObjectOfType<LobbyManager>().UpdateGameModeDescription(selected);
                         }
                         moveBuffer = -1;
                     }
