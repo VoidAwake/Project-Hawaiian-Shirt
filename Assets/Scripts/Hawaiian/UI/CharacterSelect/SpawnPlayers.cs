@@ -49,6 +49,8 @@ namespace Hawaiian.UI.CharacterSelect
 
         private Dictionary<PlayerConfig, InventoryController> inventoryControllers = new();
 
+        private List<PlayerInput> _allPlayers = new List<PlayerInput>();
+        
         private LobbyGameManager lobbyManager;
         private PlayerInputManager inputManager;
 
@@ -83,7 +85,6 @@ namespace Hawaiian.UI.CharacterSelect
             {
                 case PlayerColours.Blue:
                     return Color.blue;
-                    break;
                 case PlayerColours.Red:
                     return Color.red;
                 case PlayerColours.Yellow:
@@ -99,6 +100,8 @@ namespace Hawaiian.UI.CharacterSelect
         {
             StartCoroutine(BeginSpawnCoroutine());
         }
+        
+        
 
         IEnumerator BeginSpawnCoroutine(float delay = 0.4f)
         {
@@ -193,6 +196,12 @@ namespace Hawaiian.UI.CharacterSelect
                 playerConfig.score = inventoryController.Score;
             }
 
+          
+        }
+
+        public  void GameEnded()
+        {
+            
             Transition transition = FindObjectOfType<Transition>();
             if (transition != null)
             {
@@ -204,9 +213,19 @@ namespace Hawaiian.UI.CharacterSelect
             }
         }
 
+        public void AllowAllInputs()
+        {
+            _allPlayers.ForEach(input =>
+            {
+                input.ActivateInput();
+            });
+        }
+
         // Message from Player Input Manager
         private void OnPlayerJoined(PlayerInput playerInput)
         {
+            _allPlayers.Add(playerInput);
+            playerInput.DeactivateInput();
             playersJoined.Raise();
         }
 

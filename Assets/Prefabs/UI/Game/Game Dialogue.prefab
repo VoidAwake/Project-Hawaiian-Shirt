@@ -223,8 +223,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Begin Stealth Phase
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 5c6fd68caddd8f64dad4214a7ed94fd7, type: 2}
+  m_sharedMaterial: {fileID: 8109771248515024507, guid: 5c6fd68caddd8f64dad4214a7ed94fd7, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -306,10 +306,11 @@ MonoBehaviour:
   gameManager: {fileID: 11400000, guid: c305914e6d352644190ef7ee43a51bbd, type: 2}
   gameTimeScale: {fileID: 11400000, guid: a7999ebb747644c42b10ad44fd3b305b, type: 2}
   text: {fileID: 6770062013100560346}
-  displayTime: 2
+  displayTime: 3.5
   transitionTime: 0.5
   offset: 100
   restartButton: {fileID: 8278212432564319069}
+  EndingCinematicCompleted: {fileID: 11400000, guid: 6d9a3f134d0d26c42af0fd5e5b91f941, type: 2}
 --- !u!114 &2852919005806875372
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -735,8 +736,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Restart
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 5c6fd68caddd8f64dad4214a7ed94fd7, type: 2}
+  m_sharedMaterial: {fileID: 8109771248515024507, guid: 5c6fd68caddd8f64dad4214a7ed94fd7, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
