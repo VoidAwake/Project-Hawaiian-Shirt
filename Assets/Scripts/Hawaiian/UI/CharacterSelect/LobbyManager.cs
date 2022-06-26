@@ -185,7 +185,9 @@ namespace Hawaiian.UI.CharacterSelect
 
         private bool AllPlayersReady()
         {
-            if (lobbyPlayerControllers.Count == 0) return false;
+            // if (lobbyPlayerControllers.Count == 0) return false; // No longer returns false, because these are now hidden, not destroyed
+            if (AllPlayersHaveInvalidCharacters())
+                return false;
 
             return lobbyPlayerControllers.All(l => l.Status != LobbyPlayerController.PlayerStatus.LoadedIn);
         }
@@ -397,6 +399,17 @@ namespace Hawaiian.UI.CharacterSelect
         {
             gameModeNameTMP.text = GetGameModeString(gameModes[index], gameModeNames);
             gameModeDescriptionTMP.text = GetGameModeString(gameModes[index], gameModeDescriptions);
+        }
+
+        private bool AllPlayersHaveInvalidCharacters()
+        {
+            foreach (PlayerConfig config in lobbyGameManager.playerConfigs)
+            {
+                if (config.characterNumber >= 0)
+                    return false;
+            }
+
+            return true;
         }
         #endregion 
     }
