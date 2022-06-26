@@ -48,6 +48,7 @@ namespace Hawaiian.UI.CharacterSelect
         [SerializeField] private GridLayoutGroup buttonsParent;                 // Scene reference. To be positioned, and have buttons parented to.
         [SerializeField] private TextMeshProUGUI gameModeNameTMP;
         [SerializeField] private TextMeshProUGUI gameModeDescriptionTMP;
+        [SerializeField] private TextMeshProUGUI screenTitleTMP;
         public MainMenuController menuController;                               // Scene reference. To assign button refernce to, and redirect player inputs.
         public bool isModeSelect = false; // Denotes what screen we're on
         private Coroutine transitionCoroutine;
@@ -65,6 +66,7 @@ namespace Hawaiian.UI.CharacterSelect
             ShowCharacterSelect(true);
             ShowModeSelect(false);
             transitionImage.gameObject.SetActive(false);
+            screenTitleTMP.text = "Select Characters";
         }
 
         private void Update()
@@ -291,7 +293,7 @@ namespace Hawaiian.UI.CharacterSelect
             for (int i = 0; i < 4; i++)
             {
                 bool isSelected = lobbyGameManager.playerConfigs[i].characterNumber >= 0;
-                selectedBGs[i].color = new Color(selectedBGs[i].color.r, selectedBGs[i].color.g, selectedBGs[i].color.b, isSelected ? 1.0f : 0.25f);        // Set alpha of portrait BG
+                selectedBGs[i].color = new Color(selectedBGs[i].color.r, selectedBGs[i].color.g, selectedBGs[i].color.b, isSelected ? 1.0f : 0.15f);        // Set alpha of portrait BG
                 selectedPortraits[i].enabled = isSelected;                                                                                                  // Enable sprite or not
                 if (isSelected) selectedPortraits[i].sprite = portraitSprites[lobbyGameManager.playerConfigs[i].characterNumber];                           // Set image sprite
             }
@@ -306,12 +308,32 @@ namespace Hawaiian.UI.CharacterSelect
             }
         }
 
+        private IEnumerator ReplaceScreenTitleText(string newText)
+        {
+            // Animate deleting current title
+            while (screenTitleTMP.text.Length > 0)
+            {
+                screenTitleTMP.text = screenTitleTMP.text.Remove(screenTitleTMP.text.Length - 1);
+                yield return new WaitForSeconds(0.01f);
+            }
+
+            // Animate typing up new title
+            while (screenTitleTMP.text.Length < newText.Length)
+            {
+                screenTitleTMP.text = screenTitleTMP.text.Insert(screenTitleTMP.text.Length, newText.ElementAt(screenTitleTMP.text.Length).ToString());
+                yield return new WaitForSeconds(0.01f);
+            }
+        }
+
         private IEnumerator TransitionToModeSelect(bool toGameModeSelect)
         {
             float direction = toGameModeSelect ? 1.0f : -1.0f;
             bool reachedMidPoint = false;
             float speed = 10000.0f;
             int fudgeCounter = 0;
+
+            // Replace title text at top of screen
+            StartCoroutine(ReplaceScreenTitleText(toGameModeSelect ? "Select a Game Mode" : "Select Characters"));
 
             // Set up image, and other important stuff(s)
             PromoteAllPlayerControllers(toGameModeSelect);
