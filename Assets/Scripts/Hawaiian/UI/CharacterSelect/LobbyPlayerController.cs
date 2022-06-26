@@ -10,7 +10,7 @@ namespace Hawaiian.UI.CharacterSelect
     public class LobbyPlayerController : MonoBehaviour
     {
         private float move;
-        private bool inputEnabled;
+        public bool inputEnabled;
         int moveBuffer;
         LobbyManager lobbyManager;
         
@@ -18,13 +18,14 @@ namespace Hawaiian.UI.CharacterSelect
         {
             NotLoadedIn,
             LoadedIn,
-            Ready
+            Ready,
+            SelectingMode
         }
 
         public PlayerStatus Status
         {
             get => status;
-            private set
+            set // Mode select stuff... I removed the private keyword
             {
                 status = value;
                 OnStatusChanged();
@@ -48,13 +49,21 @@ namespace Hawaiian.UI.CharacterSelect
             {
                 if (move > 0.15f)
                 {
-                    OnPlayerCharacterSelect(1);
                     moveBuffer = 1;
+
+                    if (Status == PlayerStatus.SelectingMode)
+                        lobbyManager.menuController.move = move;
+                    else
+                        OnPlayerCharacterSelect(1);
                 }
                 if (move < -0.15f)
                 {
-                    OnPlayerCharacterSelect(-1);
                     moveBuffer = -1;
+
+                    if (Status == PlayerStatus.SelectingMode)
+                        lobbyManager.menuController.move = move;
+                    else
+                        OnPlayerCharacterSelect(-1);
                 }
             }
         }
@@ -82,6 +91,15 @@ namespace Hawaiian.UI.CharacterSelect
             move = value.Get<float>();
         }
 
+        public void OnMenuSelect(InputValue value)
+        {
+            if (!inputEnabled) return;
+
+            if (Status != PlayerStatus.SelectingMode) return;
+
+            move = value.Get<float>();
+        }
+
         public void OnActionA(InputValue value)
         {
             if (!inputEnabled) return;
@@ -98,6 +116,9 @@ namespace Hawaiian.UI.CharacterSelect
                     break;
                 case PlayerStatus.Ready:
                     lobbyManager.RequestStartGame();
+                    break;
+                case PlayerStatus.SelectingMode:
+                    lobbyManager.menuController.OnActionA(value);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
@@ -124,6 +145,9 @@ namespace Hawaiian.UI.CharacterSelect
                     {
                         Status = PlayerStatus.LoadedIn;
                     }
+                    break;
+                case PlayerStatus.SelectingMode:
+                    lobbyManager.TryExitModeSelect();
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
@@ -157,6 +181,8 @@ namespace Hawaiian.UI.CharacterSelect
                     AudioManager.audioManager.Confirm();
                     lobbyManager.GetPortrait(playerConfig.characterNumber).alpha = 0.2f;
                     StartCoroutine(EnableInput());
+                    break;
+                case PlayerStatus.SelectingMode:
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
@@ -207,6 +233,9 @@ namespace Hawaiian.UI.CharacterSelect
         
         private void OnAnyButtonPressed(InputEventPtr eventPtr, InputDevice device)
         {
+            // Mode select stuff... extra return check
+            if (lobbyManager.isModeSelect) return;
+
             if (Status != PlayerStatus.NotLoadedIn) return;
             
             if (!eventPtr.IsA<StateEvent>() && !eventPtr.IsA<DeltaStateEvent>()) return;
