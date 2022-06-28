@@ -89,7 +89,8 @@ GameObject:
   - component: {fileID: 8134753644076022705}
   - component: {fileID: 6165084741099101838}
   - component: {fileID: 7660955185848710152}
-  - component: {fileID: -7221845924380489741}
+  - component: {fileID: 3012881388243578115}
+  - component: {fileID: 2219253667184475333}
   m_Layer: 0
   m_Name: TreasureUI
   m_TagString: Untagged
@@ -200,7 +201,7 @@ MonoBehaviour:
   _backgroundColour: {fileID: 2635105238416992476}
   playerReference: {fileID: 0}
   inventory: {fileID: 0}
---- !u!114 &-7221845924380489741
+--- !u!114 &3012881388243578115
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -209,16 +210,44 @@ MonoBehaviour:
   m_GameObject: {fileID: 4208669935238418296}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7cf258db3a2b91e46925f1ac4ae5cbd7, type: 3}
+  m_Script: {fileID: 11500000, guid: 6f30e07c87c84114e800215ac5a426ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Event: {fileID: 11400000, guid: a5f5ab2a200cfdd4693a0aa48286a17a, type: 2}
+  Event: {fileID: 11400000, guid: cf0f7fcd69c8ec242b40ab6280e2c28e, type: 2}
   Response:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 7660955185848710152}
         m_TargetAssemblyTypeName: TreasurePointIndicator, Hawaiian.UI
         m_MethodName: UpdatePointIndicator
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &2219253667184475333
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4208669935238418296}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f30e07c87c84114e800215ac5a426ad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Event: {fileID: 11400000, guid: d4faf75e891b82d4a8bab1b0a693e484, type: 2}
+  Response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 7660955185848710152}
+        m_TargetAssemblyTypeName: TreasurePointIndicator, Hawaiian.UI
+        m_MethodName: UpdatePoints
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

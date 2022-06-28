@@ -35,27 +35,26 @@ public class Detonator : MonoBehaviour
     public void ParseData(IUnit player)
     {
         Tuple<IUnit, Detonator> data = new Tuple<IUnit, Detonator>(player, this);
-        
         ParseDetantorToTreasure.Raise(data);
-
     }
 
     public  IEnumerator RunTimerCoroutine()
     {
-        int _elapsedTimer = 0;
+        float elapsedTimer = _timer;
         
-        while (_elapsedTimer < _timer)
+        while (elapsedTimer > 0)
         {
-            _elapsedTimer += ( 5 - (int) Mathf.Lerp(_elapsedTimer, _timer, _elapsedTimer/_timer));
-            _timerText.text = _elapsedTimer.ToString();
+            elapsedTimer -= Time.deltaTime;
+            _timerText.text = ((int)elapsedTimer).ToString();
             yield return null;
         }
         
         DetonateBase();
     }
 
-    private void DetonateBase()
+    private void DetonateBase() 
     {
+        Treasure.DetonateBase();
         Destroy(gameObject);
     }
 }

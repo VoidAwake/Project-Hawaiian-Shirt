@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Hawaiian.Inventory;
@@ -7,6 +8,7 @@ using TMPro;
 using UI.Core;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SocialPlatforms.Impl;
 using UnityEngine.UI;
 
 public class TreasurePointIndicator : DialogueComponent<GameDialogue>
@@ -31,23 +33,38 @@ public class TreasurePointIndicator : DialogueComponent<GameDialogue>
         _backgroundColour.color = backgroundColor;
     }
 
-    public void UpdatePointIndicator(IUnit unit)
+    public void UpdatePointIndicator(Tuple<IUnit,int> data)
     {
 
-        if (playerReference.GetComponent<IUnit>() != unit)
+        if (playerReference.GetComponent<IUnit>() != data.Item1)
             return;
+
+        targetScore = data.Item2;
         
-        for (int i = 0; i < playerReference.transform.childCount; i++)
-        {
-            InventoryController temp = playerReference.transform.GetChild(i)
-                .GetComponent<InventoryController>();
+        // for (int i = 0; i < playerReference.transform.childCount; i++)
+        // {
+        //     InventoryController temp = playerReference.transform.GetChild(i)
+        //         .GetComponent<InventoryController>();
+        //
+        //     if (temp == null) continue;
+        //
+        //     inventory = temp._inv;
+        //
+        // }
+        //
+        UpdateText();
+    }
 
-            if (temp == null) continue;
-
-            inventory = temp._inv;
-
-        }
+    public void UpdatePoints(Tuple<IUnit,int> data)
+    {
         
+        if (playerReference.GetComponent<IUnit>() != data.Item1)
+            return;
+
+     
+
+        targetScore = data.Item2;
+
         UpdateText();
     }
 
@@ -55,7 +72,7 @@ public class TreasurePointIndicator : DialogueComponent<GameDialogue>
     {
         base.OnComponentStart();
 
-
+        _points.text = "0";
         fontSize = _points.fontSize;
         UpdateText();
     }
@@ -63,40 +80,40 @@ public class TreasurePointIndicator : DialogueComponent<GameDialogue>
 
     private void UpdateText()
     {
+        //
+        // if (inventory == null)
+        // {
+        //     _points.text = "0";
+        //     return;
+        // }
 
-        if (inventory == null)
-        {
-            _points.text = "0";
-            return;
-        }
-
-        List<int> indexes = new List<int>();
-        
-        for (var index = 0; index < inventory.inv.Length; index++)
-        {
-            Item item = inventory.inv[index];
-
-            if (item != null)
-            {
-                if (item.Type == ItemType.Objective)
-                {
-                    indexes.Add(index);
-                    targetScore += (int) item.Points;
-                }
-
-            }
-        }
+        // List<int> indexes = new List<int>();
+        //
+        // for (var index = 0; index < inventory.inv.Length; index++)
+        // {
+        //     Item item = inventory.inv[index];
+        //
+        //     if (item != null)
+        //     {
+        //         if (item.Type == ItemType.Objective)
+        //         {
+        //             indexes.Add(index);
+        //             targetScore += (int) item.Points;
+        //         }
+        //
+        //     }
+        // }
+        //
         
         
-        
-        for (var i = 0; i < inventory.inv.Length; i++)
-        {
-            foreach (var t in indexes)
-            {
-                if (t == i)
-                    inventory.RemoveItemAt(i);
-            }
-        }
+        // for (var i = 0; i < inventory.inv.Length; i++)
+        // {
+        //     foreach (var t in indexes)
+        //     {
+        //         if (t == i)
+        //             inventory.RemoveItemAt(i);
+        //     }
+        // }
 
         if (textCoroutine != null)
         {
