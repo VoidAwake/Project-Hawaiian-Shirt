@@ -84,6 +84,7 @@ namespace Hawaiian.Inventory
 
         //Other Specific Stats
         [HideInInspector] public bool IsKey;
+        [HideInInspector] public bool IsDetonator;
 
 
         // Start is called before the first frame update

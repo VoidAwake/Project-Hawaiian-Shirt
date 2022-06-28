@@ -42,6 +42,8 @@ namespace Hawaiian.UI.CharacterSelect
         [SerializeField] private GameManager gameManager;
         [SerializeField] private GameEvent playersJoined;
         [SerializeField] private List<SpawnPoint> spawnPoints;
+        [SerializeField] private GameObject _playerTreasurePrefab;
+        [SerializeField] private Vector3[] _playerTreasureSpawnPoint;
 
         [SerializeField] private GameObject _spawnEffectPrefab;
 
@@ -52,11 +54,14 @@ namespace Hawaiian.UI.CharacterSelect
         private List<PlayerInput> _allPlayers = new List<PlayerInput>();
         
         private LobbyGameManager lobbyManager;
+        private TreasureHoardUI _treasureHoardUI;
         private PlayerInputManager inputManager;
 
         void Start()
         {
             lobbyManager = FindObjectOfType<LobbyGameManager>();
+            _treasureHoardUI = FindObjectOfType<TreasureHoardUI>();
+
             inputManager = GetComponent<PlayerInputManager>();
 
             if (lobbyManager == null || inputManager == null)
@@ -75,6 +80,8 @@ namespace Hawaiian.UI.CharacterSelect
             inputManager.onPlayerJoined += OnPlayerJoined;
             inputManager.playerPrefab = playerPrefab;
 
+            
+            
 
             inputManager.joinBehavior = PlayerJoinBehavior.JoinPlayersManually;
         }
@@ -158,7 +165,11 @@ namespace Hawaiian.UI.CharacterSelect
                     renderer.material = dissolveMaterial;
 
                 StartCoroutine(newPlayer.GetComponent<Unit.Unit>().RunDissolveCoroutine(dissolveMaterial));
-            
+
+                _treasureHoardUI.GenerateTreasurePointUI(newPlayer, GetPlayerColour((PlayerColours) config.playerNumber));
+                GameObject reference = Instantiate(_playerTreasurePrefab, _playerTreasureSpawnPoint[config.playerNumber], Quaternion.identity);
+                reference.GetComponent<PlayerTreasure>().PlayerReference = newPlayer.GetComponent<IUnit>();
+                
                 // Update inventory UI
                 // Find inventory referenced by inventory controller contained by player prefab
                 for (int i = 0; i < newPlayer.transform.childCount; i++)

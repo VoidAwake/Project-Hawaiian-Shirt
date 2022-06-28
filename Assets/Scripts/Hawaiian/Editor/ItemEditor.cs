@@ -45,6 +45,7 @@ namespace Hawaiian.Editor
         SerializedProperty ParryPercentageLowerLimit;
         SerializedProperty ShieldUp;
         SerializedProperty ShieldDown;
+        SerializedProperty IsDetonator;
 
 
         private void OnEnable()
@@ -81,6 +82,7 @@ namespace Hawaiian.Editor
             ParryPercentageLowerLimit = serializedObject.FindProperty("ParryPercentageLowerLimit");
             ShieldUp = serializedObject.FindProperty("ShieldUp");
             ShieldDown = serializedObject.FindProperty("ShieldDown");
+            IsDetonator = serializedObject.FindProperty("IsDetonator");
         }
 
         public override void OnInspectorGUI()
@@ -264,6 +266,8 @@ namespace Hawaiian.Editor
         {
             GUILayout.Label("Other Stats", EditorStyles.boldLabel);
             EditorGUILayout.PropertyField(isKey, new GUIContent("Key"));
+            EditorGUILayout.PropertyField(IsDetonator, new GUIContent("Detonator"));
+
         }
     }
 }

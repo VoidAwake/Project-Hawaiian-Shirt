@@ -177,7 +177,7 @@ namespace Hawaiian.Camera
         IEnumerator DelayStart()
         {
             yield return new WaitForSeconds(0.1f);
-            StartCoroutine(LerpCamera(1f));
+            StartCoroutine(LerpCamera(1.1f));
         }
 
         IEnumerator RunGameStart()

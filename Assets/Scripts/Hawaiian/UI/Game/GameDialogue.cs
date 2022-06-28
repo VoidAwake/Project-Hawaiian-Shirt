@@ -16,6 +16,7 @@ namespace Hawaiian.UI.Game
         [SerializeField] private MainMenuController mainMenuController;
         [SerializeField] private MainMenuButtonFunctions pauseMenuController;
         [SerializeField] private GameObject tutorialBackground;
+       
 
         private int _inventoryCount = 0;
         private List<GameObject> inventoryGameObjects = new();

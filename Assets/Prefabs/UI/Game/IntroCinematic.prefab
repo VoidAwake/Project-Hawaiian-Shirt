@@ -1532,7 +1532,7 @@ MonoBehaviour:
   _outroWaypoint: {fileID: 7204079918816541280}
   _step: 4
   _sizeStep: 4
-  _endSize: 15
+  _endSize: 12
   _countdown: {fileID: 1557256650}
 --- !u!114 &512334085
 MonoBehaviour:
