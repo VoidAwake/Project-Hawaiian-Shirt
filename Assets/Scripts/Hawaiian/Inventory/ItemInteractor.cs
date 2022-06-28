@@ -487,9 +487,12 @@ public class ItemInteractor : MonoBehaviour
         return true;
     }
 
-
+    // TODO: Why is this here when all the other inputs are handled by InventoryController?
     public void OnDrop()
     {
+        // Prevent items being dropped while attacking
+        if (GetComponent<ItemInteractor>().IsAttacking) return;
+        
         //_controller.DropItLikeItsHot(_rotation);
         Vector3 prevInput = (_cursor.transform.localPosition - Vector3.up * 0.5f);
         Vector3 playerInput = prevInput.magnitude == 0 ? Vector2.right.normalized : prevInput.normalized;
