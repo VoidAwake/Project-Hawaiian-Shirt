@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 245282319073416817}
   - component: {fileID: 245282319073416591}
   - component: {fileID: 245282319073416816}
+  - component: {fileID: -4219696115448603590}
   m_Layer: 0
   m_Name: DetonatorPrefab
   m_TagString: Untagged
@@ -102,6 +103,22 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!58 &-4219696115448603590
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 245282319073416818}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 1
 --- !u!1 &245282319237723278
 GameObject:
   m_ObjectHideFlags: 0

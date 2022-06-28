@@ -36,6 +36,8 @@ namespace Hawaiian.UI.CharacterSelect
             Yellow,
             Green
         }
+        [SerializeField] private Item _depositor;
+        [SerializeField] private Item _detonator;
 
         [SerializeField] GameObject playerPrefab;
         [SerializeField] private int buildIndex;
@@ -183,6 +185,9 @@ namespace Hawaiian.UI.CharacterSelect
 
                     Inventory.Inventory inv = temp._inv;
 
+                   
+                    
+
                     // Search for inventory UIs, and find the one that matches our inventory
                     Game.InventoryUI[] inventoryUIs = FindObjectsOfType<Game.InventoryUI>();
                     foreach (Game.InventoryUI inventoryUI in inventoryUIs)
@@ -191,6 +196,13 @@ namespace Hawaiian.UI.CharacterSelect
                         {
                             inventoryUI.SetCharacterPortrait(config.characterNumber, config.playerNumber);
                         }
+                    }
+                    
+                    
+                    if (lobbyManager.CurrentGameMode == GameMode.TreasureHoard)
+                    {
+                        inv.inv[0] = _depositor;
+                        inv.inv[1] = _detonator;
                     }
                 }
                 

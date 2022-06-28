@@ -11,6 +11,9 @@ namespace Hawaiian.Inventory
 
             if (inventoryController != null)
             {
+                if (inventoryController.CurrentItem.IsDepositor )
+                    return;
+                
                 inventoryController.DropRandom(direction);
             }
         }

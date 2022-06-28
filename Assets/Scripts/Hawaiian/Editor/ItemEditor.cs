@@ -46,6 +46,7 @@ namespace Hawaiian.Editor
         SerializedProperty ShieldUp;
         SerializedProperty ShieldDown;
         SerializedProperty IsDetonator;
+        private SerializedProperty IsDepositor;
 
 
         private void OnEnable()
@@ -83,6 +84,7 @@ namespace Hawaiian.Editor
             ShieldUp = serializedObject.FindProperty("ShieldUp");
             ShieldDown = serializedObject.FindProperty("ShieldDown");
             IsDetonator = serializedObject.FindProperty("IsDetonator");
+            IsDepositor = serializedObject.FindProperty("IsDepositor");;
         }
 
         public override void OnInspectorGUI()
@@ -267,7 +269,7 @@ namespace Hawaiian.Editor
             GUILayout.Label("Other Stats", EditorStyles.boldLabel);
             EditorGUILayout.PropertyField(isKey, new GUIContent("Key"));
             EditorGUILayout.PropertyField(IsDetonator, new GUIContent("Detonator"));
-
+            EditorGUILayout.PropertyField(IsDepositor, new GUIContent("Depositor"));
         }
     }
 }

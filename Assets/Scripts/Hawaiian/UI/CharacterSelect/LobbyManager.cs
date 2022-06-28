@@ -163,6 +163,8 @@ namespace Hawaiian.UI.CharacterSelect
         {
             if (!isExiting)
             {
+                lobbyGameManager.CurrentGameMode = CurrentGameMode;
+                
                 //FindObjectOfType<Transition>().BeginTransition(true, true, buildIndexOfNextScene, true); // This function gets called by button that already loads a scene
                 Destroy(GetComponent<LobbyManager>());
                 Destroy(GetComponent<PlayerInputManager>());
