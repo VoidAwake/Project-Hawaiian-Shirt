@@ -81,6 +81,12 @@ public class ItemInteractor : MonoBehaviour
         _controller.currentItemChanged.AddListener(OnCurrentItemChanged);
     }
 
+    private void OnDestroy()
+    {
+        _playerReference.GetPlayerInput().actions["Attack"].performed -= StartAttack;
+        _playerReference.GetPlayerInput().actions["Attack"].canceled -= StartAttack;
+    }
+
     private void FixedUpdate()
     {
         if (_isHoldingAttack)
