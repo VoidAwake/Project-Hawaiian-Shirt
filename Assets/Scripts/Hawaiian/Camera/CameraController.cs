@@ -25,8 +25,9 @@ public class CameraController : MonoBehaviour
 
     private float _size;
     
-    
     private bool flag;
+
+    public float SmoothTime => _smoothTime;
 
     public void AddTarget()
     {
@@ -75,6 +76,16 @@ public class CameraController : MonoBehaviour
     }
 
     private void FixedUpdate()
+    {
+       RunCamera();
+    }
+
+    public void UpdateCameraForEndCinematic()
+    {
+        _minZoom += _minZoom / 2 + 20;
+    }
+
+    public void RunCamera()
     {
         if (players.Count <= 0)
             return;

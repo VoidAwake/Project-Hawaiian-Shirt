@@ -10,7 +10,9 @@ namespace Hawaiian.Game
         [SerializeField] private ScriptableFloat gameTime;
         [SerializeField] private bool startOnAwake;
         [SerializeField] private GameManager gameManager;
-       
+
+        public GameEvent GameEndedOccured;
+        
         private bool timerActive;
 
         private void Start()
@@ -25,7 +27,7 @@ namespace Hawaiian.Game
         private void Update()
         {
             if (!timerActive) return;
-
+            
             gameTime.Value -= Time.deltaTime * gameTimeScale.Value;
 
             if (gameTime.Value > 0) return;
@@ -59,7 +61,8 @@ namespace Hawaiian.Game
             // TODO: Move this to a dedicated script, possibly the game manager
             gameTimeScale.Value = 0;
             gameManager.Phase = GameManager.GamePhase.GameOver;
-
+            GameEndedOccured.Raise();
+                
             // TODO: Change to the results screen
         }
     }

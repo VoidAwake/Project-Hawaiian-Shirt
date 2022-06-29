@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 1726984037084381513}
   - component: {fileID: 950186398}
   - component: {fileID: 6250164837340820167}
+  - component: {fileID: 800061994573790538}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -133,11 +134,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _camera: {fileID: 2387493150576276816}
-  _smoothTime: 0.6
+  _smoothTime: 1
   _offset: {x: 0, y: 0}
   _maxZoom: 6
   _minZoom: 40
   _maximumDistance: 100
+  _zoomExponent: 0.65
   players: []
 --- !u!114 &6250164837340820167
 MonoBehaviour:
@@ -158,6 +160,34 @@ MonoBehaviour:
       - m_Target: {fileID: 950186398}
         m_TargetAssemblyTypeName: CameraController, Hawaiian.Camera
         m_MethodName: AddTarget
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &800061994573790538
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2387493150576276818}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8beaaee945cf0844ad0f79ee7108362, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Event: {fileID: 11400000, guid: 3f110c950f25a164b8bce56a2f06f376, type: 2}
+  Response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 950186398}
+        m_TargetAssemblyTypeName: CameraController, Hawaiian.Camera
+        m_MethodName: UpdateCameraForEndCinematic
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

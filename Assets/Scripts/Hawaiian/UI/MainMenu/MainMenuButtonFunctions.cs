@@ -13,6 +13,8 @@ namespace Hawaiian.UI.MainMenu
         [SerializeField] bool callTransition;
         public bool isModeSelectButton; // Cool code, for mode select screen
 
+        public GameMode gameMode; // Even cooler code for mode select
+        
         public UnityEvent displayControlsSelected = new UnityEvent();
 
         public void LoadSceneByIndex()
@@ -21,7 +23,10 @@ namespace Hawaiian.UI.MainMenu
             {
                 LobbyManager lobby = FindObjectOfType<LobbyManager>();
                 if (lobby != null)
+                {
+                    lobby.CurrentGameMode = gameMode;
                     lobby.StartGame();
+                }
             }
 
             if (callTransition)
@@ -86,12 +91,15 @@ namespace Hawaiian.UI.MainMenu
                     break;
             }
         }
+        
+       
 
-        public void SetButtonFunction(int newFunction, int newBuild, bool newTransition)
+        public void SetButtonFunction(int newFunction, int newBuild, bool newTransition, GameMode currentGameMode)
         {
             function = (ButtonFunction)newFunction;
             buildIndex = newBuild;
             callTransition = newTransition;
+            gameMode = currentGameMode;
         }
     }
 }
