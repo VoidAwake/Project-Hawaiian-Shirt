@@ -91,7 +91,8 @@ namespace Hawaiian.Unit
 
         public void TripUnit(Vector2 direction, float distance)
         {
-           KnockBack(direction,distance);
+            AudioManager.audioManager.PlayerTrip();
+            KnockBack(direction,distance);
         }
 
         public UnitPlayer GetUnit() => this;

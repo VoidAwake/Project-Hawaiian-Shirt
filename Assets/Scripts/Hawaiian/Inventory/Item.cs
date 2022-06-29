@@ -84,7 +84,7 @@ namespace Hawaiian.Inventory
 
         //Other Specific Stats
         [HideInInspector] public bool IsKey;
-
+        [HideInInspector] public int SFXIndex;
 
         // Start is called before the first frame update
 
