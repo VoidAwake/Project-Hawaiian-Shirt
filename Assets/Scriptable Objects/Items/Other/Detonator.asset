@@ -48,4 +48,5 @@ MonoBehaviour:
   PlacementIcon: {fileID: 0}
   TrapInstance: {fileID: 0}
   IsKey: 0
-  IsDetonator: 0
+  IsDetonator: 1
+  IsDepositor: 0

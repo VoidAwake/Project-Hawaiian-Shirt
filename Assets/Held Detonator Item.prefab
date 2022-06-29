@@ -83,7 +83,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 3
+  m_Radius: 2
 --- !u!114 &5424057397593351752
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -97,7 +97,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   token: {fileID: 11400000, guid: e8b2231db87fad546af457281ce33b93, type: 2}
-  radius: 3
+  radius: 2
   interactionTarget: 1
   targetsChanged: {fileID: 11400000, guid: 37e77cbc288b0bb408597b25a3a84f7e, type: 2}
   raisedOnTarget:

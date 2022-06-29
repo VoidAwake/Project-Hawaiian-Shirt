@@ -49,3 +49,4 @@ MonoBehaviour:
   TrapInstance: {fileID: 0}
   IsKey: 0
   IsDetonator: 0
+  IsDepositor: 1

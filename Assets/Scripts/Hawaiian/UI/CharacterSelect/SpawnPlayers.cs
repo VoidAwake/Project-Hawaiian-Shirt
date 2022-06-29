@@ -59,6 +59,8 @@ namespace Hawaiian.UI.CharacterSelect
         private TreasureHoardUI _treasureHoardUI;
         private PlayerInputManager inputManager;
 
+        public List<PlayerTreasure> _treasures = new List<PlayerTreasure>();
+
         void Start()
         {
             lobbyManager = FindObjectOfType<LobbyGameManager>();
@@ -168,9 +170,15 @@ namespace Hawaiian.UI.CharacterSelect
 
                 StartCoroutine(newPlayer.GetComponent<Unit.Unit>().RunDissolveCoroutine(dissolveMaterial));
 
-                _treasureHoardUI.GenerateTreasurePointUI(newPlayer, GetPlayerColour((PlayerColours) config.playerNumber));
-                GameObject reference = Instantiate(_playerTreasurePrefab, _playerTreasureSpawnPoint[config.playerNumber], Quaternion.identity);
-                reference.GetComponent<PlayerTreasure>().PlayerReference = newPlayer.GetComponent<IUnit>();
+
+                if (lobbyManager.CurrentGameMode == GameMode.TreasureHoard)
+                {
+                    _treasureHoardUI.GenerateTreasurePointUI(newPlayer, GetPlayerColour((PlayerColours) config.playerNumber));
+                    GameObject reference = Instantiate(_playerTreasurePrefab, _playerTreasureSpawnPoint[config.playerNumber], Quaternion.identity);
+                    reference.GetComponent<PlayerTreasure>().PlayerReference = newPlayer.GetComponent<IUnit>();
+                    _treasures.Add( reference.GetComponent<PlayerTreasure>());
+                }
+     
                 
                 // Update inventory UI
                 // Find inventory referenced by inventory controller contained by player prefab
@@ -214,6 +222,20 @@ namespace Hawaiian.UI.CharacterSelect
         {
             if (gameManager.Phase != GameManager.GamePhase.GameOver) return;
 
+            if (lobbyManager.CurrentGameMode == GameMode.TreasureHoard)
+            {
+                int i = 0;
+                
+                foreach (var (playerConfig, inventoryController) in inventoryControllers)
+                {
+                    playerConfig.score = _treasures[i].CurrentPoints;
+                    i++;
+                }
+
+                return;
+            }
+            
+            
             foreach (var (playerConfig, inventoryController) in inventoryControllers)
             {
                 playerConfig.score = inventoryController.Score;
