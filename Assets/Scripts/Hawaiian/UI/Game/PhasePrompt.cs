@@ -18,6 +18,8 @@ namespace Hawaiian.UI.Game
         [SerializeField] private float offset;
         [SerializeField] private GameObject restartButton;
 
+        public GameEvent EndingCinematicCompleted;
+        
         private RectTransform rectTransform;
         private Vector3 initialPosition;
 
@@ -77,7 +79,7 @@ namespace Hawaiian.UI.Game
 
             // rectTransform.position = initialPosition;
             yield return new WaitForSeconds(displayTime);
-            
+            EndingCinematicCompleted.Raise();
             // transitionTimer = 0;
             //
             // while (transitionTimer < transitionTime)

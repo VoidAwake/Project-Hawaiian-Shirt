@@ -37,6 +37,8 @@ namespace Hawaiian.Unit
         private bool isSwingingRight;
 
         public bool IsLookingLeft => _isLookingLeft;
+
+        public SpriteRenderer[] Renderers => _renderers;
         
         private void Start()
         {

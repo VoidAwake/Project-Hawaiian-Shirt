@@ -28,7 +28,6 @@ namespace Hawaiian.UI.CharacterSelect
         private bool isExiting;
 
         // Mode select stuff... new properties
-        public enum GameMode { RoundRobbin, ColdPotato, HotPotato, TreasureHoard, DeathMatch, DeathRun, DodgeBall, SittingDucks } // TODO: Possibly replace this enum or move it somewhere more useful
         [Serializable] private struct GameModeString { public GameMode gameMode; public string text; }
         [Serializable] private struct GameModeInt { public GameMode gameMode; public int number; }
 
@@ -53,6 +52,8 @@ namespace Hawaiian.UI.CharacterSelect
         public bool isModeSelect = false; // Denotes what screen we're on
         private Coroutine transitionCoroutine;
 
+
+        public GameMode CurrentGameMode;
         #region MonoBehaviour Functions
 
         private void Start()
@@ -162,6 +163,8 @@ namespace Hawaiian.UI.CharacterSelect
         {
             if (!isExiting)
             {
+                lobbyGameManager.CurrentGameMode = CurrentGameMode;
+                
                 //FindObjectOfType<Transition>().BeginTransition(true, true, buildIndexOfNextScene, true); // This function gets called by button that already loads a scene
                 Destroy(GetComponent<LobbyManager>());
                 Destroy(GetComponent<PlayerInputManager>());
@@ -227,7 +230,7 @@ namespace Hawaiian.UI.CharacterSelect
                 if (counter == 0) menuController.cursor.transform.localPosition = button.transform.localPosition;                   // Set cursor to initial position, for first element
                 button.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = GetGameModeString(gameMode, gameModeNames);     // Set button text to game mode name
                 MainMenuButtonFunctions buttonFunction = button.gameObject.AddComponent<MainMenuButtonFunctions>();                 // Add button function component
-                buttonFunction.SetButtonFunction(0, GetGameModeInt(gameMode, gameModeBuildIndex), true);                            // Set button's function to load build index associated with game mode
+                buttonFunction.SetButtonFunction(0, GetGameModeInt(gameMode, gameModeBuildIndex), true,gameMode);                            // Set button's function to load build index associated with game mode
                 buttonFunction.isModeSelectButton = true;                                                                           // Set button to tell this script to update selection's decription
                 buttons[counter] = button.GetComponent<Button>();
                 counter++;

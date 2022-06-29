@@ -69,6 +69,7 @@ Material:
     - _LineColour: {r: 1, g: 0, b: 0, a: 0}
     - _Line_Colour: {r: 1, g: 0.13088842, b: 0, a: 1}
     - _RendererColor: {r: 1, g: 1, b: 1, a: 1}
+    - _lineColour: {r: 1, g: 0, b: 0, a: 0}
   m_BuildTextureStacks: []
 --- !u!114 &7095089627136583143
 MonoBehaviour:

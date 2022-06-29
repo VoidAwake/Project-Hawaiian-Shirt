@@ -121,6 +121,8 @@ namespace Hawaiian.UI.MainMenu
                     else
                     {
                         buttons[selected].GetComponent<MainMenuButtonFunctions>().CallSerializedFunction();
+                        
+                        
                         disabled = true;
                     }
                     actionA++;

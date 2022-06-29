@@ -18,6 +18,8 @@ namespace Hawaiian.Unit
         
         public void TripUnit(Vector2 direction, float distance);
         public UnitPlayer GetUnit();
+        
+        public Color32 PlayerColour { get; set; }
 
 
     }

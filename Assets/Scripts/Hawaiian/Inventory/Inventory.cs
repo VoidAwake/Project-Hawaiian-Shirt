@@ -35,6 +35,8 @@ namespace Hawaiian.Inventory
                 if (inv[i] != null) continue;
                 
                 inv[i] = item;
+
+
                 currentItemChanged.Invoke();
                 return true;
             }

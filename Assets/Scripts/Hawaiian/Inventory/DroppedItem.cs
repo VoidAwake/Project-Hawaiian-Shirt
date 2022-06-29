@@ -19,8 +19,16 @@ namespace Hawaiian.Inventory
                     return;
                 
                 spriteRenderer.sprite = item.DroppedItemSprite;
+                
+                
+                if (item.IsDetonator)
+                    spriteRenderer.color = Color.red;
+                else
+                    spriteRenderer.color = Color.white;
             }
         }
+
+      
 
         public void OnPickUp()
         {
@@ -36,6 +44,13 @@ namespace Hawaiian.Inventory
             if (spriteRenderer == null) return;
 
             spriteRenderer.sprite = item.DroppedItemSprite;
+
+            if (item.IsDetonator)
+                spriteRenderer.color = Color.red;
+            else
+                spriteRenderer.color = Color.white;
+
+            
         }
     }
 }

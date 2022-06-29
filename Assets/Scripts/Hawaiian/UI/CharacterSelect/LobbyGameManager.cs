@@ -6,7 +6,8 @@ namespace Hawaiian.UI.CharacterSelect
     public class LobbyGameManager : MonoBehaviour
     {
         public PlayerConfig[] playerConfigs;
-
+        public GameMode CurrentGameMode;
+        
         void Start()
         {
             // Ensure that this is the one and only GameManager

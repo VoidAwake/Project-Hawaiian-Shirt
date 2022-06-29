@@ -198,6 +198,9 @@ namespace Hawaiian.Inventory
 
         public void DropItLikeItsHot(Vector2 rad)
         {
+            if (CurrentItem.IsDepositor)
+                return;
+
             DropItem(_inv.invPosition, rad);
         }
 
@@ -209,7 +212,7 @@ namespace Hawaiian.Inventory
             RemoveItemFromIndex(_inv.InvPosition);
         }
 
-        
+
         public void RemoveCurrentItem()
         {
             RemoveItemFromIndex(_inv.InvPosition);
@@ -222,12 +225,16 @@ namespace Hawaiian.Inventory
             for (int i = 0; i < _inv.inv.Length; i++)
             {
                 if (_inv.inv[i] != null)
-                    itemIndexes.Add(i);
+                {
+                    if (!_inv.inv[i].IsDepositor)
+                        itemIndexes.Add(i);
+                }
             }
 
             if (itemIndexes.Count == 0) return;
 
             var randomItemIndex = itemIndexes[UnityEngine.Random.Range(0, itemIndexes.Count)];
+
 
             DropItem(randomItemIndex, dir);
         }
@@ -244,9 +251,11 @@ namespace Hawaiian.Inventory
                 {
                     if (transform.parent.GetChild(i).name == "Item Sprite")
                     {
-                        dp.transform.GetChild(i).GetComponent<SpriteRenderer>().sprite = _inv.inv[invPosition].DroppedItemSprite;
+                        dp.transform.GetChild(i).GetComponent<SpriteRenderer>().sprite =
+                            _inv.inv[invPosition].DroppedItemSprite;
                     }
                 }
+
                 dp.GetComponent<ItemUnit>().OnThrow(dir);
                 _inv.RemoveItemAt(invPosition);
                 hand.sprite = null;

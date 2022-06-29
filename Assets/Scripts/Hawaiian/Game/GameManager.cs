@@ -12,10 +12,6 @@ namespace Hawaiian.Game
 
         private GamePhase phase;
 
-      
-        
-        
-
         public GamePhase Phase
         {
             get => phase;
