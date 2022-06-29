@@ -16,6 +16,7 @@ public class Bomb : Throwable
     public override void OnTargetReached()
     { 
        GameObject bombEffect =  Instantiate(_bombExplosionPrefab, LastPosition,Quaternion.identity);
+        AudioManager.audioManager.PlayWeapon(8);
         base.OnTargetReached();
       
     }

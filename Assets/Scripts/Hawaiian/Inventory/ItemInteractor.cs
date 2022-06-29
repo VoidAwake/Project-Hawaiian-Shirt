@@ -338,12 +338,14 @@ public class ItemInteractor : MonoBehaviour
                     case Throwable:
                         p.GetComponent<T>().Initialise(positions.ToArray(), CurrentItem.ItemSprite,
                             CurrentItem.SticksOnWall);
+                        AudioManager.audioManager.PlayWeapon(9);
                         _removeItem.Raise(_playerReference);
                         break;
                     case Projectile:
                         p.GetComponent<T>().Initialise(_playerReference, _multiShotTargets[index],
                             CurrentItem.SticksOnWall, CurrentItem.ReturnsToPlayer, CurrentItem.IsRicochet,
                             CurrentItem.MaximumBounces);
+                        AudioManager.audioManager.PlayWeapon(10);
                         break;
                 }
 
@@ -362,6 +364,7 @@ public class ItemInteractor : MonoBehaviour
         {
             //Begin melee 
             Vector3 input = GetPlayerInput();
+            AudioManager.audioManager.PlayWeapon(7);
             var angle = Mathf.Atan2(input.y, input.x) * Mathf.Rad2Deg;
             var direction = input;
             InstantiateMeleeIndicator(angle, direction);

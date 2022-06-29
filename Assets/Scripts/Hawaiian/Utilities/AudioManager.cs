@@ -44,8 +44,15 @@ public class AudioManager : MonoBehaviour
     {
         uiSfx.PlayOneShot(sfxClips[0]);
     }
-    void PlayWeapon(AudioClip clip)
+
+   public void PlayerTrip()
     {
-        sfx.PlayOneShot(clip);
+        sfx.PlayOneShot(sfxClips[6]);
     }
+    public void PlayWeapon(int clipIndex)
+    {
+        sfx.PlayOneShot(sfxClips[clipIndex]);
+    }
+
+    
 }
