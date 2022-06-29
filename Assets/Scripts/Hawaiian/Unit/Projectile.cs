@@ -172,7 +172,9 @@ namespace Hawaiian.Unit
             if (other.gameObject.GetComponent<Projectile>()) return;
             if (other.gameObject.GetComponent<ItemUnit>()) return;
             if (other.gameObject.GetComponent<ShieldCollider>()) return;
-        
+            if (other.gameObject.GetComponent<ShieldCollider>()) return;
+            if (other.gameObject.GetComponent<AvoidHit>()) return;
+
             Debug.Log(!other.gameObject.GetComponent<UnitPlayer>() + " state of the unit player");
             Debug.Log(!other.gameObject.GetComponent<Projectile>() + " state of the projectile");
             Debug.Log(!other.gameObject.GetComponent<ItemUnit>() + " state of the item unit");

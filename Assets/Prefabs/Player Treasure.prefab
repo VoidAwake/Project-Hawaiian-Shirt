@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8183905602645265150}
   - component: {fileID: 248960936639406416}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Slider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -102,7 +102,7 @@ GameObject:
   - component: {fileID: 8671976946045029199}
   - component: {fileID: 9161697470358304603}
   - component: {fileID: 5533978883705790684}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Fill
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -178,7 +178,7 @@ GameObject:
   - component: {fileID: 5895905763057083858}
   - component: {fileID: 3768602577353680668}
   - component: {fileID: 63554347686982444}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Innter
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -253,7 +253,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3593141695739620615}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Fill Area
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -296,6 +296,7 @@ GameObject:
   - component: {fileID: 4821606711847235003}
   - component: {fileID: 6044853708255425988}
   - component: {fileID: 2653948153596301405}
+  - component: {fileID: -5345530330210007769}
   m_Layer: 0
   m_Name: Player Treasure
   m_TagString: Untagged
@@ -312,7 +313,7 @@ Transform:
   m_GameObject: {fileID: 4821606711847234976}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 9058617675111983578}
@@ -454,19 +455,7 @@ MonoBehaviour:
   token: {fileID: 11400000, guid: e8b2231db87fad546af457281ce33b93, type: 2}
   response:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 4821606711847235003}
-        m_TargetAssemblyTypeName: Hawaiian.Unit.PlayerTreasure, Hawaiian.Inventory
-        m_MethodName: SetIsBeingDetonated
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &2653948153596301405
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -495,6 +484,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &-5345530330210007769
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4821606711847234976}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6af930e3a4326804390fe0990d0ed5be, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5499244656064920606
 GameObject:
   m_ObjectHideFlags: 0
@@ -507,7 +508,7 @@ GameObject:
   - component: {fileID: 3234841433070647466}
   - component: {fileID: 3673920956964474137}
   - component: {fileID: 3128035803235835730}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -607,7 +608,7 @@ GameObject:
   - component: {fileID: 5173518760144270318}
   - component: {fileID: 5496653055141807417}
   - component: {fileID: 7106637613371092607}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Outer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -683,7 +684,7 @@ GameObject:
   - component: {fileID: 9128005109048571298}
   - component: {fileID: 6710268872462945831}
   - component: {fileID: 4412265737979134255}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Center
   m_TagString: Untagged
   m_Icon: {fileID: 0}

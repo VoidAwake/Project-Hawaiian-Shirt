@@ -12,6 +12,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 namespace Hawaiian.UI.CharacterSelect
 {
@@ -45,7 +46,7 @@ namespace Hawaiian.UI.CharacterSelect
         [SerializeField] private GameEvent playersJoined;
         [SerializeField] private List<SpawnPoint> spawnPoints;
         [SerializeField] private GameObject _playerTreasurePrefab;
-        [SerializeField] private Vector3[] _playerTreasureSpawnPoint;
+        [SerializeField] private Transform[] _playerTreasureSpawnPoint;
 
         [SerializeField] private GameObject _spawnEffectPrefab;
 
@@ -174,9 +175,10 @@ namespace Hawaiian.UI.CharacterSelect
                 if (lobbyManager.CurrentGameMode == GameMode.TreasureHoard)
                 {
                     _treasureHoardUI.GenerateTreasurePointUI(newPlayer, GetPlayerColour((PlayerColours) config.playerNumber));
-                    GameObject reference = Instantiate(_playerTreasurePrefab, _playerTreasureSpawnPoint[config.playerNumber], Quaternion.identity);
+                    GameObject reference = Instantiate(_playerTreasurePrefab, _playerTreasureSpawnPoint[config.playerNumber].position, Quaternion.identity);
                     reference.GetComponent<PlayerTreasure>().PlayerReference = newPlayer.GetComponent<IUnit>();
                     _treasures.Add( reference.GetComponent<PlayerTreasure>());
+                    reference.GetComponent<SpriteRenderer>().color = GetPlayerColour((PlayerColours) config.playerNumber);
                 }
      
                 

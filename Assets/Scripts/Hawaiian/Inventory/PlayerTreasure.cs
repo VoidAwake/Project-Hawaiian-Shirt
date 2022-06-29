@@ -2,15 +2,9 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Cryptography.X509Certificates;
-using Codice.Client.BaseCommands;
-using Codice.CM.WorkspaceServer.Tree;
 using Hawaiian.Inventory;
-using Hawaiian.Utilities;
-using PlasticGui.Configuration.CloudEdition.Welcome;
 using UnityEngine;
 using UnityEngine.UI;
-using Random = System.Random;
 
 namespace Hawaiian.Unit
 {
@@ -210,11 +204,7 @@ namespace Hawaiian.Unit
 
         public void SetIsBeingDetonated()
         {
-            if (IsBeingDetonated == true)
-            {
-                
-            }
-            
+
             IsBeingDetonated = true;
         }
 
@@ -272,6 +262,8 @@ namespace Hawaiian.Unit
             
             DetonatorReference = reference.Item2;
             DetonatorReference.Treasure = this;
+            IsBeingDetonated = true;
+
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Hawaiian.UI.CharacterSelect;
 using Hawaiian.UI.MainMenu;
 using UI.Core;
 using UnityEngine;
@@ -12,6 +13,9 @@ namespace Hawaiian.UI.Game
         [SerializeField] private Transform uiParent;
         [SerializeField] private Transform uiParentForFourPlayers;
         [SerializeField] private GameObject tutorialDialoguePrefab;
+        [SerializeField] private GameObject _treasureHoardTutorialDialoguePrefab;
+        [SerializeField] private GameObject _treasureHoardControlInstructionsPrefab;
+
         [SerializeField] private GameObject controlsInstructionsDialoguePrefab;
         [SerializeField] private MainMenuController mainMenuController;
         [SerializeField] private MainMenuButtonFunctions pauseMenuController;
@@ -62,10 +66,17 @@ namespace Hawaiian.UI.Game
 
         private void DisplayControls()
         {
+       
             tutorialBackground.SetActive(true);
             
+            if (FindObjectOfType<LobbyGameManager>().CurrentGameMode == GameMode.TreasureHoard)
+            {
+                Instantiate(_treasureHoardControlInstructionsPrefab, transform.parent);
+                Instantiate(_treasureHoardTutorialDialoguePrefab, transform.parent);
+                return;
+            }
+            
             Instantiate(controlsInstructionsDialoguePrefab, transform.parent);
-
             Instantiate(tutorialDialoguePrefab, transform.parent);
         }
     }

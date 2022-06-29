@@ -61,10 +61,13 @@ namespace Hawaiian.Inventory
                 {
                     if (listener.gameObject.GetComponent<PlayerTreasure>().DetonatorReference != null)
                         CanPlaceDetonator = false;
-                }
+                    else
+                        CanPlaceDetonator = true;
+
+                }  else
+                    CanPlaceDetonator = false;
            
-                else
-                    CanPlaceDetonator = true;
+             
             }
         }
         
@@ -86,10 +89,11 @@ namespace Hawaiian.Inventory
                 {
                     if (listener.gameObject.GetComponent<PlayerTreasure>().DetonatorReference != null)
                         CanPlaceDetonator = false;
-                }
-           
-                else
-                    CanPlaceDetonator = true;
+                    else
+                        CanPlaceDetonator = true;
+
+                }  else
+                    CanPlaceDetonator = false;
             }
         }
 
@@ -112,10 +116,12 @@ namespace Hawaiian.Inventory
                 {
                     if (listener.gameObject.GetComponent<PlayerTreasure>().DetonatorReference != null)
                         CanPlaceDetonator = false;
+                    else
+                        CanPlaceDetonator = true;
+
                 }
-           
                 else
-                    CanPlaceDetonator = true;
+                    CanPlaceDetonator = false;
             }
         }
     }

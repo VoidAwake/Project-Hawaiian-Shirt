@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 1016610830817855855}
   - component: {fileID: 979334200053766057}
   - component: {fileID: 5424057397593351752}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Held Depositor Item
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -62,9 +62,12 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  _detonatorPrefab: {fileID: 0}
+  DetonateBase: {fileID: 0}
   destroyed:
     m_PersistentCalls:
       m_Calls: []
+  IsDetonator: 0
 --- !u!58 &979334200053766057
 CircleCollider2D:
   m_ObjectHideFlags: 0

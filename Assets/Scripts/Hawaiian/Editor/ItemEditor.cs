@@ -219,6 +219,9 @@ namespace Hawaiian.Editor
             EditorGUILayout.Space();
             EditorGUILayout.PropertyField(IsRicochet,
                 new GUIContent("Is Ricochet", "Refers to if the item will bounce of wall"));
+            EditorGUILayout.Space();
+            EditorGUILayout.PropertyField(KnockbackDistance, new GUIContent("Knockback Distance"));
+            
 
             if (item.IsMultiShot)
             {

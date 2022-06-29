@@ -51,7 +51,7 @@ public class Throwable : ItemBehaviour
 
         while (!startingPosition.Equals(endPosition))
         {
-            startingPosition = Vector2.Lerp(startingPosition, endPosition, Time.deltaTime);
+            startingPosition = Vector2.Lerp(startingPosition, endPosition,_speed);
             positions.Add(startingPosition);
             yield return null;
         }
@@ -95,6 +95,7 @@ public class Throwable : ItemBehaviour
         if (other.gameObject.GetComponent<Projectile>()) return;
         if (other.gameObject.GetComponent<ItemUnit>()) return;
         if (other.gameObject.GetComponent<ShieldCollider>()) return;
+        if (other.gameObject.GetComponent<AvoidHit>()) return;
 
         Debug.Log(!other.gameObject.GetComponent<UnitPlayer>() + " state of the unit player");
         Debug.Log(!other.gameObject.GetComponent<Projectile>() + " state of the projectile");
