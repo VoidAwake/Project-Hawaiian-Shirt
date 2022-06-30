@@ -1,4 +1,4 @@
-using System;
+    using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,7 +12,7 @@ namespace Hawaiian.Unit
     {
         [SerializeField] private GameObject _bombEffectPrefab;
         [SerializeField] private GameObject _defuserIndicator;
-        [SerializeField] private Slider _defuserSlider;
+        [SerializeField] private Slider _defuserSlider;     
 
         [SerializeField] private float defuseTarget;
         [SerializeField] private float defuseTimer;
@@ -21,13 +21,30 @@ namespace Hawaiian.Unit
         [SerializeField] private GameObject DroppedItemPrefab;
         public List<Item> _items = new List<Item>();
 
-        public Detonator DetonatorReference;
+
+        private Detonator _detonatorReference;
+        public Detonator DetonatorReference
+        {
+            get => _detonatorReference;
+            set
+            {
+                _detonatorReference = value;
+
+                if (_detonatorReference == null)
+                    IsBeingDetonated = false;
+                    
+            }
+        }
         public IUnit PlayerReference { get; set; }
         [SerializeField] private IUnitIntGameEvent UpdatePoint;
 
         public IUnitIntGameEvent AddPoints;
 
+
+
+
         public bool IsBeingDetonated;
+       
 
         private float _currentDetonationTime;
 
@@ -262,7 +279,7 @@ namespace Hawaiian.Unit
             
             DetonatorReference = reference.Item2;
             DetonatorReference.Treasure = this;
-            IsBeingDetonated = true;
+            IsBeingDetonated = true;   
 
         }
     }
