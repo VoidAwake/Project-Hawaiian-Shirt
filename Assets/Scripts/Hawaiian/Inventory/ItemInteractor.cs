@@ -10,6 +10,10 @@ using Cursor = Hawaiian.Inventory.Cursor;
 [RequireComponent(typeof(InventoryController))]
 public class ItemInteractor : MonoBehaviour
 {
+    private static readonly int Rate = Shader.PropertyToID("_Rate");
+    private static readonly int LineColour = Shader.PropertyToID("_lineColour");
+
+
     [Header("Components")] [SerializeField]
     private LineRenderer _renderer;
 
@@ -21,7 +25,8 @@ public class ItemInteractor : MonoBehaviour
     [SerializeField] private UnitAnimator _animator;
     [SerializeField] private IUnitGameEvent _parryOccured;
     [SerializeField] private GameObject shieldColliderPrefab;
-
+    [SerializeField] private LayerMask _raycastMask;
+    
     //Components
     private InventoryController _controller;
     private List<LineRenderer> _lineRenderers;
@@ -36,6 +41,8 @@ public class ItemInteractor : MonoBehaviour
     private float _offset = 1.1f;
     private float _slashCooldown;
     private float _parryTimer;
+
+    private bool collisionFlag = false;
     private Shield _shieldReference;
 
     [SerializeField] private IUnitGameEvent _removeItem;
@@ -46,7 +53,7 @@ public class ItemInteractor : MonoBehaviour
     public bool IsAttacking => _isHoldingAttack;
 
     public UnitPlayer PlayerReference => _playerReference;
-    
+
     public Item CurrentItem => _controller.CurrentItem;
 
     public GameObject ProjectileReference => _projectileReference;
@@ -63,6 +70,7 @@ public class ItemInteractor : MonoBehaviour
 
     public bool signal = false;
 
+
     #region Monobehaviour
 
     private void Awake()
@@ -74,6 +82,13 @@ public class ItemInteractor : MonoBehaviour
         _lineRenderers = new List<LineRenderer>();
         // TODO: Unlisten?
         _controller.currentItemChanged.AddListener(OnCurrentItemChanged);
+       
+    }
+
+    private void OnDestroy()
+    {
+        _playerReference.GetPlayerInput().actions["Attack"].performed -= StartAttack;
+        _playerReference.GetPlayerInput().actions["Attack"].canceled -= StartAttack;
     }
 
     private void FixedUpdate()
@@ -83,8 +98,20 @@ public class ItemInteractor : MonoBehaviour
             if (_controller.CurrentItem.Type == ItemType.Projectile)
                 UpdateLineRenderers();
             else
+            {
                 _renderer = BezierCurve.DrawQuadraticBezierCurve(_renderer, transform.position,
                     transform.position + new Vector3(0.5f, 2, 0), _cursor.transform.position);
+
+                Gradient gradient = new Gradient();
+                gradient.SetKeys(
+                    new GradientColorKey[]
+                    {
+                        new GradientColorKey(_playerReference.PlayerColour, 0.0f),
+                        new GradientColorKey(_playerReference.PlayerColour, 1.0f)
+                    }, new GradientAlphaKey[] {new GradientAlphaKey(1, 0.0f), new GradientAlphaKey(1, 1.0f)});
+                _renderer.colorGradient = gradient;
+            }
+
 
             if (Math.Abs(_cursor.CurrentRad - _cursor.MaxRadius) > 0.01f)
             {
@@ -171,7 +198,7 @@ public class ItemInteractor : MonoBehaviour
 
         switch (CurrentItem.Type)
         {
-            case ItemType.Throwable:
+            case ItemType.Throwable:    
                 UseItem<Throwable>(projectiles);
                 break;
             case ItemType.Projectile:
@@ -221,12 +248,11 @@ public class ItemInteractor : MonoBehaviour
 
         #endregion
 
-      
 
         #region MeleeAttack
 
         if (value.canceled) return;
-        
+
         if (CurrentItem.Type == ItemType.Shield)
         {
             UseItem<Shield>();
@@ -276,8 +302,11 @@ public class ItemInteractor : MonoBehaviour
 
         if (CurrentItem.Type == ItemType.Shield)
         {
-            _shieldReference =  gameObject.AddComponent<Shield>();
-            _shieldReference.Initialise(CurrentItem.ParryWindow, new[]{CurrentItem.ParryPercentageUpperLimit, CurrentItem.ParryPercentageLowerLimit}, _handHelder,new[]{CurrentItem.ShieldDown,CurrentItem.ShieldUp}, _parryOccured, shieldColliderPrefab,CurrentItem.TimeTillParry, _playerReference, _cursor.transform);
+            _shieldReference = gameObject.AddComponent<Shield>();
+            _shieldReference.Initialise(CurrentItem.ParryWindow,
+                new[] {CurrentItem.ParryPercentageUpperLimit, CurrentItem.ParryPercentageLowerLimit}, _handHelder,
+                new[] {CurrentItem.ShieldDown, CurrentItem.ShieldUp}, _parryOccured, shieldColliderPrefab,
+                CurrentItem.TimeTillParry, _playerReference, _cursor.transform);
         }
         else if (_shieldReference != null)
             _shieldReference.RemoveShieldComponent();
@@ -289,6 +318,8 @@ public class ItemInteractor : MonoBehaviour
 
     private void UseItem<T>(List<GameObject> projectiles = null) where T : ItemBehaviour
     {
+        collisionFlag = false;
+
         List<Vector2> positions = new List<Vector2>();
 
         for (int i = 0; i < _renderer.positionCount; i++)
@@ -308,15 +339,15 @@ public class ItemInteractor : MonoBehaviour
                     case Throwable:
                         p.GetComponent<T>().Initialise(positions.ToArray(), CurrentItem.ItemSprite,
                             CurrentItem.SticksOnWall);
+                        AudioManager.audioManager.PlayWeapon(9);
                         _removeItem.Raise(_playerReference);
                         break;
                     case Projectile:
                         p.GetComponent<T>().Initialise(_playerReference, _multiShotTargets[index],
                             CurrentItem.SticksOnWall, CurrentItem.ReturnsToPlayer, CurrentItem.IsRicochet,
                             CurrentItem.MaximumBounces);
+                        AudioManager.audioManager.PlayWeapon(10);
                         break;
-                  
-
                 }
 
                 if (p.GetComponent<HitUnit>())
@@ -334,17 +365,15 @@ public class ItemInteractor : MonoBehaviour
         {
             //Begin melee 
             Vector3 input = GetPlayerInput();
+            AudioManager.audioManager.PlayWeapon(7);
             var angle = Mathf.Atan2(input.y, input.x) * Mathf.Rad2Deg;
             var direction = input;
             InstantiateMeleeIndicator(angle, direction);
         }
         else if (CurrentItem.Type == ItemType.Shield && _shieldReference.CanParry())
-           _shieldReference.LiftShield();
-
+            _shieldReference.LiftShield();
     }
 
-    
-    
 
     private void InstantiateMeleeIndicator(float angle, Vector3 direction)
     {
@@ -371,14 +400,6 @@ public class ItemInteractor : MonoBehaviour
 
         var position = new Vector3(transform.position.x, transform.position.y + 0.5f, transform.position.z);
 
-
-        //if (_playerReference.GetPlayerInput().currentControlScheme == "Gamepad")
-        //{
-        //    if (_isJoystickNeutral) _rotation = _animator.IsLookingLeft ? Vector2.left : Vector2.right;
-        //}
-
-        //playerInput = _rotation;
-
         Vector3 prevInput = (_cursor.transform.localPosition - Vector3.up * 0.5f);
         playerInput = prevInput.magnitude == 0 ? Vector2.right.normalized : prevInput.normalized;
 
@@ -401,6 +422,9 @@ public class ItemInteractor : MonoBehaviour
 
             renderer.material = Resources.Load<Material>("Sprites/lineRendererMaterial");
 
+            if (CurrentItem.Type == ItemType.Projectile)
+                renderer.material.SetFloat(Rate, renderer.material.GetFloat(Rate) * -1);
+
             renderer.startWidth = 0.2f;
             renderer.endWidth = 0.2f;
 
@@ -408,7 +432,8 @@ public class ItemInteractor : MonoBehaviour
             gradient.SetKeys(
                 new GradientColorKey[]
                 {
-                    new GradientColorKey(Color.red, 0.0f), new GradientColorKey(Color.red, 1.0f)
+                    new GradientColorKey(_playerReference.PlayerColour, 0.0f),
+                    new GradientColorKey(_playerReference.PlayerColour, 1.0f)
                 }, new GradientAlphaKey[] {new GradientAlphaKey(1, 0.0f), new GradientAlphaKey(1, 1.0f)});
 
             renderer.colorGradient = gradient;
@@ -418,8 +443,12 @@ public class ItemInteractor : MonoBehaviour
     // TODO: Misleading name, also calculates the _multiShotTargets 
     private void UpdateLineRenderers()
     {
-        var direction = (_cursor.transform.position - transform.position).normalized;
+        if (collisionFlag)
+            return;
 
+        var direction = (_cursor.transform.position - transform.position).normalized;
+        
+     
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
 
         if (angle < 0) angle = 360 - angle * -1;
@@ -440,8 +469,8 @@ public class ItemInteractor : MonoBehaviour
                 var y = Mathf.Sin(radians);
                 var targetPos = transform.position + new Vector3(x, y, 0f) * _cursor.CurrentRad;
 
+
                 Vector3[] otherPositions = new[] {targetPos, (_playerReference.transform.position + Vector3.up * 0.5f)};
-                List<Vector3> updatedPositions = new List<Vector3>();
 
 
                 _multiShotTargets[i] = targetPos;
@@ -467,9 +496,12 @@ public class ItemInteractor : MonoBehaviour
         return true;
     }
 
-
+    // TODO: Why is this here when all the other inputs are handled by InventoryController?
     public void OnDrop()
     {
+        // Prevent items being dropped while attacking
+        if (GetComponent<ItemInteractor>().IsAttacking) return;
+        
         //_controller.DropItLikeItsHot(_rotation);
         Vector3 prevInput = (_cursor.transform.localPosition - Vector3.up * 0.5f);
         Vector3 playerInput = prevInput.magnitude == 0 ? Vector2.right.normalized : prevInput.normalized;

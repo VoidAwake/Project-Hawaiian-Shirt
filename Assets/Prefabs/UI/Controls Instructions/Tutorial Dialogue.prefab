@@ -661,6 +661,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   manager: {fileID: 11400000, guid: b205461929d08b7439e72030dc234753, type: 2}
+  TutorialClosedEvent: {fileID: 11400000, guid: 189e0677d300e0e4d902c66aa79c563a, type: 2}
 --- !u!1 &4838262430839265525
 GameObject:
   m_ObjectHideFlags: 0

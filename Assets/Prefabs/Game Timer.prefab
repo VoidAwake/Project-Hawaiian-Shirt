@@ -46,69 +46,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cc2945ab51b4b0c88c54a3177efb799, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startTime: 120
+  startTime: 10
   gameTimeScale: {fileID: 11400000, guid: a7999ebb747644c42b10ad44fd3b305b, type: 2}
   gameTime: {fileID: 11400000, guid: 0c73cc340ca261c4fb0bb0fd9ce5302f, type: 2}
   startOnAwake: 0
   gameManager: {fileID: 11400000, guid: c305914e6d352644190ef7ee43a51bbd, type: 2}
-  debugEndGameAction:
-    m_Name: Debug End Game
-    m_Type: 0
-    m_ExpectedControlType: 
-    m_Id: eaf26d99-ca27-4ae2-9db0-811b092e4a62
-    m_Processors: 
-    m_Interactions: 
-    m_SingletonActionBindings:
-    - m_Name: Two Modifiers
-      m_Id: 8100e80d-cef1-4568-b6e4-49f1fa2471df
-      m_Path: TwoModifiers
-      m_Interactions: 
-      m_Processors: 
-      m_Groups: 
-      m_Action: Debug End Game
-      m_Flags: 4
-    - m_Name: modifier1
-      m_Id: cc908090-68cd-4a41-bdb0-f315aa6ab71a
-      m_Path: <Gamepad>/select
-      m_Interactions: 
-      m_Processors: 
-      m_Groups: 
-      m_Action: Debug End Game
-      m_Flags: 8
-    - m_Name: modifier2
-      m_Id: ad4d08c9-a9c2-428d-9fc9-3cf0cb5fb46d
-      m_Path: <Gamepad>/start
-      m_Interactions: 
-      m_Processors: 
-      m_Groups: 
-      m_Action: Debug End Game
-      m_Flags: 8
-    - m_Name: binding
-      m_Id: 252c056c-b75e-40cf-bd8c-d236f880d724
-      m_Path: <Gamepad>/buttonEast
-      m_Interactions: 
-      m_Processors: 
-      m_Groups: 
-      m_Action: Debug End Game
-      m_Flags: 8
-    m_Flags: 0
-  testAction:
-    m_Name: Test
-    m_Type: 0
-    m_ExpectedControlType: 
-    m_Id: bad14d6a-7dc1-4fce-a22f-cff13afcd6a9
-    m_Processors: 
-    m_Interactions: 
-    m_SingletonActionBindings:
-    - m_Name: 
-      m_Id: 698f05a9-8665-40b5-be00-5ba9ceadfc8e
-      m_Path: <Gamepad>/buttonNorth
-      m_Interactions: 
-      m_Processors: 
-      m_Groups: 
-      m_Action: Test
-      m_Flags: 0
-    m_Flags: 0
+  GameEndedOccured: {fileID: 11400000, guid: 3f110c950f25a164b8bce56a2f06f376, type: 2}
 --- !u!114 &3920133195234102886
 MonoBehaviour:
   m_ObjectHideFlags: 0

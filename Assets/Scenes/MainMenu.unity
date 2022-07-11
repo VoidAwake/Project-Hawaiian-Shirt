@@ -448,6 +448,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 21df38d2562da874b8d188338b2c2707, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  move: 0
   buttons:
   - {fileID: 330319612}
   - {fileID: 1335071126}
@@ -457,6 +458,7 @@ MonoBehaviour:
   - {fileID: -1859449190, guid: a3627312065ae844b926aec3d48b7f5a, type: 3}
   - {fileID: 1988936865, guid: a3627312065ae844b926aec3d48b7f5a, type: 3}
   disabled: 0
+  rapidInput: 0
   pausePlayer: {fileID: 0}
 --- !u!114 &632448060
 MonoBehaviour:
@@ -1691,6 +1693,34 @@ PrefabInstance:
       propertyPath: m_Name
       value: AudioManager
       objectReference: {fileID: 0}
+    - target: {fileID: 8479217165420016019, guid: 17fc3a0c0aeba0948ae112a58a115d49, type: 3}
+      propertyPath: sfxClips.Array.size
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 8479217165420016019, guid: 17fc3a0c0aeba0948ae112a58a115d49, type: 3}
+      propertyPath: sfxClips.Array.data[5]
+      value: 
+      objectReference: {fileID: 8300000, guid: 13eba58a03aee5a498657c27bbc379da, type: 3}
+    - target: {fileID: 8479217165420016019, guid: 17fc3a0c0aeba0948ae112a58a115d49, type: 3}
+      propertyPath: sfxClips.Array.data[6]
+      value: 
+      objectReference: {fileID: 8300000, guid: ec9b8b8e8cb72f34289b6c0ab3461ca1, type: 3}
+    - target: {fileID: 8479217165420016019, guid: 17fc3a0c0aeba0948ae112a58a115d49, type: 3}
+      propertyPath: sfxClips.Array.data[7]
+      value: 
+      objectReference: {fileID: 8300000, guid: 784c3eac6a0479643a68c5bb8355c92f, type: 3}
+    - target: {fileID: 8479217165420016019, guid: 17fc3a0c0aeba0948ae112a58a115d49, type: 3}
+      propertyPath: sfxClips.Array.data[8]
+      value: 
+      objectReference: {fileID: 8300000, guid: dfe1f13ac179db34298e22b054775fe8, type: 3}
+    - target: {fileID: 8479217165420016019, guid: 17fc3a0c0aeba0948ae112a58a115d49, type: 3}
+      propertyPath: sfxClips.Array.data[9]
+      value: 
+      objectReference: {fileID: 8300000, guid: 6e108782c97061047b71e2f7d4383acc, type: 3}
+    - target: {fileID: 8479217165420016019, guid: 17fc3a0c0aeba0948ae112a58a115d49, type: 3}
+      propertyPath: sfxClips.Array.data[10]
+      value: 
+      objectReference: {fileID: 8300000, guid: 3434b141b1bf6e0439c14444b440ffc8, type: 3}
     - target: {fileID: 8479217165420016020, guid: 17fc3a0c0aeba0948ae112a58a115d49, type: 3}
       propertyPath: m_RootOrder
       value: 4

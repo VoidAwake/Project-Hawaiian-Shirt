@@ -47,26 +47,35 @@ namespace Hawaiian.PositionalEvents
 
         private void OnTriggerEnter2D(Collider2D col)
         {
-            var listener = col.GetComponent<PositionalEventListener>();
+            var listeners = col.GetComponents<PositionalEventListener>();
 
-            if (listener == null) return;
-
-            if (listener.token != token) return;
             
-            RegisterListener(listener);
+            foreach(var listener in listeners)
+            {
+                if (listener == null) continue;
+
+                if (listener.token != token) continue;
+            
+                RegisterListener(listener);
+            }
+      
         }
 
         private void OnTriggerExit2D(Collider2D other)
         {
-            var listener = other.GetComponent<PositionalEventListener>();
+            var listeners = other.GetComponents<PositionalEventListener>();
 
-            if (listener == null) return;
+            foreach(var listener in listeners)
+            {
+                if (listener == null) continue;
 
-            if (listener.token != token) return;
+                if (listener.token != token) continue;
             
-            if (!interactablesInRange.Contains(listener)) return;
+                if (!interactablesInRange.Contains(listener)) continue;
             
-            UnregisterListener(listener);
+                UnregisterListener(listener);
+            }
+       
         }
 
         private PositionalEventListener NearestInteractable()

@@ -25,8 +25,8 @@ MonoBehaviour:
   ProbabilityRangeFrom: 0
   ProbabilityRangeTo: 60
   ItemDamage: 10
-  DrawSpeed: 15
-  DrawDistance: 5
+  DrawSpeed: 80
+  DrawDistance: 8
   SticksOnWall: 0
   ReturnsToPlayer: 0
   IsMultiShot: 0
@@ -34,8 +34,11 @@ MonoBehaviour:
   IsRicochet: 0
   MaximumBounces: 0
   ParryWindow: 0
-  ParryPercentage: 0
+  ParryPercentageUpperLimit: 0
+  ParryPercentageLowerLimit: 0
   TimeTillParry: 0
+  ShieldUp: {fileID: 0}
+  ShieldDown: {fileID: 0}
   AttackRate: 0
   KnockbackDistance: 0
   IsMainObjective: 0
@@ -45,3 +48,5 @@ MonoBehaviour:
   PlacementIcon: {fileID: 0}
   TrapInstance: {fileID: 0}
   IsKey: 0
+  IsDetonator: 0
+  IsDepositor: 0

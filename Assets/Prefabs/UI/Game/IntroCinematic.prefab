@@ -1518,6 +1518,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   LevelPreviewCompleted: {fileID: 0}
   GameStarted: {fileID: 11400000, guid: e4c536f8917779747896d7451a944c3b, type: 2}
+  StartPlayerSpawns: {fileID: 11400000, guid: 1382dd088fa19364096849dc373d148c, type: 2}
   _mainCamera: {fileID: 0}
   _parent: {fileID: 7204079918529730857}
   _camera: {fileID: 7204079918996316421}
@@ -1531,7 +1532,7 @@ MonoBehaviour:
   _outroWaypoint: {fileID: 7204079918816541280}
   _step: 4
   _sizeStep: 4
-  _endSize: 10
+  _endSize: 12
   _countdown: {fileID: 1557256650}
 --- !u!114 &512334085
 MonoBehaviour:

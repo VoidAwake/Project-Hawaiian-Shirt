@@ -156,6 +156,9 @@ namespace Hawaiian.Inventory
 
         public void DropItLikeItsHot(Vector2 rad)
         {
+            if (CurrentItem.IsDepositor)
+                return;
+
             DropItem(inv.invPosition, rad);
         }
 
@@ -166,7 +169,7 @@ namespace Hawaiian.Inventory
 
             RemoveItemFromIndex(inv.InvPosition);
         }
-        
+
         public void RemoveCurrentItem()
         {
             RemoveItemFromIndex(inv.InvPosition);
@@ -179,12 +182,16 @@ namespace Hawaiian.Inventory
             for (int i = 0; i < inv.inv.Length; i++)
             {
                 if (inv.inv[i] != null)
-                    itemIndexes.Add(i);
+                {
+                    if (!inv.inv[i].IsDepositor)
+                        itemIndexes.Add(i);
+                }
             }
 
             if (itemIndexes.Count == 0) return;
 
             var randomItemIndex = itemIndexes[UnityEngine.Random.Range(0, itemIndexes.Count)];
+
 
             DropItem(randomItemIndex, dir);
         }
@@ -196,6 +203,16 @@ namespace Hawaiian.Inventory
             GameObject droppedItemObject = Instantiate(droppedItemPrefab, transform.position + Vector3.up * 0.5f, quaternion.identity);
             
             droppedItemObject.GetComponent<DroppedItem>().Item = inv.inv[invPosition];
+            
+            // I'm so sorry
+            for (int i = 0; i < droppedItemObject.transform.childCount; i++)
+            {
+                if (transform.parent.GetChild(i).name == "Item Sprite")
+                {
+                    droppedItemObject.transform.GetChild(i).GetComponent<SpriteRenderer>().sprite =
+                        inv.inv[invPosition].DroppedItemSprite;
+                }
+            }
             
             droppedItemObject.GetComponent<ItemUnit>().OnThrow(dir);
             inv.RemoveItemAt(invPosition);

@@ -10,6 +10,8 @@ namespace Hawaiian.Game
         
         public PlayerConfig[] playerConfigs;
 
+        public GameMode CurrentGameMode;
+
         public PlayerConfig AddPlayer(PlayerInput playerInput)
         {
             for (int i = 0; i < maxPlayers; i++)

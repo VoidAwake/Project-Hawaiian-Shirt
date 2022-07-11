@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Hawaiian.Inventory;
@@ -16,16 +17,29 @@ namespace Hawaiian.Game
         [SerializeField] private List<SpawnPoint> spawnPoints;
         [SerializeField] private PlayerConfigManager playerConfigManager;
         [SerializeField] private BaseGameEvent<Inventory.Inventory> addedInventory;
+        
+        [SerializeField] private Item _depositor;
+        [SerializeField] private Item _detonator;
+        [SerializeField] private GameObject _playerTreasurePrefab;
+        [SerializeField] private Transform[] _playerTreasureSpawnPoint;
+        [SerializeField] private PlayerColors playerColors;
 
         public UnityEvent winningPlayersChanged = new();
         
         private Dictionary<PlayerConfig, InventoryController> inventoryControllers = new();
 
         private PlayerInputManager inputManager;
+        
+        private List<PlayerInput> _allPlayers = new List<PlayerInput>();
+        // TODO: Invert dependency.
+        // private TreasureHoardUI _treasureHoardUI;
+        public List<PlayerTreasure> _treasures = new List<PlayerTreasure>();
 
         private void Start()
         {
             inputManager = GetComponent<PlayerInputManager>();
+            
+            // _treasureHoardUI = FindObjectOfType<TreasureHoardUI>();
 
             if (inputManager == null) return;
 
@@ -44,28 +58,62 @@ namespace Hawaiian.Game
 
         public void BeginSpawn()
         {
-            if (playerConfigManager == null) return;
+            StartCoroutine(BeginSpawnCoroutine());
+        }
+        
+        private IEnumerator BeginSpawnCoroutine() {
+            if (playerConfigManager == null) yield break;
             
             foreach (PlayerConfig playerConfig in playerConfigManager.playerConfigs)
             {
-                if (!playerConfig.IsPlayer) continue;
-                
-                PlayerInput playerInput = inputManager.JoinPlayer(
-                    playerConfig.playerIndex,
-                    playerConfig.splitScreenIndex,
-                    playerConfig.controlScheme,
-                    playerConfig.deviceIds.Select(InputSystem.GetDeviceById).ToArray()
-                );
-
-                OnPlayerJoined(playerInput, playerConfig);
+                yield return StartCoroutine(SpawnPlayerCoroutine(playerConfig));
+                // TODO: Magic number.
+                yield return new WaitForSeconds(0.4f);
             }
+        }
+
+        private IEnumerator SpawnPlayerCoroutine(PlayerConfig playerConfig)
+        {
+            if (!playerConfig.IsPlayer) yield break;
+            
+            PlayerInput playerInput = inputManager.JoinPlayer(
+                playerConfig.playerIndex,
+                playerConfig.splitScreenIndex,
+                playerConfig.controlScheme,
+                playerConfig.deviceIds.Select(InputSystem.GetDeviceById).ToArray()
+            );
+            
+
+            if (playerConfigManager.CurrentGameMode == GameMode.TreasureHoard)
+            {
+                // _treasureHoardUI.GenerateTreasurePointUI(playerInput, playerColors.GetColor(playerConfig.playerNumber));
+                GameObject reference = Instantiate(_playerTreasurePrefab, _playerTreasureSpawnPoint[playerConfig.playerNumber].position, Quaternion.identity);
+                reference.GetComponent<PlayerTreasure>().PlayerReference = playerInput.GetComponent<IUnit>();
+                _treasures.Add( reference.GetComponent<PlayerTreasure>());
+                reference.GetComponent<SpriteRenderer>().color = playerColors.GetColor(playerConfig.playerNumber);
+            }
+
+            OnPlayerJoined(playerInput, playerConfig);
         }
 
         public void SaveScores()
         {
-            foreach (var (playerConfig, inventoryController) in inventoryControllers)
+            if (playerConfigManager.CurrentGameMode == GameMode.TreasureHoard)
             {
-                playerConfig.score = inventoryController.Score;
+                int i = 0;
+                
+                foreach (var (playerConfig, inventoryController) in inventoryControllers)
+                {
+                    playerConfig.score = _treasures[i].CurrentPoints;
+                    i++;
+                }
+            }
+            else
+            {
+                foreach (var (playerConfig, inventoryController) in inventoryControllers)
+                {
+                    playerConfig.score = inventoryController.Score;
+                }
             }
         }
 
@@ -78,6 +126,10 @@ namespace Hawaiian.Game
         
         private void OnPlayerJoined(PlayerInput playerInput, PlayerConfig playerConfig)
         {
+            // TODO: No idea if this is where this is meant to go
+            _allPlayers.Add(playerInput);
+            playerInput.DeactivateInput();
+            
             if (playerConfig != null)
             {
                 playerInput.GetComponent<UnitPlayer>().Initialise(playerConfig.characterNumber, playerConfig.playerNumber);
@@ -93,6 +145,12 @@ namespace Hawaiian.Game
                     inventoryController.currentItemChanged.AddListener(UpdateWinningPlayers);
 
                     addedInventory.Raise(inventoryController.inv);
+
+                    if (playerConfigManager.CurrentGameMode == GameMode.TreasureHoard)
+                    {
+                        inventoryController.inv.inv[0] = _depositor;
+                        inventoryController.inv.inv[1] = _detonator;
+                    }
                 }
             }
             else
@@ -141,5 +199,12 @@ namespace Hawaiian.Game
         {
             return inventoryControllers.FirstOrDefault(a => a.Value.inv == inv).Key;
         }
+         public void AllowAllInputs()
+         {
+             _allPlayers.ForEach(input =>
+             {
+                 input.ActivateInput();
+             });
+         }   
     }
 }

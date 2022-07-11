@@ -18,9 +18,14 @@ namespace Hawaiian.Inventory
                 if (spriteRenderer == null)
                     return;
 
-                spriteRenderer.sprite = Item.DroppedItemSprite;
+                // TODO: Duplicate code. See OnValidate.
+                spriteRenderer.sprite = item.DroppedItemSprite;
+                
+                spriteRenderer.color = item.IsDetonator ? Color.red : Color.white;
             }
         }
+
+      
 
         public void OnPickUp()
         {
@@ -35,7 +40,10 @@ namespace Hawaiian.Inventory
 
             if (spriteRenderer == null) return;
 
+            // TODO: Duplicate code. See Item.
             spriteRenderer.sprite = Item.DroppedItemSprite;
+            
+            spriteRenderer.color = Item.IsDetonator ? Color.red : Color.white;
         }
     }
 }

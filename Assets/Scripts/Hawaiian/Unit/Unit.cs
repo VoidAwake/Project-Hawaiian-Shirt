@@ -16,6 +16,7 @@ namespace Hawaiian.Unit
         [SerializeField] SpriteResolver torso;
 
         [SerializeField] PlayerColors playerColors;
+        [SerializeField] private GameObject _spawnEffectPrefab;
         
         enum TorsoLabels { Red, Blue, Yellow, Green }
         public enum HeadLabels { Fox, Robin, Monkey, Cat, Goose, Soup, Gambit, Bert }
@@ -156,6 +157,19 @@ namespace Hawaiian.Unit
             else return false;
         }
 
+        public IEnumerator RunDissolveCoroutine(Material reference)
+        {
+            var elapsedTime = 0f;
+            var endTime = 1f;
+
+            while (elapsedTime < endTime)
+            {
+                reference.SetFloat("_Amount",Mathf.Lerp(elapsedTime,endTime,elapsedTime/endTime));
+                elapsedTime += Time.deltaTime;
+                yield return null;
+            }
+        }
+
         public void SetSpriteResolvers(string headName, string torsoName)
         {
             head.SetCategoryAndLabel("Head", headName);
@@ -165,6 +179,25 @@ namespace Hawaiian.Unit
         public virtual void Initialise(int characterNumber, int playerNumber)
         {
             SetSpriteResolvers(((HeadLabels) characterNumber).ToString(), ((TorsoLabels) playerNumber).ToString());
+            
+            //Generate SpawnEffect on player spawn location
+            GameObject spawnEffect =Instantiate(_spawnEffectPrefab, transform.position, Quaternion.identity);
+            spawnEffect.GetComponent<AttachGameObjectsToParticles>().LightColour = playerColors.GetColor(playerNumber);
+            
+            ParticleSystem.MainModule settings = spawnEffect.GetComponent<ParticleSystem>().main;
+            settings.startColor = new ParticleSystem.MinMaxGradient(playerColors.GetColor(playerNumber));
+    
+        
+            //Apply the appropriate material to use the dissolve effect
+            UnitAnimator animator = gameObject.GetComponent<UnitAnimator>();
+            
+
+            Material dissolveMaterial  = Resources.Load<Material>($"Materials/Player{playerNumber}Dissolve");
+            foreach (SpriteRenderer renderer in animator.Renderers)
+                renderer.material = dissolveMaterial;
+
+            StartCoroutine(RunDissolveCoroutine(dissolveMaterial));
+
             
             initialised.Invoke();
         }
