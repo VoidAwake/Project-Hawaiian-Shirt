@@ -156,7 +156,7 @@ namespace Hawaiian.Inventory
 
         public void DropItLikeItsHot(Vector2 rad)
         {
-            if (CurrentItem.IsDepositor)
+            if (CurrentItem != null && CurrentItem.IsDepositor)
                 return;
 
             DropItem(inv.invPosition, rad);
