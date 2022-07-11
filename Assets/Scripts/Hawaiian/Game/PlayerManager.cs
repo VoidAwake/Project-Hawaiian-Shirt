@@ -31,15 +31,13 @@ namespace Hawaiian.Game
         private PlayerInputManager inputManager;
         
         private List<PlayerInput> _allPlayers = new List<PlayerInput>();
-        // TODO: Invert dependency.
-        // private TreasureHoardUI _treasureHoardUI;
         public List<PlayerTreasure> _treasures = new List<PlayerTreasure>();
+        
+        public UnitPlayer LastPlayerJoined { get; private set; }
 
         private void Start()
         {
             inputManager = GetComponent<PlayerInputManager>();
-            
-            // _treasureHoardUI = FindObjectOfType<TreasureHoardUI>();
 
             if (inputManager == null) return;
 
@@ -85,7 +83,6 @@ namespace Hawaiian.Game
 
             if (playerConfigManager.CurrentGameMode == GameMode.TreasureHoard)
             {
-                // _treasureHoardUI.GenerateTreasurePointUI(playerInput, playerColors.GetColor(playerConfig.playerNumber));
                 GameObject reference = Instantiate(_playerTreasurePrefab, _playerTreasureSpawnPoint[playerConfig.playerNumber].position, Quaternion.identity);
                 reference.GetComponent<PlayerTreasure>().PlayerReference = playerInput.GetComponent<IUnit>();
                 _treasures.Add( reference.GetComponent<PlayerTreasure>());
@@ -151,6 +148,8 @@ namespace Hawaiian.Game
                         inventoryController.inv.inv[1] = _detonator;
                     }
                 }
+
+                LastPlayerJoined = playerInput.GetComponent<UnitPlayer>();
             }
             else
             {

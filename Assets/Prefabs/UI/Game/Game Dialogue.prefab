@@ -467,8 +467,8 @@ MonoBehaviour:
   uiParent: {fileID: 2135048521676535366}
   uiParentForFourPlayers: {fileID: 5433760765802800313}
   tutorialDialoguePrefab: {fileID: 4814276844058300917, guid: 45769a02522b0c84da70d092cf10c2dc, type: 3}
-  _treasureHoardTutorialDialoguePrefab: {fileID: 0}
-  _treasureHoardControlInstructionsPrefab: {fileID: 0}
+  _treasureHoardTutorialDialoguePrefab: {fileID: 4814276844058300917, guid: 021eb3a714576614e9bb4618ab3e56e5, type: 3}
+  _treasureHoardControlInstructionsPrefab: {fileID: 6701680597941144673, guid: ad9da8ae28d5a1446a50507627be2e64, type: 3}
   controlsInstructionsDialoguePrefab: {fileID: 6701680597941144673, guid: ad9da8ae28d5a1446a50507627be2e64, type: 3}
   mainMenuController: {fileID: 2092102775}
   pauseMenuController: {fileID: 1893241053}

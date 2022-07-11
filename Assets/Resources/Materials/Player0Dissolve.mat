@@ -60,7 +60,7 @@ Material:
     m_Ints: []
     m_Floats:
     - _AlphaClip: 1
-    - _Amount: 0.99998784
+    - _Amount: 0.999895
     - _Blend: 0
     - _CastShadows: 1
     - _Cull: 0

@@ -15,8 +15,7 @@ public class TreasurePointIndicator : DialogueComponent<GameDialogue>
 {
     [SerializeField] private TextMeshProUGUI _points;
     [SerializeField] private Image _backgroundColour;
-    [SerializeField] private PlayerInput playerReference;
-
+    [SerializeField] private UnitPlayer unitPlayer;
 
     public Inventory inventory;
 
@@ -27,16 +26,16 @@ public class TreasurePointIndicator : DialogueComponent<GameDialogue>
 
     float fontSize;
 
-    public void Initialise(PlayerInput player, Color32 backgroundColor)
+    public void Initialise(UnitPlayer unitPlayer)
     {
-        playerReference = player;
-        _backgroundColour.color = backgroundColor;
+        this.unitPlayer = unitPlayer;
+        _backgroundColour.color = unitPlayer.PlayerColour;
     }
 
     public void UpdatePointIndicator(Tuple<IUnit,int> data)
     {
 
-        if (playerReference.GetComponent<IUnit>() != data.Item1)
+        if (unitPlayer.GetComponent<IUnit>() != data.Item1)
             return;
 
         targetScore = data.Item2;
@@ -58,10 +57,8 @@ public class TreasurePointIndicator : DialogueComponent<GameDialogue>
     public void UpdatePoints(Tuple<IUnit,int> data)
     {
         
-        if (playerReference.GetComponent<IUnit>() != data.Item1)
+        if (unitPlayer.GetComponent<IUnit>() != data.Item1)
             return;
-
-     
 
         targetScore = data.Item2;
 
