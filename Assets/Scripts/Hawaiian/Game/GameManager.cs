@@ -11,10 +11,10 @@ namespace Hawaiian.Game
         [SerializeField] private SceneReference resultsScene;
         [SerializeField] private List<SceneReference> roundRobbinlevels;
         [SerializeField] private List<SceneReference> treasureHoardLevels;
-        // TODO: Move gamemode here
-        [SerializeField] private PlayerConfigManager playerConfigManager;
 
         public enum GamePhase { Stealth, GameOver }
+
+        public GameMode CurrentGameMode { get; set; }
 
         private GamePhase phase;
 
@@ -43,7 +43,7 @@ namespace Hawaiian.Game
 
         public void LoadRandomLevel()
         {
-            var isHoardMode = playerConfigManager.CurrentGameMode == GameMode.TreasureHoard;
+            var isHoardMode = CurrentGameMode == GameMode.TreasureHoard;
 
             var levelSet = isHoardMode ? treasureHoardLevels : roundRobbinlevels;
             

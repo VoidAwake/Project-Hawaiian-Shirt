@@ -19,7 +19,7 @@ namespace Hawaiian.UI.Game
         [SerializeField] private MainMenuController mainMenuController;
         [SerializeField] private MainMenuButtonFunctions pauseMenuController;
         [SerializeField] private GameObject tutorialBackground;
-        [SerializeField] private PlayerConfigManager playerConfigManager;
+        [SerializeField] private GameManager gameManager;
 
         private int _inventoryCount = 0;
         private List<GameObject> inventoryGameObjects = new();
@@ -67,7 +67,7 @@ namespace Hawaiian.UI.Game
         {
             tutorialBackground.SetActive(true);
             
-            if (playerConfigManager.CurrentGameMode == GameMode.TreasureHoard)
+            if (gameManager.CurrentGameMode == GameMode.TreasureHoard)
             {
                 Instantiate(_treasureHoardControlInstructionsPrefab, transform.parent);
                 Instantiate(_treasureHoardTutorialDialoguePrefab, transform.parent);

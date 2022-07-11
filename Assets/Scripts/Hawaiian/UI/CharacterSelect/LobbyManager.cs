@@ -144,7 +144,7 @@ namespace Hawaiian.UI.CharacterSelect
         {
             if (!isExiting)
             {
-                playerConfigManager.CurrentGameMode = CurrentGameMode;
+                gameManager.CurrentGameMode = CurrentGameMode;
 
                 // Destroy(GetComponent<LobbyManager>());
                 // Destroy(GetComponent<PlayerInputManager>());

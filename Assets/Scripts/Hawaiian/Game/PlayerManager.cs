@@ -16,6 +16,7 @@ namespace Hawaiian.Game
         [SerializeField] private GameEvent playersJoined;
         [SerializeField] private List<SpawnPoint> spawnPoints;
         [SerializeField] private PlayerConfigManager playerConfigManager;
+        [SerializeField] private GameManager gameManager;
         [SerializeField] private BaseGameEvent<Inventory.Inventory> addedInventory;
         
         [SerializeField] private Item _depositor;
@@ -81,7 +82,7 @@ namespace Hawaiian.Game
                 playerConfig.deviceIds.Select(InputSystem.GetDeviceById).ToArray()
             );
 
-            if (playerConfigManager.CurrentGameMode == GameMode.TreasureHoard)
+            if (gameManager.CurrentGameMode == GameMode.TreasureHoard)
             {
                 GameObject reference = Instantiate(_playerTreasurePrefab, _playerTreasureSpawnPoint[playerConfig.playerNumber].position, Quaternion.identity);
                 reference.GetComponent<PlayerTreasure>().PlayerReference = playerInput.GetComponent<IUnit>();
@@ -94,7 +95,7 @@ namespace Hawaiian.Game
 
         public void SaveScores()
         {
-            if (playerConfigManager.CurrentGameMode == GameMode.TreasureHoard)
+            if (gameManager.CurrentGameMode == GameMode.TreasureHoard)
             {
                 int i = 0;
                 
@@ -142,7 +143,7 @@ namespace Hawaiian.Game
 
                     addedInventory.Raise(inventoryController.inv);
 
-                    if (playerConfigManager.CurrentGameMode == GameMode.TreasureHoard)
+                    if (gameManager.CurrentGameMode == GameMode.TreasureHoard)
                     {
                         inventoryController.inv.inv[0] = _depositor;
                         inventoryController.inv.inv[1] = _detonator;
