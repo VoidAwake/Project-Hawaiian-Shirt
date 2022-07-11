@@ -50,6 +50,9 @@ namespace Hawaiian.UI.CharacterSelect
                 case LobbyPlayerController.PlayerStatus.Ready:
                     SetSelected();
                     break;
+                case LobbyPlayerController.PlayerStatus.SelectingMode:
+                    // TODO: Not really sure what to do in this case.
+                    break;
                 default:
                     throw new ArgumentOutOfRangeException();
             }

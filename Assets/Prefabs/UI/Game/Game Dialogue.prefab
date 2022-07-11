@@ -467,10 +467,13 @@ MonoBehaviour:
   uiParent: {fileID: 2135048521676535366}
   uiParentForFourPlayers: {fileID: 5433760765802800313}
   tutorialDialoguePrefab: {fileID: 4814276844058300917, guid: 45769a02522b0c84da70d092cf10c2dc, type: 3}
+  _treasureHoardTutorialDialoguePrefab: {fileID: 0}
+  _treasureHoardControlInstructionsPrefab: {fileID: 0}
   controlsInstructionsDialoguePrefab: {fileID: 6701680597941144673, guid: ad9da8ae28d5a1446a50507627be2e64, type: 3}
   mainMenuController: {fileID: 2092102775}
   pauseMenuController: {fileID: 1893241053}
   tutorialBackground: {fileID: 6418810255081669784}
+  playerConfigManager: {fileID: 11400000, guid: 424474a542819c946b03786b7421e196, type: 2}
 --- !u!114 &2135048521545393823
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1264,7 +1267,7 @@ PrefabInstance:
     - target: {fileID: 857639338631508198, guid: 1d50fbe35eab87342a6ea22ddca9ed68, type: 3}
       propertyPath: TreasureHoardUIPrefab
       value: 
-      objectReference: {fileID: 6375787970708803118}
+      objectReference: {fileID: 0}
     - target: {fileID: 2761538022161170272, guid: 1d50fbe35eab87342a6ea22ddca9ed68, type: 3}
       propertyPath: m_AnchorMax.y
       value: 1
@@ -1387,11 +1390,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1d50fbe35eab87342a6ea22ddca9ed68, type: 3}
---- !u!1 &6375787970708803118 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5519389317405039625, guid: 1d50fbe35eab87342a6ea22ddca9ed68, type: 3}
-  m_PrefabInstance: {fileID: 1505211860692881959}
-  m_PrefabAsset: {fileID: 0}
 --- !u!224 &8947855233417319047 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 7552181274152550560, guid: 1d50fbe35eab87342a6ea22ddca9ed68, type: 3}

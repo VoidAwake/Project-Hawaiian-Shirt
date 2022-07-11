@@ -14,9 +14,6 @@ GameObject:
   - component: {fileID: 2043199627}
   - component: {fileID: 207243568}
   - component: {fileID: 207243567}
-  - component: {fileID: 133010312862769111}
-  - component: {fileID: 7157973145063421036}
-  - component: {fileID: 11858734511974128}
   m_Layer: 0
   m_Name: PlayerManager
   m_TagString: Untagged
@@ -95,18 +92,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f47d1dda1ed5a524ebed1b5e1bd7ca90, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _depositor: {fileID: 11400000, guid: 9018dd0de1a0b244eb69ec5986781a73, type: 2}
-  _detonator: {fileID: 11400000, guid: efa01176e9a02a744a26b7bd744fdb1e, type: 2}
   playerPrefab: {fileID: 3772646986385756032, guid: cbb41f2b105532c4a878d6f54f9e31bd, type: 3}
-  buildIndex: 3
   playersJoined: {fileID: 11400000, guid: 2a2ac177cfbc4ee44a6355e7378dddb1, type: 2}
   spawnPoints: []
   playerConfigManager: {fileID: 11400000, guid: 424474a542819c946b03786b7421e196, type: 2}
   addedInventory: {fileID: 11400000, guid: 2220e64b52956274a8ac1a529699a2d4, type: 2}
-  sceneChanger: {fileID: 11400000, guid: 3d32adecca106ad4a8e92d019d2654af, type: 2}
+  _depositor: {fileID: 11400000, guid: 9018dd0de1a0b244eb69ec5986781a73, type: 2}
+  _detonator: {fileID: 11400000, guid: efa01176e9a02a744a26b7bd744fdb1e, type: 2}
+  _playerTreasurePrefab: {fileID: 4821606711847234976, guid: 8a61579873297c8408bd79f4cbcf486d, type: 3}
+  _playerTreasureSpawnPoint: []
+  playerColors: {fileID: 11400000, guid: c18c22b93a97a954ca8ab46031e350bd, type: 2}
   winningPlayersChanged:
     m_PersistentCalls:
       m_Calls: []
+  _treasures: []
 --- !u!114 &2043199627
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -158,15 +157,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f47d1dda1ed5a524ebed1b5e1bd7ca90, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _depositor: {fileID: 0}
-  _detonator: {fileID: 0}
   playerPrefab: {fileID: 3772646986385756032, guid: cbb41f2b105532c4a878d6f54f9e31bd, type: 3}
-  buildIndex: 0
   playersJoined: {fileID: 11400000, guid: 2a2ac177cfbc4ee44a6355e7378dddb1, type: 2}
   spawnPoints: []
   playerConfigManager: {fileID: 11400000, guid: 424474a542819c946b03786b7421e196, type: 2}
   addedInventory: {fileID: 11400000, guid: 2220e64b52956274a8ac1a529699a2d4, type: 2}
-  sceneChanger: {fileID: 0}
+  _depositor: {fileID: 0}
+  _detonator: {fileID: 0}
+  _playerTreasurePrefab: {fileID: 0}
+  _playerTreasureSpawnPoint: []
+  playerColors: {fileID: 0}
   winningPlayersChanged:
     m_PersistentCalls:
       m_Calls: []
+  _treasures: []

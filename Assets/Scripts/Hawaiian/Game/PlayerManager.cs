@@ -82,7 +82,6 @@ namespace Hawaiian.Game
                 playerConfig.controlScheme,
                 playerConfig.deviceIds.Select(InputSystem.GetDeviceById).ToArray()
             );
-            
 
             if (playerConfigManager.CurrentGameMode == GameMode.TreasureHoard)
             {
@@ -199,12 +198,10 @@ namespace Hawaiian.Game
         {
             return inventoryControllers.FirstOrDefault(a => a.Value.inv == inv).Key;
         }
-         public void AllowAllInputs()
-         {
-             _allPlayers.ForEach(input =>
-             {
-                 input.ActivateInput();
-             });
-         }   
+
+        public void AllowAllInputs()
+        {
+            _allPlayers.ForEach(input => { input.ActivateInput(); });
+        }   
     }
 }

@@ -72,8 +72,6 @@ namespace Hawaiian.UI.CharacterSelect
 
         private void Start()
         {
-            playerConfigManager = GetComponent<PlayerConfigManager>();
-
             // Mode select stuff...
             CreateGameModeButtons();
             ShowCharacterSelect(true);
@@ -148,8 +146,8 @@ namespace Hawaiian.UI.CharacterSelect
             {
                 playerConfigManager.CurrentGameMode = CurrentGameMode;
 
-                Destroy(GetComponent<LobbyManager>());
-                Destroy(GetComponent<PlayerInputManager>());
+                // Destroy(GetComponent<LobbyManager>());
+                // Destroy(GetComponent<PlayerInputManager>());
                 
                 gameManager.LoadRandomLevel();
                 
@@ -181,7 +179,6 @@ namespace Hawaiian.UI.CharacterSelect
             return lobbyPlayerControllers.All(l => l.Status == playerStatus);
         }
 
-        // TODO: Make the buildIndex a variable.
         public bool RequestMainMenu()
         {
             if (!isExiting)

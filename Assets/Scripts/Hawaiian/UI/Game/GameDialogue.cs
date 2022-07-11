@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Hawaiian.Game;
-using Hawaiian.UI.CharacterSelect;
 using Hawaiian.UI.MainMenu;
 using UI.Core;
 using UnityEngine;
@@ -21,7 +19,7 @@ namespace Hawaiian.UI.Game
         [SerializeField] private MainMenuController mainMenuController;
         [SerializeField] private MainMenuButtonFunctions pauseMenuController;
         [SerializeField] private GameObject tutorialBackground;
-       
+        [SerializeField] private PlayerConfigManager playerConfigManager;
 
         private int _inventoryCount = 0;
         private List<GameObject> inventoryGameObjects = new();
@@ -67,10 +65,9 @@ namespace Hawaiian.UI.Game
 
         private void DisplayControls()
         {
-       
             tutorialBackground.SetActive(true);
             
-            if (FindObjectOfType<PlayerConfigManager>().CurrentGameMode == GameMode.TreasureHoard)
+            if (playerConfigManager.CurrentGameMode == GameMode.TreasureHoard)
             {
                 Instantiate(_treasureHoardControlInstructionsPrefab, transform.parent);
                 Instantiate(_treasureHoardTutorialDialoguePrefab, transform.parent);
