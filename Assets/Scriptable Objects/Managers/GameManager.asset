@@ -16,10 +16,14 @@ MonoBehaviour:
   resultsScene:
     sceneAsset: {fileID: 102900000, guid: b0930558751c425429485c00789637e4, type: 3}
     scenePath: Assets/Scenes/Results Screen.unity
-  levels:
+  roundRobbinlevels:
   - sceneAsset: {fileID: 102900000, guid: 2261d57602b6c63458a5281ed2fff923, type: 3}
     scenePath: Assets/Scenes/Eddie Second Secret.unity
   - sceneAsset: {fileID: 102900000, guid: 8e4ef8966e3de0d40a859ea995ac6a92, type: 3}
     scenePath: Assets/Scenes/Eddie Secret URP.unity
+  treasureHoardLevels:
+  - sceneAsset: {fileID: 102900000, guid: 33d5af66925ac9f4582c514f34f6593f, type: 3}
+    scenePath: Assets/Scenes/Francisco's Treasure Hoard Level One.unity
+  playerConfigManager: {fileID: 11400000, guid: 424474a542819c946b03786b7421e196, type: 2}
   phaseChanged: {fileID: 11400000, guid: d5c9e20f87d81084da0f7a6327a76a25, type: 2}
   gameOver: {fileID: 11400000, guid: 3f166778320e3064188ff102927875f8, type: 2}
