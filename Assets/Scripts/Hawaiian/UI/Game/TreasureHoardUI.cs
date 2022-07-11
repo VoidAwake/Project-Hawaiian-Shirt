@@ -9,9 +9,12 @@ namespace Hawaiian.UI.Game
         [SerializeField] private GameObject TreasureHoardUIPrefab;
         [SerializeField] private Transform TreasureHoardUIParent;
         [SerializeField] private PlayerManager playerManager;
+        [SerializeField] private PlayerConfigManager playerConfigManager;
 
         public void GenerateTreasurePointUI()
         {
+            if (playerConfigManager.CurrentGameMode != GameMode.TreasureHoard) return;
+            
             GameObject treasurePrefab = Instantiate(TreasureHoardUIPrefab, TreasureHoardUIParent);
             treasurePrefab.GetComponent<TreasurePointIndicator>().Initialise(playerManager.LastPlayerJoined);
         }
