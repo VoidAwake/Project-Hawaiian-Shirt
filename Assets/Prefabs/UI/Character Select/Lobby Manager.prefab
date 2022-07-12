@@ -112,22 +112,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 128faa9441b1457cb911eda3424d2b61, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameModes: 0000000003000000
-  gameModeNames:
-  - gameMode: 0
-    text: Round Robbin'
-  - gameMode: 3
-    text: Treasure Hoard
-  gameModeDescriptions:
-  - gameMode: 0
-    text: TEMP
-  - gameMode: 3
-    text: TEMP
-  gameModeBuildIndex:
-  - gameMode: 0
-    number: 2
-  - gameMode: 3
-    number: 6
+  gameModeSOs:
+  - {fileID: 11400000, guid: db6268147e054a04db0be00ec75c7523, type: 2}
+  - {fileID: 11400000, guid: 2657d6f5cdf6b504d92519a469062350, type: 2}
   selectedPortraits:
   - {fileID: 0}
   - {fileID: 0}

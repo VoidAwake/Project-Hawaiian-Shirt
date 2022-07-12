@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Hawaiian.Game;
+using Hawaiian.UI.Game;
 using Hawaiian.UI.MainMenu;
 using TMPro;
 using UnityEngine;
@@ -11,14 +12,8 @@ namespace Hawaiian.UI.CharacterSelect
 {
     public class ModeLobbyManager : MonoBehaviour
     {
-        [Serializable] private struct GameModeString { public GameMode gameMode; public string text; }
-        [Serializable] private struct GameModeInt { public GameMode gameMode; public int number; }
-
         [Header("Mode Select")]
-        [SerializeField] private GameMode[] gameModes;
-        [SerializeField] private List<GameModeString> gameModeNames;
-        [SerializeField] private List<GameModeString> gameModeDescriptions;
-        [SerializeField] private List<GameModeInt> gameModeBuildIndex;
+        [SerializeField] private GameModeSO[] gameModeSOs;
         [SerializeField] private Image[] selectedPortraits;                     // Scene reference. Update sprites (and positions) to match player's characters.
         [SerializeField] private Image[] selectedBGs;                           // Scene reference. Reduce alpha on BG of unselected characters.
         [SerializeField] private Sprite[] portraitSprites;                      // Asset reference. Sprites for character portraits.
@@ -64,45 +59,29 @@ namespace Hawaiian.UI.CharacterSelect
         private void CreateGameModeButtons()
         {
             // Create buttons for mode select screen
-            Button[] buttons = new Button[gameModes.Length];
+            Button[] buttons = new Button[gameModeSOs.Length];
             int counter = 0;
-            foreach (GameMode gameMode in gameModes)
+            foreach (GameModeSO gameModeSO in gameModeSOs)
             {
                 GameObject button = Instantiate(buttonPrefab, buttonsParent.transform);                                             // Create and parent button
                 float yPos = counter * -130.0f;
                 button.transform.localPosition = new Vector2(0.0f, yPos);
                 if (counter == 0) menuController.cursor.transform.localPosition = button.transform.localPosition;                   // Set cursor to initial position, for first element
-                button.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = GetGameModeString(gameMode, gameModeNames);     // Set button text to game mode name
+                button.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = gameModeSO.displayName;
                 MainMenuButtonFunctions buttonFunction = button.gameObject.AddComponent<MainMenuButtonFunctions>();                 // Add button function component
-                buttonFunction.SetButtonFunction(0, GetGameModeInt(gameMode, gameModeBuildIndex), true,gameMode);                            // Set button's function to load build index associated with game mode
+                buttonFunction.SetButtonFunction(0, gameModeSO.gameMode);                            // Set button's function to load build index associated with game mode
                 buttonFunction.isModeSelectButton = true;                                                                           // Set button to tell this script to update selection's decription
                 buttons[counter] = button.GetComponent<Button>();
                 counter++;
             }
             menuController.buttons = buttons;                                                                                       // Assign reference to new buttons in menu controller
             buttonsParent.transform.localPosition = new Vector2(-200.0f,
-                ((gameModes.Length * 100.0f) + ((gameModes.Length - 1) * 30.0f)) / 2.0f - 50.0f);                                   // Position buttons' parent so that they're centred on screen
+                ((gameModeSOs.Length * 100.0f) + ((gameModeSOs.Length - 1) * 30.0f)) / 2.0f - 50.0f);                                   // Position buttons' parent so that they're centred on screen
             menuController.cursor.transform.parent.localPosition = new Vector2(-200.0f,
-                ((gameModes.Length * 100.0f) + ((gameModes.Length - 1) * 30.0f)) / 2.0f - 50.0f);                                   // Gotta move parent of cursor too, because awesome code
+                ((gameModeSOs.Length * 100.0f) + ((gameModeSOs.Length - 1) * 30.0f)) / 2.0f - 50.0f);                                   // Gotta move parent of cursor too, because awesome code
 
             // Update textmesh elements
             UpdateGameModeDescription(0);
-        }
-
-        private string GetGameModeString(GameMode toFind, List<GameModeString> list)
-        {
-            foreach (GameModeString element in list)
-                if (element.gameMode == toFind) return element.text;
-
-            return toFind.ToString();
-        }
-
-        private int GetGameModeInt(GameMode toFind, List<GameModeInt> list)
-        {
-            foreach (GameModeInt element in list)
-                if (element.gameMode == toFind) return element.number;
-
-            return -1;
         }
 
         private void SetUpSelectedCharacterUI()
@@ -123,8 +102,8 @@ namespace Hawaiian.UI.CharacterSelect
 
         public void UpdateGameModeDescription(int index)
         {
-            gameModeNameTMP.text = GetGameModeString(gameModes[index], gameModeNames);
-            gameModeDescriptionTMP.text = GetGameModeString(gameModes[index], gameModeDescriptions);
+            gameModeNameTMP.text = gameModeSOs[index].displayName;
+            gameModeDescriptionTMP.text = gameModeSOs[index].description;
         }
     }
 }

@@ -82,10 +82,7 @@ namespace Hawaiian.UI.MainMenu
             }
         }
         
-       
-
-        // TODO: Clean up unused params.
-        public void SetButtonFunction(int newFunction, int newBuild, bool newTransition, GameMode currentGameMode)
+        public void SetButtonFunction(int newFunction, GameMode currentGameMode)
         {
             function = (ButtonFunction)newFunction;
             gameMode = currentGameMode;
