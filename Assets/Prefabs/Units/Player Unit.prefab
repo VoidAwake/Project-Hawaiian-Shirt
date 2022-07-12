@@ -585,10 +585,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01396aa4aa6e1514abc1e9974bb5204c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _player: {fileID: 2635515794497460195}
   _baseRadius: 1.1
   _maxRadius: 20
-  _input: {fileID: 6432945937749252037}
   unit: {fileID: 5588978955059791629}
   spriteRenderer: {fileID: 1598933601258987996}
   playerColors: {fileID: 11400000, guid: c18c22b93a97a954ca8ab46031e350bd, type: 2}
@@ -1148,6 +1146,21 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 6924075283435537384, guid: fe93fd4b04ca3d340865789a7d27cade, type: 3}
   m_PrefabInstance: {fileID: 6074339651911699560}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &-2732029700120481927
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3772646986385756032}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 29436db2274e43bcb50ac4581e19290b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  unit: {fileID: 5588978955059791629}
+  playerColors: {fileID: 11400000, guid: c18c22b93a97a954ca8ab46031e350bd, type: 2}
+  _spawnEffectPrefab: {fileID: 14599233181292866, guid: 22679898e105812469709475d2af798c, type: 3}
 --- !u!114 &4532151668749739656
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1185,8 +1198,6 @@ MonoBehaviour:
   testFloat: 0
   head: {fileID: 7237116040329313408}
   torso: {fileID: 6508653587361009964}
-  playerColors: {fileID: 11400000, guid: c18c22b93a97a954ca8ab46031e350bd, type: 2}
-  _spawnEffectPrefab: {fileID: 14599233181292866, guid: 22679898e105812469709475d2af798c, type: 3}
   playerState: 0
   OverrideDamage: 0
   _maxHealth: 20
