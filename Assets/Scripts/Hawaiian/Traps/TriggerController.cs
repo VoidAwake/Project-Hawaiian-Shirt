@@ -7,6 +7,7 @@ public class TriggerController : MonoBehaviour
     // Start is called before the first frame update
 
     [SerializeField] TrapController[] kiddies;
+    public bool test;
     
     private void OnTrigger()
     {
@@ -15,10 +16,24 @@ public class TriggerController : MonoBehaviour
         }
     }
 
+    void Update()
+    {
+        if (test)
+        {
+            test = !test;
+            foreach(TrapController trap in kiddies){
+                Debug.DrawLine(transform.position,trap.transform.position, Color.red,20f);
+                Debug.Log(trap.transform.position);
+            }
+        }
+    }
 
 
     void OnTriggerEnter2D(Collider2D col) {
-        Debug.Log("Big Daady has been triggered!!!!");
-        OnTrigger();
+        if (col.tag == "Player")
+        {
+            Debug.Log("Big Daady has been triggered!!!!");
+            OnTrigger();
+        }
     }
 }
