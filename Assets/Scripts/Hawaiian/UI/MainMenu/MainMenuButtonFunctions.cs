@@ -5,6 +5,7 @@ using UnityEngine.Events;
 
 namespace Hawaiian.UI.MainMenu
 {
+    // TODO: I hate this class.
     public class MainMenuButtonFunctions : MonoBehaviour
     {
         enum ButtonFunction { LoadSceneByIndex, CloseApp, DeleteSelf, ResumeGame, DisplayControls }
@@ -23,10 +24,10 @@ namespace Hawaiian.UI.MainMenu
             // TODO: This needs another look.
             if (isModeSelectButton)
             {
-                LobbyManager lobby = FindObjectOfType<LobbyManager>();
+                var lobby = FindObjectOfType<SuperLobbyManager>();
                 if (lobby != null)
                 {
-                    lobby.CurrentGameMode = gameMode;
+                    lobby.SetGameMode(gameMode);
                     lobby.StartGame();
                 }
             }

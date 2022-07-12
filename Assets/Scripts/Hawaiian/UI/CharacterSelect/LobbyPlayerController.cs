@@ -17,7 +17,9 @@ namespace Hawaiian.UI.CharacterSelect
         private float move;
         public bool inputEnabled;
         int moveBuffer;
-        LobbyManager lobbyManager;
+        private SuperLobbyManager superLobbyManager;
+        private LobbyManager lobbyManager;
+        private ModeLobbyManager modeLobbyManager;
         
         public enum PlayerStatus
         {
@@ -57,7 +59,7 @@ namespace Hawaiian.UI.CharacterSelect
                     moveBuffer = 1;
 
                     if (Status == PlayerStatus.SelectingMode)
-                        lobbyManager.menuController.move = move;
+                        modeLobbyManager.menuController.move = move;
                     else
                         OnPlayerCharacterSelect(1);
                 }
@@ -66,7 +68,7 @@ namespace Hawaiian.UI.CharacterSelect
                     moveBuffer = -1;
 
                     if (Status == PlayerStatus.SelectingMode)
-                        lobbyManager.menuController.move = move;
+                        modeLobbyManager.menuController.move = move;
                     else
                         OnPlayerCharacterSelect(-1);
                 }
@@ -123,7 +125,7 @@ namespace Hawaiian.UI.CharacterSelect
                     lobbyManager.RequestStartGame();
                     break;
                 case PlayerStatus.SelectingMode:
-                    lobbyManager.menuController.OnActionA(value);
+                    modeLobbyManager.menuController.OnActionA(value);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
@@ -152,7 +154,7 @@ namespace Hawaiian.UI.CharacterSelect
                     }
                     break;
                 case PlayerStatus.SelectingMode:
-                    lobbyManager.TryExitModeSelect();
+                    modeLobbyManager.TryExitModeSelect();
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
@@ -192,9 +194,12 @@ namespace Hawaiian.UI.CharacterSelect
             statusChanged.Invoke();
         }
 
-        public void Initialise(LobbyManager lobbyManager, PlayerConfig playerConfig)
+        // TODO: We shouldn't need all these references, this can definitely be simplified
+        public void Initialise(SuperLobbyManager superLobbyManager, LobbyManager lobbyManager, ModeLobbyManager modeLobbyManager, PlayerConfig playerConfig)
         {
+            this.superLobbyManager = superLobbyManager;
             this.lobbyManager = lobbyManager;
+            this.modeLobbyManager = modeLobbyManager;
             this.playerConfig = playerConfig;
 
             moveBuffer = 1;
@@ -233,7 +238,7 @@ namespace Hawaiian.UI.CharacterSelect
         private void OnAnyButtonPressed(InputEventPtr eventPtr, InputDevice device)
         {
             // Mode select stuff... extra return check
-            if (lobbyManager.isModeSelect) return;
+            if (superLobbyManager.isModeSelect) return;
 
             if (Status != PlayerStatus.NotLoadedIn) return;
             
@@ -249,9 +254,9 @@ namespace Hawaiian.UI.CharacterSelect
                 // If the button pressed was the ActionB button, request to return to the main menu
                 if (GetComponent<PlayerInput>().actions.FindAction("ActionB", true).controls.Contains(control))
                 {
-                    var requestGranted = lobbyManager.RequestMainMenu();
+                    lobbyManager.RequestMainMenu();
 
-                    if (requestGranted)
+                    if (lobbyManager.GoingToMainMenu)
                         break;
                 }
 
