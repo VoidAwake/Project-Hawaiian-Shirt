@@ -594,18 +594,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Exit Button
       objectReference: {fileID: 0}
-    - target: {fileID: 1009951023056850495, guid: 8c526f30be7a11c41be8054efdca85ef, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 2821428303674365021}
-    - target: {fileID: 1009951023056850495, guid: 8c526f30be7a11c41be8054efdca85ef, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: CloseApp
-      objectReference: {fileID: 0}
-    - target: {fileID: 1009951023056850495, guid: 8c526f30be7a11c41be8054efdca85ef, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: Hawaiian.UI.MainMenu.MainMenuButtonFunctions, Hawaiian.UI
-      objectReference: {fileID: 0}
     - target: {fileID: 1009951023736066098, guid: 8c526f30be7a11c41be8054efdca85ef, type: 3}
       propertyPath: m_text
       value: Exit
@@ -633,7 +621,7 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 1009951023056850481, guid: 8c526f30be7a11c41be8054efdca85ef, type: 3}
   m_PrefabInstance: {fileID: 2821428303674365018}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &2821428303674365021
+--- !u!114 &922010850667814204
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -642,19 +630,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 2964401052975553131}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: af123e572d2028d489491f491aeb9204, type: 3}
+  m_Script: {fileID: 11500000, guid: 60f9cc3df8cb46e888afc3b985d44778, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  function: 1
-  sceneChanger: {fileID: 11400000, guid: 3d32adecca106ad4a8e92d019d2654af, type: 2}
-  scene:
-    sceneAsset: {fileID: 0}
-    scenePath: 
-  isModeSelectButton: 0
-  gameMode: {fileID: 0}
-  displayControlsSelected:
-    m_PersistentCalls:
-      m_Calls: []
+  manager: {fileID: 11400000, guid: b205461929d08b7439e72030dc234753, type: 2}
 --- !u!1001 &2964401053845753103
 PrefabInstance:
   m_ObjectHideFlags: 0

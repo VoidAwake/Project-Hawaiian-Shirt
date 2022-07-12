@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using Cysharp.Threading.Tasks.Triggers;
 using Hawaiian.Game;
 using Hawaiian.UI.Game;
 using Hawaiian.UI.MainMenu;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace Hawaiian.UI.CharacterSelect
@@ -32,6 +34,7 @@ namespace Hawaiian.UI.CharacterSelect
         public List<LobbyPlayerController> LobbyPlayerControllers { get; set; }
         
         public UnityEvent mainMenuRequested = new();
+        public UnityEvent startGameRequested = new();
         
         private void OnEnable()
         {
@@ -63,15 +66,14 @@ namespace Hawaiian.UI.CharacterSelect
             int counter = 0;
             foreach (GameModeSO gameModeSO in gameModeSOs)
             {
-                GameObject button = Instantiate(buttonPrefab, buttonsParent.transform);                                             // Create and parent button
+                GameObject buttonObject = Instantiate(buttonPrefab, buttonsParent.transform);                                             // Create and parent button
                 float yPos = counter * -130.0f;
-                button.transform.localPosition = new Vector2(0.0f, yPos);
-                if (counter == 0) menuController.cursor.transform.localPosition = button.transform.localPosition;                   // Set cursor to initial position, for first element
-                button.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = gameModeSO.displayName;
-                MainMenuButtonFunctions buttonFunction = button.gameObject.AddComponent<MainMenuButtonFunctions>();                 // Add button function component
-                buttonFunction.SetButtonFunction(0, gameModeSO);                            // Set button's function to load build index associated with game mode
-                buttonFunction.isModeSelectButton = true;                                                                           // Set button to tell this script to update selection's decription
-                buttons[counter] = button.GetComponent<Button>();
+                buttonObject.transform.localPosition = new Vector2(0.0f, yPos);
+                if (counter == 0) menuController.cursor.transform.localPosition = buttonObject.transform.localPosition;                   // Set cursor to initial position, for first element
+                buttonObject.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = gameModeSO.displayName;
+                var button = buttonObject.GetComponent<Button>();
+                button.onClick.AddListener(() => OnModeButtonClicked(gameModeSO));
+                buttons[counter] = buttonObject.GetComponent<Button>();
                 counter++;
             }
             menuController.buttons = buttons;                                                                                       // Assign reference to new buttons in menu controller
@@ -82,6 +84,13 @@ namespace Hawaiian.UI.CharacterSelect
 
             // Update textmesh elements
             UpdateGameModeDescription(0);
+        }
+
+        private void OnModeButtonClicked(GameModeSO gameModeSO)
+        {
+            CurrentGameMode = gameModeSO;
+
+            startGameRequested.Invoke();
         }
 
         private void SetUpSelectedCharacterUI()

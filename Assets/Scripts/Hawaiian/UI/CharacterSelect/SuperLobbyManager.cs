@@ -37,6 +37,12 @@ namespace Hawaiian.UI.CharacterSelect
             lobbyManager.mainMenuRequested.AddListener(OnMainMenuRequested);
             
             modeLobbyManager.mainMenuRequested.AddListener(OnModeMainMenuRequested);
+            modeLobbyManager.startGameRequested.AddListener(OnModeStartGameRequested);
+        }
+
+        private void OnModeStartGameRequested()
+        {
+            StartGame();
         }
 
         private void OnModeMainMenuRequested()
@@ -51,6 +57,7 @@ namespace Hawaiian.UI.CharacterSelect
             lobbyManager.mainMenuRequested.RemoveListener(OnMainMenuRequested);
             
             modeLobbyManager.mainMenuRequested.RemoveListener(OnModeMainMenuRequested);
+            modeLobbyManager.startGameRequested.RemoveListener(OnModeStartGameRequested);
         }
 
         private void Start()
@@ -226,11 +233,6 @@ namespace Hawaiian.UI.CharacterSelect
                 if (player.Status == LobbyPlayerController.PlayerStatus.SelectingMode && !toGameModeSelect)
                     player.Status = LobbyPlayerController.PlayerStatus.LoadedIn;
             }
-        }
-
-        public void SetGameMode(GameModeSO gameMode)
-        {
-            modeLobbyManager.CurrentGameMode = gameMode;
         }
     }
 }

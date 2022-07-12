@@ -94,12 +94,7 @@ namespace Hawaiian.UI.MainMenu
                             //Debug.Log(selected + " " + buttons.Length);
 
                             // Update description of currently selected game mode in lobby
-                            // TODO: Fixed for now but needs another look
-                            var mainMenuButtonFunctions = buttons[selected].GetComponent<MainMenuButtonFunctions>();
-                            
-                            if (mainMenuButtonFunctions != null)
-                                if (mainMenuButtonFunctions.isModeSelectButton)
-                                    FindObjectOfType<ModeLobbyManager>().UpdateGameModeDescription(selected);
+                            // TODO: Call ModeLobbyManager.UpdateGameModeDescription(selected)
                         }
                         moveBuffer = 1;
                     }
@@ -114,12 +109,7 @@ namespace Hawaiian.UI.MainMenu
                             //Debug.Log(selected +" "+ buttons.Length);
 
                             // Update description of currently selected game mode in lobby
-                            // TODO: Fixed for now but needs another look
-                            var mainMenuButtonFunctions = buttons[selected].GetComponent<MainMenuButtonFunctions>();
-                            
-                            if (mainMenuButtonFunctions != null)
-                                if (mainMenuButtonFunctions.isModeSelectButton)
-                                    FindObjectOfType<ModeLobbyManager>().UpdateGameModeDescription(selected);
+                            // TODO: Call ModeLobbyManager.UpdateGameModeDescription(selected)
                         }
                         moveBuffer = -1;
                     }
@@ -129,13 +119,7 @@ namespace Hawaiian.UI.MainMenu
                     if (!cursorActive) { cursor.enabled = true; cursorActive = true; }
                     else
                     {
-                        // TODO: Fixed for now but needs another look
-                        var mainMenuButtonFunctions = buttons[selected].GetComponent<MainMenuButtonFunctions>();
-                        
-                        if (mainMenuButtonFunctions != null)
-                            mainMenuButtonFunctions.CallSerializedFunction();
-                        else
-                            buttons[selected].GetComponent<Button>().onClick.Invoke();
+                        buttons[selected].GetComponent<Button>().onClick.Invoke();
                         
                         disabled = true;
                     }
