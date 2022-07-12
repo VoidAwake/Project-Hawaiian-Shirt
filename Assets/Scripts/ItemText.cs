@@ -26,19 +26,16 @@ public class ItemText : MonoBehaviour
         text.text = "";
     }
 
-    // Update is called once per frame
-
     private void OnCurrentItemChanged()
     {
-        Debug.Log("called");
-        if (_controller._inv.inv[_controller._inv.invPosition] != null)
+        if (_controller.inv.inv[_controller.inv.invPosition] != null)
         {
-            if (text.text != _controller._inv.inv[_controller._inv.invPosition].ItemName)
+            if (text.text != _controller.inv.inv[_controller.inv.invPosition].ItemName)
             {
-                text.text = _controller._inv.inv[_controller._inv.invPosition].ItemName;
+                text.text = _controller.inv.inv[_controller.inv.invPosition].ItemName;
                 text.color = color;
                 timer = duration;
-                Debug.Log(_controller._inv.inv[_controller._inv.invPosition].ItemName);
+                Debug.Log(_controller.inv.inv[_controller.inv.invPosition].ItemName);
             }
         }
         else

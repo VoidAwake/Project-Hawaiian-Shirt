@@ -5,6 +5,7 @@ using Hawaiian.UI.CharacterSelect;
 
 namespace Hawaiian.UI.MainMenu
 {
+    // TODO: This class needs refactoring
     public class MainMenuController : MonoBehaviour
     {
         int actionA = 0;    // INPUT STATUSES:
@@ -94,7 +95,7 @@ namespace Hawaiian.UI.MainMenu
 
                             // Update description of currently selected game mode in lobby
                             if (buttons[selected].GetComponent<MainMenuButtonFunctions>().isModeSelectButton)
-                                FindObjectOfType<LobbyManager>().UpdateGameModeDescription(selected);
+                                FindObjectOfType<ModeLobbyManager>().UpdateGameModeDescription(selected);
                         }
                         moveBuffer = 1;
                     }
@@ -110,7 +111,7 @@ namespace Hawaiian.UI.MainMenu
 
                             // Update description of currently selected game mode in lobby
                             if (buttons[selected].GetComponent<MainMenuButtonFunctions>().isModeSelectButton)
-                                FindObjectOfType<LobbyManager>().UpdateGameModeDescription(selected);
+                                FindObjectOfType<ModeLobbyManager>().UpdateGameModeDescription(selected);
                         }
                         moveBuffer = -1;
                     }

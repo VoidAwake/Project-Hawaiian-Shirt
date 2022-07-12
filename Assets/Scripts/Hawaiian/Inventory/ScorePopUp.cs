@@ -1,10 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
 namespace Hawaiian.Inventory
 {
+    // TODO: Should be moved to UI
     public class ScorePopUp : MonoBehaviour
     {
         public Transform parent;

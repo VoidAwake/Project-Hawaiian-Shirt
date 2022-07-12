@@ -1,49 +1,39 @@
-using UnityEngine;
-using UnityEngine.SceneManagement;
+using Hawaiian.Game;
 using Hawaiian.UI.CharacterSelect;
+using UnityEngine;
 using UnityEngine.Events;
 
 namespace Hawaiian.UI.MainMenu
 {
+    // TODO: I hate this class.
     public class MainMenuButtonFunctions : MonoBehaviour
     {
         enum ButtonFunction { LoadSceneByIndex, CloseApp, DeleteSelf, ResumeGame, DisplayControls }
         [SerializeField] ButtonFunction function;
-        [SerializeField] int buildIndex;
-        [SerializeField] bool callTransition;
+        [SerializeField] private SceneChanger sceneChanger;
+        // TODO: UI should not be handling scene references
+        [SerializeField] private SceneReference scene;
         public bool isModeSelectButton; // Cool code, for mode select screen
 
-        public GameMode gameMode; // Even cooler code for mode select
+        public GameModeSO gameMode; // Even cooler code for mode select
         
         public UnityEvent displayControlsSelected = new UnityEvent();
 
         public void LoadSceneByIndex()
         {
+            // TODO: This needs another look.
             if (isModeSelectButton)
             {
-                LobbyManager lobby = FindObjectOfType<LobbyManager>();
+                var lobby = FindObjectOfType<SuperLobbyManager>();
                 if (lobby != null)
                 {
-                    lobby.CurrentGameMode = gameMode;
+                    lobby.SetGameMode(gameMode);
                     lobby.StartGame();
-                }
-            }
-
-            if (callTransition)
-            {
-                Transition transition = FindObjectOfType<Transition>();
-                if (transition != null)
-                {
-                    transition.BeginTransition(true, true, buildIndex, isModeSelectButton);
-                }
-                else
-                {
-                    SceneManager.LoadScene(buildIndex);
                 }
             }
             else
             {
-                SceneManager.LoadScene(buildIndex);
+                sceneChanger.ChangeScene(scene);
             }
         }
 
@@ -92,13 +82,9 @@ namespace Hawaiian.UI.MainMenu
             }
         }
         
-       
-
-        public void SetButtonFunction(int newFunction, int newBuild, bool newTransition, GameMode currentGameMode)
+        public void SetButtonFunction(int newFunction, GameModeSO currentGameMode)
         {
             function = (ButtonFunction)newFunction;
-            buildIndex = newBuild;
-            callTransition = newTransition;
             gameMode = currentGameMode;
         }
     }

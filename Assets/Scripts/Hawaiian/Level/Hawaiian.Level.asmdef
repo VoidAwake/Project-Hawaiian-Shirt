@@ -1,0 +1,16 @@
+{
+    "name": "Hawaiian.Level",
+    "rootNamespace": "",
+    "references": [
+        "GUID:6dc4a93f925250f48a84051c224efed1"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
