@@ -38,7 +38,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 273.66666, y: -50}
+  m_AnchoredPosition: {x: 270, y: -50}
   m_SizeDelta: {x: 540, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1000451379203399689
@@ -128,7 +128,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1000451379206089042}
   - component: {fileID: 1000451379206089040}
-  - component: {fileID: 1000451379206089041}
   m_Layer: 5
   m_Name: Pause Screen
   m_TagString: Untagged
@@ -169,11 +168,12 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1000451379206089043}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 21df38d2562da874b8d188338b2c2707, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  move: 0
   buttons:
   - {fileID: 280982534664203159}
   - {fileID: 280982533994586741}
@@ -184,37 +184,8 @@ MonoBehaviour:
   - {fileID: -1859449190, guid: a3627312065ae844b926aec3d48b7f5a, type: 3}
   - {fileID: 1988936865, guid: a3627312065ae844b926aec3d48b7f5a, type: 3}
   disabled: 0
+  rapidInput: 0
   pausePlayer: {fileID: 0}
---- !u!114 &1000451379206089041
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1000451379206089043}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Actions: {fileID: -944628639613478452, guid: 1fbf3dcea99b03942b04fac4b66d2c19, type: 3}
-  m_NotificationBehavior: 0
-  m_UIInputModule: {fileID: 0}
-  m_DeviceLostEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_DeviceRegainedEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_ControlsChangedEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_ActionEvents: []
-  m_NeverAutoSwitchControlSchemes: 0
-  m_DefaultControlScheme: 
-  m_DefaultActionMap: Player
-  m_SplitScreenIndex: -1
-  m_Camera: {fileID: 0}
 --- !u!1 &1000451379338254366
 GameObject:
   m_ObjectHideFlags: 0
@@ -387,7 +358,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 720, y: -50}
+  m_AnchoredPosition: {x: 709, y: -50}
   m_SizeDelta: {x: 338, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1000451379392293574
@@ -1203,7 +1174,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 1041.3333, y: -50}
+  m_AnchoredPosition: {x: 1023, y: -50}
   m_SizeDelta: {x: 290, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1000451380131606394
@@ -2131,19 +2102,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1009951023056850481, guid: 8c526f30be7a11c41be8054efdca85ef, type: 3}
       propertyPath: m_Name
-      value: Button
-      objectReference: {fileID: 0}
-    - target: {fileID: 1009951023056850495, guid: 8c526f30be7a11c41be8054efdca85ef, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 1000451380078642200}
-    - target: {fileID: 1009951023056850495, guid: 8c526f30be7a11c41be8054efdca85ef, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: ResumeGame
-      objectReference: {fileID: 0}
-    - target: {fileID: 1009951023056850495, guid: 8c526f30be7a11c41be8054efdca85ef, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: Hawaiian.UI.MainMenu.MainMenuButtonFunctions, Hawaiian.UI
+      value: Resume Button
       objectReference: {fileID: 0}
     - target: {fileID: 1009951023736066098, guid: 8c526f30be7a11c41be8054efdca85ef, type: 3}
       propertyPath: m_text
@@ -2172,7 +2131,7 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 1009951023056850481, guid: 8c526f30be7a11c41be8054efdca85ef, type: 3}
   m_PrefabInstance: {fileID: 1000451379588179368}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1000451380078642200
+--- !u!114 &4784967914599389037
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2181,15 +2140,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 280982534664203161}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: af123e572d2028d489491f491aeb9204, type: 3}
+  m_Script: {fileID: 11500000, guid: c8f22f29dac54ce2a242981420d64b3f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  function: 3
-  buildIndex: 0
-  callTransition: 1
-  displayControlsSelected:
-    m_PersistentCalls:
-      m_Calls: []
+  manager: {fileID: 11400000, guid: b205461929d08b7439e72030dc234753, type: 2}
 --- !u!1001 &1000451380145727129
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2401,19 +2355,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1009951023056850481, guid: 8c526f30be7a11c41be8054efdca85ef, type: 3}
       propertyPath: m_Name
-      value: Button (2)
-      objectReference: {fileID: 0}
-    - target: {fileID: 1009951023056850495, guid: 8c526f30be7a11c41be8054efdca85ef, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 1000451379270619852}
-    - target: {fileID: 1009951023056850495, guid: 8c526f30be7a11c41be8054efdca85ef, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: LoadSceneByIndex
-      objectReference: {fileID: 0}
-    - target: {fileID: 1009951023056850495, guid: 8c526f30be7a11c41be8054efdca85ef, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: Hawaiian.UI.MainMenu.MainMenuButtonFunctions, Hawaiian.UI
+      value: Exit Button
       objectReference: {fileID: 0}
     - target: {fileID: 1009951023736066098, guid: 8c526f30be7a11c41be8054efdca85ef, type: 3}
       propertyPath: m_text
@@ -2431,7 +2373,7 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 1009951023056850481, guid: 8c526f30be7a11c41be8054efdca85ef, type: 3}
   m_PrefabInstance: {fileID: 1000451380936029044}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1000451379270619852
+--- !u!114 &4211126736402073135
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2440,15 +2382,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 280982533852970309}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: af123e572d2028d489491f491aeb9204, type: 3}
+  m_Script: {fileID: 11500000, guid: 4f47a5ae40f34fd5ac1cdf26c4271195, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  function: 0
-  buildIndex: 0
-  callTransition: 1
-  displayControlsSelected:
-    m_PersistentCalls:
-      m_Calls: []
+  manager: {fileID: 11400000, guid: b205461929d08b7439e72030dc234753, type: 2}
+  sceneReference:
+    sceneAsset: {fileID: 102900000, guid: 4f35cff614acf774490bd35fbd174d70, type: 3}
+    scenePath: Assets/Scenes/MainMenu.unity
+  sceneChanger: {fileID: 11400000, guid: 3d32adecca106ad4a8e92d019d2654af, type: 2}
 --- !u!114 &280982533852970315 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1009951023056850495, guid: 8c526f30be7a11c41be8054efdca85ef, type: 3}
@@ -2553,23 +2494,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1009951023056850481, guid: 8c526f30be7a11c41be8054efdca85ef, type: 3}
       propertyPath: m_Name
-      value: Button (1)
+      value: Controls Button
       objectReference: {fileID: 0}
     - target: {fileID: 1009951023056850481, guid: 8c526f30be7a11c41be8054efdca85ef, type: 3}
       propertyPath: m_IsActive
       value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1009951023056850495, guid: 8c526f30be7a11c41be8054efdca85ef, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 1000451379410144762}
-    - target: {fileID: 1009951023056850495, guid: 8c526f30be7a11c41be8054efdca85ef, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: DisplayControls
-      objectReference: {fileID: 0}
-    - target: {fileID: 1009951023056850495, guid: 8c526f30be7a11c41be8054efdca85ef, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: Hawaiian.UI.MainMenu.MainMenuButtonFunctions, Hawaiian.UI
       objectReference: {fileID: 0}
     - target: {fileID: 1009951023736066098, guid: 8c526f30be7a11c41be8054efdca85ef, type: 3}
       propertyPath: m_text
@@ -2600,7 +2529,7 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 1009951023056850481, guid: 8c526f30be7a11c41be8054efdca85ef, type: 3}
   m_PrefabInstance: {fileID: 1000451381058776138}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1000451379410144762
+--- !u!114 &1903025295954062313
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2609,15 +2538,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 280982533994586747}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: af123e572d2028d489491f491aeb9204, type: 3}
+  m_Script: {fileID: 11500000, guid: e1317f2981eb448094ae50e17763fbc4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  function: 4
-  buildIndex: 0
-  callTransition: 0
-  displayControlsSelected:
-    m_PersistentCalls:
-      m_Calls: []
+  manager: {fileID: 11400000, guid: b205461929d08b7439e72030dc234753, type: 2}
+  dialoguePrefab: {fileID: 6701680597941144673, guid: ad9da8ae28d5a1446a50507627be2e64, type: 3}
 --- !u!1001 &2985658605660367112
 PrefabInstance:
   m_ObjectHideFlags: 0

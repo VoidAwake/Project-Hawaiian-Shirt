@@ -94,8 +94,12 @@ namespace Hawaiian.UI.MainMenu
                             //Debug.Log(selected + " " + buttons.Length);
 
                             // Update description of currently selected game mode in lobby
-                            if (buttons[selected].GetComponent<MainMenuButtonFunctions>().isModeSelectButton)
-                                FindObjectOfType<ModeLobbyManager>().UpdateGameModeDescription(selected);
+                            // TODO: Fixed for now but needs another look
+                            var mainMenuButtonFunctions = buttons[selected].GetComponent<MainMenuButtonFunctions>();
+                            
+                            if (mainMenuButtonFunctions != null)
+                                if (mainMenuButtonFunctions.isModeSelectButton)
+                                    FindObjectOfType<ModeLobbyManager>().UpdateGameModeDescription(selected);
                         }
                         moveBuffer = 1;
                     }
@@ -110,8 +114,12 @@ namespace Hawaiian.UI.MainMenu
                             //Debug.Log(selected +" "+ buttons.Length);
 
                             // Update description of currently selected game mode in lobby
-                            if (buttons[selected].GetComponent<MainMenuButtonFunctions>().isModeSelectButton)
-                                FindObjectOfType<ModeLobbyManager>().UpdateGameModeDescription(selected);
+                            // TODO: Fixed for now but needs another look
+                            var mainMenuButtonFunctions = buttons[selected].GetComponent<MainMenuButtonFunctions>();
+                            
+                            if (mainMenuButtonFunctions != null)
+                                if (mainMenuButtonFunctions.isModeSelectButton)
+                                    FindObjectOfType<ModeLobbyManager>().UpdateGameModeDescription(selected);
                         }
                         moveBuffer = -1;
                     }
@@ -121,8 +129,13 @@ namespace Hawaiian.UI.MainMenu
                     if (!cursorActive) { cursor.enabled = true; cursorActive = true; }
                     else
                     {
-                        buttons[selected].GetComponent<MainMenuButtonFunctions>().CallSerializedFunction();
+                        // TODO: Fixed for now but needs another look
+                        var mainMenuButtonFunctions = buttons[selected].GetComponent<MainMenuButtonFunctions>();
                         
+                        if (mainMenuButtonFunctions != null)
+                            mainMenuButtonFunctions.CallSerializedFunction();
+                        else
+                            buttons[selected].GetComponent<Button>().onClick.Invoke();
                         
                         disabled = true;
                     }

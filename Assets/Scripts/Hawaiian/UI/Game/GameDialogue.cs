@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using Hawaiian.Game;
-using Hawaiian.UI.MainMenu;
 using UI.Core;
 using UnityEngine;
 
@@ -11,10 +10,9 @@ namespace Hawaiian.UI.Game
         [SerializeField] private GameObject inventoryUIPrefab;
         [SerializeField] private Transform uiParent;
         [SerializeField] private Transform uiParentForFourPlayers;
-        [SerializeField] private MainMenuController mainMenuController;
-        [SerializeField] private MainMenuButtonFunctions pauseMenuController;
         [SerializeField] private GameObject tutorialBackground;
         [SerializeField] private GameManager gameManager;
+        [SerializeField] private GameObject pauseMenuDialoguePrefab;
 
         private int _inventoryCount = 0;
         private List<GameObject> inventoryGameObjects = new();
@@ -24,9 +22,6 @@ namespace Hawaiian.UI.Game
         protected override void OnPromote()
         {
             tutorialBackground.SetActive(false);
-            
-            if (mainMenuController.enabled)
-                mainMenuController.CursorToStartingState();
         }
 
         protected override void OnDemote() { }
@@ -48,16 +43,6 @@ namespace Hawaiian.UI.Game
             DisplayControls();
         }
 
-        private void OnEnable()
-        {
-            pauseMenuController.displayControlsSelected.AddListener(DisplayControls);
-        }
-
-        private void OnDisable()
-        {
-            pauseMenuController.displayControlsSelected.RemoveListener(DisplayControls);
-        }
-
         private void DisplayControls()
         {
             tutorialBackground.SetActive(true);
@@ -66,6 +51,14 @@ namespace Hawaiian.UI.Game
             
             Instantiate(gameMode.controlsInstructionsDialoguePrefab, transform.parent);
             Instantiate(gameMode.tutorialDialoguePrefab, transform.parent);
+        }
+
+        public void Pause()
+        {
+            // TODO: Just create an isPromoted variable
+            if (!canvasGroup.interactable) return;
+            
+            Instantiate(pauseMenuDialoguePrefab, transform.parent);
         }
     }
 }

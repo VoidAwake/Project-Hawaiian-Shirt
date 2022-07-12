@@ -1028,7 +1028,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6638286123732195131, guid: fe93fd4b04ca3d340865789a7d27cade, type: 3}
       propertyPath: m_InstanceId
-      value: -358298
+      value: -104028
       objectReference: {fileID: 0}
     - target: {fileID: 6924075283435537384, guid: fe93fd4b04ca3d340865789a7d27cade, type: 3}
       propertyPath: m_Name
@@ -1174,6 +1174,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameTime: {fileID: 11400000, guid: a7999ebb747644c42b10ad44fd3b305b, type: 2}
+  pauseGameEvent: {fileID: 11400000, guid: f581a12f799236641bfda7a19488a6ba, type: 2}
 --- !u!114 &5588978955059791629
 MonoBehaviour:
   m_ObjectHideFlags: 0

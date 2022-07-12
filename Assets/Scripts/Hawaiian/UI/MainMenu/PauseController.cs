@@ -1,16 +1,15 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Hawaiian.Utilities;
-using Hawaiian.Unit;
 
 namespace Hawaiian.UI.MainMenu
 {
     public class PauseController : MonoBehaviour
     {
         [SerializeField] ScriptableFloat gameTime;
-        MainMenuController menuController;
+        [SerializeField] private GameEvent pauseGameEvent;
+        
+        private MainMenuController menuController;
 
         public void OnMenuSelect(InputValue value)
         {
@@ -30,10 +29,13 @@ namespace Hawaiian.UI.MainMenu
             {
                 if (value.Get<float>() > 0.5f)
                 {
+                    pauseGameEvent.Raise();
+                    
                     menuController = FindObjectOfType<MainMenuController>();
+                    
                     if (menuController != null)
                     {
-                        if (!menuController.enabled && menuController.pausePlayer == null)
+                        if (menuController.pausePlayer == null)
                         {
                             PauseGame();
                         }
@@ -52,15 +54,7 @@ namespace Hawaiian.UI.MainMenu
 
         public void PauseGame()
         {
-            //menuController.gameObject.SetActive(true);
-            for (int i = 0; i < menuController.transform.childCount; i++)
-            {
-                menuController.transform.GetChild(i).gameObject.SetActive(true);
-            }
-
-            menuController.enabled = true;
             menuController.pausePlayer = this;
-            menuController.CursorToStartingState();
 
             gameTime.Value = 0.0f;
             Unit.Unit[] units = FindObjectsOfType<Unit.Unit>();
@@ -79,13 +73,6 @@ namespace Hawaiian.UI.MainMenu
                 unit.enabled = true;
             }
 
-            //menuController.gameObject.SetActive(false);
-            for (int i = 0; i < menuController.transform.childCount; i++)
-            {
-                menuController.transform.GetChild(i).gameObject.SetActive(false);
-            }
-
-            menuController.enabled = false;
             menuController.pausePlayer = null;
             menuController = null;
         }
