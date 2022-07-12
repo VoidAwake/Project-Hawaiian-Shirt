@@ -16,6 +16,8 @@ MonoBehaviour:
   displayName: Round Robbin'
   description: Race to nab the most treasure before the timer runs out! Attack other
     players to steal their treasures.
-  sceneReference:
-    sceneAsset: {fileID: 0}
-    scenePath: 
+  sceneReferences:
+  - sceneAsset: {fileID: 102900000, guid: 2261d57602b6c63458a5281ed2fff923, type: 3}
+    scenePath: Assets/Scenes/Eddie Second Secret.unity
+  - sceneAsset: {fileID: 102900000, guid: 8e4ef8966e3de0d40a859ea995ac6a92, type: 3}
+    scenePath: Assets/Scenes/Eddie Secret URP.unity

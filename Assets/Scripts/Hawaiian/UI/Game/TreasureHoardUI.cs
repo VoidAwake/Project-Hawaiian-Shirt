@@ -13,7 +13,7 @@ namespace Hawaiian.UI.Game
 
         public void GenerateTreasurePointUI()
         {
-            if (gameManager.CurrentGameMode != GameMode.TreasureHoard) return;
+            if (gameManager.CurrentGameMode.gameMode != GameMode.TreasureHoard) return;
             
             GameObject treasurePrefab = Instantiate(TreasureHoardUIPrefab, TreasureHoardUIParent);
             treasurePrefab.GetComponent<TreasurePointIndicator>().Initialise(playerManager.LastPlayerJoined);

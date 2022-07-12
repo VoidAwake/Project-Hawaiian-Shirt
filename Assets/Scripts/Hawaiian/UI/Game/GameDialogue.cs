@@ -67,7 +67,7 @@ namespace Hawaiian.UI.Game
         {
             tutorialBackground.SetActive(true);
             
-            if (gameManager.CurrentGameMode == GameMode.TreasureHoard)
+            if (gameManager.CurrentGameMode.gameMode == GameMode.TreasureHoard)
             {
                 Instantiate(_treasureHoardControlInstructionsPrefab, transform.parent);
                 Instantiate(_treasureHoardTutorialDialoguePrefab, transform.parent);

@@ -27,7 +27,7 @@ namespace Hawaiian.UI.CharacterSelect
         [SerializeField] private GameObject modeSelectCanvas;
         public MainMenuController menuController;                               // Scene reference. To assign button refernce to, and redirect player inputs.
         
-        public GameMode CurrentGameMode;
+        public GameModeSO CurrentGameMode;
         
         public List<LobbyPlayerController> LobbyPlayerControllers { get; set; }
         
@@ -69,7 +69,7 @@ namespace Hawaiian.UI.CharacterSelect
                 if (counter == 0) menuController.cursor.transform.localPosition = button.transform.localPosition;                   // Set cursor to initial position, for first element
                 button.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = gameModeSO.displayName;
                 MainMenuButtonFunctions buttonFunction = button.gameObject.AddComponent<MainMenuButtonFunctions>();                 // Add button function component
-                buttonFunction.SetButtonFunction(0, gameModeSO.gameMode);                            // Set button's function to load build index associated with game mode
+                buttonFunction.SetButtonFunction(0, gameModeSO);                            // Set button's function to load build index associated with game mode
                 buttonFunction.isModeSelectButton = true;                                                                           // Set button to tell this script to update selection's decription
                 buttons[counter] = button.GetComponent<Button>();
                 counter++;

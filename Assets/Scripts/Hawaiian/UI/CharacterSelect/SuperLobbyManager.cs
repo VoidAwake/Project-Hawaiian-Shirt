@@ -228,7 +228,7 @@ namespace Hawaiian.UI.CharacterSelect
             }
         }
 
-        public void SetGameMode(GameMode gameMode)
+        public void SetGameMode(GameModeSO gameMode)
         {
             modeLobbyManager.CurrentGameMode = gameMode;
         }

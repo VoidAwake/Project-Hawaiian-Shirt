@@ -82,7 +82,7 @@ namespace Hawaiian.Game
                 playerConfig.deviceIds.Select(InputSystem.GetDeviceById).ToArray()
             );
 
-            if (gameManager.CurrentGameMode == GameMode.TreasureHoard)
+            if (gameManager.CurrentGameMode.gameMode == GameMode.TreasureHoard)
             {
                 GameObject reference = Instantiate(_playerTreasurePrefab, _playerTreasureSpawnPoint[playerConfig.playerNumber].position, Quaternion.identity);
                 reference.GetComponent<PlayerTreasure>().PlayerReference = playerInput.GetComponent<IUnit>();
@@ -95,7 +95,7 @@ namespace Hawaiian.Game
 
         public void SaveScores()
         {
-            if (gameManager.CurrentGameMode == GameMode.TreasureHoard)
+            if (gameManager.CurrentGameMode.gameMode == GameMode.TreasureHoard)
             {
                 int i = 0;
                 
@@ -143,7 +143,7 @@ namespace Hawaiian.Game
 
                     addedInventory.Raise(inventoryController.inv);
 
-                    if (gameManager.CurrentGameMode == GameMode.TreasureHoard)
+                    if (gameManager.CurrentGameMode.gameMode == GameMode.TreasureHoard)
                     {
                         inventoryController.inv.inv[0] = _depositor;
                         inventoryController.inv.inv[1] = _detonator;

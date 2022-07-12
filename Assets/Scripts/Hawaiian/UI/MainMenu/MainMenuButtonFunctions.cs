@@ -15,7 +15,7 @@ namespace Hawaiian.UI.MainMenu
         [SerializeField] private SceneReference scene;
         public bool isModeSelectButton; // Cool code, for mode select screen
 
-        public GameMode gameMode; // Even cooler code for mode select
+        public GameModeSO gameMode; // Even cooler code for mode select
         
         public UnityEvent displayControlsSelected = new UnityEvent();
 
@@ -82,7 +82,7 @@ namespace Hawaiian.UI.MainMenu
             }
         }
         
-        public void SetButtonFunction(int newFunction, GameMode currentGameMode)
+        public void SetButtonFunction(int newFunction, GameModeSO currentGameMode)
         {
             function = (ButtonFunction)newFunction;
             gameMode = currentGameMode;

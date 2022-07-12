@@ -14,7 +14,7 @@ namespace Hawaiian.Game
 
         public enum GamePhase { Stealth, GameOver }
 
-        public GameMode CurrentGameMode { get; set; }
+        public GameModeSO CurrentGameMode { get; set; }
 
         private GamePhase phase;
 
@@ -43,9 +43,7 @@ namespace Hawaiian.Game
 
         public void LoadRandomLevel()
         {
-            var isHoardMode = CurrentGameMode == GameMode.TreasureHoard;
-
-            var levelSet = isHoardMode ? treasureHoardLevels : roundRobbinlevels;
+            var levelSet = CurrentGameMode.sceneReferences;
             
             if (levelSet.Count == 0) return;
 
