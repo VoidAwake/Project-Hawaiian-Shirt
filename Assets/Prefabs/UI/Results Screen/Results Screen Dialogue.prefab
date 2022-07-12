@@ -126,6 +126,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 21df38d2562da874b8d188338b2c2707, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  move: 0
   buttons:
   - {fileID: 1882099550005633708}
   - {fileID: 1882099550704264008}
@@ -135,6 +136,7 @@ MonoBehaviour:
   - {fileID: -1859449190, guid: a3627312065ae844b926aec3d48b7f5a, type: 3}
   - {fileID: 1988936865, guid: a3627312065ae844b926aec3d48b7f5a, type: 3}
   disabled: 1
+  rapidInput: 0
   pausePlayer: {fileID: 0}
 --- !u!114 &2064617177
 MonoBehaviour:
@@ -652,25 +654,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   manager: {fileID: 11400000, guid: b205461929d08b7439e72030dc234753, type: 2}
-  buildIndex: 0
---- !u!114 &1448644551323760732
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1882099550704264006}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: af123e572d2028d489491f491aeb9204, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  function: 0
-  buildIndex: 0
-  callTransition: 1
-  displayControlsSelected:
-    m_PersistentCalls:
-      m_Calls: []
+  sceneReference:
+    sceneAsset: {fileID: 102900000, guid: 4f35cff614acf774490bd35fbd174d70, type: 3}
+    scenePath: Assets/Scenes/MainMenu.unity
+  sceneChanger: {fileID: 11400000, guid: 3d32adecca106ad4a8e92d019d2654af, type: 2}
 --- !u!224 &1882099550704264007 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 1009951023056850480, guid: 8c526f30be7a11c41be8054efdca85ef, type: 3}
@@ -895,24 +882,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 1009951023056850481, guid: 8c526f30be7a11c41be8054efdca85ef, type: 3}
   m_PrefabInstance: {fileID: 1448644551733062803}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1448644551323760733
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1882099550005633698}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: af123e572d2028d489491f491aeb9204, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  function: 0
-  buildIndex: 2
-  callTransition: 1
-  displayControlsSelected:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!114 &1448644551733062806
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -926,7 +895,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   manager: {fileID: 11400000, guid: b205461929d08b7439e72030dc234753, type: 2}
-  buildIndex: 1
+  sceneReference:
+    sceneAsset: {fileID: 102900000, guid: d16a4626545988844af636cf388650df, type: 3}
+    scenePath: Assets/Scenes/CharacterSelect.unity
+  sceneChanger: {fileID: 11400000, guid: 3d32adecca106ad4a8e92d019d2654af, type: 2}
 --- !u!224 &1882099550005633699 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 1009951023056850480, guid: 8c526f30be7a11c41be8054efdca85ef, type: 3}
