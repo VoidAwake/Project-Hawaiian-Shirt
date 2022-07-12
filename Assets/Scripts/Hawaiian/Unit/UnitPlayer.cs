@@ -100,9 +100,9 @@ namespace Hawaiian.Unit
 
         public override void Initialise(int characterNumber, int playerNumber)
         {
-            base.Initialise(characterNumber, playerNumber);
-
             PlayerNumber = playerNumber;
+            
+            base.Initialise(characterNumber, playerNumber);
         }
         
         public Color32 PlayerColour { get; set; }
