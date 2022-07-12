@@ -19,3 +19,5 @@ MonoBehaviour:
   sceneReferences:
   - sceneAsset: {fileID: 102900000, guid: 33d5af66925ac9f4582c514f34f6593f, type: 3}
     scenePath: Assets/Scenes/Francisco's Treasure Hoard Level One.unity
+  controlsInstructionsDialoguePrefab: {fileID: 6701680597941144673, guid: ad9da8ae28d5a1446a50507627be2e64, type: 3}
+  tutorialDialoguePrefab: {fileID: 4814276844058300917, guid: 021eb3a714576614e9bb4618ab3e56e5, type: 3}

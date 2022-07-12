@@ -10,5 +10,7 @@ namespace Hawaiian.Game
         public string displayName;
         public string description;
         public List<SceneReference> sceneReferences;
+        public GameObject controlsInstructionsDialoguePrefab;
+        public GameObject tutorialDialoguePrefab;
     }
 }

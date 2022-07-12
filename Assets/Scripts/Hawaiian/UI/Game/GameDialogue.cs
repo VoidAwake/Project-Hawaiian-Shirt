@@ -11,11 +11,6 @@ namespace Hawaiian.UI.Game
         [SerializeField] private GameObject inventoryUIPrefab;
         [SerializeField] private Transform uiParent;
         [SerializeField] private Transform uiParentForFourPlayers;
-        [SerializeField] private GameObject tutorialDialoguePrefab;
-        [SerializeField] private GameObject _treasureHoardTutorialDialoguePrefab;
-        [SerializeField] private GameObject _treasureHoardControlInstructionsPrefab;
-
-        [SerializeField] private GameObject controlsInstructionsDialoguePrefab;
         [SerializeField] private MainMenuController mainMenuController;
         [SerializeField] private MainMenuButtonFunctions pauseMenuController;
         [SerializeField] private GameObject tutorialBackground;
@@ -66,16 +61,11 @@ namespace Hawaiian.UI.Game
         private void DisplayControls()
         {
             tutorialBackground.SetActive(true);
+
+            var gameMode = gameManager.CurrentGameMode;
             
-            if (gameManager.CurrentGameMode.gameMode == GameMode.TreasureHoard)
-            {
-                Instantiate(_treasureHoardControlInstructionsPrefab, transform.parent);
-                Instantiate(_treasureHoardTutorialDialoguePrefab, transform.parent);
-                return;
-            }
-            
-            Instantiate(controlsInstructionsDialoguePrefab, transform.parent);
-            Instantiate(tutorialDialoguePrefab, transform.parent);
+            Instantiate(gameMode.controlsInstructionsDialoguePrefab, transform.parent);
+            Instantiate(gameMode.tutorialDialoguePrefab, transform.parent);
         }
     }
 }
