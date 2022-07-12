@@ -52,6 +52,12 @@ MonoBehaviour:
   - {fileID: 8300000, guid: c27c43a424f94c84b87424c97cae4a2e, type: 3}
   - {fileID: 8300000, guid: e0a527b6c686a2249918e7c8f8902a36, type: 3}
   - {fileID: 8300000, guid: 005b3b8a43d6c7946a0f912a25542aa3, type: 3}
+  - {fileID: 8300000, guid: 13eba58a03aee5a498657c27bbc379da, type: 3}
+  - {fileID: 8300000, guid: ec9b8b8e8cb72f34289b6c0ab3461ca1, type: 3}
+  - {fileID: 8300000, guid: 784c3eac6a0479643a68c5bb8355c92f, type: 3}
+  - {fileID: 8300000, guid: dfe1f13ac179db34298e22b054775fe8, type: 3}
+  - {fileID: 8300000, guid: 6e108782c97061047b71e2f7d4383acc, type: 3}
+  - {fileID: 8300000, guid: 3434b141b1bf6e0439c14444b440ffc8, type: 3}
   uiSfx: {fileID: 8479217165420016018}
   sfx: {fileID: 8479217165420016017}
 --- !u!82 &8479217165420016018

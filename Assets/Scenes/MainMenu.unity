@@ -243,11 +243,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   function: 0
-  callTransition: 1
   sceneChanger: {fileID: 11400000, guid: 3d32adecca106ad4a8e92d019d2654af, type: 2}
   scene:
     sceneAsset: {fileID: 102900000, guid: d16a4626545988844af636cf388650df, type: 3}
     scenePath: Assets/Scenes/CharacterSelect.unity
+  isModeSelectButton: 0
+  gameMode: {fileID: 0}
   displayControlsSelected:
     m_PersistentCalls:
       m_Calls: []
@@ -623,11 +624,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   function: 0
-  callTransition: 0
   sceneChanger: {fileID: 0}
   scene:
     sceneAsset: {fileID: 0}
     scenePath: 
+  isModeSelectButton: 0
+  gameMode: {fileID: 0}
   displayControlsSelected:
     m_PersistentCalls:
       m_Calls: []
@@ -961,11 +963,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   function: 1
-  callTransition: 0
   sceneChanger: {fileID: 11400000, guid: 3d32adecca106ad4a8e92d019d2654af, type: 2}
   scene:
     sceneAsset: {fileID: 0}
     scenePath: 
+  isModeSelectButton: 0
+  gameMode: {fileID: 0}
   displayControlsSelected:
     m_PersistentCalls:
       m_Calls: []
@@ -1693,34 +1696,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: AudioManager
       objectReference: {fileID: 0}
-    - target: {fileID: 8479217165420016019, guid: 17fc3a0c0aeba0948ae112a58a115d49, type: 3}
-      propertyPath: sfxClips.Array.size
-      value: 11
-      objectReference: {fileID: 0}
-    - target: {fileID: 8479217165420016019, guid: 17fc3a0c0aeba0948ae112a58a115d49, type: 3}
-      propertyPath: sfxClips.Array.data[5]
-      value: 
-      objectReference: {fileID: 8300000, guid: 13eba58a03aee5a498657c27bbc379da, type: 3}
-    - target: {fileID: 8479217165420016019, guid: 17fc3a0c0aeba0948ae112a58a115d49, type: 3}
-      propertyPath: sfxClips.Array.data[6]
-      value: 
-      objectReference: {fileID: 8300000, guid: ec9b8b8e8cb72f34289b6c0ab3461ca1, type: 3}
-    - target: {fileID: 8479217165420016019, guid: 17fc3a0c0aeba0948ae112a58a115d49, type: 3}
-      propertyPath: sfxClips.Array.data[7]
-      value: 
-      objectReference: {fileID: 8300000, guid: 784c3eac6a0479643a68c5bb8355c92f, type: 3}
-    - target: {fileID: 8479217165420016019, guid: 17fc3a0c0aeba0948ae112a58a115d49, type: 3}
-      propertyPath: sfxClips.Array.data[8]
-      value: 
-      objectReference: {fileID: 8300000, guid: dfe1f13ac179db34298e22b054775fe8, type: 3}
-    - target: {fileID: 8479217165420016019, guid: 17fc3a0c0aeba0948ae112a58a115d49, type: 3}
-      propertyPath: sfxClips.Array.data[9]
-      value: 
-      objectReference: {fileID: 8300000, guid: 6e108782c97061047b71e2f7d4383acc, type: 3}
-    - target: {fileID: 8479217165420016019, guid: 17fc3a0c0aeba0948ae112a58a115d49, type: 3}
-      propertyPath: sfxClips.Array.data[10]
-      value: 
-      objectReference: {fileID: 8300000, guid: 3434b141b1bf6e0439c14444b440ffc8, type: 3}
     - target: {fileID: 8479217165420016020, guid: 17fc3a0c0aeba0948ae112a58a115d49, type: 3}
       propertyPath: m_RootOrder
       value: 4
