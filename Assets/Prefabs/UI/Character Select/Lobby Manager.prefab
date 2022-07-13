@@ -143,15 +143,18 @@ MonoBehaviour:
   - {x: 0, y: -0.84}
   - {x: 7.5, y: -6}
   - {x: 4, y: 0}
-  buttonPrefab: {fileID: 1009951023056850481, guid: 8c526f30be7a11c41be8054efdca85ef, type: 3}
+  modeSelectButtonPrefab: {fileID: 7453662035632870295, guid: 1c3e3e1af1a5c2c4cbc42638cc4963e3, type: 3}
   buttonsParent: {fileID: 0}
   gameModeNameTMP: {fileID: 0}
   gameModeDescriptionTMP: {fileID: 0}
   playerConfigManager: {fileID: 11400000, guid: 424474a542819c946b03786b7421e196, type: 2}
   modeSelectCanvas: {fileID: 0}
   menuController: {fileID: 0}
-  CurrentGameMode: 0
+  CurrentGameMode: {fileID: 0}
   mainMenuRequested:
+    m_PersistentCalls:
+      m_Calls: []
+  startGameRequested:
     m_PersistentCalls:
       m_Calls: []
 --- !u!114 &7105355168855903381

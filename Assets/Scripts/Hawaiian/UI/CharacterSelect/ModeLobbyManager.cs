@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Cysharp.Threading.Tasks.Triggers;
 using Hawaiian.Game;
 using Hawaiian.UI.Game;
+using Hawaiian.UI.General;
 using Hawaiian.UI.MainMenu;
 using TMPro;
 using UnityEngine;
@@ -20,7 +21,7 @@ namespace Hawaiian.UI.CharacterSelect
         [SerializeField] private Image[] selectedBGs;                           // Scene reference. Reduce alpha on BG of unselected characters.
         [SerializeField] private Sprite[] portraitSprites;                      // Asset reference. Sprites for character portraits.
         [SerializeField] private Vector2[] selectedPortraitOffsets;             // To be entered in inspector. Individual offsets for each character's portrait sprite.
-        [SerializeField] private GameObject buttonPrefab;                       // Asset reference. To be instantiated in runtime, set up, and assigned to menu controller.
+        [SerializeField] private GameObject modeSelectButtonPrefab;                       // Asset reference. To be instantiated in runtime, set up, and assigned to menu controller.
         [SerializeField] private GridLayoutGroup buttonsParent;                 // Scene reference. To be positioned, and have buttons parented to.
         [SerializeField] private TextMeshProUGUI gameModeNameTMP;
         [SerializeField] private TextMeshProUGUI gameModeDescriptionTMP;
@@ -39,7 +40,7 @@ namespace Hawaiian.UI.CharacterSelect
         private void OnEnable()
         {
             modeSelectCanvas.gameObject.SetActive(true);
-            menuController.disabled = false;
+            menuController.enabled = true;
             
             SetUpSelectedCharacterUI();
             
@@ -51,7 +52,7 @@ namespace Hawaiian.UI.CharacterSelect
         private void OnDisable()
         {
             modeSelectCanvas.gameObject.SetActive(false);
-            menuController.disabled = true;
+            menuController.enabled = false;
         }
 
         private void Start()
@@ -61,36 +62,58 @@ namespace Hawaiian.UI.CharacterSelect
 
         private void CreateGameModeButtons()
         {
-            // Create buttons for mode select screen
-            Button[] buttons = new Button[gameModeSOs.Length];
             int counter = 0;
             foreach (GameModeSO gameModeSO in gameModeSOs)
             {
-                GameObject buttonObject = Instantiate(buttonPrefab, buttonsParent.transform);                                             // Create and parent button
+                GameObject buttonObject = Instantiate(modeSelectButtonPrefab, buttonsParent.transform);
+
+                var modeSelectButton = buttonObject.GetComponent<ModeSelectButton>();
+
+                // TODO: We should make this logic into a utility
+                if (modeSelectButton == null)
+                {
+                    throw new Exception(
+                        $"{nameof(modeSelectButtonPrefab)} does not contain {nameof(ModeSelectButton)} component;");
+                }
+
+                modeSelectButton.Initialise(gameModeSO);
+                modeSelectButton.clicked.AddListener(OnModeButtonClicked);
+                modeSelectButton.selected.AddListener(OnModeButtonSelected);
+
+                // TODO: Replace with vertical layout group
                 float yPos = counter * -130.0f;
                 buttonObject.transform.localPosition = new Vector2(0.0f, yPos);
+                
                 if (counter == 0) menuController.cursor.transform.localPosition = buttonObject.transform.localPosition;                   // Set cursor to initial position, for first element
-                buttonObject.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = gameModeSO.displayName;
-                var button = buttonObject.GetComponent<Button>();
-                button.onClick.AddListener(() => OnModeButtonClicked(gameModeSO));
-                buttons[counter] = buttonObject.GetComponent<Button>();
                 counter++;
             }
-            menuController.buttons = buttons;                                                                                       // Assign reference to new buttons in menu controller
+
+            menuController.enabled = false;
+            menuController.enabled = true;
+            
             buttonsParent.transform.localPosition = new Vector2(-200.0f,
                 ((gameModeSOs.Length * 100.0f) + ((gameModeSOs.Length - 1) * 30.0f)) / 2.0f - 50.0f);                                   // Position buttons' parent so that they're centred on screen
             menuController.cursor.transform.parent.localPosition = new Vector2(-200.0f,
                 ((gameModeSOs.Length * 100.0f) + ((gameModeSOs.Length - 1) * 30.0f)) / 2.0f - 50.0f);                                   // Gotta move parent of cursor too, because awesome code
 
             // Update textmesh elements
-            UpdateGameModeDescription(0);
+            UpdateGameModeDescription(gameModeSOs[0]);
         }
 
-        private void OnModeButtonClicked(GameModeSO gameModeSO)
+        private void OnModeButtonClicked(Button<CharacterSelectDialogue> button)
         {
+            var gameModeSO = ((ModeSelectButton) button).GameModeSO;
+            
             CurrentGameMode = gameModeSO;
 
             startGameRequested.Invoke();
+        }
+
+        private void OnModeButtonSelected(MenuButton<CharacterSelectDialogue> menuButton)
+        {
+            var gameModeSO = ((ModeSelectButton) menuButton).GameModeSO;
+            
+            UpdateGameModeDescription(gameModeSO);
         }
 
         private void SetUpSelectedCharacterUI()
@@ -109,10 +132,10 @@ namespace Hawaiian.UI.CharacterSelect
             mainMenuRequested.Invoke();
         }
 
-        public void UpdateGameModeDescription(int index)
+        public void UpdateGameModeDescription(GameModeSO gameModeSO)
         {
-            gameModeNameTMP.text = gameModeSOs[index].displayName;
-            gameModeDescriptionTMP.text = gameModeSOs[index].description;
+            gameModeNameTMP.text = gameModeSO.displayName;
+            gameModeDescriptionTMP.text = gameModeSO.description;
         }
     }
 }
