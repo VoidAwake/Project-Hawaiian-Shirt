@@ -125,7 +125,6 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   text: {fileID: 7453662036312608148}
-  gameModeSO: {fileID: 0}
 --- !u!114 &7453662036312608148 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1009951023736066098, guid: 8c526f30be7a11c41be8054efdca85ef, type: 3}

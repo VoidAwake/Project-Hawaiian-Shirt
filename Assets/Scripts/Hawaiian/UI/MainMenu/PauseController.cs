@@ -9,52 +9,35 @@ namespace Hawaiian.UI.MainMenu
         [SerializeField] ScriptableFloat gameTime;
         [SerializeField] private GameEvent pauseGameEvent;
         
-        private MainMenuController menuController;
-
-        public void OnMenuSelect(InputValue value)
-        {
-            if (menuController != null) menuController.OnMenuSelect(value);
-        }
-        public void OnActionA(InputValue value)
-        {
-            if (menuController != null) menuController.OnActionA(value);
-        }
+        public static PauseController pausePlayer;
+        
         public void OnActionB(InputValue value)
         {
-            if (menuController != null) menuController.OnActionB(value);
+            if (pausePlayer == this)
+            {
+                ResumeGame();
+            }
         }
         public void OnMenu(InputValue value)
         {
-            if (menuController == null)
+            if (!(value.Get<float>() > 0.5f)) return;
+
+            if (pausePlayer == this)
             {
-                if (value.Get<float>() > 0.5f)
-                {
-                    pauseGameEvent.Raise();
-                    
-                    menuController = FindObjectOfType<MainMenuController>();
-                    
-                    if (menuController != null)
-                    {
-                        if (menuController.pausePlayer == null)
-                        {
-                            PauseGame();
-                        }
-                        else
-                        {
-                            menuController = null;
-                        }
-                    }
-                }
+                OnActionB(value);
+                return;
             }
-            else
-            {
-                menuController.OnActionB(value);
-            }
+
+            if (pausePlayer != null) return;
+            
+            pauseGameEvent.Raise();
+                    
+            PauseGame();
         }
 
         public void PauseGame()
         {
-            menuController.pausePlayer = this;
+            pausePlayer = this;
 
             gameTime.Value = 0.0f;
             Unit.Unit[] units = FindObjectsOfType<Unit.Unit>();
@@ -73,8 +56,7 @@ namespace Hawaiian.UI.MainMenu
                 unit.enabled = true;
             }
 
-            menuController.pausePlayer = null;
-            menuController = null;
+            pausePlayer = null;
         }
     }
 }

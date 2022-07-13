@@ -1,25 +1,27 @@
 ﻿using Hawaiian.UI.MainMenu;
 using UI.Core;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Hawaiian.UI.PauseMenu
 {
     public class PauseMenuDialogue : Dialogue
     {
-        [SerializeField] private MainMenuController mainMenuController;
+        [SerializeField] private Selectable firstSelectable;
         
         protected override void OnClose() { }
 
         protected override void OnPromote()
         {
-            mainMenuController.CursorToStartingState();
+            // TODO: For some reason this doesn't trigger MenuButtonCursor.OnSelect
+            firstSelectable.Select();
         }
 
         protected override void OnDemote() { }
 
         public void ResumeGame()
         {
-            mainMenuController.pausePlayer.ResumeGame();
+            PauseController.pausePlayer.ResumeGame();
             
             // TODO: Dialogues shouldn't destroy themselves
             manager.Pop();

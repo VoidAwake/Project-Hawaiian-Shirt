@@ -67,15 +67,6 @@ namespace Hawaiian.UI.CharacterSelect
             OnPlayerCharacterSelect((int) value.Get<float>());;
         }
 
-        public void OnMenuSelect(InputValue value)
-        {
-            if (!inputEnabled) return;
-
-            if (Status != PlayerStatus.SelectingMode) return;
-
-            modeLobbyManager.menuController.OnMenuSelect(value);
-        }
-
         public void OnActionA(InputValue value)
         {
             if (!inputEnabled) return;
@@ -94,7 +85,6 @@ namespace Hawaiian.UI.CharacterSelect
                     lobbyManager.RequestStartGame();
                     break;
                 case PlayerStatus.SelectingMode:
-                    modeLobbyManager.menuController.OnActionA(value);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();

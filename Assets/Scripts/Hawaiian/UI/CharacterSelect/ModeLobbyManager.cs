@@ -1,14 +1,10 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
-using Cysharp.Threading.Tasks.Triggers;
 using Hawaiian.Game;
-using Hawaiian.UI.Game;
 using Hawaiian.UI.General;
-using Hawaiian.UI.MainMenu;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace Hawaiian.UI.CharacterSelect
@@ -22,13 +18,12 @@ namespace Hawaiian.UI.CharacterSelect
         [SerializeField] private Sprite[] portraitSprites;                      // Asset reference. Sprites for character portraits.
         [SerializeField] private Vector2[] selectedPortraitOffsets;             // To be entered in inspector. Individual offsets for each character's portrait sprite.
         [SerializeField] private GameObject modeSelectButtonPrefab;                       // Asset reference. To be instantiated in runtime, set up, and assigned to menu controller.
-        [SerializeField] private GridLayoutGroup buttonsParent;                 // Scene reference. To be positioned, and have buttons parented to.
+        [SerializeField] private Transform buttonsParent;                 // Scene reference. To be positioned, and have buttons parented to.
         [SerializeField] private TextMeshProUGUI gameModeNameTMP;
         [SerializeField] private TextMeshProUGUI gameModeDescriptionTMP;
         [SerializeField] private PlayerConfigManager playerConfigManager;
         
         [SerializeField] private GameObject modeSelectCanvas;
-        public MainMenuController menuController;                               // Scene reference. To assign button refernce to, and redirect player inputs.
         
         public GameModeSO CurrentGameMode;
         
@@ -40,19 +35,13 @@ namespace Hawaiian.UI.CharacterSelect
         private void OnEnable()
         {
             modeSelectCanvas.gameObject.SetActive(true);
-            menuController.enabled = true;
             
             SetUpSelectedCharacterUI();
-            
-            // Format buttons
-            //buttonsParent.enabled = !enable;
-            //menuController.cursor.gameObject.SetActive(enable);
         }
 
         private void OnDisable()
         {
             modeSelectCanvas.gameObject.SetActive(false);
-            menuController.enabled = false;
         }
 
         private void Start()
@@ -62,10 +51,12 @@ namespace Hawaiian.UI.CharacterSelect
 
         private void CreateGameModeButtons()
         {
-            int counter = 0;
+            var modeSelectButtons = new List<ModeSelectButton>();
             foreach (GameModeSO gameModeSO in gameModeSOs)
             {
                 GameObject buttonObject = Instantiate(modeSelectButtonPrefab, buttonsParent.transform);
+
+                buttonObject.name = $"{gameModeSO.displayName} Mode Select Button";
 
                 var modeSelectButton = buttonObject.GetComponent<ModeSelectButton>();
 
@@ -75,27 +66,16 @@ namespace Hawaiian.UI.CharacterSelect
                     throw new Exception(
                         $"{nameof(modeSelectButtonPrefab)} does not contain {nameof(ModeSelectButton)} component;");
                 }
+                
+                modeSelectButtons.Add(modeSelectButton);
 
                 modeSelectButton.Initialise(gameModeSO);
                 modeSelectButton.clicked.AddListener(OnModeButtonClicked);
                 modeSelectButton.selected.AddListener(OnModeButtonSelected);
-
-                // TODO: Replace with vertical layout group
-                float yPos = counter * -130.0f;
-                buttonObject.transform.localPosition = new Vector2(0.0f, yPos);
-                
-                if (counter == 0) menuController.cursor.transform.localPosition = buttonObject.transform.localPosition;                   // Set cursor to initial position, for first element
-                counter++;
             }
 
-            menuController.enabled = false;
-            menuController.enabled = true;
+            modeSelectButtons[0].GetComponent<Button>().Select();
             
-            buttonsParent.transform.localPosition = new Vector2(-200.0f,
-                ((gameModeSOs.Length * 100.0f) + ((gameModeSOs.Length - 1) * 30.0f)) / 2.0f - 50.0f);                                   // Position buttons' parent so that they're centred on screen
-            menuController.cursor.transform.parent.localPosition = new Vector2(-200.0f,
-                ((gameModeSOs.Length * 100.0f) + ((gameModeSOs.Length - 1) * 30.0f)) / 2.0f - 50.0f);                                   // Gotta move parent of cursor too, because awesome code
-
             // Update textmesh elements
             UpdateGameModeDescription(gameModeSOs[0]);
         }
