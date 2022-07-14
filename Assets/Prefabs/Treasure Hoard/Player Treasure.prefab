@@ -434,12 +434,14 @@ MonoBehaviour:
   defuseTarget: 0
   defuseTimer: 0
   DroppedItemPrefab: {fileID: 3056942884218095950, guid: 37132a09f5d1c4046a4bb460892afc47, type: 3}
+  playerColors: {fileID: 11400000, guid: c18c22b93a97a954ca8ab46031e350bd, type: 2}
+  spriteRenderer: {fileID: 4821606711847234980}
   _items: []
   DetonatorReference: {fileID: 0}
-  UpdatePoint: {fileID: 11400000, guid: d4faf75e891b82d4a8bab1b0a693e484, type: 2}
-  AddPoints: {fileID: 11400000, guid: cf0f7fcd69c8ec242b40ab6280e2c28e, type: 2}
   IsBeingDetonated: 0
-  CurrentPoints: 0
+  pointsChanged:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &6044853708255425988
 MonoBehaviour:
   m_ObjectHideFlags: 0

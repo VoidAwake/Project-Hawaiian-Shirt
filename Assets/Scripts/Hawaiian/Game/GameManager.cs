@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using Hawaiian.Utilities;
+﻿using Hawaiian.Utilities;
 using UnityEngine;
 
 namespace Hawaiian.Game
@@ -9,12 +8,12 @@ namespace Hawaiian.Game
     {
         [SerializeField] private SceneChanger sceneChanger;
         [SerializeField] private SceneReference resultsScene;
-        [SerializeField] private List<SceneReference> roundRobbinlevels;
-        [SerializeField] private List<SceneReference> treasureHoardLevels;
 
         public enum GamePhase { Stealth, GameOver }
 
         public GameModeSO CurrentGameMode { get; set; }
+
+        public GameModeSceneReference GameModeSceneReference { get; private set; }
 
         private GamePhase phase;
 
@@ -47,7 +46,9 @@ namespace Hawaiian.Game
             
             if (levelSet.Count == 0) return;
 
-            sceneChanger.ChangeScene(levelSet[Random.Range(0, levelSet.Count)]);
+            GameModeSceneReference = levelSet[Random.Range(0, levelSet.Count)];
+            
+            sceneChanger.ChangeScene(GameModeSceneReference.sceneReference);
         }
     }
 }

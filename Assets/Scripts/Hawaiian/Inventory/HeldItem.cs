@@ -56,7 +56,7 @@ namespace Hawaiian.Inventory
 
                 if (listener.token != DetonateBase) continue;
 
-                if (listener.gameObject.GetComponent<PlayerTreasure>().PlayerReference !=
+                if (listener.gameObject.GetComponent<PlayerTreasure>().playerInventoryController !=
                     gameObject.GetComponentInParent<IUnit>())
                 {
                     if (listener.gameObject.GetComponent<PlayerTreasure>().DetonatorReference != null)
@@ -84,7 +84,7 @@ namespace Hawaiian.Inventory
 
                 if (listener.token != DetonateBase) continue;
 
-                if (listener.gameObject.GetComponent<PlayerTreasure>().PlayerReference !=
+                if (listener.gameObject.GetComponent<PlayerTreasure>().playerInventoryController !=
                     gameObject.GetComponentInParent<IUnit>())
                 {
                     if (listener.gameObject.GetComponent<PlayerTreasure>().DetonatorReference != null)
@@ -111,7 +111,7 @@ namespace Hawaiian.Inventory
 
                 if (listener.token != DetonateBase) continue;
 
-                if (listener.gameObject.GetComponent<PlayerTreasure>().PlayerReference !=
+                if (listener.gameObject.GetComponent<PlayerTreasure>().playerInventoryController !=
                     gameObject.GetComponentInParent<IUnit>())
                 {
                     if (listener.gameObject.GetComponent<PlayerTreasure>().DetonatorReference != null)

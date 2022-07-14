@@ -92,7 +92,7 @@ GameObject:
   - component: {fileID: 3012881388243578115}
   - component: {fileID: 2219253667184475333}
   m_Layer: 0
-  m_Name: TreasureUI
+  m_Name: Treasure Point Indicator
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -219,7 +219,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 7660955185848710152}
         m_TargetAssemblyTypeName: TreasurePointIndicator, Hawaiian.UI
-        m_MethodName: UpdatePointIndicator
+        m_MethodName: UpdatePoints
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

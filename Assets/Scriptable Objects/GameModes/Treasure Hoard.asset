@@ -12,12 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30cf9dc979324af38064b1e692e5bfad, type: 3}
   m_Name: Treasure Hoard
   m_EditorClassIdentifier: 
-  gameMode: 3
   displayName: Treasure Hoard
   description: Grab and steal treasure to add to your hoard and sabotage other players
     hoard.
   sceneReferences:
-  - sceneAsset: {fileID: 102900000, guid: 33d5af66925ac9f4582c514f34f6593f, type: 3}
-    scenePath: Assets/Scenes/Francisco's Treasure Hoard Level One.unity
+  - {fileID: 11400000, guid: 26959702288a2744f8386a163c285f56, type: 2}
   controlsInstructionsDialoguePrefab: {fileID: 6701680597941144673, guid: ad9da8ae28d5a1446a50507627be2e64, type: 3}
   tutorialDialoguePrefab: {fileID: 4814276844058300917, guid: 021eb3a714576614e9bb4618ab3e56e5, type: 3}
+  modeControllerPrefab: {fileID: 8563792579945961907, guid: 1e8b711e78001bc41ad01ef4426fc557, type: 3}
+  modeUIPrefab: {fileID: 378428827036738159, guid: 1d50fbe35eab87342a6ea22ddca9ed68, type: 3}

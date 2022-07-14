@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 2395206677613711887}
   - component: {fileID: 4841726817478386292}
   m_Layer: 0
-  m_Name: Treasure Hoard
+  m_Name: Treasure Hoard UI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -54,8 +54,6 @@ MonoBehaviour:
   manager: {fileID: 11400000, guid: b205461929d08b7439e72030dc234753, type: 2}
   TreasureHoardUIPrefab: {fileID: 4208669935238418296, guid: fc1f86168dfd8314d9e9c72826735b0e, type: 3}
   TreasureHoardUIParent: {fileID: 7552181274152550560}
-  playerManager: {fileID: 0}
-  gameManager: {fileID: 11400000, guid: c305914e6d352644190ef7ee43a51bbd, type: 2}
 --- !u!114 &2395206677613711887
 MonoBehaviour:
   m_ObjectHideFlags: 0
