@@ -18,7 +18,7 @@ namespace Hawaiian.Unit
         private bool hasReachedDestination;
 
         private float _currentDistance;
-        private Vector2 _targetLocation;
+       [SerializeField] private Vector2 _targetLocation;
         private IUnit _user;
         private bool hasCollided = false;
         private int _currentBounces;

@@ -80,8 +80,8 @@ public class ArrowTrap : TrapController
         {
             x = new Vector3(1f, 0f, 0f);
         }
-
-        return transform.position + x*projectileDistance;
+        //Debug.Log("GET DIR IS" + (transform.position + x * projectileDistance));
+        return transform.position + x * projectileDistance;
     }
     
 }
