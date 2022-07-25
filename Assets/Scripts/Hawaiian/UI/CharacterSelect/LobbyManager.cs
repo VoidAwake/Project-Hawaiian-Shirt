@@ -41,12 +41,12 @@ namespace Hawaiian.UI.CharacterSelect
 
         private void OnEnable()
         {
-            characterSelectCanvas.gameObject.SetActive(true);
+            if (characterSelectCanvas) characterSelectCanvas.SetActive(true);
         }
         
         private void OnDisable()
         {
-            characterSelectCanvas.gameObject.SetActive(false);
+            if (characterSelectCanvas) characterSelectCanvas.SetActive(false);
         }
 
         private void Start()

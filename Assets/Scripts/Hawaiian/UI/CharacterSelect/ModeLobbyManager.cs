@@ -35,14 +35,14 @@ namespace Hawaiian.UI.CharacterSelect
         
         private void OnEnable()
         {
-            modeSelectCanvas.gameObject.SetActive(true);
+            if (modeSelectCanvas) modeSelectCanvas.SetActive(true);
             
             SetUpSelectedCharacterUI();
         }
 
         private void OnDisable()
         {
-            modeSelectCanvas.gameObject.SetActive(false);
+            if (modeSelectCanvas) modeSelectCanvas.SetActive(false);
         }
 
         private void Start()
