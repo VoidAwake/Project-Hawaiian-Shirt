@@ -1,4 +1,5 @@
-﻿using Hawaiian.Utilities;
+﻿using Hawaiian.Game.GameModes;
+using Hawaiian.Utilities;
 using UnityEngine;
 
 namespace Hawaiian.Game
@@ -13,7 +14,7 @@ namespace Hawaiian.Game
 
         public GameModeSO CurrentGameMode { get; set; }
 
-        public GameModeSceneReference GameModeSceneReference { get; private set; }
+        public ModeSceneReference ModeSceneReference { get; private set; }
 
         private GamePhase phase;
 
@@ -46,9 +47,9 @@ namespace Hawaiian.Game
             
             if (levelSet.Count == 0) return;
 
-            GameModeSceneReference = levelSet[Random.Range(0, levelSet.Count)];
+            ModeSceneReference = levelSet[Random.Range(0, levelSet.Count)];
             
-            sceneChanger.ChangeScene(GameModeSceneReference.sceneReference);
+            sceneChanger.ChangeScene(ModeSceneReference.sceneReference);
         }
     }
 }

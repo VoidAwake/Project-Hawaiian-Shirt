@@ -1,22 +1,13 @@
 using System.Linq;
-using Hawaiian.Game;
+using Hawaiian.Game.GameModes.TreasureHoard;
 using UnityEngine;
 
 namespace Hawaiian.UI.Game
 {
-    public class TreasureHoardUI : ModeUI
+    public class TreasureHoardUI : ModeUI<TreasureHoardModeController>
     {
         [SerializeField] private GameObject TreasureHoardUIPrefab;
         [SerializeField] private Transform TreasureHoardUIParent;
-        
-        private TreasureHoardModeController modeController;
-
-        public override void Initialise(IModeController modeController)
-        {
-            base.Initialise(modeController);
-            
-            this.modeController = (TreasureHoardModeController) modeController;
-        }
 
         public void GenerateTreasurePointUI()
         {

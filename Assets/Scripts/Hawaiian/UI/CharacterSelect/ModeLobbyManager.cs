@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Hawaiian.Game;
+using Hawaiian.Game.GameModes;
 using Hawaiian.UI.General;
 using TMPro;
 using UnityEngine;

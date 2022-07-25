@@ -1,15 +1,19 @@
-﻿using Hawaiian.Game;
+﻿using Hawaiian.Game.GameModes;
 using UI.Core;
 
 namespace Hawaiian.UI.Game
 {
-    // TODO: Should be using generics
-    public abstract class ModeUI : DialogueComponent<GameDialogue>
+    public abstract class ModeUI<T> : DialogueComponent<GameDialogue> where T : IModeController
     {
+        protected T modeController;
+        
         protected override void Subscribe() { }
 
         protected override void Unsubscribe() { }
 
-        public virtual void Initialise(IModeController modeController) { }
+        public virtual void Initialise(T modeController)
+        {
+            this.modeController = modeController;
+        }
     }
 }

@@ -30,7 +30,7 @@ MonoBehaviour:
     playerIndex: 1
     splitScreenIndex: 1
     controlScheme: Gamepad
-    deviceIds: 09000000
+    deviceIds: 0a000000
     isPlayer: 1
   - playerNumber: 2
     characterNumber: -1

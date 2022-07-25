@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Hawaiian.Inventory;
 using Hawaiian.Utilities;
 using UnityEngine;
 
-namespace Hawaiian.Game
+namespace Hawaiian.Game.GameModes.TreasureHoard
 {
-    public class TreasureHoardModeController : MonoBehaviour, IModeController
+    public class TreasureHoardModeController : ModeController<TreasureHoardSceneReference>
     {
         [SerializeField] private Item _depositor;
         [SerializeField] private Item _detonator;
@@ -17,34 +16,20 @@ namespace Hawaiian.Game
 
         public Dictionary<PlayerConfig, PlayerTreasure> PlayerTreasures => new(playerTreasures);
 
-        private PlayerManager playerManager;
-        private TreasureHoardSceneReference sceneReference;
-
-        private void OnDestroy()
+        public override void SaveScores()
         {
-            if (playerManager != null)
-                playerManager.playerJoined.RemoveListener(OnPlayerJoined);
-        }
-
-        public void Initialise(PlayerManager playerManager, GameModeSceneReference gameModeSceneReference)
-        {
-            this.playerManager = playerManager;
+            base.SaveScores();
             
-            playerManager.playerJoined.AddListener(OnPlayerJoined);
-
-            sceneReference = (TreasureHoardSceneReference) gameModeSceneReference;
-        }
-
-        public void SaveScores()
-        {
             foreach (var (playerConfig, playerTreasure) in playerTreasures)
             {
                 playerConfig.score = playerTreasure.CurrentPoints;
             }
         }
 
-        public void OnPlayerJoined(PlayerConfig playerConfig)
+        protected override void OnPlayerJoined(PlayerConfig playerConfig)
         {
+            base.OnPlayerJoined(playerConfig);
+            
             GameObject playerTreasureObject = Instantiate(_playerTreasurePrefab, sceneReference.treasureSpawnPoints[playerConfig.playerNumber], Quaternion.identity);
 
             var playerTreasure = playerTreasureObject.GetComponent<PlayerTreasure>();

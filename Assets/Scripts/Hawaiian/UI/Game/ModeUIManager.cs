@@ -1,4 +1,5 @@
 ﻿using Hawaiian.Game;
+using Hawaiian.Game.GameModes;
 using UI.Core;
 using UnityEngine;
 
@@ -20,7 +21,7 @@ namespace Hawaiian.UI.Game
             modeManager.initialised.RemoveListener(OnInitialised);
         }
 
-        private void OnInitialised(IModeController modeController)
+        private void OnInitialised(ModeController<ModeSceneReference> modeController)
         {
             var modeUIPrefab = gameManager.CurrentGameMode.modeUIPrefab;
 
@@ -28,7 +29,7 @@ namespace Hawaiian.UI.Game
             
             var modeUIObject = Instantiate(modeUIPrefab, transform);
 
-            var modeUI = modeUIObject.GetComponent<ModeUI>();
+            var modeUI = modeUIObject.GetComponent<ModeUI<IModeController>>();
 
             modeUI.Initialise(modeController);
         }
