@@ -1,6 +1,9 @@
-﻿namespace Hawaiian.Game.GameModes.RoundRobbin
+﻿using UnityEngine;
+
+namespace Hawaiian.Game.GameModes.RoundRobbin
 {
-    public class RoundRobbinModeController : ModeController<RoundRobbinSceneReference>
+    [CreateAssetMenu(order = 0, menuName = "Hawaiian/Managers/GameModeManager/RoundRobbinModeManager")]
+    public class RoundRobbinModeManager : ModeManager<RoundRobbinSceneReference>
     {
         public override void SaveScores()
         {

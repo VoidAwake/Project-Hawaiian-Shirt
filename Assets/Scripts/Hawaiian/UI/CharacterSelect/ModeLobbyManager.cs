@@ -13,7 +13,7 @@ namespace Hawaiian.UI.CharacterSelect
     public class ModeLobbyManager : MonoBehaviour
     {
         [Header("Mode Select")]
-        [SerializeField] private GameModeSO[] gameModeSOs;
+        [SerializeField] private ModeManager[] modeManagers;
         [SerializeField] private Image[] selectedPortraits;                     // Scene reference. Update sprites (and positions) to match player's characters.
         [SerializeField] private Image[] selectedBGs;                           // Scene reference. Reduce alpha on BG of unselected characters.
         [SerializeField] private Sprite[] portraitSprites;                      // Asset reference. Sprites for character portraits.
@@ -26,7 +26,7 @@ namespace Hawaiian.UI.CharacterSelect
         
         [SerializeField] private GameObject modeSelectCanvas;
         
-        public GameModeSO CurrentGameMode;
+        public ModeManager CurrentGameMode;
         
         public List<LobbyPlayerController> LobbyPlayerControllers { get; set; }
         
@@ -53,11 +53,11 @@ namespace Hawaiian.UI.CharacterSelect
         private void CreateGameModeButtons()
         {
             var modeSelectButtons = new List<ModeSelectButton>();
-            foreach (GameModeSO gameModeSO in gameModeSOs)
+            foreach (ModeManager modeManager in modeManagers)
             {
                 GameObject buttonObject = Instantiate(modeSelectButtonPrefab, buttonsParent.transform);
 
-                buttonObject.name = $"{gameModeSO.displayName} Mode Select Button";
+                buttonObject.name = $"{modeManager.DisplayName} Mode Select Button";
 
                 var modeSelectButton = buttonObject.GetComponent<ModeSelectButton>();
 
@@ -70,7 +70,7 @@ namespace Hawaiian.UI.CharacterSelect
                 
                 modeSelectButtons.Add(modeSelectButton);
 
-                modeSelectButton.Initialise(gameModeSO);
+                modeSelectButton.Initialise(modeManager);
                 modeSelectButton.clicked.AddListener(OnModeButtonClicked);
                 modeSelectButton.selected.AddListener(OnModeButtonSelected);
             }
@@ -78,12 +78,12 @@ namespace Hawaiian.UI.CharacterSelect
             modeSelectButtons[0].GetComponent<Button>().Select();
             
             // Update textmesh elements
-            UpdateGameModeDescription(gameModeSOs[0]);
+            UpdateGameModeDescription(modeManagers[0]);
         }
 
         private void OnModeButtonClicked(Button<CharacterSelectDialogue> button)
         {
-            var gameModeSO = ((ModeSelectButton) button).GameModeSO;
+            var gameModeSO = ((ModeSelectButton) button).ModeManager;
             
             CurrentGameMode = gameModeSO;
 
@@ -92,7 +92,7 @@ namespace Hawaiian.UI.CharacterSelect
 
         private void OnModeButtonSelected(MenuButton<CharacterSelectDialogue> menuButton)
         {
-            var gameModeSO = ((ModeSelectButton) menuButton).GameModeSO;
+            var gameModeSO = ((ModeSelectButton) menuButton).ModeManager;
             
             UpdateGameModeDescription(gameModeSO);
         }
@@ -113,10 +113,10 @@ namespace Hawaiian.UI.CharacterSelect
             mainMenuRequested.Invoke();
         }
 
-        public void UpdateGameModeDescription(GameModeSO gameModeSO)
+        public void UpdateGameModeDescription(ModeManager modeManager)
         {
-            gameModeNameTMP.text = gameModeSO.displayName;
-            gameModeDescriptionTMP.text = gameModeSO.description;
+            gameModeNameTMP.text = modeManager.DisplayName;
+            gameModeDescriptionTMP.text = modeManager.Description;
         }
     }
 }

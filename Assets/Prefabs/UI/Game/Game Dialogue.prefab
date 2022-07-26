@@ -1019,8 +1019,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   manager: {fileID: 11400000, guid: b205461929d08b7439e72030dc234753, type: 2}
-  modeManager: {fileID: 0}
   gameManager: {fileID: 11400000, guid: c305914e6d352644190ef7ee43a51bbd, type: 2}
+  uiBindings:
+  - modeManagerTypeName: Hawaiian.Game.GameModes.TreasureHoard.TreasureHoardModeManager
+    modeUIPrefab: {fileID: 378428827036738159, guid: 1d50fbe35eab87342a6ea22ddca9ed68, type: 3}
 --- !u!1001 &2068501823
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -9,8 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 30cf9dc979324af38064b1e692e5bfad, type: 3}
-  m_Name: Treasure Hoard
+  m_Script: {fileID: 11500000, guid: 371b97384620429c93b901e453133c25, type: 3}
+  m_Name: Treasure Hoard Mode Manager
   m_EditorClassIdentifier: 
   displayName: Treasure Hoard
   description: Grab and steal treasure to add to your hoard and sabotage other players
@@ -19,5 +19,9 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 26959702288a2744f8386a163c285f56, type: 2}
   controlsInstructionsDialoguePrefab: {fileID: 6701680597941144673, guid: ad9da8ae28d5a1446a50507627be2e64, type: 3}
   tutorialDialoguePrefab: {fileID: 4814276844058300917, guid: 021eb3a714576614e9bb4618ab3e56e5, type: 3}
-  modeControllerPrefab: {fileID: 8563792579945961907, guid: 1e8b711e78001bc41ad01ef4426fc557, type: 3}
-  modeUIPrefab: {fileID: 378428827036738159, guid: 1d50fbe35eab87342a6ea22ddca9ed68, type: 3}
+  sceneChanger: {fileID: 11400000, guid: 3d32adecca106ad4a8e92d019d2654af, type: 2}
+  gameOverEvent: {fileID: 11400000, guid: 3f166778320e3064188ff102927875f8, type: 2}
+  _depositor: {fileID: 11400000, guid: 9018dd0de1a0b244eb69ec5986781a73, type: 2}
+  _detonator: {fileID: 11400000, guid: efa01176e9a02a744a26b7bd744fdb1e, type: 2}
+  _playerTreasurePrefab: {fileID: 4821606711847234976, guid: 8a61579873297c8408bd79f4cbcf486d, type: 3}
+  playerTreasureCreated: {fileID: 11400000, guid: 2e3d45eb4119ae544b9c7e5f1552efbd, type: 2}

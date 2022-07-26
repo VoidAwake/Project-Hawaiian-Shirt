@@ -49,8 +49,8 @@ namespace Hawaiian.UI.Game
 
             var gameMode = gameManager.CurrentGameMode;
             
-            Instantiate(gameMode.controlsInstructionsDialoguePrefab, transform.parent);
-            Instantiate(gameMode.tutorialDialoguePrefab, transform.parent);
+            Instantiate(gameMode.ControlsInstructionsDialoguePrefab, transform.parent);
+            Instantiate(gameMode.TutorialDialoguePrefab, transform.parent);
         }
 
         public void Pause()

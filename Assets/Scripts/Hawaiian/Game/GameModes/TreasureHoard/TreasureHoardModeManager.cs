@@ -1,16 +1,16 @@
 ﻿using System.Collections.Generic;
 using Hawaiian.Inventory;
-using Hawaiian.Utilities;
 using UnityEngine;
 
 namespace Hawaiian.Game.GameModes.TreasureHoard
 {
-    public class TreasureHoardModeController : ModeController<TreasureHoardSceneReference>
+    [CreateAssetMenu(order = 0, menuName = "Hawaiian/Managers/GameModeManager/TreasureHoardModeManager")]
+    public class TreasureHoardModeManager : ModeManager<TreasureHoardSceneReference>
     {
+        [Header("Treasure Hoard Mode Manager")]
         [SerializeField] private Item _depositor;
         [SerializeField] private Item _detonator;
         [SerializeField] private GameObject _playerTreasurePrefab;
-        [SerializeField] private GameEvent playerTreasureCreated;
         
         private Dictionary<PlayerConfig, PlayerTreasure> playerTreasures = new();
 
@@ -28,8 +28,6 @@ namespace Hawaiian.Game.GameModes.TreasureHoard
 
         protected override void OnPlayerJoined(PlayerConfig playerConfig)
         {
-            base.OnPlayerJoined(playerConfig);
-            
             GameObject playerTreasureObject = Instantiate(_playerTreasurePrefab, sceneReference.treasureSpawnPoints[playerConfig.playerNumber], Quaternion.identity);
 
             var playerTreasure = playerTreasureObject.GetComponent<PlayerTreasure>();
@@ -42,8 +40,8 @@ namespace Hawaiian.Game.GameModes.TreasureHoard
         
             playerInventoryController.inv.inv[0] = _depositor;
             playerInventoryController.inv.inv[1] = _detonator;
-
-            playerTreasureCreated.Raise();
+            
+            base.OnPlayerJoined(playerConfig);
         }
     }
 }

@@ -118,7 +118,7 @@ namespace Hawaiian.UI.CharacterSelect
                 // Destroy(GetComponent<LobbyManager>());
                 // Destroy(GetComponent<PlayerInputManager>());
                 
-                gameManager.LoadRandomLevel();
+                gameManager.CurrentGameMode.LoadRandomLevel();
                 
                 isExiting = true;
             }

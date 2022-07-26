@@ -12,9 +12,7 @@ namespace Hawaiian.Game
 
         public enum GamePhase { Stealth, GameOver }
 
-        public GameModeSO CurrentGameMode { get; set; }
-
-        public ModeSceneReference ModeSceneReference { get; private set; }
+        public ModeManager CurrentGameMode { get; set; }
 
         private GamePhase phase;
 
@@ -40,16 +38,5 @@ namespace Hawaiian.Game
 
         public GameEvent phaseChanged;
         public GameEvent gameOver;
-
-        public void LoadRandomLevel()
-        {
-            var levelSet = CurrentGameMode.sceneReferences;
-            
-            if (levelSet.Count == 0) return;
-
-            ModeSceneReference = levelSet[Random.Range(0, levelSet.Count)];
-            
-            sceneChanger.ChangeScene(ModeSceneReference.sceneReference);
-        }
     }
 }

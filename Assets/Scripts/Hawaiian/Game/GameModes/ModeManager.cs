@@ -1,31 +1,53 @@
-﻿using UnityEngine;
+﻿using Hawaiian.Utilities;
+using UnityEngine;
 using UnityEngine.Events;
 
 namespace Hawaiian.Game.GameModes
 {
-    public class ModeManager : MonoBehaviour
+    public abstract class ModeManager : ScriptableObject
     {
-        [SerializeField] private GameManager gameManager;
-        [SerializeField] private PlayerManager playerManager;
-        
-        public ModeController<ModeSceneReference> modeController;
+        [Header("Mode Manager")]
+        [SerializeField] private string displayName;
+        [SerializeField] private string description;
+        [SerializeField] private GameObject controlsInstructionsDialoguePrefab;
+        [SerializeField] private GameObject tutorialDialoguePrefab;
+        [SerializeField] protected SceneChanger sceneChanger;
+        [SerializeField] protected GameEvent gameOverEvent;
 
-        public UnityEvent<ModeController<ModeSceneReference>> initialised = new();
+        public static ModeManager CurrentModeManager { get; set; }
+        public static UnityEvent<ModeManager> Initialised { get; } = new();
         
-        private void Awake()
+        public virtual GameObject ControlsInstructionsDialoguePrefab => controlsInstructionsDialoguePrefab;
+        public virtual GameObject TutorialDialoguePrefab => tutorialDialoguePrefab;
+        public virtual string DisplayName => displayName;
+        public virtual string Description => description;
+
+        public UnityEvent<PlayerConfig> playerJoined = new();
+        protected UnityEvent gameOver = new();
+
+        protected PlayerManager playerManager;
+        
+        public virtual void LoadRandomLevel() { }
+        public virtual void SaveScores() { }
+
+        protected virtual void OnPlayerJoined(PlayerConfig playerConfig)
         {
-            var modeControllerObject = Instantiate(gameManager.CurrentGameMode.modeControllerPrefab, transform);
-
-            modeController = modeControllerObject.GetComponent<ModeController<ModeSceneReference>>();
-            
-            modeController.Initialise(playerManager, gameManager.ModeSceneReference);
-            
-            initialised.Invoke(modeController);
+            playerJoined.Invoke(playerConfig);
         }
 
-        public void SaveScores()
+        private void OnEnable()
         {
-            modeController.SaveScores();
+            gameOver.AddListener(OnGameOver);
+        }
+
+        private void OnDisable()
+        {
+            gameOver.RemoveListener(OnGameOver);
+        }
+
+        private void OnGameOver()
+        {
+            SaveScores();
         }
     }
 }

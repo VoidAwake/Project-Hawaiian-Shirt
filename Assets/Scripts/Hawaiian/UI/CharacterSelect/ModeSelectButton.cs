@@ -1,5 +1,4 @@
-﻿using Hawaiian.Game;
-using Hawaiian.Game.GameModes;
+﻿using Hawaiian.Game.GameModes;
 using Hawaiian.UI.General;
 using TMPro;
 using UnityEngine;
@@ -10,13 +9,13 @@ namespace Hawaiian.UI.CharacterSelect
     {
         [SerializeField] private TMP_Text text;
 
-        public GameModeSO GameModeSO { get; set; }
+        public ModeManager ModeManager { get; set; }
 
-        public void Initialise(GameModeSO gameModeSO)
+        public void Initialise(ModeManager modeManager)
         {
-            GameModeSO = gameModeSO;
+            ModeManager = modeManager;
             
-            text.text = gameModeSO.displayName;
+            text.text = modeManager.DisplayName;
         }
     }
 }

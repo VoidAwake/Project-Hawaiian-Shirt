@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -10,11 +11,11 @@ namespace Hawaiian.Game
     {
         public event Func<object, EventArgs, Task> ChangingScene;
         
-        public async void ChangeScene(SceneReference scene)
+        public async Task ChangeScene(SceneReference scene)
         {
             await ChangingScene.Raise(this, EventArgs.Empty);
-            
-            SceneManager.LoadScene(scene);
+
+            await SceneManager.LoadSceneAsync(scene);
         }
     }
 }
