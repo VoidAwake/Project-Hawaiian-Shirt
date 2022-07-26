@@ -1,4 +1,5 @@
 using UnityEngine;
+using Application = UnityEngine.Device.Application;
 
 namespace Hawaiian.Inventory
 {
@@ -15,24 +16,27 @@ namespace Hawaiian.Inventory
             {
                 item = value;
 
-                if (spriteRenderer == null)
-                    return;
-
-                // TODO: Duplicate code. See OnValidate.
-                spriteRenderer.sprite = item.DroppedItemSprite;
-                
-                spriteRenderer.color = item.IsDetonator ? Color.red : Color.white;
+                OnItemChanged();
             }
         }
-
-      
 
         public void OnPickUp()
         {
             Destroy(gameObject);
         }
 
+#if UNITY_EDITOR
+        
         private void OnValidate()
+        {
+            if (Application.isPlaying) return;
+
+            OnItemChanged();
+        }
+
+#endif
+        
+        private void OnItemChanged()
         {
             if (Item == null) return;
 
@@ -40,9 +44,8 @@ namespace Hawaiian.Inventory
 
             if (spriteRenderer == null) return;
 
-            // TODO: Duplicate code. See Item.
             spriteRenderer.sprite = Item.DroppedItemSprite;
-            
+
             spriteRenderer.color = Item.IsDetonator ? Color.red : Color.white;
         }
     }
