@@ -15,8 +15,10 @@ namespace Hawaiian.UI.Results_Screen
         [SerializeField] private PlayerConfig[] defaultPlayerConfigs;
         [SerializeField] private PlayerConfigManager playerConfigManager;
 
-        private void Start()
+        protected override void Start()
         {
+            base.Start();
+            
             var playerConfigs = playerConfigManager != null ? playerConfigManager.playerConfigs : defaultPlayerConfigs;
 
             barChart.Initialise(playerConfigs);

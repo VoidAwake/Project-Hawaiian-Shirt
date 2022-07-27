@@ -11,13 +11,17 @@ namespace Hawaiian.UI.PauseMenu
         
         protected override void OnClose() { }
 
-        protected override void OnPromote()
-        {
-            // TODO: For some reason this doesn't trigger MenuButtonCursor.OnSelect
-            firstSelectable.Select();
-        }
+        protected override void OnPromote() { }
 
         protected override void OnDemote() { }
+
+        protected override void Start()
+        {
+            base.Start();
+            
+            // Has to be called in start because ISelectHandlers are registered in Awake
+            firstSelectable.Select();
+        }
 
         public void ResumeGame()
         {

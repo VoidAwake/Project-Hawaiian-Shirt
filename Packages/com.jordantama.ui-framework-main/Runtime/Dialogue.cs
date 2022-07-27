@@ -28,6 +28,8 @@ namespace UI.Core
             
             manager.Add(this);
         }
+        
+        protected virtual void Start() { }
 
         #endregion
         
