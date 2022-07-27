@@ -40,25 +40,10 @@ namespace Hawaiian.UI.Game
 
         protected override void Unsubscribe() { }
 
+        // TODO: Needs to be called some other way
         public void OnPhaseChanged()
         {
-            var newPhase = gameManager.Phase;
-
-            switch (newPhase)
-            {
-                // case GameManager.GamePhase.Stealth:
-                //     StartCoroutine(ShowPrompt("Begin Stealth"));
-                //     break;
-                // case GameManager.GamePhase.HighAlert:
-                //     StartCoroutine(ShowPrompt("Begin High Alert"));
-                //     break;
-                case GameManager.GamePhase.GameOver:
-                    StartCoroutine(ShowPrompt("Time's Up"));
-                    break;
-                default:
-                    return;
-                    //throw new ArgumentOutOfRangeException();
-            }
+            StartCoroutine(ShowPrompt("Time's Up"));
         }
 
         private IEnumerator ShowPrompt(string promptText)

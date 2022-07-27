@@ -15,8 +15,6 @@ namespace Hawaiian.UI.Game
         {
             base.OnClick();
 
-            gameManager.Phase = GameManager.GamePhase.Stealth;
-            
             gameTimeScale.Value = 1;
         }
     }

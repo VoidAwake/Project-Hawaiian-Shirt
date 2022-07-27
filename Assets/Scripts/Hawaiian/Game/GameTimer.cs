@@ -55,7 +55,7 @@ namespace Hawaiian.Game
             
             // TODO: Move this to a dedicated script, possibly the game manager
             gameTimeScale.Value = 0;
-            gameManager.Phase = GameManager.GamePhase.GameOver;
+            gameManager.GameOver();
                 
             // TODO: Pretty sure this event duplicates other functionality.
             GameEndedOccured.Raise();
