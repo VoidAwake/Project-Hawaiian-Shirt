@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections;
+using System.Threading.Tasks;
+using Cysharp.Threading.Tasks;
 using Hawaiian.Game;
 using Hawaiian.Utilities;
 using TMPro;
@@ -17,8 +19,6 @@ namespace Hawaiian.UI.Game
         [SerializeField] private float transitionTime;
         [SerializeField] private float offset;
         [SerializeField] private GameObject restartButton;
-
-        public GameEvent EndingCinematicCompleted;
         
         private RectTransform rectTransform;
         private Vector3 initialPosition;
@@ -36,14 +36,19 @@ namespace Hawaiian.UI.Game
             restartButton.SetActive(false);
         }
 
-        protected override void Subscribe() { }
-
-        protected override void Unsubscribe() { }
-
-        // TODO: Needs to be called some other way
-        public void OnPhaseChanged()
+        protected override void Subscribe()
         {
-            StartCoroutine(ShowPrompt("Time's Up"));
+            gameManager.GameOverAsync += OnGameOverAsync;
+        }
+
+        protected override void Unsubscribe()
+        {
+            gameManager.GameOverAsync -= OnGameOverAsync;
+        }
+
+        private async Task OnGameOverAsync(object arg1, EventArgs arg2)
+        {
+            await ShowPrompt("Time's Up");
         }
 
         private IEnumerator ShowPrompt(string promptText)
@@ -64,7 +69,6 @@ namespace Hawaiian.UI.Game
 
             // rectTransform.position = initialPosition;
             yield return new WaitForSeconds(displayTime);
-            EndingCinematicCompleted.Raise();
             // transitionTimer = 0;
             //
             // while (transitionTimer < transitionTime)

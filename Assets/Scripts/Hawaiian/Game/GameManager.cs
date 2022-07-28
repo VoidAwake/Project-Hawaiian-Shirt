@@ -1,4 +1,6 @@
-﻿using Hawaiian.Game.GameModes;
+﻿using System;
+using System.Threading.Tasks;
+using Hawaiian.Game.GameModes;
 using Hawaiian.Utilities;
 using UnityEngine;
 
@@ -10,14 +12,19 @@ namespace Hawaiian.Game
         [SerializeField] private SceneChanger sceneChanger;
         [SerializeField] private SceneReference resultsScene;
         [SerializeField] private GameEvent gameOver;
+        
+        public event Func<object, EventArgs, Task> GameOverAsync;
 
         public ModeManager CurrentGameMode { get; set; }
 
-        public void GameOver()
+        public async void GameOver()
         {
             gameOver.Raise();
+
+            // TODO: Not great to have to bypass the GameEvent system like this
+            await GameOverAsync?.Invoke(this, EventArgs.Empty);
             
-            sceneChanger.ChangeScene(resultsScene);
+            await sceneChanger.ChangeScene(resultsScene);
         }
     }
 }

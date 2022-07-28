@@ -12,8 +12,6 @@ namespace Hawaiian.Game
         [SerializeField] private bool startOnAwake;
         [SerializeField] private GameManager gameManager;
         [SerializeField] private InputAction debugEndGameAction;
-
-        public GameEvent GameEndedOccured;
         
         private bool timerActive;
 
@@ -56,11 +54,6 @@ namespace Hawaiian.Game
             // TODO: Move this to a dedicated script, possibly the game manager
             gameTimeScale.Value = 0;
             gameManager.GameOver();
-                
-            // TODO: Pretty sure this event duplicates other functionality.
-            GameEndedOccured.Raise();
-                
-            // TODO: Change to the results screen
         }
 
         private void OnEnable()
