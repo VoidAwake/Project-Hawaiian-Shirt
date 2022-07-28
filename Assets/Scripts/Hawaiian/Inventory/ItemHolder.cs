@@ -1,4 +1,4 @@
-﻿using System;
+﻿using Hawaiian.Unit;
 using UnityEngine;
 
 namespace Hawaiian.Inventory
@@ -6,6 +6,11 @@ namespace Hawaiian.Inventory
     public class ItemHolder : MonoBehaviour
     {
         [SerializeField] private InventoryController inventoryController;
+        
+        // TODO: Need to reconsider these references
+        [SerializeField] public UnitPlayer unitPlayer;
+        [SerializeField] public Cursor cursor;
+        [SerializeField] public Transform firePoint;
 
         private HeldItem heldItem;
 

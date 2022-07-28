@@ -27,44 +27,42 @@ namespace Hawaiian.Inventory
         {
             // TODO: Duplicate code. See DamageIndicator.OnTriggerEnter2D
             var unit = col.gameObject.GetComponent<Unit.Unit>();
-            if (unit is IUnit)
+            
+            if (unit is not IUnit target) return;
+
+            if (_overrideDirectionForBombs)
             {
-                //Yucky 
-                IUnit target = (IUnit) unit;
+                direction = target.GetPosition() - transform.position;
+            }
 
-                if (_overrideDirectionForBombs)
-                {
-                    direction = target.GetPosition() - transform.position;
-                }
+            // if (gameObject.GetComponent<Projectile>() != null)
+            // {
+                // TODO: Reconsider the logic of this
+                // if (!gameObject.GetComponent<Projectile>().WasParried)
+                // {
+                    if (target == user || oldTargets.Contains(target))
+                        return;
+                // }
+                // else
+                // {
+                    // direction = -direction;
+                // }
+            // }
 
-                if (gameObject.GetComponent<Projectile>() != null)
-                {
-                    if (!gameObject.GetComponent<Projectile>().WasParried)
-                    {
-                        if (target == user || oldTargets.Contains(target))
-                            return;
-                    }
-                    else
-                    {
-                        direction = -direction;
-                    }
-                }
+            if (unit.isInvincible) return;
 
-                if (unit.isInvincible) return;
+            //Used if the user has parried sucessfully
+            if (unit.OverrideDamage)
+            {
+                unit.OverrideDamage = false;
+                return;
+            }
 
-                //Used if the user has parried sucessfully
-                if (unit.OverrideDamage)
-                {
-                    unit.OverrideDamage = false;
-                    return;
-                }
+            oldTargets.Add(target);
 
-                oldTargets.Add(target);
-
-                foreach (var hitEffect in hitEffects)
-                {
-                    hitEffect.OnHit(unit, direction);
-                }
+            foreach (var hitEffect in hitEffects)
+            {
+                hitEffect.OnHit(unit, direction);
             }
         }
     }

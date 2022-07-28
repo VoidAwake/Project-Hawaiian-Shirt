@@ -19,8 +19,6 @@ public class ItemInteractor : MonoBehaviour
 
     [SerializeField] private Cursor _cursor;
     [SerializeField] public UnitPlayer _playerReference;
-    [SerializeField] private Transform _firePoint;
-    [SerializeField] private float _meleeSlashRotationOffset;
     [SerializeField] private SpriteRenderer _handHelder;
     [SerializeField] private UnitAnimator _animator;
     [SerializeField] private IUnitGameEvent _parryOccured;
@@ -35,14 +33,10 @@ public class ItemInteractor : MonoBehaviour
     private InventoryController _controller;
     public Vector3[] _multiShotTargets;
     private Vector2 _rotation;
-    private Vector3 _lastAttackPosition;
-    private bool _attackFlag;
     private bool isLookingLeft;
     private bool _isJoystickNeutral = true;
     public bool _isHoldingAttack = false;
     private float _currentHoldTime;
-    private float _offset = 1.1f;
-    private float _slashCooldown;
     private float _parryTimer;
 
     private bool collisionFlag = false;
@@ -81,8 +75,6 @@ public class ItemInteractor : MonoBehaviour
     }
 
     private Vector2 _move;
-
-    public bool CanMeleeAttack() => _slashCooldown <= 0;
 
     public bool signal = false;
     private int targetCount;
@@ -134,12 +126,6 @@ public class ItemInteractor : MonoBehaviour
         );
         
         throwableArcPositionsUpdated.Invoke();
-    }
-
-    public void Update()
-    {
-        if (_slashCooldown >= 0)
-            _slashCooldown -= Time.deltaTime;
     }
 
     #endregion
@@ -258,10 +244,6 @@ public class ItemInteractor : MonoBehaviour
             UseItem<Shield>();
             return;
         }
-
-        if (!CanMeleeAttack()) return;
-
-        UseItem<DamageIndicator>();
     }
 
     #endregion
@@ -360,50 +342,8 @@ public class ItemInteractor : MonoBehaviour
                 index++;
             });
         }
-        else if (CurrentItem.Type == ItemType.Melee)
-        {
-            //Begin melee 
-            Vector3 input = GetPlayerInput();
-            AudioManager.audioManager.PlayWeapon(7);
-            var angle = Mathf.Atan2(input.y, input.x) * Mathf.Rad2Deg;
-            var direction = input;
-            InstantiateMeleeIndicator(angle, direction);
-        }
         else if (CurrentItem.Type == ItemType.Shield && _shieldReference.CanParry())
             _shieldReference.LiftShield();
-    }
-
-
-    private void InstantiateMeleeIndicator(float angle, Vector3 direction)
-    {
-        _firePoint.position = _lastAttackPosition;
-
-        _playerReference.transform.GetComponent<UnitAnimator>()
-            .UseItem(UnitAnimationState.MeleeSwing,
-                new Vector2(Mathf.Sin(angle * Mathf.Deg2Rad + Mathf.PI / 2),
-                    -Mathf.Cos(angle * Mathf.Deg2Rad + Mathf.PI / 2)), _attackFlag);
-
-        GameObject indicator = Instantiate(_projectileReference, _lastAttackPosition,
-            Quaternion.Euler(new Vector3(0, 0, angle + _meleeSlashRotationOffset)), _firePoint);
-
-        indicator.GetComponent<DamageIndicator>().Initialise(CurrentItem.DrawSpeed, CurrentItem.KnockbackDistance,
-            _attackFlag, _playerReference, direction);
-        indicator.GetComponent<HitUnit>().Initialise(_playerReference, _cursor.transform.position - transform.position);
-        _attackFlag = !_attackFlag;
-    }
-
-    private Vector3 GetPlayerInput()
-    {
-        _slashCooldown = _controller.CurrentItem.AttackRate;
-        Vector3 playerInput;
-
-        var position = new Vector3(transform.position.x, transform.position.y + 0.5f, transform.position.z);
-
-        Vector3 prevInput = (_cursor.transform.localPosition - Vector3.up * 0.5f);
-        playerInput = prevInput.magnitude == 0 ? Vector2.right.normalized : prevInput.normalized;
-
-        _lastAttackPosition = position + (Vector3) playerInput * _offset;
-        return playerInput;
     }
 
     private void UpdateMultiShotTargets()
