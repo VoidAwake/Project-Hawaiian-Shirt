@@ -4,13 +4,14 @@ using Hawaiian.Inventory;
 using Hawaiian.Unit;
 using Hawaiian.Utilities;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.InputSystem;
 using Cursor = Hawaiian.Inventory.Cursor;
 
 [RequireComponent(typeof(InventoryController))]
 public class ItemInteractor : MonoBehaviour
 {
-    private static readonly int Rate = Shader.PropertyToID("_Rate");
+    public static readonly int Rate = Shader.PropertyToID("_Rate");
     private static readonly int LineColour = Shader.PropertyToID("_lineColour");
 
 
@@ -18,7 +19,7 @@ public class ItemInteractor : MonoBehaviour
     private LineRenderer _renderer;
 
     [SerializeField] private Cursor _cursor;
-    [SerializeField] private UnitPlayer _playerReference;
+    [SerializeField] public UnitPlayer _playerReference;
     [SerializeField] private Transform _firePoint;
     [SerializeField] private float _meleeSlashRotationOffset;
     [SerializeField] private SpriteRenderer _handHelder;
@@ -26,17 +27,19 @@ public class ItemInteractor : MonoBehaviour
     [SerializeField] private IUnitGameEvent _parryOccured;
     [SerializeField] private GameObject shieldColliderPrefab;
     [SerializeField] private LayerMask _raycastMask;
+
+    public UnityEvent targetCountChanged = new();
+    public UnityEvent multiShotTargetsUpdated = new();
     
     //Components
     private InventoryController _controller;
-    private List<LineRenderer> _lineRenderers;
-    private Vector3[] _multiShotTargets;
+    public Vector3[] _multiShotTargets;
     private Vector2 _rotation;
     private Vector3 _lastAttackPosition;
     private bool _attackFlag;
     private bool isLookingLeft;
     private bool _isJoystickNeutral = true;
-    private bool _isHoldingAttack = false;
+    public bool _isHoldingAttack = false;
     private float _currentHoldTime;
     private float _offset = 1.1f;
     private float _slashCooldown;
@@ -44,6 +47,17 @@ public class ItemInteractor : MonoBehaviour
 
     private bool collisionFlag = false;
     private Shield _shieldReference;
+
+    public int TargetCount
+    {
+        get => targetCount;
+        private set
+        {
+            targetCount = value;
+            targetCountChanged.Invoke();
+            UpdateMultiShotTargets();
+        }
+    }
 
     [SerializeField] private IUnitGameEvent _removeItem;
 
@@ -69,6 +83,7 @@ public class ItemInteractor : MonoBehaviour
     public bool CanMeleeAttack() => _slashCooldown <= 0;
 
     public bool signal = false;
+    private int targetCount;
 
 
     #region Monobehaviour
@@ -79,7 +94,6 @@ public class ItemInteractor : MonoBehaviour
         _renderer = GetComponent<LineRenderer>();
         _playerReference.GetPlayerInput().actions["Attack"].performed += StartAttack;
         _playerReference.GetPlayerInput().actions["Attack"].canceled += StartAttack;
-        _lineRenderers = new List<LineRenderer>();
         // TODO: Unlisten?
         _controller.currentItemChanged.AddListener(OnCurrentItemChanged);
        
@@ -162,7 +176,7 @@ public class ItemInteractor : MonoBehaviour
 
         if (value.canceled)
         {
-            if (_lineRenderers.Count <= 0)
+            if (targetCount <= 0)
                 return;
         }
 
@@ -174,11 +188,8 @@ public class ItemInteractor : MonoBehaviour
         {
             _isHoldingAttack = true;
 
-            _multiShotTargets =
-                new Vector3[CurrentItem.ProjectileAmount == 0 ? 1 : CurrentItem.ProjectileAmount];
-            _lineRenderers = new List<LineRenderer>();
+            UpdateMultiShotTargets();
 
-            GenerateLineRenderers();
             return;
         }
 
@@ -204,17 +215,6 @@ public class ItemInteractor : MonoBehaviour
             case ItemType.Projectile:
                 UseItem<Projectile>(projectiles);
                 break;
-        }
-
-
-        if (_lineRenderers.Count > 0)
-        {
-            for (int i = _lineRenderers.Count - 1; i >= 0; i--)
-            {
-                LineRenderer lr = _lineRenderers[i];
-                _lineRenderers.Remove(_lineRenderers[i]);
-                Destroy(lr.gameObject);
-            }
         }
 
         _cursor.LerpToReset();
@@ -297,8 +297,12 @@ public class ItemInteractor : MonoBehaviour
         {
             if (_shieldReference != null)
                 _shieldReference.RemoveShieldComponent();
+
+            TargetCount = 0;
             return;
         }
+        
+        TargetCount = CurrentItem.ProjectileAmount == 0 ? 1 : CurrentItem.ProjectileAmount;
 
         if (CurrentItem.Type == ItemType.Shield)
         {
@@ -407,41 +411,13 @@ public class ItemInteractor : MonoBehaviour
         return playerInput;
     }
 
-
-    private void GenerateLineRenderers()
-    {
-        for (int i = 0; i < (CurrentItem.ProjectileAmount == 0 ? 1 : CurrentItem.ProjectileAmount); i++)
-        {
-            GameObject instance = new GameObject();
-
-            instance.transform.parent = transform.parent;
-
-            LineRenderer renderer = instance.AddComponent(typeof(LineRenderer)) as LineRenderer;
-            renderer.sortingOrder = 100;
-            _lineRenderers.Add(renderer);
-
-            renderer.material = Resources.Load<Material>("Sprites/lineRendererMaterial");
-
-            if (CurrentItem.Type == ItemType.Projectile)
-                renderer.material.SetFloat(Rate, renderer.material.GetFloat(Rate) * -1);
-
-            renderer.startWidth = 0.2f;
-            renderer.endWidth = 0.2f;
-
-            Gradient gradient = new Gradient();
-            gradient.SetKeys(
-                new GradientColorKey[]
-                {
-                    new GradientColorKey(_playerReference.PlayerColour, 0.0f),
-                    new GradientColorKey(_playerReference.PlayerColour, 1.0f)
-                }, new GradientAlphaKey[] {new GradientAlphaKey(1, 0.0f), new GradientAlphaKey(1, 1.0f)});
-
-            renderer.colorGradient = gradient;
-        }
-    }
-
     private void UpdateMultiShotTargets()
     {
+        if (_multiShotTargets.Length != targetCount)
+        {
+            _multiShotTargets = new Vector3[targetCount];
+        }
+        
         if (collisionFlag)
             return;
 
@@ -451,10 +427,10 @@ public class ItemInteractor : MonoBehaviour
 
         if (angle < 0) angle = 360 - angle * -1;
 
-        for (var i = 0; i < _multiShotTargets.Length; i++)
+        for (var i = 0; i < TargetCount; i++)
         {
             // Increment the angle for each target
-            var currentAngle = angle + 20f * i - (_multiShotTargets.Length - 1) / (float) 2 * 20f;
+            var currentAngle = angle + 20f * i - (TargetCount - 1) / (float) 2 * 20f;
 
             var radians = currentAngle * Mathf.Deg2Rad;
 
@@ -465,21 +441,7 @@ public class ItemInteractor : MonoBehaviour
             _multiShotTargets[i] = targetPos;
         }
         
-        UpdateLineRenderers();
-    }
-
-    private void UpdateLineRenderers()
-    {
-        for (var i = 0; i < _multiShotTargets.Length; i++)
-        {
-            LineRenderer lr = _lineRenderers[i];
-            lr.transform.localPosition = Vector3.zero;
-
-            Vector3[] otherPositions = {_multiShotTargets[i], _playerReference.transform.position + Vector3.up * 0.5f};
-
-            lr.positionCount = 2;
-            lr.SetPositions(otherPositions);
-        }
+        multiShotTargetsUpdated.Invoke();
     }
 
     public bool CanUseProjectile()
