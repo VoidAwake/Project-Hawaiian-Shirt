@@ -96,7 +96,7 @@ public class ItemInteractor : MonoBehaviour
         if (_isHoldingAttack)
         {
             if (_controller.CurrentItem.Type == ItemType.Projectile)
-                UpdateLineRenderers();
+                UpdateMultiShotTargets();
             else
             {
                 _renderer = BezierCurve.DrawQuadraticBezierCurve(_renderer, transform.position,
@@ -440,43 +440,45 @@ public class ItemInteractor : MonoBehaviour
         }
     }
 
-    // TODO: Misleading name, also calculates the _multiShotTargets 
-    private void UpdateLineRenderers()
+    private void UpdateMultiShotTargets()
     {
         if (collisionFlag)
             return;
 
         var direction = (_cursor.transform.position - transform.position).normalized;
-        
      
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
 
         if (angle < 0) angle = 360 - angle * -1;
 
-        if (_lineRenderers.Count > 0)
+        for (var i = 0; i < _multiShotTargets.Length; i++)
         {
-            for (var i = 0; i < _lineRenderers.Count; i++)
-            {
-                LineRenderer lr = _lineRenderers[i];
-                lr.transform.localPosition = Vector3.zero;
+            // Increment the angle for each target
+            var currentAngle = angle + 20f * i - (_multiShotTargets.Length - 1) / (float) 2 * 20f;
 
-                // Increment the angle for each line renderer 
-                var currentAngle = angle + 20f * i - (_lineRenderers.Count - 1) / (float) 2 * 20f;
+            var radians = currentAngle * Mathf.Deg2Rad;
 
-                var radians = currentAngle * Mathf.Deg2Rad;
+            var x = Mathf.Cos(radians);
+            var y = Mathf.Sin(radians);
+            var targetPos = transform.position + new Vector3(x, y, 0f) * _cursor.CurrentRad;
 
-                var x = Mathf.Cos(radians);
-                var y = Mathf.Sin(radians);
-                var targetPos = transform.position + new Vector3(x, y, 0f) * _cursor.CurrentRad;
+            _multiShotTargets[i] = targetPos;
+        }
+        
+        UpdateLineRenderers();
+    }
 
+    private void UpdateLineRenderers()
+    {
+        for (var i = 0; i < _multiShotTargets.Length; i++)
+        {
+            LineRenderer lr = _lineRenderers[i];
+            lr.transform.localPosition = Vector3.zero;
 
-                Vector3[] otherPositions = new[] {targetPos, (_playerReference.transform.position + Vector3.up * 0.5f)};
+            Vector3[] otherPositions = {_multiShotTargets[i], _playerReference.transform.position + Vector3.up * 0.5f};
 
-
-                _multiShotTargets[i] = targetPos;
-                lr.positionCount = 2;
-                lr.SetPositions(otherPositions);
-            }
+            lr.positionCount = 2;
+            lr.SetPositions(otherPositions);
         }
     }
 
