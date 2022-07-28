@@ -1,13 +1,14 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace Hawaiian.Inventory
 {
-    public class ItemInteractorLineRenderers : MonoBehaviour
+    public class ProjectileLineRenderer : MonoBehaviour
     {
         [SerializeField] private ItemInteractor itemInteractor;
 
-        private List<LineRenderer> lineRenderers = new List<LineRenderer>();
+        private readonly List<LineRenderer> lineRenderers = new();
 
         private void OnEnable()
         {
@@ -23,11 +24,19 @@ namespace Hawaiian.Inventory
 
         private void OnTargetCountChanged()
         {
+            if (itemInteractor.CurrentItem == null) return;
+            
+            if (itemInteractor.CurrentItem.Type != ItemType.Projectile) return;
+            
             GenerateLineRenderers();
         }
 
         private void OnMultiShotTargetsUpdated()
         {
+            if (itemInteractor.CurrentItem == null) return;
+            
+            if (itemInteractor.CurrentItem.Type != ItemType.Projectile) return;
+            
             UpdateLineRenderers(); 
         }
 
@@ -90,9 +99,13 @@ namespace Hawaiian.Inventory
 
         private void Update()
         {
+            var lineRenderersEnabled =
+                itemInteractor._isHoldingAttack &&
+                itemInteractor.CurrentItem.Type == ItemType.Projectile;
+            
             foreach (var lineRenderer in lineRenderers)
             {
-                lineRenderer.enabled = itemInteractor._isHoldingAttack;
+                lineRenderer.enabled = lineRenderersEnabled;
             }
         }
     }

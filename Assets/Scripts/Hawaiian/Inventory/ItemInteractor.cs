@@ -15,8 +15,7 @@ public class ItemInteractor : MonoBehaviour
     private static readonly int LineColour = Shader.PropertyToID("_lineColour");
 
 
-    [Header("Components")] [SerializeField]
-    private LineRenderer _renderer;
+    [Header("Components")]
 
     [SerializeField] private Cursor _cursor;
     [SerializeField] public UnitPlayer _playerReference;
@@ -30,6 +29,7 @@ public class ItemInteractor : MonoBehaviour
 
     public UnityEvent targetCountChanged = new();
     public UnityEvent multiShotTargetsUpdated = new();
+    public UnityEvent throwableArcPositionsUpdated = new();
     
     //Components
     private InventoryController _controller;
@@ -58,6 +58,8 @@ public class ItemInteractor : MonoBehaviour
             UpdateMultiShotTargets();
         }
     }
+
+    public List<Vector2> throwableArcPositions = new List<Vector2>();
 
     [SerializeField] private IUnitGameEvent _removeItem;
 
@@ -91,7 +93,6 @@ public class ItemInteractor : MonoBehaviour
     private void Awake()
     {
         _controller = GetComponent<InventoryController>();
-        _renderer = GetComponent<LineRenderer>();
         _playerReference.GetPlayerInput().actions["Attack"].performed += StartAttack;
         _playerReference.GetPlayerInput().actions["Attack"].canceled += StartAttack;
         // TODO: Unlisten?
@@ -111,21 +112,9 @@ public class ItemInteractor : MonoBehaviour
         {
             if (_controller.CurrentItem.Type == ItemType.Projectile)
                 UpdateMultiShotTargets();
-            else
-            {
-                _renderer = BezierCurve.DrawQuadraticBezierCurve(_renderer, transform.position,
-                    transform.position + new Vector3(0.5f, 2, 0), _cursor.transform.position);
 
-                Gradient gradient = new Gradient();
-                gradient.SetKeys(
-                    new GradientColorKey[]
-                    {
-                        new GradientColorKey(_playerReference.PlayerColour, 0.0f),
-                        new GradientColorKey(_playerReference.PlayerColour, 1.0f)
-                    }, new GradientAlphaKey[] {new GradientAlphaKey(1, 0.0f), new GradientAlphaKey(1, 1.0f)});
-                _renderer.colorGradient = gradient;
-            }
-
+            if (_controller.CurrentItem.Type == ItemType.Throwable)
+                UpdateThrowableArcPositions();
 
             if (Math.Abs(_cursor.CurrentRad - _cursor.MaxRadius) > 0.01f)
             {
@@ -133,6 +122,18 @@ public class ItemInteractor : MonoBehaviour
                 UpdateHoldAttackCursor();
             }
         }
+    }
+
+    private void UpdateThrowableArcPositions()
+    {
+        throwableArcPositions = BezierCurve.QuadraticBezierCurvePoints(
+            transform.position,
+            transform.position + new Vector3(0.5f, 2, 0),
+            _cursor.transform.position,
+            200
+        );
+        
+        throwableArcPositionsUpdated.Invoke();
     }
 
     public void Update()
@@ -218,7 +219,6 @@ public class ItemInteractor : MonoBehaviour
         }
 
         _cursor.LerpToReset();
-        _renderer.positionCount = 0;
         _currentHoldTime = 0f;
         _isHoldingAttack = false;
     }
@@ -324,11 +324,6 @@ public class ItemInteractor : MonoBehaviour
     {
         collisionFlag = false;
 
-        List<Vector2> positions = new List<Vector2>();
-
-        for (int i = 0; i < _renderer.positionCount; i++)
-            positions.Add((Vector2) _renderer.GetPosition(i));
-
         int index = 0;
 
         if (projectiles != null)
@@ -341,7 +336,7 @@ public class ItemInteractor : MonoBehaviour
                 switch (p.GetComponent<T>())
                 {
                     case Throwable:
-                        p.GetComponent<T>().Initialise(positions.ToArray(), CurrentItem.ItemSprite,
+                        p.GetComponent<T>().Initialise(throwableArcPositions.ToArray(), CurrentItem.ItemSprite,
                             CurrentItem.SticksOnWall);
                         AudioManager.audioManager.PlayWeapon(9);
                         _removeItem.Raise(_playerReference);

@@ -258,6 +258,7 @@ GameObject:
   - component: {fileID: 5706338390592453364}
   - component: {fileID: 6680228674293283482}
   - component: {fileID: 575775214649751587}
+  - component: {fileID: 7133341689605696234}
   m_Layer: 9
   m_Name: Inventory
   m_TagString: Untagged
@@ -348,7 +349,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 759602a1436df6c4787ac3b2960c1193, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _renderer: {fileID: 5706338390592453364}
   _cursor: {fileID: 4461786547461907839}
   _playerReference: {fileID: 5588978955059791629}
   _firePoint: {fileID: 8652883126283529586}
@@ -367,8 +367,13 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   _multiShotTargets: []
+  _isHoldingAttack: 0
   _removeItem: {fileID: 11400000, guid: 3e4e531c6a7cb484bae0c31a53757702, type: 2}
   signal: 0
+  throwableArcPositions: []
+  throwableArcPositionsUpdated:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!120 &5706338390592453364
 LineRenderer:
   m_ObjectHideFlags: 0
@@ -509,6 +514,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemInteractor: {fileID: 2023147119661780085}
+--- !u!114 &7133341689605696234
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6722766841112063685}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8d74b77e37b649faa77c1ae16c2ddd3b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemInteractor: {fileID: 2023147119661780085}
+  throwableLineRenderer: {fileID: 5706338390592453364}
 --- !u!1 &7111658898038595601
 GameObject:
   m_ObjectHideFlags: 0
@@ -1049,7 +1068,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6638286123732195131, guid: fe93fd4b04ca3d340865789a7d27cade, type: 3}
       propertyPath: m_InstanceId
-      value: -45810
+      value: -115590
       objectReference: {fileID: 0}
     - target: {fileID: 6924075283435537384, guid: fe93fd4b04ca3d340865789a7d27cade, type: 3}
       propertyPath: m_Name
