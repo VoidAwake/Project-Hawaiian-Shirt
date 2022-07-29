@@ -33,6 +33,27 @@ namespace Hawaiian.Inventory.ItemBehaviours
             {
                 direction = target.GetPosition() - transform.position;
             }
+            
+            // TODO: Copied from a duplicate DealKnockback script. Needs sorting out.
+            // TODO: defaultDirection was passed in to Initialise
+            // TODO: This is really jank, but I don't want to rework Projectile and cause merge conflicts
+            // if (useDefaultDirection)
+            //     direction = defaultDirection;
+            // else if (rigidbody2D == null)
+            // {
+            //     if (GetComponent<Projectile>())
+            //         direction = GetComponent<Projectile>().Direction;
+            //     else if (GetComponent<Bomb>())
+            //     {
+            //         direction = col.gameObject.transform.position - GetComponent<Bomb>().transform.position;
+            //     } else
+            //         direction = defaultDirection;
+            //
+            // }
+            // else
+            // {
+            //     direction = rigidbody2D.velocity.normalized;
+            // }
 
             // if (gameObject.GetComponent<Projectile>() != null)
             // {

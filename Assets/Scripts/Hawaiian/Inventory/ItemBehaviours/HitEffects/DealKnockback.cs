@@ -1,4 +1,5 @@
-﻿using Hawaiian.Unit;
+﻿using Hawaiian.Inventory.HeldItemBehaviours;
+using Hawaiian.Unit;
 using UnityEngine;
 
 namespace Hawaiian.Inventory.ItemBehaviours.HitEffects
@@ -11,15 +12,13 @@ namespace Hawaiian.Inventory.ItemBehaviours.HitEffects
 
         public override void OnHit(Unit.Unit unit, Vector2 direction)
         {
-            // TODO: Move knockback to IUnit
-
             if (GetComponent<DamageIndicator>())
                 knockbackDistance = GetComponent<DamageIndicator>().KnockbackDistance;
 
-            if (unit.GetComponentInChildren<Shield>())
-                unit.GetComponentInChildren<Shield>().IsHit = true;
+            if (unit.GetComponentInChildren<ItemShield>())
+                unit.GetComponentInChildren<ItemShield>().IsHit = true;
             
-            
+            // TODO: Move knockback to IUnit
             unit.GetComponent<UnitPlayer>().KnockBack(direction, knockbackDistance);
         }
     }

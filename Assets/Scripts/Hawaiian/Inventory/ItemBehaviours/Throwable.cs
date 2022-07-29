@@ -91,10 +91,11 @@ namespace Hawaiian.Inventory.ItemBehaviours
     
         private void OnTriggerEnter2D(Collider2D other)
         {
+            // TODO: LAYERS ARE A THING
             if (other.gameObject.GetComponent<UnitPlayer>()) return;
             if (other.gameObject.GetComponent<Projectile>()) return;
             if (other.gameObject.GetComponent<ItemUnit>()) return;
-            if (other.gameObject.GetComponent<ShieldCollider>()) return;
+            // if (other.gameObject.GetComponent<ShieldCollider>()) return;
             if (other.gameObject.GetComponent<AvoidHit>()) return;
 
             Debug.Log(!other.gameObject.GetComponent<UnitPlayer>() + " state of the unit player");

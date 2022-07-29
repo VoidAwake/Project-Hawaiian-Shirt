@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3709458200693345195}
   - component: {fileID: -1867274275193140683}
-  - component: {fileID: 8746537984514094037}
+  - component: {fileID: 5436343612476701647}
   m_Layer: 0
   m_Name: Held Shield Item
   m_TagString: Untagged
@@ -46,23 +46,30 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _parryOccured: {fileID: 11400000, guid: 044baa1bdb65bce4d8436c3142846ddd, type: 2}
-  shieldColliderPrefab: {fileID: 8962048215263133830, guid: d2473bb5b1df2484bbbfd55502f1ec72, type: 3}
-  _shieldReference: {fileID: 8746537984514094037}
-  item: {fileID: 0}
-  _playerReference: {fileID: 0}
---- !u!114 &8746537984514094037
-MonoBehaviour:
+  _shieldReference: {fileID: 0}
+--- !u!61 &5436343612476701647
+BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8844233374723903085}
   m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fd60612699820964a955295df1dd47d9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _speed: 0
-  _knockbackDistance: 0
-  _shieldState: []
-  IsHit: 0
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1}
+  m_EdgeRadius: 0
