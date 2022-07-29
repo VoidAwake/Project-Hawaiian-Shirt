@@ -1,8 +1,9 @@
-﻿using Hawaiian.Unit;
+﻿using Hawaiian.Inventory.ItemBehaviours;
+using Hawaiian.Unit;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace Hawaiian.Inventory
+namespace Hawaiian.Inventory.HeldItemBehaviours
 {
     // TODO: Merge with Shield?
     public class ItemShield : MonoBehaviour

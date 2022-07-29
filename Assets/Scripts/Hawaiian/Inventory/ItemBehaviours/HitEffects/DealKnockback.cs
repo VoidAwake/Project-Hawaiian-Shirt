@@ -1,7 +1,7 @@
 ﻿using Hawaiian.Unit;
 using UnityEngine;
 
-namespace Hawaiian.Inventory
+namespace Hawaiian.Inventory.ItemBehaviours.HitEffects
 {
     public class DealKnockback : HitEffect
     {

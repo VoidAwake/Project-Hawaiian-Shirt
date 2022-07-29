@@ -4,7 +4,7 @@ using System.Linq;
 using Hawaiian.Unit;
 using UnityEngine;
 
-namespace Hawaiian.Inventory
+namespace Hawaiian.Inventory.ItemBehaviours
 {
     public class Throwable : ItemBehaviour
     {

@@ -4,7 +4,7 @@ using Hawaiian.Utilities;
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace Hawaiian.Inventory
+namespace Hawaiian.Inventory.ItemBehaviours
 {
     public class Shield : ItemBehaviour
     {

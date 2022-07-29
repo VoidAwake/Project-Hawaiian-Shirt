@@ -1,4 +1,5 @@
-﻿using Hawaiian.Unit;
+﻿using Hawaiian.Inventory.ItemBehaviours;
+using Hawaiian.Unit;
 using UnityEngine;
 
 namespace Hawaiian.Inventory

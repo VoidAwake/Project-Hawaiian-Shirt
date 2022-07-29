@@ -1,9 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Hawaiian.Unit;
 using UnityEngine;
 
-namespace Hawaiian.Inventory
+namespace Hawaiian.Inventory.ItemBehaviours
 {
     public class HitUnit : MonoBehaviour
     {

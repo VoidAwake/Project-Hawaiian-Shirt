@@ -2,7 +2,7 @@ using Hawaiian.Unit;
 using Hawaiian.Utilities;
 using UnityEngine;
 
-namespace Hawaiian.Inventory
+namespace Hawaiian.Inventory.ItemBehaviours
 {
     public class DamageIndicator : ItemBehaviour
     {

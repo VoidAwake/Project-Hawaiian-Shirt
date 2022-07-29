@@ -4,7 +4,7 @@ using UnityEngine;
 using Vector2 = UnityEngine.Vector2;
 using Vector3 = UnityEngine.Vector3;
 
-namespace Hawaiian.Inventory
+namespace Hawaiian.Inventory.ItemBehaviours
 {
     public class Projectile : ItemBehaviour
     {

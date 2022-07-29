@@ -1,9 +1,10 @@
 ﻿using System.Collections.Generic;
+using Hawaiian.Inventory.ItemBehaviours;
 using Hawaiian.Unit;
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace Hawaiian.Inventory
+namespace Hawaiian.Inventory.HeldItemBehaviours
 {
     public class ItemShoot : ItemInstantiate
     {

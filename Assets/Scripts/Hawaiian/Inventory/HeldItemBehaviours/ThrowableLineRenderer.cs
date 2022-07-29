@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using UnityEngine;
 
-namespace Hawaiian.Inventory
+namespace Hawaiian.Inventory.HeldItemBehaviours
 {
     public class ThrowableLineRenderer : MonoBehaviour
     {

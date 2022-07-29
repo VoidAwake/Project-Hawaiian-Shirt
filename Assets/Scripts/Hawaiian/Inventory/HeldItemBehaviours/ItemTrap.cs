@@ -1,7 +1,7 @@
 ﻿using Hawaiian.Unit;
 using UnityEngine;
 
-namespace Hawaiian.Inventory
+namespace Hawaiian.Inventory.HeldItemBehaviours
 {
     public class ItemTrap : MonoBehaviour
     {
