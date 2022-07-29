@@ -1,6 +1,5 @@
 ﻿using Hawaiian.PositionalEvents;
 using Hawaiian.Unit;
-using Hawaiian.Utilities;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -8,11 +7,14 @@ namespace Hawaiian.Inventory
 {
     public class HeldItem : MonoBehaviour
     {
+        [SerializeField] private UnityEvent itemUsedDown;
         [SerializeField] private UnityEvent itemUsed;
         [SerializeField] private GameObject _detonatorPrefab;
         public PositionalEventToken DetonateBase;
 
         public UnityEvent destroyed = new UnityEvent();
+
+        public Item Item;
 
         private bool CanPlaceDetonator = true;
 
@@ -20,6 +22,11 @@ namespace Hawaiian.Inventory
         public void Use()
         {
             itemUsed.Invoke();
+        }
+
+        public void UseDown()
+        {
+            itemUsedDown.Invoke();
         }
 
         public void Destroy()
@@ -70,7 +77,7 @@ namespace Hawaiian.Inventory
              
             }
         }
-        
+
         private void OnTriggerStay2D(Collider2D col)
         {
             if (!IsDetonator)
@@ -123,6 +130,15 @@ namespace Hawaiian.Inventory
                 else
                     CanPlaceDetonator = false;
             }
+        }
+
+        public UnityEvent initialised = new();
+
+        public void Initialise(Item currentItem)
+        {
+            Item = currentItem;
+            
+            initialised.Invoke();
         }
     }
 }

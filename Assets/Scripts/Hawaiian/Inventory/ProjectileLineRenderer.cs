@@ -1,42 +1,33 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 namespace Hawaiian.Inventory
 {
     public class ProjectileLineRenderer : MonoBehaviour
     {
-        [SerializeField] private ItemInteractor itemInteractor;
+        [SerializeField] private ItemShoot itemShoot;
 
         private readonly List<LineRenderer> lineRenderers = new();
 
         private void OnEnable()
         {
-            itemInteractor.targetCountChanged.AddListener(OnTargetCountChanged);
-            itemInteractor.multiShotTargetsUpdated.AddListener(OnMultiShotTargetsUpdated);
+            itemShoot.targetCountChanged.AddListener(OnTargetCountChanged);
+            itemShoot.multiShotTargetsUpdated.AddListener(OnMultiShotTargetsUpdated);
         }
 
         private void OnDisable()
         {
-            itemInteractor.targetCountChanged.RemoveListener(OnTargetCountChanged);
-            itemInteractor.multiShotTargetsUpdated.RemoveListener(OnMultiShotTargetsUpdated);
+            itemShoot.targetCountChanged.RemoveListener(OnTargetCountChanged);
+            itemShoot.multiShotTargetsUpdated.RemoveListener(OnMultiShotTargetsUpdated);
         }
 
         private void OnTargetCountChanged()
         {
-            if (itemInteractor.CurrentItem == null) return;
-            
-            if (itemInteractor.CurrentItem.Type != ItemType.Projectile) return;
-            
             GenerateLineRenderers();
         }
 
         private void OnMultiShotTargetsUpdated()
         {
-            if (itemInteractor.CurrentItem == null) return;
-            
-            if (itemInteractor.CurrentItem.Type != ItemType.Projectile) return;
-            
             UpdateLineRenderers(); 
         }
 
@@ -52,7 +43,7 @@ namespace Hawaiian.Inventory
                 }
             }
             
-            for (int i = 0; i < (itemInteractor.CurrentItem.ProjectileAmount == 0 ? 1 : itemInteractor.CurrentItem.ProjectileAmount); i++)
+            for (int i = 0; i < (itemShoot.item.ProjectileAmount == 0 ? 1 : itemShoot.item.ProjectileAmount); i++)
             {
                 GameObject instance = new GameObject();
 
@@ -64,8 +55,7 @@ namespace Hawaiian.Inventory
 
                 renderer.material = Resources.Load<Material>("Sprites/lineRendererMaterial");
 
-                if (itemInteractor.CurrentItem.Type == ItemType.Projectile)
-                    renderer.material.SetFloat(ItemInteractor.Rate, renderer.material.GetFloat(ItemInteractor.Rate) * -1);
+                renderer.material.SetFloat(ItemInteractor.Rate, renderer.material.GetFloat(ItemInteractor.Rate) * -1);
 
                 renderer.startWidth = 0.2f;
                 renderer.endWidth = 0.2f;
@@ -74,8 +64,8 @@ namespace Hawaiian.Inventory
                 gradient.SetKeys(
                     new GradientColorKey[]
                     {
-                        new GradientColorKey(itemInteractor._playerReference.PlayerColour, 0.0f),
-                        new GradientColorKey(itemInteractor._playerReference.PlayerColour, 1.0f)
+                        new GradientColorKey(itemShoot._playerReference.PlayerColour, 0.0f),
+                        new GradientColorKey(itemShoot._playerReference.PlayerColour, 1.0f)
                     }, new GradientAlphaKey[] {new GradientAlphaKey(1, 0.0f), new GradientAlphaKey(1, 1.0f)});
 
                 renderer.colorGradient = gradient;
@@ -85,12 +75,12 @@ namespace Hawaiian.Inventory
         private void UpdateLineRenderers()
         {
             GenerateLineRenderers();
-            for (var i = 0; i < itemInteractor._multiShotTargets.Length; i++)
+            for (var i = 0; i < itemShoot._multiShotTargets.Length; i++)
             {
                 LineRenderer lr = lineRenderers[i];
                 lr.transform.localPosition = Vector3.zero;
 
-                Vector3[] otherPositions = {itemInteractor._multiShotTargets[i], itemInteractor._playerReference.transform.position + Vector3.up * 0.5f};
+                Vector3[] otherPositions = {itemShoot._multiShotTargets[i], itemShoot._playerReference.transform.position + Vector3.up * 0.5f};
 
                 lr.positionCount = 2;
                 lr.SetPositions(otherPositions);
@@ -99,13 +89,9 @@ namespace Hawaiian.Inventory
 
         private void Update()
         {
-            var lineRenderersEnabled =
-                itemInteractor._isHoldingAttack &&
-                itemInteractor.CurrentItem.Type == ItemType.Projectile;
-            
             foreach (var lineRenderer in lineRenderers)
             {
-                lineRenderer.enabled = lineRenderersEnabled;
+                lineRenderer.enabled = itemShoot._isHoldingAttack;
             }
         }
     }

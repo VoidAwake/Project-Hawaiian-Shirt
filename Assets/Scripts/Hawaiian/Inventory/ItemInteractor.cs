@@ -2,9 +2,7 @@ using System;
 using System.Collections.Generic;
 using Hawaiian.Inventory;
 using Hawaiian.Unit;
-using Hawaiian.Utilities;
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.InputSystem;
 using Cursor = Hawaiian.Inventory.Cursor;
 
@@ -20,18 +18,11 @@ public class ItemInteractor : MonoBehaviour
     [SerializeField] private Cursor _cursor;
     [SerializeField] public UnitPlayer _playerReference;
     [SerializeField] private SpriteRenderer _handHelder;
-    [SerializeField] private UnitAnimator _animator;
     [SerializeField] private IUnitGameEvent _parryOccured;
     [SerializeField] private GameObject shieldColliderPrefab;
-    [SerializeField] private LayerMask _raycastMask;
-
-    public UnityEvent targetCountChanged = new();
-    public UnityEvent multiShotTargetsUpdated = new();
-    public UnityEvent throwableArcPositionsUpdated = new();
     
     //Components
     private InventoryController _controller;
-    public Vector3[] _multiShotTargets;
     private Vector2 _rotation;
     private bool isLookingLeft;
     private bool _isJoystickNeutral = true;
@@ -39,46 +30,13 @@ public class ItemInteractor : MonoBehaviour
     private float _currentHoldTime;
     private float _parryTimer;
 
-    private bool collisionFlag = false;
     private Shield _shieldReference;
-
-    public int TargetCount
-    {
-        get => targetCount;
-        private set
-        {
-            targetCount = value;
-            targetCountChanged.Invoke();
-            UpdateMultiShotTargets();
-        }
-    }
-
-    public List<Vector2> throwableArcPositions = new List<Vector2>();
-
-    [SerializeField] private IUnitGameEvent _removeItem;
-
-    private GameObject _projectileInstance;
-    private GameObject _projectileReference; //TODO: Get from item
 
     public bool IsAttacking => _isHoldingAttack;
 
     public UnitPlayer PlayerReference => _playerReference;
 
     public Item CurrentItem => _controller.CurrentItem;
-
-    public GameObject ProjectileReference => _projectileReference;
-
-    public Vector2 Rotation
-    {
-        get => _rotation;
-        set => _rotation = value;
-    }
-
-    private Vector2 _move;
-
-    public bool signal = false;
-    private int targetCount;
-
 
     #region Monobehaviour
 
@@ -102,12 +60,6 @@ public class ItemInteractor : MonoBehaviour
     {
         if (_isHoldingAttack)
         {
-            if (_controller.CurrentItem.Type == ItemType.Projectile)
-                UpdateMultiShotTargets();
-
-            if (_controller.CurrentItem.Type == ItemType.Throwable)
-                UpdateThrowableArcPositions();
-
             if (Math.Abs(_cursor.CurrentRad - _cursor.MaxRadius) > 0.01f)
             {
                 _currentHoldTime += Time.deltaTime;
@@ -115,19 +67,7 @@ public class ItemInteractor : MonoBehaviour
             }
         }
     }
-
-    private void UpdateThrowableArcPositions()
-    {
-        throwableArcPositions = BezierCurve.QuadraticBezierCurvePoints(
-            transform.position,
-            transform.position + new Vector3(0.5f, 2, 0),
-            _cursor.transform.position,
-            200
-        );
-        
-        throwableArcPositionsUpdated.Invoke();
-    }
-
+    
     #endregion
 
 
@@ -150,63 +90,19 @@ public class ItemInteractor : MonoBehaviour
         _rotation = value.Get<Vector2>();
     }
 
-    public void OnMove(InputValue value)
-    {
-        _move = value.Get<Vector2>();
-    }
-
-
     //Handles when the player holds the attack for throwables and projectiles
     public void HoldAttack(InputAction.CallbackContext value)
     {
-        if (!CanUseProjectile()) return;
-
         if (value.canceled)
         {
-            if (targetCount <= 0)
-                return;
+            _cursor.LerpToReset();
+            _currentHoldTime = 0f;
+            _isHoldingAttack = false;
         }
-
-
-        if (!CanUseProjectile() && _controller.CurrentItem.Type == ItemType.Throwable)
-            return;
-
-        if (value.performed)
+        else
         {
             _isHoldingAttack = true;
-
-            UpdateMultiShotTargets();
-
-            return;
         }
-
-        var projectiles = new List<GameObject>();
-
-        for (int i = _controller.CurrentItem.ProjectileAmount == 0 ? -1 : 0;
-             i < _controller.CurrentItem.ProjectileAmount;
-             i++)
-        {
-            _projectileInstance = Instantiate(_controller.CurrentItem.ProjectileInstance,
-                transform.position + 0.1f * (_cursor.transform.position - transform.position), Quaternion.identity);
-            projectiles.Add(_projectileInstance);
-
-            if (i == -1)
-                break;
-        }
-
-        switch (CurrentItem.Type)
-        {
-            case ItemType.Throwable:    
-                UseItem<Throwable>(projectiles);
-                break;
-            case ItemType.Projectile:
-                UseItem<Projectile>(projectiles);
-                break;
-        }
-
-        _cursor.LerpToReset();
-        _currentHoldTime = 0f;
-        _isHoldingAttack = false;
     }
 
     //*MAIN ITEM INTERACTION FUNCTION* Handles the initial processing of item interactions
@@ -280,11 +176,8 @@ public class ItemInteractor : MonoBehaviour
             if (_shieldReference != null)
                 _shieldReference.RemoveShieldComponent();
 
-            TargetCount = 0;
             return;
         }
-        
-        TargetCount = CurrentItem.ProjectileAmount == 0 ? 1 : CurrentItem.ProjectileAmount;
 
         if (CurrentItem.Type == ItemType.Shield)
         {
@@ -297,102 +190,14 @@ public class ItemInteractor : MonoBehaviour
         else if (_shieldReference != null)
             _shieldReference.RemoveShieldComponent();
 
-        _projectileReference = _controller.CurrentItem.ProjectileInstance;
         _handHelder.sprite = _controller.CurrentItem.ItemSprite;
         _cursor.MaxRadius = _controller.CurrentItem.DrawDistance;
     }
 
     private void UseItem<T>(List<GameObject> projectiles = null) where T : ItemBehaviour
     {
-        collisionFlag = false;
-
-        int index = 0;
-
-        if (projectiles != null)
-        {
-            projectiles.ForEach(p =>
-            {
-                p.GetComponent<T>()
-                    .BaseInitialise(_playerReference, CurrentItem.DrawSpeed, CurrentItem.KnockbackDistance);
-
-                switch (p.GetComponent<T>())
-                {
-                    case Throwable:
-                        p.GetComponent<T>().Initialise(throwableArcPositions.ToArray(), CurrentItem.ItemSprite,
-                            CurrentItem.SticksOnWall);
-                        AudioManager.audioManager.PlayWeapon(9);
-                        _removeItem.Raise(_playerReference);
-                        break;
-                    case Projectile:
-                        p.GetComponent<T>().Initialise(_playerReference, _multiShotTargets[index],
-                            CurrentItem.SticksOnWall, CurrentItem.ReturnsToPlayer, CurrentItem.IsRicochet,
-                            CurrentItem.MaximumBounces);
-                        AudioManager.audioManager.PlayWeapon(10);
-                        break;
-                }
-
-                if (p.GetComponent<HitUnit>())
-                    p.GetComponent<HitUnit>()
-                        .Initialise(_playerReference, _cursor.transform.position - transform.position);
-
-
-                _playerReference.transform.GetComponent<UnitAnimator>()
-                    .UseItem(UnitAnimationState.Throw, _cursor.transform.localPosition, false);
-
-                index++;
-            });
-        }
-        else if (CurrentItem.Type == ItemType.Shield && _shieldReference.CanParry())
+        if (CurrentItem.Type == ItemType.Shield && _shieldReference.CanParry())
             _shieldReference.LiftShield();
-    }
-
-    private void UpdateMultiShotTargets()
-    {
-        if (_multiShotTargets.Length != targetCount)
-        {
-            _multiShotTargets = new Vector3[targetCount];
-        }
-        
-        if (collisionFlag)
-            return;
-
-        var direction = (_cursor.transform.position - transform.position).normalized;
-     
-        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-
-        if (angle < 0) angle = 360 - angle * -1;
-
-        for (var i = 0; i < TargetCount; i++)
-        {
-            // Increment the angle for each target
-            var currentAngle = angle + 20f * i - (TargetCount - 1) / (float) 2 * 20f;
-
-            var radians = currentAngle * Mathf.Deg2Rad;
-
-            var x = Mathf.Cos(radians);
-            var y = Mathf.Sin(radians);
-            var targetPos = transform.position + new Vector3(x, y, 0f) * _cursor.CurrentRad;
-
-            _multiShotTargets[i] = targetPos;
-        }
-        
-        multiShotTargetsUpdated.Invoke();
-    }
-
-    public bool CanUseProjectile()
-    {
-        if (_projectileInstance != null)
-        {
-            if (_projectileInstance.GetComponent<Projectile>())
-            {
-                if (_projectileInstance.GetComponent<Projectile>().IsOnWall())
-                    return true;
-
-                return false;
-            }
-        }
-
-        return true;
     }
 
     // TODO: Why is this here when all the other inputs are handled by InventoryController?

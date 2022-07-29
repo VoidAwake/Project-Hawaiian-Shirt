@@ -1,5 +1,6 @@
 ﻿using Hawaiian.Unit;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace Hawaiian.Inventory
 {
@@ -46,6 +47,8 @@ namespace Hawaiian.Inventory
 
             heldItem = heldItemObject.GetComponent<HeldItem>();
 
+            heldItem.Initialise(currentItem);
+
             heldItem.destroyed.AddListener(OnHeldItemDestroyed);
         }
 
@@ -64,11 +67,19 @@ namespace Hawaiian.Inventory
         }
 
         // Message from Player Input
-        private void OnAttack()
+        private void OnAttack(InputValue value)
         {
+            Debug.Log(value.Get<float>());
             if (heldItem == null) return;
-            
-            heldItem.Use();
+
+            if (value.Get<float>() > 0.5)
+            {
+                heldItem.UseDown();
+            }
+            else
+            {
+                heldItem.Use();
+            }
         }
     }
 }
