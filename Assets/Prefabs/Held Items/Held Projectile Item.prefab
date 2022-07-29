@@ -9,9 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3235944655807293717}
-  - component: {fileID: 5455860566317737300}
   - component: {fileID: -6668763926886357600}
   - component: {fileID: 9138440934089525135}
+  - component: {fileID: 2147112893830372386}
   m_Layer: 0
   m_Name: Held Projectile Item
   m_TagString: Untagged
@@ -34,54 +34,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5455860566317737300
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7291259026507672787}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 23796b4f53be4d1fa9e91794a4a01900, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  itemUsedDown:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: -6668763926886357600}
-        m_TargetAssemblyTypeName: Hawaiian.Inventory.ItemShoot, Hawaiian.Inventory
-        m_MethodName: Aim
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  itemUsed:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: -6668763926886357600}
-        m_TargetAssemblyTypeName: Hawaiian.Inventory.ItemShoot, Hawaiian.Inventory
-        m_MethodName: Shoot
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  _detonatorPrefab: {fileID: 0}
-  DetonateBase: {fileID: 0}
-  destroyed:
-    m_PersistentCalls:
-      m_Calls: []
-  IsDetonator: 0
 --- !u!114 &-6668763926886357600
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -94,23 +46,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6283159ac30a4798b0f9477cbafadbdb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  projectilePrefab: {fileID: 8484802503941745754, guid: 6ccdae3489326844c9b49b012c477987, type: 3}
-  projectileAmount: 1
-  SticksOnWall: 0
-  ReturnsToPlayer: 0
-  IsRicochet: 0
-  MaximumBounces: 0
-  DrawSpeed: 9
-  KnockbackDistance: 0
   targetCountChanged:
     m_PersistentCalls:
       m_Calls: []
   multiShotTargetsUpdated:
     m_PersistentCalls:
       m_Calls: []
-  _isHoldingAttack: 0
   _multiShotTargets: []
-  _playerReference: {fileID: 0}
 --- !u!114 &9138440934089525135
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -124,3 +66,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemShoot: {fileID: -6668763926886357600}
+--- !u!114 &2147112893830372386
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7291259026507672787}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f30f9b440ed43d08eb22c60abf787b6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

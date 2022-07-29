@@ -105,7 +105,7 @@ namespace Hawaiian.Inventory.ItemBehaviours
 
         public virtual void OnTargetReached()
         {
-            Destroy(this.gameObject);
+            Destroy(gameObject);
         }
 
 

@@ -17,7 +17,6 @@ namespace Hawaiian.Inventory.ItemBehaviours
 
         private GameEvent parryOccured;
         private IUnitGameEventListener _listener;
-        private ItemInteractor _itemInteractor;
         private UnitPlayer _user;
         private Transform _cursorPos;
         private Vector3 _lastPosition;
@@ -47,7 +46,6 @@ namespace Hawaiian.Inventory.ItemBehaviours
             ParryWindow = parryWindow;
             ParryPercentage = parryPercentage;
             _duration = 0;
-            _itemInteractor = GetComponent<ItemInteractor>();
             _canParry = true;
         }
 
@@ -77,7 +75,7 @@ namespace Hawaiian.Inventory.ItemBehaviours
                 return;
             }
 
-            _itemInteractor.PlayerReference.OverrideDamage = true;
+            _user.OverrideDamage = true;
         
             //Determine if the parry hit the desired window
             if ((_duration / ParryWindow) * 100 <= ParryPercentage[1] &&
@@ -148,7 +146,7 @@ namespace Hawaiian.Inventory.ItemBehaviours
         IEnumerator RemoveOverrideDamage()
         {
             yield return new WaitForSeconds(Time.deltaTime);
-            _itemInteractor.PlayerReference.OverrideDamage = false;
+            _user.OverrideDamage = false;
         }
 
 

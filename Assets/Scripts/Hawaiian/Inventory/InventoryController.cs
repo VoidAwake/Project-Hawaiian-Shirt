@@ -17,6 +17,7 @@ namespace Hawaiian.Inventory
         [SerializeField] private ScriptableInt size;
         [SerializeField] private SpriteRenderer hand;
         [SerializeField] private GameObject droppedItemPrefab;
+        [SerializeField] private Cursor cursor;
 
         public UnityEvent currentItemChanged = new UnityEvent();
         public Inventory inv;
@@ -87,9 +88,9 @@ namespace Hawaiian.Inventory
         {
             // TODO: Two way dependency.
             // TODO: Replace with a cancel attack function
-            if (GetComponent<ItemInteractor>()
-                .IsAttacking) // makes sure that they cant change their items while attacking since that make it go brokey
-                return;
+            // if (GetComponent<ItemInteractor>()
+            //     .IsAttacking) // makes sure that they cant change their items while attacking since that make it go brokey
+            //     return;
 
             inv.InvPosition++;
             Parse();
@@ -99,9 +100,9 @@ namespace Hawaiian.Inventory
         {
             // TODO: Two way dependency.
             // TODO: Replace with a cancel attack function
-            if (GetComponent<ItemInteractor>()
-                .IsAttacking) // makes sure that they cant change their items while attacking since that make it go brokey
-                return;
+            // if (GetComponent<ItemInteractor>()
+            //     .IsAttacking) // makes sure that they cant change their items while attacking since that make it go brokey
+            //     return;
 
             inv.InvPosition--;
             Parse();
@@ -134,11 +135,11 @@ namespace Hawaiian.Inventory
 
         public void OnNumParse(int x)
         {
-            // TODO: Two way dependency.
-            // TODO: Replace with a cancel attack function
-            if (GetComponent<ItemInteractor>()
-                .IsAttacking) // makes sure that they cant change their items while attacking since that make it go brokey
-                return;
+            // // TODO: Two way dependency.
+            // // TODO: Replace with a cancel attack function
+            // if (GetComponent<ItemInteractor>()
+            //     .IsAttacking) // makes sure that they cant change their items while attacking since that make it go brokey
+            //     return;
             inv.invPosition = x;
             Parse();
         }
@@ -237,6 +238,20 @@ namespace Hawaiian.Inventory
             }
 
             prevScore = newScore;
+        }
+        
+        // TODO: Sort this out
+        // TODO: Why is this here when all the other inputs are handled by InventoryController?
+        public void OnDrop()
+        {
+            // // Prevent items being dropped while attacking
+            // if (GetComponent<ItemInteractor>().IsAttacking) return;
+        
+            //_controller.DropItLikeItsHot(_rotation);
+            Vector3 prevInput = (cursor.transform.localPosition - Vector3.up * 0.5f);
+            Vector3 playerInput = prevInput.magnitude == 0 ? Vector2.right.normalized : prevInput.normalized;
+
+            DropItLikeItsHot(playerInput);
         }
     }
 }

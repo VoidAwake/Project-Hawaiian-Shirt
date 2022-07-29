@@ -1,6 +1,5 @@
 ﻿using Hawaiian.Unit;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 namespace Hawaiian.Inventory
 {
@@ -14,7 +13,9 @@ namespace Hawaiian.Inventory
         [SerializeField] public Transform firePoint;
         [SerializeField] public SpriteRenderer heldItemSpriteRenderer;
 
-        private HeldItem heldItem;
+        public Item Item => inventoryController.CurrentItem;
+
+        private GameObject heldItemObject;
 
         private void OnEnable()
         {
@@ -28,61 +29,43 @@ namespace Hawaiian.Inventory
 
         private void OnItemUpdated()
         {
-            if (heldItem != null)
+            if (heldItemObject != null)
             {
                 DestroyHeldItem();
             }
             
-            var currentItem = inventoryController.CurrentItem;
-            
             // TODO: Is should just be part of the held item
-            heldItemSpriteRenderer.sprite = currentItem.ItemSprite;
+            heldItemSpriteRenderer.sprite = Item != null ? Item.ItemSprite : null;
 
-            if (currentItem == null) return;
+            if (Item == null) return;
 
-            if (currentItem.heldItemPrefab == null) return;
+            if (Item.heldItemPrefab == null) return;
             
-            CreateHeldItem(currentItem);
+            CreateHeldItem(Item);
         }
 
         private void CreateHeldItem(Item currentItem)
         {
-            var heldItemObject = Instantiate(currentItem.heldItemPrefab, transform);
+            heldItemObject = Instantiate(currentItem.heldItemPrefab, transform);
+            
+            BroadcastMessage("Initialise", this);
 
-            heldItem = heldItemObject.GetComponent<HeldItem>();
-
-            heldItem.Initialise(currentItem);
-
-            heldItem.destroyed.AddListener(OnHeldItemDestroyed);
+            // TODO: Come back to this
+            // heldItem.destroyed.AddListener(OnHeldItemDestroyed);
         }
 
         private void DestroyHeldItem()
         {
-            heldItem.destroyed.RemoveListener(OnHeldItemDestroyed);
+            // heldItem.destroyed.RemoveListener(OnHeldItemDestroyed);
 
-            Destroy(heldItem.gameObject);
+            Destroy(heldItemObject);
 
-            heldItem = null;
+            heldItemObject = null;
         }
 
         private void OnHeldItemDestroyed()
         {
             inventoryController.RemoveCurrentItem();
-        }
-
-        // Message from Player Input
-        private void OnAttack(InputValue value)
-        {
-            if (heldItem == null) return;
-
-            if (value.Get<float>() > 0.5)
-            {
-                heldItem.UseDown();
-            }
-            else
-            {
-                heldItem.Use();
-            }
         }
     }
 }

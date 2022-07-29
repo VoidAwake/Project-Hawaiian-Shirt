@@ -3,31 +3,16 @@ using Hawaiian.Unit;
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace Hawaiian.Inventory
+namespace Hawaiian.Inventory.HeldItemBehaviours
 {
-    public class HeldItem : MonoBehaviour
+    public class DetonatorHeldItem : HeldItemBehaviour
     {
-        [SerializeField] private UnityEvent itemUsedDown;
-        [SerializeField] private UnityEvent itemUsed;
         [SerializeField] private GameObject _detonatorPrefab;
         public PositionalEventToken DetonateBase;
 
         public UnityEvent destroyed = new UnityEvent();
 
-        public Item Item;
-
         private bool CanPlaceDetonator = true;
-
-        public bool IsDetonator = false;
-        public void Use()
-        {
-            itemUsed.Invoke();
-        }
-
-        public void UseDown()
-        {
-            itemUsedDown.Invoke();
-        }
 
         public void Destroy()
         {
@@ -52,9 +37,6 @@ namespace Hawaiian.Inventory
 
         private void OnTriggerEnter2D(Collider2D col)
         {
-            if (!IsDetonator)
-                return;
-            
             var listeners = col.GetComponents<PositionalEventListener>();
 
             foreach (var listener in listeners)
@@ -80,9 +62,6 @@ namespace Hawaiian.Inventory
 
         private void OnTriggerStay2D(Collider2D col)
         {
-            if (!IsDetonator)
-                return;
-            
             var listeners = col.GetComponents<PositionalEventListener>();
 
             foreach (var listener in listeners)
@@ -107,9 +86,6 @@ namespace Hawaiian.Inventory
 
         private void OnTriggerExit2D(Collider2D col)
         {
-            if (!IsDetonator)
-                return;
-            
             var listeners = col.GetComponents<PositionalEventListener>();
 
             foreach (var listener in listeners)
@@ -130,15 +106,6 @@ namespace Hawaiian.Inventory
                 else
                     CanPlaceDetonator = false;
             }
-        }
-
-        public UnityEvent initialised = new();
-
-        public void Initialise(Item currentItem)
-        {
-            Item = currentItem;
-            
-            initialised.Invoke();
         }
     }
 }

@@ -17,7 +17,7 @@ namespace Hawaiian.Inventory.HeldItemBehaviours
         
         private void FixedUpdate()
         {
-            if (_isHoldingAttack)
+            if (UseItemActionHeld)
             {
                 UpdateThrowableArcPositions();
             }
@@ -28,7 +28,7 @@ namespace Hawaiian.Inventory.HeldItemBehaviours
             throwableArcPositions = BezierCurve.QuadraticBezierCurvePoints(
                 transform.position,
                 transform.position + new Vector3(0.5f, 2, 0),
-                cursor.transform.position,
+                Cursor.transform.position,
                 200
             );
             
@@ -51,25 +51,25 @@ namespace Hawaiian.Inventory.HeldItemBehaviours
                 projectiles.ForEach(p =>
                 {
                     p.GetComponent<T>()
-                        .BaseInitialise(_playerReference, item.DrawSpeed, item.KnockbackDistance);
+                        .BaseInitialise(UnitPlayer, Item.DrawSpeed, Item.KnockbackDistance);
 
                     switch (p.GetComponent<T>())
                     {
                         case Throwable:
-                            p.GetComponent<T>().Initialise(throwableArcPositions.ToArray(), item.ItemSprite,
-                                item.SticksOnWall);
+                            p.GetComponent<T>().Initialise(throwableArcPositions.ToArray(), Item.ItemSprite,
+                                Item.SticksOnWall);
                             AudioManager.audioManager.PlayWeapon(9);
-                            _removeItem.Raise(_playerReference);
+                            _removeItem.Raise(UnitPlayer);
                             break;
                     }
 
                     if (p.GetComponent<HitUnit>())
                         p.GetComponent<HitUnit>()
-                            .Initialise(_playerReference, cursor.transform.position - transform.position);
+                            .Initialise(UnitPlayer, Cursor.transform.position - transform.position);
 
 
-                    _playerReference.transform.GetComponent<UnitAnimator>()
-                        .UseItem(UnitAnimationState.Throw, cursor.transform.localPosition, false);
+                    UnitPlayer.transform.GetComponent<UnitAnimator>()
+                        .UseItem(UnitAnimationState.Throw, Cursor.transform.localPosition, false);
 
                     index++;
                 });

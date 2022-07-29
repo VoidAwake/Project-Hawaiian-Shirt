@@ -33,15 +33,15 @@ namespace Hawaiian.Inventory.HeldItemBehaviours
             gradient.SetKeys(
                 new GradientColorKey[]
                 {
-                    new GradientColorKey(itemThrow._playerReference.PlayerColour, 0.0f),
-                    new GradientColorKey(itemThrow._playerReference.PlayerColour, 1.0f)
+                    new GradientColorKey(itemThrow.UnitPlayer.PlayerColour, 0.0f),
+                    new GradientColorKey(itemThrow.UnitPlayer.PlayerColour, 1.0f)
                 }, new GradientAlphaKey[] {new GradientAlphaKey(1, 0.0f), new GradientAlphaKey(1, 1.0f)});
             throwableLineRenderer.colorGradient = gradient;
         }
 
         private void Update()
         {
-            throwableLineRenderer.enabled = itemThrow._isHoldingAttack;
+            throwableLineRenderer.enabled = itemThrow.UseItemActionHeld;
         }
     }
 }

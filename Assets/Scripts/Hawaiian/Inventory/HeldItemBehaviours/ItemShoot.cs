@@ -16,13 +16,11 @@ namespace Hawaiian.Inventory.HeldItemBehaviours
         public Vector3[] _multiShotTargets;
         private int targetCount;
 
-        protected override void OnInitialised()
+        protected override void Initialise(ItemHolder itemHolder)
         {
-            base.OnInitialised();
+            base.Initialise(itemHolder);
             
-            if (item == null) return;
-            
-            TargetCount = item.ProjectileAmount == 0 ? 1 : item.ProjectileAmount;
+            TargetCount = Item.ProjectileAmount == 0 ? 1 : Item.ProjectileAmount;
         }
 
         public int TargetCount
@@ -38,7 +36,7 @@ namespace Hawaiian.Inventory.HeldItemBehaviours
         
         private void FixedUpdate()
         {
-            if (_isHoldingAttack)
+            if (UseItemActionHeld)
             {
                 UpdateMultiShotTargets();
             }
@@ -54,7 +52,7 @@ namespace Hawaiian.Inventory.HeldItemBehaviours
             if (collisionFlag)
                 return;
 
-            var direction = (cursor.transform.position - transform.position).normalized;
+            var direction = (Cursor.transform.position - transform.position).normalized;
          
             float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
 
@@ -69,7 +67,7 @@ namespace Hawaiian.Inventory.HeldItemBehaviours
 
                 var x = Mathf.Cos(radians);
                 var y = Mathf.Sin(radians);
-                var targetPos = transform.position + new Vector3(x, y, 0f) * cursor.CurrentRad;
+                var targetPos = transform.position + new Vector3(x, y, 0f) * Cursor.CurrentRad;
 
                 _multiShotTargets[i] = targetPos;
             }
@@ -95,25 +93,25 @@ namespace Hawaiian.Inventory.HeldItemBehaviours
                 projectiles.ForEach(p =>
                 {
                     p.GetComponent<T>()
-                        .BaseInitialise(_playerReference, item.DrawSpeed, item.KnockbackDistance);
+                        .BaseInitialise(UnitPlayer, Item.DrawSpeed, Item.KnockbackDistance);
 
                     switch (p.GetComponent<T>())
                     {
                         case Projectile:
-                            p.GetComponent<T>().Initialise(_playerReference, _multiShotTargets[index],
-                                item.SticksOnWall, item.ReturnsToPlayer, item.IsRicochet,
-                                item.MaximumBounces);
+                            p.GetComponent<T>().Initialise(UnitPlayer, _multiShotTargets[index],
+                                Item.SticksOnWall, Item.ReturnsToPlayer, Item.IsRicochet,
+                                Item.MaximumBounces);
                             AudioManager.audioManager.PlayWeapon(10);
                             break;
                     }
 
                     if (p.GetComponent<HitUnit>())
                         p.GetComponent<HitUnit>()
-                            .Initialise(_playerReference, cursor.transform.position - transform.position);
+                            .Initialise(UnitPlayer, Cursor.transform.position - transform.position);
 
 
-                    _playerReference.transform.GetComponent<UnitAnimator>()
-                        .UseItem(UnitAnimationState.Throw, cursor.transform.localPosition, false);
+                    UnitPlayer.transform.GetComponent<UnitAnimator>()
+                        .UseItem(UnitAnimationState.Throw, Cursor.transform.localPosition, false);
 
                     index++;
                 });
