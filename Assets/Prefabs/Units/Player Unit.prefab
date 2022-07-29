@@ -100,6 +100,7 @@ MonoBehaviour:
   unitPlayer: {fileID: 5588978955059791629}
   cursor: {fileID: 4461786547461907839}
   firePoint: {fileID: 8652883126283529586}
+  heldItemSpriteRenderer: {fileID: 937560079924309396}
 --- !u!1 &3636419626033286241
 GameObject:
   m_ObjectHideFlags: 0
@@ -351,9 +352,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _cursor: {fileID: 4461786547461907839}
   _playerReference: {fileID: 5588978955059791629}
-  _handHelder: {fileID: 937560079924309396}
-  _parryOccured: {fileID: 11400000, guid: 044baa1bdb65bce4d8436c3142846ddd, type: 2}
-  shieldColliderPrefab: {fileID: 8962048215263133830, guid: d2473bb5b1df2484bbbfd55502f1ec72, type: 3}
   _isHoldingAttack: 0
 --- !u!114 &6680228674293283482
 MonoBehaviour:
@@ -923,7 +921,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6638286123732195131, guid: fe93fd4b04ca3d340865789a7d27cade, type: 3}
       propertyPath: m_InstanceId
-      value: -63926
+      value: -93456
       objectReference: {fileID: 0}
     - target: {fileID: 6924075283435537384, guid: fe93fd4b04ca3d340865789a7d27cade, type: 3}
       propertyPath: m_Name

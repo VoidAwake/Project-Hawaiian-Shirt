@@ -1,0 +1,121 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &8844233374723903085
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3709458200693345195}
+  - component: {fileID: 6063492536832690154}
+  - component: {fileID: -1867274275193140683}
+  - component: {fileID: 8746537984514094037}
+  m_Layer: 0
+  m_Name: Held Shield Item
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3709458200693345195
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8844233374723903085}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6063492536832690154
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8844233374723903085}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 23796b4f53be4d1fa9e91794a4a01900, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemUsedDown:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: -1867274275193140683}
+        m_TargetAssemblyTypeName: Hawaiian.Inventory.ItemShield, Hawaiian.Inventory
+        m_MethodName: Attack
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  itemUsed:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: -1867274275193140683}
+        m_TargetAssemblyTypeName: Hawaiian.Inventory.ItemShield, Hawaiian.Inventory
+        m_MethodName: Attack
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  _detonatorPrefab: {fileID: 0}
+  DetonateBase: {fileID: 0}
+  destroyed:
+    m_PersistentCalls:
+      m_Calls: []
+  Item: {fileID: 0}
+  IsDetonator: 0
+  initialised:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!114 &-1867274275193140683
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8844233374723903085}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 435c209b566045fa861071a9b0a99842, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _parryOccured: {fileID: 11400000, guid: 044baa1bdb65bce4d8436c3142846ddd, type: 2}
+  shieldColliderPrefab: {fileID: 8962048215263133830, guid: d2473bb5b1df2484bbbfd55502f1ec72, type: 3}
+  _shieldReference: {fileID: 8746537984514094037}
+  item: {fileID: 0}
+  _playerReference: {fileID: 0}
+--- !u!114 &8746537984514094037
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8844233374723903085}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd60612699820964a955295df1dd47d9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _speed: 0
+  _knockbackDistance: 0
+  _shieldState: []
+  IsHit: 0

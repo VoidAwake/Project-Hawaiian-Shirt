@@ -21,7 +21,7 @@ MonoBehaviour:
   ProjectileInstance: {fileID: 0}
   Rarity: 1
   ItemWeight: 50
-  heldItemPrefab: {fileID: 0}
+  heldItemPrefab: {fileID: 8844233374723903085, guid: 13771032c14f4eb458a3616205eabd70, type: 3}
   ProbabilityRangeFrom: 0
   ProbabilityRangeTo: 50
   ItemDamage: 0
@@ -48,3 +48,5 @@ MonoBehaviour:
   PlacementIcon: {fileID: 0}
   TrapInstance: {fileID: 0}
   IsKey: 0
+  IsDetonator: 0
+  IsDepositor: 0

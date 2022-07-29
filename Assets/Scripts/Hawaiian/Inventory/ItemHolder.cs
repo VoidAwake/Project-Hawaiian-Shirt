@@ -12,6 +12,7 @@ namespace Hawaiian.Inventory
         [SerializeField] public UnitPlayer unitPlayer;
         [SerializeField] public Cursor cursor;
         [SerializeField] public Transform firePoint;
+        [SerializeField] public SpriteRenderer heldItemSpriteRenderer;
 
         private HeldItem heldItem;
 
@@ -33,6 +34,9 @@ namespace Hawaiian.Inventory
             }
             
             var currentItem = inventoryController.CurrentItem;
+            
+            // TODO: Is should just be part of the held item
+            heldItemSpriteRenderer.sprite = currentItem.ItemSprite;
 
             if (currentItem == null) return;
 
@@ -69,7 +73,6 @@ namespace Hawaiian.Inventory
         // Message from Player Input
         private void OnAttack(InputValue value)
         {
-            Debug.Log(value.Get<float>());
             if (heldItem == null) return;
 
             if (value.Get<float>() > 0.5)

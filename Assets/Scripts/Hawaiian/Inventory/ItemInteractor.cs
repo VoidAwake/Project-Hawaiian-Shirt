@@ -17,9 +17,6 @@ public class ItemInteractor : MonoBehaviour
 
     [SerializeField] private Cursor _cursor;
     [SerializeField] public UnitPlayer _playerReference;
-    [SerializeField] private SpriteRenderer _handHelder;
-    [SerializeField] private IUnitGameEvent _parryOccured;
-    [SerializeField] private GameObject shieldColliderPrefab;
     
     //Components
     private InventoryController _controller;
@@ -30,13 +27,9 @@ public class ItemInteractor : MonoBehaviour
     private float _currentHoldTime;
     private float _parryTimer;
 
-    private Shield _shieldReference;
-
     public bool IsAttacking => _isHoldingAttack;
 
     public UnitPlayer PlayerReference => _playerReference;
-
-    public Item CurrentItem => _controller.CurrentItem;
 
     #region Monobehaviour
 
@@ -129,20 +122,7 @@ public class ItemInteractor : MonoBehaviour
         }
 
         #endregion
-
-
-        #region MeleeAttack
-
-        if (value.canceled) return;
-
-        if (CurrentItem.Type == ItemType.Shield)
-        {
-            UseItem<Shield>();
-            return;
-        }
     }
-
-    #endregion
 
     private void BeginTrapHighlighting()
     {
@@ -171,33 +151,7 @@ public class ItemInteractor : MonoBehaviour
 
     public void OnCurrentItemChanged()
     {
-        if (_controller.CurrentItem == null)
-        {
-            if (_shieldReference != null)
-                _shieldReference.RemoveShieldComponent();
-
-            return;
-        }
-
-        if (CurrentItem.Type == ItemType.Shield)
-        {
-            _shieldReference = gameObject.AddComponent<Shield>();
-            _shieldReference.Initialise(CurrentItem.ParryWindow,
-                new[] {CurrentItem.ParryPercentageUpperLimit, CurrentItem.ParryPercentageLowerLimit}, _handHelder,
-                new[] {CurrentItem.ShieldDown, CurrentItem.ShieldUp}, _parryOccured, shieldColliderPrefab,
-                CurrentItem.TimeTillParry, _playerReference, _cursor.transform);
-        }
-        else if (_shieldReference != null)
-            _shieldReference.RemoveShieldComponent();
-
-        _handHelder.sprite = _controller.CurrentItem.ItemSprite;
         _cursor.MaxRadius = _controller.CurrentItem.DrawDistance;
-    }
-
-    private void UseItem<T>(List<GameObject> projectiles = null) where T : ItemBehaviour
-    {
-        if (CurrentItem.Type == ItemType.Shield && _shieldReference.CanParry())
-            _shieldReference.LiftShield();
     }
 
     // TODO: Why is this here when all the other inputs are handled by InventoryController?

@@ -177,6 +177,7 @@ public class Shield : ItemBehaviour
         _shieldSprite.gameObject.transform.localPosition = _lastPosition;
     }
 
+    // TODO: No longer used?
     public void RemoveShieldComponent()
     {
         if (_shieldColliderInstance != null)
