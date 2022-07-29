@@ -1,7 +1,8 @@
 using System;
+using Hawaiian.Unit;
 using UnityEngine;
-using System.Collections.Generic;
-namespace Hawaiian.Unit
+
+namespace Hawaiian.Inventory
 {
     
     [Serializable]

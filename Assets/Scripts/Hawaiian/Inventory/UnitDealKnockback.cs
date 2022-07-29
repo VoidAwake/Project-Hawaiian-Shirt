@@ -1,8 +1,9 @@
-﻿using UnityEngine;
+﻿using Hawaiian.Unit;
+using UnityEngine;
 
-namespace Hawaiian.Unit
+namespace Hawaiian.Inventory
 {
-    public class DealKnockback : MonoBehaviour
+    public class UnitDealKnockback : MonoBehaviour
     {
         [SerializeField] private new Rigidbody2D rigidbody2D;
         
@@ -28,10 +29,10 @@ namespace Hawaiian.Unit
         public void OnTriggerEnter2D(Collider2D col)
         {
             // TODO: Duplicate code. See DamageIndicator.OnTriggerEnter2D
-            if (col.gameObject.GetComponent<Unit>() is IUnit)
+            if (col.gameObject.GetComponent<Unit.Unit>() is IUnit)
             {
                 //Yucky 
-                IUnit target = (IUnit) col.gameObject.GetComponent<Unit>();
+                IUnit target = (IUnit) col.gameObject.GetComponent<Unit.Unit>();
 
                 if (target == user)
                     return;

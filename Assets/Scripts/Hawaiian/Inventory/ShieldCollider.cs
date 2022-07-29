@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Hawaiian.Unit
+namespace Hawaiian.Inventory
 {
     [RequireComponent(typeof(BoxCollider2D))]
     public class ShieldCollider : MonoBehaviour

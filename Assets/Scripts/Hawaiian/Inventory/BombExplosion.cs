@@ -1,22 +1,22 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class BombExplosion : MonoBehaviour
+namespace Hawaiian.Inventory
 {
-    private float timer = 0;
-
-    public void Update()
+    public class BombExplosion : MonoBehaviour
     {
-        if (timer < 1)
-            timer += Time.deltaTime;
-        else
-            DestoryExplosion();
-    }
+        private float timer = 0;
 
-    public void DestoryExplosion()
-    {
-        Destroy(gameObject);
+        public void Update()
+        {
+            if (timer < 1)
+                timer += Time.deltaTime;
+            else
+                DestoryExplosion();
+        }
+
+        public void DestoryExplosion()
+        {
+            Destroy(gameObject);
+        }
     }
 }
