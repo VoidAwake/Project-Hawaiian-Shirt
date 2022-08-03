@@ -18,7 +18,6 @@ namespace Hawaiian.UI.Game
         [SerializeField] private float displayTime;
         [SerializeField] private float transitionTime;
         [SerializeField] private float offset;
-        [SerializeField] private GameObject restartButton;
         
         private RectTransform rectTransform;
         private Vector3 initialPosition;
@@ -32,8 +31,6 @@ namespace Hawaiian.UI.Game
             initialPosition = rectTransform.anchoredPosition;
 
             text.text = "";
-            
-            restartButton.SetActive(false);
         }
 
         protected override void Subscribe()
@@ -77,8 +74,6 @@ namespace Hawaiian.UI.Game
             //
             //     rectTransform.position = initialPosition + new Vector3((1 - transitionTimer / transitionTime) * offset, 0);
             // }
-            
-            restartButton.SetActive(true);
 
             // TODO: This will be the default, but for the gameover screen, there's no point
             // text.text = "";
