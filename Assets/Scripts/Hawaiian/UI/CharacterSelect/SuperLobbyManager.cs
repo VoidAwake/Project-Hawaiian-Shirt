@@ -4,6 +4,7 @@ using System.Linq;
 using Hawaiian.Game;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.InputSystem;
 
 namespace Hawaiian.UI.CharacterSelect
@@ -27,7 +28,8 @@ namespace Hawaiian.UI.CharacterSelect
         public readonly List<LobbyPlayerController> lobbyPlayerControllers = new();
         
         private bool isExiting;
-        
+
+        public UnityEvent<LobbyPlayerController> playerJoined = new();
         
         private Coroutine transitionCoroutine;
 
@@ -89,6 +91,8 @@ namespace Hawaiian.UI.CharacterSelect
             lobbyPlayerController.Initialise(this, lobbyManager, modeLobbyManager, playerConfig);
 
             lobbyManager.JoinPlayer(playerConfig, lobbyPlayerController);
+            
+            playerJoined.Invoke(lobbyPlayerController);
         }
 
         #endregion

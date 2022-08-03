@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Hawaiian.Inventory.ItemBehaviours;
 using Hawaiian.Unit;
+using Hawaiian.Utilities;
 using UnityEngine;
 using UnityEngine.Events;
 

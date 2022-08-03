@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Hawaiian.Unit;
+using Hawaiian.Utilities;
 using UnityEngine;
 
 namespace Hawaiian.Inventory.ItemBehaviours

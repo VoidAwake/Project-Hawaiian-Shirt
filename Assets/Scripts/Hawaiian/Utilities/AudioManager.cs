@@ -1,58 +1,33 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class AudioManager : MonoBehaviour
+namespace Hawaiian.Utilities
 {
-    [SerializeField] AudioClip[] sfxClips;
-    [SerializeField] AudioSource uiSfx;
-    [SerializeField] AudioSource sfx;
-    public static AudioManager audioManager;
-    // Start is called before the first frame update
-    void Start()
+    public class AudioManager : MonoBehaviour
     {
-        DontDestroyOnLoad(gameObject);
-        if (audioManager == null)
-        {
-            audioManager = this;
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
+        [SerializeField] AudioClip[] sfxClips;
+        [SerializeField] AudioSource sfx;
+        public static AudioManager audioManager;
         
-    }
+        void Start()
+        {
+            DontDestroyOnLoad(gameObject);
+            if (audioManager == null)
+            {
+                audioManager = this;
+            }
+            else
+            {
+                Destroy(gameObject);
+            }
+        }
 
-    public void Swap()
-    {
-        
-            uiSfx.PlayOneShot(sfxClips[1]);
+        public void PlayerTrip()
+        {
+            sfx.PlayOneShot(sfxClips[6]);
+        }
+        public void PlayWeapon(int clipIndex)
+        {
+            sfx.PlayOneShot(sfxClips[clipIndex]);
+        }
     }
-
-    public void Confirm()
-    {
-        if (!uiSfx.isPlaying)
-            uiSfx.PlayOneShot(sfxClips[3]);
-    }
-
-    public void PlayerAdd()
-    {
-        uiSfx.PlayOneShot(sfxClips[0]);
-    }
-
-   public void PlayerTrip()
-    {
-        sfx.PlayOneShot(sfxClips[6]);
-    }
-    public void PlayWeapon(int clipIndex)
-    {
-        sfx.PlayOneShot(sfxClips[clipIndex]);
-    }
-
-    
 }

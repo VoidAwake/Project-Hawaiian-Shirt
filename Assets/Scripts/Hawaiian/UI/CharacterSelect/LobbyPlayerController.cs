@@ -11,7 +11,7 @@ namespace Hawaiian.UI.CharacterSelect
 {
     public class LobbyPlayerController : MonoBehaviour
     {
-        public UnityEvent statusChanged = new();
+        public UnityEvent<LobbyPlayerController> statusChanged = new();
         public UnityEvent characterUpdated = new();
         
         public bool inputEnabled;
@@ -138,7 +138,6 @@ namespace Hawaiian.UI.CharacterSelect
                     StartCoroutine(EnableInput());
                     break;
                 case PlayerStatus.Ready:
-                    AudioManager.audioManager.Confirm();
                     Portrait.alpha = 0.2f;
                     StartCoroutine(EnableInput());
                     break;
@@ -150,7 +149,7 @@ namespace Hawaiian.UI.CharacterSelect
             
             lobbyManager.UpdateReadyToStart();
             
-            statusChanged.Invoke();
+            statusChanged.Invoke(this);
         }
 
         // TODO: We shouldn't need all these references, this can definitely be simplified
@@ -180,7 +179,7 @@ namespace Hawaiian.UI.CharacterSelect
             playerConfig.characterNumber = charNumber;
             
             if (charNumber == -1) return;
-            AudioManager.audioManager.Swap();
+            
             Portrait = lobbyManager.GetPortrait(charNumber);
             
             characterUpdated.Invoke();
