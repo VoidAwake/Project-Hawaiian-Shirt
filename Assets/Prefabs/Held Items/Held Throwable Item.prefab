@@ -13,6 +13,8 @@ GameObject:
   - component: {fileID: 7052883581821415129}
   - component: {fileID: 7888202671740746222}
   - component: {fileID: 2527044679971565751}
+  - component: {fileID: 7195581447481802236}
+  - component: {fileID: 5005838694579915155}
   m_Layer: 0
   m_Name: Held Throwable Item
   m_TagString: Untagged
@@ -52,6 +54,21 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   throwableArcPositions: []
+  threw:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 5005838694579915155}
+        m_TargetAssemblyTypeName: Hawaiian.Inventory.SoundEffectBehaviour, Hawaiian.Inventory
+        m_MethodName: Play
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &7052883581821415129
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -177,3 +194,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3f30f9b440ed43d08eb22c60abf787b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &7195581447481802236
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 709440188485822649}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 119d9f63a3e347ec910080989f7506d6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  destroyed:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!114 &5005838694579915155
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 709440188485822649}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2188f752774f4ee3af25f696106449a1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  audioClip: {fileID: 8300000, guid: 6e108782c97061047b71e2f7d4383acc, type: 3}
+  soundEffectPrefab: {fileID: 1677760502211808288, guid: 3fa395965866be44bae4285d7c437731, type: 3}
+  destroyable: {fileID: 7195581447481802236}

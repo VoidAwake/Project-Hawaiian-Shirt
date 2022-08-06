@@ -41,8 +41,7 @@ namespace Hawaiian.Inventory
             UseItemActionHeld = false;
         }
 
-        // Message from ItemHolder
-        protected virtual void Initialise(ItemHolder itemHolder)
+        public virtual void Initialise(ItemHolder itemHolder)
         {
             this.itemHolder = itemHolder;
             

@@ -18,10 +18,8 @@ namespace Hawaiian.Inventory.ItemBehaviours
     
         public override void OnTargetReached()
         { 
-            GameObject bombEffect =  Instantiate(_bombExplosionPrefab, LastPosition,Quaternion.identity);
-            AudioManager.audioManager.PlayWeapon(8);
+            GameObject bombEffect = Instantiate(_bombExplosionPrefab, LastPosition,Quaternion.identity);
             base.OnTargetReached();
-      
         }
     }
 }

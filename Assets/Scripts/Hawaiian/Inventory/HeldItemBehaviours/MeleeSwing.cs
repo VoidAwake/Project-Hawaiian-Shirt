@@ -1,7 +1,7 @@
 ﻿using Hawaiian.Inventory.ItemBehaviours;
 using Hawaiian.Unit;
-using Hawaiian.Utilities;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.InputSystem;
 
 namespace Hawaiian.Inventory.HeldItemBehaviours
@@ -14,6 +14,8 @@ namespace Hawaiian.Inventory.HeldItemBehaviours
         [SerializeField] private float AttackRate;
         [SerializeField] public float DrawSpeed;
         [SerializeField] public int KnockbackDistance;
+
+        public UnityEvent attacked = new();
             
         private float _slashCooldown;
         private Vector3 _lastAttackPosition;
@@ -30,14 +32,17 @@ namespace Hawaiian.Inventory.HeldItemBehaviours
 
         protected override void UseItemActionPerformed(InputAction.CallbackContext value)
         {
+            base.UseItemActionPerformed(value);
+            
             if (!CanMeleeAttack()) return;
 
             //Begin melee 
             Vector3 input = GetPlayerInput();
-            AudioManager.audioManager.PlayWeapon(7);
             var angle = Mathf.Atan2(input.y, input.x) * Mathf.Rad2Deg;
             var direction = input;
             InstantiateMeleeIndicator(angle, direction);
+            
+            attacked.Invoke();
         }
 
         private Vector3 GetPlayerInput()

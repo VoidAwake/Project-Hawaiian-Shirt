@@ -15,10 +15,12 @@ MonoBehaviour:
   displayName: Round Robbin
   description: Race to nab the most treasure before the timer runs out! Attack other
     players to steal their treasures.
-  sceneReferences:
-  - {fileID: 11400000, guid: ad1852f60b1701d42b82206d34034a33, type: 2}
-  - {fileID: 11400000, guid: cd15109325d54a740adbc00594d3213f, type: 2}
   controlsInstructionsDialoguePrefab: {fileID: 6701680597941144673, guid: ad9da8ae28d5a1446a50507627be2e64, type: 3}
   tutorialDialoguePrefab: {fileID: 4814276844058300917, guid: 45769a02522b0c84da70d092cf10c2dc, type: 3}
   sceneChanger: {fileID: 11400000, guid: 3d32adecca106ad4a8e92d019d2654af, type: 2}
   gameOverEvent: {fileID: 11400000, guid: 3f166778320e3064188ff102927875f8, type: 2}
+  playerJoined:
+    m_PersistentCalls:
+      m_Calls: []
+  sceneReferences:
+  - {fileID: 11400000, guid: ad1852f60b1701d42b82206d34034a33, type: 2}

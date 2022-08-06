@@ -8,7 +8,7 @@ namespace Hawaiian.Inventory.HeldItemBehaviours
     {
         private float currentHoldTime;
 
-        protected override void Initialise(ItemHolder itemHolder)
+        public override void Initialise(ItemHolder itemHolder)
         {
             base.Initialise(itemHolder);
             

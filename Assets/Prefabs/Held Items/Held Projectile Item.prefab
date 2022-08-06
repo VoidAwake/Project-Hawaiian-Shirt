@@ -12,6 +12,8 @@ GameObject:
   - component: {fileID: -6668763926886357600}
   - component: {fileID: 9138440934089525135}
   - component: {fileID: 2147112893830372386}
+  - component: {fileID: 4323576048635687990}
+  - component: {fileID: 2997490603596123563}
   m_Layer: 0
   m_Name: Held Projectile Item
   m_TagString: Untagged
@@ -53,6 +55,21 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   _multiShotTargets: []
+  shot:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 4323576048635687990}
+        m_TargetAssemblyTypeName: Hawaiian.Inventory.SoundEffectBehaviour, Hawaiian.Inventory
+        m_MethodName: Play
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &9138440934089525135
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -78,3 +95,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3f30f9b440ed43d08eb22c60abf787b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &4323576048635687990
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7291259026507672787}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2188f752774f4ee3af25f696106449a1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  audioClip: {fileID: 8300000, guid: 3434b141b1bf6e0439c14444b440ffc8, type: 3}
+  soundEffectPrefab: {fileID: 1677760502211808288, guid: 3fa395965866be44bae4285d7c437731, type: 3}
+  destroyable: {fileID: 2997490603596123563}
+--- !u!114 &2997490603596123563
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7291259026507672787}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 119d9f63a3e347ec910080989f7506d6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  destroyed:
+    m_PersistentCalls:
+      m_Calls: []

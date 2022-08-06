@@ -14,7 +14,7 @@ namespace Hawaiian.Inventory.HeldItemBehaviours
         [SerializeField] private IUnitGameEvent _parryOccured;
         private SpriteRenderer heldItemSpriteRenderer;
 
-        protected override void Initialise(ItemHolder itemHolder)
+        public override void Initialise(ItemHolder itemHolder)
         {
             base.Initialise(itemHolder);
             

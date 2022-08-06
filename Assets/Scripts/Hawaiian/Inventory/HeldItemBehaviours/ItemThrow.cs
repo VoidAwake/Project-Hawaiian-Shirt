@@ -14,6 +14,8 @@ namespace Hawaiian.Inventory.HeldItemBehaviours
         public UnityEvent throwableArcPositionsUpdated = new();
         
         public List<Vector2> throwableArcPositions = new List<Vector2>();
+
+        public UnityEvent threw = new();
         
         private void FixedUpdate()
         {
@@ -58,8 +60,9 @@ namespace Hawaiian.Inventory.HeldItemBehaviours
                         case Throwable:
                             p.GetComponent<T>().Initialise(throwableArcPositions.ToArray(), Item.ItemSprite,
                                 Item.SticksOnWall);
-                            AudioManager.audioManager.PlayWeapon(9);
                             _removeItem.Raise(UnitPlayer);
+                            
+                            threw.Invoke();
                             break;
                     }
 

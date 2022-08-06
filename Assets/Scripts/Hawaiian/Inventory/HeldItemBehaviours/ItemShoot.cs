@@ -17,7 +17,9 @@ namespace Hawaiian.Inventory.HeldItemBehaviours
         public Vector3[] _multiShotTargets;
         private int targetCount;
 
-        protected override void Initialise(ItemHolder itemHolder)
+        public UnityEvent shot = new();
+
+        public override void Initialise(ItemHolder itemHolder)
         {
             base.Initialise(itemHolder);
             
@@ -102,7 +104,8 @@ namespace Hawaiian.Inventory.HeldItemBehaviours
                             p.GetComponent<T>().Initialise(UnitPlayer, _multiShotTargets[index],
                                 Item.SticksOnWall, Item.ReturnsToPlayer, Item.IsRicochet,
                                 Item.MaximumBounces);
-                            AudioManager.audioManager.PlayWeapon(10);
+                            
+                            shot.Invoke();
                             break;
                     }
 

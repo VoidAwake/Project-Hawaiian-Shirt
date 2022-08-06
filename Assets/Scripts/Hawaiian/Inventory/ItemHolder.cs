@@ -48,7 +48,13 @@ namespace Hawaiian.Inventory
         {
             heldItemObject = Instantiate(currentItem.heldItemPrefab, transform);
             
-            BroadcastMessage("Initialise", this);
+            // TODO: Two way dependency.
+            var heldItemBehaviours = heldItemObject.GetComponents<HeldItemBehaviour>();
+
+            foreach (var heldItemBehaviour in heldItemBehaviours)
+            {
+                heldItemBehaviour.Initialise(this);
+            }
 
             // TODO: Come back to this
             // heldItem.destroyed.AddListener(OnHeldItemDestroyed);
