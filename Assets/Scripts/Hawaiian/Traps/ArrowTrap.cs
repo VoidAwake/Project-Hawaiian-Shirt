@@ -11,6 +11,7 @@ public class ArrowTrap : TrapController
     [SerializeField] private float cooldown;
     [SerializeField] private float timer = 0f;
     [SerializeField] private SpriteRenderer spr;
+    private float rotation;
 
     [SerializeField] private Animator anim;
     [SerializeField] private float projectileDistance;
@@ -33,9 +34,9 @@ public class ArrowTrap : TrapController
             anim.SetTrigger("trigger");
             triggered = true;
             timer = 0;
-
-            GameObject pro =  Instantiate(projectile,transform.position,quaternion.identity);
-            pro.GetComponent<Projectile>().Initialise(GetDir());
+            Vector3 x = GetDir();
+            GameObject pro =  Instantiate(projectile,transform.position + new Vector3(0.1f,0.1f,0.1f),Quaternion.Euler(0f,0f,rotation));
+            pro.GetComponent<Projectile>().Initialise(x);
 
         }
         //anim.ResetTrigger("trigger");
@@ -67,18 +68,22 @@ public class ArrowTrap : TrapController
         if ( dir == Direction.Up)
         {
             x = new Vector3(0f, 1f, 0f);
+            rotation = 0f;
         }
         else if (dir == Direction.Down)
         {
             x = new Vector3(0f, -1f, 0f);
+            rotation = 180f;
         }
         else if (dir == Direction.Left)
         {
             x = new Vector3(-1f, 0f, 0f);
+            rotation = 90f;
         }
         else if (dir == Direction.Right)
         {
             x = new Vector3(1f, 0f, 0f);
+            rotation = 270f;
         }
         //Debug.Log("GET DIR IS" + (transform.position + x * projectileDistance));
         return transform.position + x * projectileDistance;
