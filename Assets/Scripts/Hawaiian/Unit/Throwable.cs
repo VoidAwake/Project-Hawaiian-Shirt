@@ -80,7 +80,7 @@ public class Throwable : ItemBehaviour
         if (positionIndex >= _positions.Length - 1)
             OnTargetReached();
         
-        var step = _speed * Time.deltaTime;
+        var step = _speed;
 
         transform.position = Vector3.MoveTowards(transform.position, _positions[positionIndex], step);
         

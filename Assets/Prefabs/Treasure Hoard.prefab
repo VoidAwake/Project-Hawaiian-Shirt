@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 7552181274152550560}
   - component: {fileID: 857639338631508198}
   - component: {fileID: 2395206677613711887}
+  - component: {fileID: 4841726817478386292}
   m_Layer: 0
   m_Name: Treasure Hoard
   m_TagString: Untagged
@@ -53,6 +54,8 @@ MonoBehaviour:
   manager: {fileID: 11400000, guid: b205461929d08b7439e72030dc234753, type: 2}
   TreasureHoardUIPrefab: {fileID: 4208669935238418296, guid: fc1f86168dfd8314d9e9c72826735b0e, type: 3}
   TreasureHoardUIParent: {fileID: 7552181274152550560}
+  playerManager: {fileID: 0}
+  gameManager: {fileID: 11400000, guid: c305914e6d352644190ef7ee43a51bbd, type: 2}
 --- !u!114 &2395206677613711887
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -77,3 +80,31 @@ MonoBehaviour:
   m_Spacing: {x: 1320, y: 486}
   m_Constraint: 1
   m_ConstraintCount: 2
+--- !u!114 &4841726817478386292
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 378428827036738159}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8beaaee945cf0844ad0f79ee7108362, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Event: {fileID: 11400000, guid: 2a2ac177cfbc4ee44a6355e7378dddb1, type: 2}
+  Response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 857639338631508198}
+        m_TargetAssemblyTypeName: Hawaiian.UI.Game.TreasureHoardUI, Hawaiian.UI
+        m_MethodName: GenerateTreasurePointUI
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2

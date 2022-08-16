@@ -1,5 +1,6 @@
 ﻿using Hawaiian.Utilities;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace Hawaiian.Game
 {
@@ -10,6 +11,7 @@ namespace Hawaiian.Game
         [SerializeField] private ScriptableFloat gameTime;
         [SerializeField] private bool startOnAwake;
         [SerializeField] private GameManager gameManager;
+        [SerializeField] private InputAction debugEndGameAction;
 
         public GameEvent GameEndedOccured;
         
@@ -17,7 +19,6 @@ namespace Hawaiian.Game
 
         private void Start()
         {
-
             gameTime.Value = startTime;
             
             if (startOnAwake)
@@ -45,12 +46,6 @@ namespace Hawaiian.Game
             timerActive = false;
         }
 
-        // public void OnPhaseChanged()
-        // {
-        //     if (gameManager.Phase == GameManager.GamePhase.Stealth)
-        //         StartTimer();
-        // }
-
         [ContextMenu("TimesUp")]
         private void TimesUp()
         {
@@ -61,9 +56,30 @@ namespace Hawaiian.Game
             // TODO: Move this to a dedicated script, possibly the game manager
             gameTimeScale.Value = 0;
             gameManager.Phase = GameManager.GamePhase.GameOver;
+                
+            // TODO: Pretty sure this event duplicates other functionality.
             GameEndedOccured.Raise();
                 
             // TODO: Change to the results screen
+        }
+
+        private void OnEnable()
+        {
+            debugEndGameAction.Enable();
+            
+            debugEndGameAction.performed += OnDebugEndGameActionPerformed;
+        }
+
+        private void OnDisable()
+        {
+            debugEndGameAction.Disable();
+            
+            debugEndGameAction.performed -= OnDebugEndGameActionPerformed;
+        }
+
+        private void OnDebugEndGameActionPerformed(InputAction.CallbackContext callbackContext)
+        {
+            TimesUp();
         }
     }
 }

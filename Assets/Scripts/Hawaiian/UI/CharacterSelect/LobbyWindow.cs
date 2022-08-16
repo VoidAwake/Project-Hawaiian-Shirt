@@ -1,3 +1,5 @@
+using System;
+using Hawaiian.Unit;
 using UnityEngine;
 using TMPro;
 using UnityEngine.U2D.Animation;
@@ -7,9 +9,6 @@ namespace Hawaiian.UI.CharacterSelect
 {
     public class LobbyWindow : MonoBehaviour
     {
-        //public enum CharacterNames { Fox, Robin, Monkey, Cat, Goose, Soup, Gambit, Bert } // Use public enum is SpawnPlayers
-
-        [SerializeField] LobbyGameManager manager;
         [SerializeField] TextMeshProUGUI textNumber;
         [SerializeField] TextMeshProUGUI textPrompt;
         [SerializeField] TextMeshProUGUI textReady;
@@ -19,13 +18,51 @@ namespace Hawaiian.UI.CharacterSelect
         [SerializeField] Camera renderCamera;
         [SerializeField] RawImage renderTexture;
 
-        // Start is called before the first frame update
+        private LobbyPlayerController lobbyPlayerController;
+
+        public void Initialise(LobbyPlayerController lobbyPlayerController)
+        {
+            this.lobbyPlayerController = lobbyPlayerController;
+            
+            // TODO: Unlisten?
+            lobbyPlayerController.statusChanged.AddListener(OnStatusChanged);
+            lobbyPlayerController.characterUpdated.AddListener(OnCharacterUpdated);
+            
+            OnStatusChanged();
+            OnCharacterUpdated();
+        }
+
+        private void OnCharacterUpdated()
+        {
+            UpdateHead(lobbyPlayerController.playerConfig.characterNumber);
+        }
+
+        private void OnStatusChanged()
+        {
+            switch (lobbyPlayerController.Status)
+            {
+                case LobbyPlayerController.PlayerStatus.NotLoadedIn:
+                    SetEmpty();
+                    break;
+                case LobbyPlayerController.PlayerStatus.LoadedIn:
+                    SetUnselected();
+                    break;
+                case LobbyPlayerController.PlayerStatus.Ready:
+                    SetSelected();
+                    break;
+                case LobbyPlayerController.PlayerStatus.SelectingMode:
+                    // TODO: Not really sure what to do in this case.
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+        }
+
         void Start()
         {
             SetEmpty();
         }
 
-        // Update is called once per frame
         void Update()
         {
             if (textPrompt.enabled)
@@ -75,7 +112,7 @@ namespace Hawaiian.UI.CharacterSelect
 
         public void UpdateHead(int characterNumber)
         {
-            head.SetCategoryAndLabel("Head", ((SpawnPlayers.CharacterNames)characterNumber).ToString());
+            head.SetCategoryAndLabel("Head", ((Unit.Unit.HeadLabels)characterNumber).ToString());
         }
     }
 }

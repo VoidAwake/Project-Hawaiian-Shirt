@@ -27,7 +27,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3920133195234102889}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 518.4547, y: 386.9502, z: -1.0063616}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -51,6 +51,47 @@ MonoBehaviour:
   gameTime: {fileID: 11400000, guid: 0c73cc340ca261c4fb0bb0fd9ce5302f, type: 2}
   startOnAwake: 0
   gameManager: {fileID: 11400000, guid: c305914e6d352644190ef7ee43a51bbd, type: 2}
+  debugEndGameAction:
+    m_Name: Debug End Game
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: d569e53f-644a-45fd-90cf-d4278f4258bf
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings:
+    - m_Name: Two Modifiers
+      m_Id: 9b43eb6e-46e4-4794-b73f-6aa0c84b1795
+      m_Path: TwoModifiers
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Debug End Game
+      m_Flags: 4
+    - m_Name: modifier1
+      m_Id: ef35009e-aef3-4394-a6db-113c5f27939f
+      m_Path: <Gamepad>/select
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Debug End Game
+      m_Flags: 8
+    - m_Name: modifier2
+      m_Id: 373f6a86-afa2-4588-a0e2-d6df55eaa5bd
+      m_Path: <Gamepad>/start
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Debug End Game
+      m_Flags: 8
+    - m_Name: binding
+      m_Id: 9ca6515c-f6e9-454e-86d1-4b7a7f57a960
+      m_Path: <Gamepad>/leftTrigger
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Debug End Game
+      m_Flags: 8
+    m_Flags: 0
   GameEndedOccured: {fileID: 11400000, guid: 3f110c950f25a164b8bce56a2f06f376, type: 2}
 --- !u!114 &3920133195234102886
 MonoBehaviour:
