@@ -1,26 +1,48 @@
-using Hawaiian.Game;
+using System.Collections;
+using Hawaiian.Inventory;
+using Hawaiian.UI.Game;
+using MoreLinq;
+using TMPro;
 using UI.Core;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
-namespace Hawaiian.UI.Game
+public class TreasureHoardUI : DialogueComponent<GameDialogue>
 {
-    public class TreasureHoardUI : DialogueComponent<GameDialogue>
+    [SerializeField] private GameObject TreasureHoardUIPrefab;
+    [SerializeField] private Transform TreasureHoardUIParent;
+
+
+
+
+    // float timer;
+    // Start is called before the first frame update
+    void Start()
     {
-        [SerializeField] private GameObject TreasureHoardUIPrefab;
-        [SerializeField] private Transform TreasureHoardUIParent;
-        [SerializeField] private PlayerManager playerManager;
-        [SerializeField] private GameManager gameManager;
+        Debug.Log("Teasure hoard UI placed");
+    }
 
-        public void GenerateTreasurePointUI()
-        {
-            if (gameManager.CurrentGameMode.gameMode != GameMode.TreasureHoard) return;
-            
-            GameObject treasurePrefab = Instantiate(TreasureHoardUIPrefab, TreasureHoardUIParent);
-            treasurePrefab.GetComponent<TreasurePointIndicator>().Initialise(playerManager.LastPlayerJoined);
-        }
 
-        protected override void Subscribe() { }
 
-        protected override void Unsubscribe() { }
+
+    public void GenerateTreasurePointUI(PlayerInput playerReference, Color32 playerColour)
+    {
+        GameObject treasurePrefab = Instantiate(TreasureHoardUIPrefab, TreasureHoardUIParent);
+        treasurePrefab.GetComponent<TreasurePointIndicator>().Initialise(playerReference, playerColour);
+    }
+
+ 
+
+    protected override void Subscribe()
+    {
+    }
+
+    protected override void Unsubscribe()
+    {
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
     }
 }

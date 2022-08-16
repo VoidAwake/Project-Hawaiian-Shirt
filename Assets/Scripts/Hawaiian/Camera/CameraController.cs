@@ -92,6 +92,8 @@ public class CameraController : MonoBehaviour
         
         _center = GetCenterPoint(players.ToArray());
 
+        //Debug.Log(_center);
+      
         var newPosition = _center;
         transform.position = Vector2.SmoothDamp(transform.position, newPosition, ref velocity, _smoothTime);
 

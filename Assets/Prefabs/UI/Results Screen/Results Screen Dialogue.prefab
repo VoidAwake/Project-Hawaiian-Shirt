@@ -347,7 +347,7 @@ MonoBehaviour:
   - playerNumber: 0
     characterNumber: 1
     score: 50
-    playerInput: {fileID: 0}
+    inputComponent: {fileID: 0}
     playerIndex: 0
     splitScreenIndex: 0
     controlScheme: 
@@ -356,13 +356,12 @@ MonoBehaviour:
   - playerNumber: 1
     characterNumber: 2
     score: 90
-    playerInput: {fileID: 0}
+    inputComponent: {fileID: 0}
     playerIndex: 0
     splitScreenIndex: 0
     controlScheme: 
     deviceIds: 
     isPlayer: 1
-  playerConfigManager: {fileID: 11400000, guid: 424474a542819c946b03786b7421e196, type: 2}
 --- !u!1 &1448644550872619322
 GameObject:
   m_ObjectHideFlags: 0

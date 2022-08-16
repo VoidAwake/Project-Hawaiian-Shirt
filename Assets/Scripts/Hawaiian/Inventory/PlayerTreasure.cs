@@ -182,7 +182,7 @@ namespace Hawaiian.Unit
 
                 if (temp == null) continue;
 
-                inventory = temp.inv;
+                inventory = temp._inv;
             }
 
             int newPoints = 0;
@@ -245,7 +245,7 @@ namespace Hawaiian.Unit
                 temp.Add(item);
                 pointsToRemove += (int) item.Points;
                 GameObject droppedItem = Instantiate(DroppedItemPrefab, transform.position, Quaternion.identity);
-                droppedItem.GetComponent<DroppedItem>().Item = item;
+                droppedItem.GetComponent<DroppedItem>().item = item;
 
                 var randomX = UnityEngine.Random.Range(-1f, 1f);
                 var randomY = UnityEngine.Random.Range(-1f, 1f);

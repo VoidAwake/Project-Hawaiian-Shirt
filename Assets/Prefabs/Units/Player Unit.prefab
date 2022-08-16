@@ -291,15 +291,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 66c6441a83f4ea347a2e1d720ada3f61, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 0}
+  _player: {fileID: 0}
   parse: {fileID: 11400000, guid: 06a444aa59e4ca842aaf66d652849d39, type: 2}
+  addinv: 0
+  item: {fileID: 0}
   size: {fileID: 11400000, guid: d1df78077398a98448d92b549af3857f, type: 2}
+  addedInventory: {fileID: 11400000, guid: 2220e64b52956274a8ac1a529699a2d4, type: 2}
   hand: {fileID: 937560079924309396}
-  droppedItemPrefab: {fileID: 3056942884218095950, guid: 37132a09f5d1c4046a4bb460892afc47, type: 3}
+  droppedItem: {fileID: 3056942884218095950, guid: 37132a09f5d1c4046a4bb460892afc47, type: 3}
   currentItemChanged:
     m_PersistentCalls:
       m_Calls: []
-  inv: {fileID: 0}
+  _inv: {fileID: 0}
 --- !u!58 &121433996737073732
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -589,9 +592,6 @@ MonoBehaviour:
   _baseRadius: 1.1
   _maxRadius: 20
   _input: {fileID: 6432945937749252037}
-  unit: {fileID: 5588978955059791629}
-  spriteRenderer: {fileID: 1598933601258987996}
-  playerColors: {fileID: 11400000, guid: c18c22b93a97a954ca8ab46031e350bd, type: 2}
 --- !u!1 &7257212948175652388
 GameObject:
   m_ObjectHideFlags: 0
@@ -1186,7 +1186,6 @@ MonoBehaviour:
   head: {fileID: 7237116040329313408}
   torso: {fileID: 6508653587361009964}
   playerColors: {fileID: 11400000, guid: c18c22b93a97a954ca8ab46031e350bd, type: 2}
-  _spawnEffectPrefab: {fileID: 14599233181292866, guid: 22679898e105812469709475d2af798c, type: 3}
   playerState: 0
   OverrideDamage: 0
   _maxHealth: 20
@@ -1196,9 +1195,6 @@ MonoBehaviour:
   maxSpeed: 6.5
   tweenRate: 15
   runMultiplier: 1.75
-  initialised:
-    m_PersistentCalls:
-      m_Calls: []
   _playerInput: {fileID: 6432945937749252037}
   _playerJoined: {fileID: 11400000, guid: 2a2ac177cfbc4ee44a6355e7378dddb1, type: 2}
 --- !u!114 &6432945937749252037

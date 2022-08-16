@@ -25,8 +25,8 @@ MonoBehaviour:
   ProbabilityRangeFrom: 0
   ProbabilityRangeTo: 60
   ItemDamage: 10
-  DrawSpeed: 80
-  DrawDistance: 8
+  DrawSpeed: 50
+  DrawDistance: 5
   SticksOnWall: 0
   ReturnsToPlayer: 0
   IsMultiShot: 0

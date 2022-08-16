@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Hawaiian.Game;
 using Hawaiian.UI.CharacterSelect;
 using Hawaiian.Unit;
 using UI.Core;

@@ -5,7 +5,6 @@ using Hawaiian.Unit;
 using Hawaiian.Utilities;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using Cursor = Hawaiian.Inventory.Cursor;
 
 [RequireComponent(typeof(InventoryController))]
 public class ItemInteractor : MonoBehaviour
@@ -17,7 +16,7 @@ public class ItemInteractor : MonoBehaviour
     [Header("Components")] [SerializeField]
     private LineRenderer _renderer;
 
-    [SerializeField] private Cursor _cursor;
+    [SerializeField] private Hawaiian.Input.Cursor _cursor;
     [SerializeField] private UnitPlayer _playerReference;
     [SerializeField] private Transform _firePoint;
     [SerializeField] private float _meleeSlashRotationOffset;

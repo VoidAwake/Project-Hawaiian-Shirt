@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace Hawaiian.Inventory
@@ -6,22 +7,24 @@ namespace Hawaiian.Inventory
     {
         [SerializeField] private SpriteRenderer spriteRenderer;
 
-        [SerializeField] private Item item;
-
-        public Item Item
+       [SerializeField] private Item _item;
+        public Item item
         {
-            get => item;
+            get => _item;
             set
             {
-                item = value;
-
+                _item = value;
+                
                 if (spriteRenderer == null)
                     return;
-
-                // TODO: Duplicate code. See OnValidate.
+                
                 spriteRenderer.sprite = item.DroppedItemSprite;
                 
-                spriteRenderer.color = item.IsDetonator ? Color.red : Color.white;
+                
+                if (item.IsDetonator)
+                    spriteRenderer.color = Color.red;
+                else
+                    spriteRenderer.color = Color.white;
             }
         }
 
@@ -31,19 +34,23 @@ namespace Hawaiian.Inventory
         {
             Destroy(gameObject);
         }
-
+        
         private void OnValidate()
         {
-            if (Item == null) return;
+            if (item == null) return;
 
-            name = Item.name + " Item";
+            name = item.name + " Item";
 
             if (spriteRenderer == null) return;
 
-            // TODO: Duplicate code. See Item.
-            spriteRenderer.sprite = Item.DroppedItemSprite;
+            spriteRenderer.sprite = item.DroppedItemSprite;
+
+            if (item.IsDetonator)
+                spriteRenderer.color = Color.red;
+            else
+                spriteRenderer.color = Color.white;
+
             
-            spriteRenderer.color = Item.IsDetonator ? Color.red : Color.white;
         }
     }
 }

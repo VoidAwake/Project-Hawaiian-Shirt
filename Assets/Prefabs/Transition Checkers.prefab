@@ -102,7 +102,9 @@ MonoBehaviour:
   - {fileID: -1411936884, guid: ebdfa010ef5bee54ba4e826fe89f6c9a, type: 3}
   - {fileID: -867677588, guid: ebdfa010ef5bee54ba4e826fe89f6c9a, type: 3}
   stepDuration: 0.05
-  sceneChanger: {fileID: 11400000, guid: 3d32adecca106ad4a8e92d019d2654af, type: 2}
+  buildIndexOfNextScene: 0
   loadNextScene: 0
   fadeOut: 0
   transitionActive: 1
+  stashPlayerInfo: 0
+  itIsTheCharacterSelectScreenAndYouShouldIncrementTheLobbySubstateOnTransitionConclusion: 0
