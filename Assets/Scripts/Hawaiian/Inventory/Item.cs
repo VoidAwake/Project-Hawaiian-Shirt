@@ -38,6 +38,7 @@ namespace Hawaiian.Inventory
         [HideInInspector] public int MaxStack;
         
         [HideInInspector] public GameObject DroppedItemBase;
+        // TODO: Misleading name
         [HideInInspector] public GameObject ProjectileInstance;
         [HideInInspector] public ItemRarity Rarity;
         [HideInInspector] public int ItemWeight;

@@ -17,8 +17,6 @@ namespace Hawaiian.Game
                 if (!playerConfigs[i].IsPlayer)
                 {
                     playerConfigs[i].SetPlayer(playerInput);
-                    // TODO: Pretty sure this shouldn't be here
-                    AudioManager.audioManager.PlayerAdd();
                     ForceSerialization();
                     return playerConfigs[i];
                 }

@@ -36,11 +36,11 @@ namespace Hawaiian.UI.CharacterSelect
             lobbyPlayerController.statusChanged.AddListener(OnStatusChanged);
             lobbyPlayerController.characterUpdated.AddListener(OnCharacterUpdated);
             
-            OnStatusChanged();
+            OnStatusChanged(lobbyPlayerController);
             OnCharacterUpdated();
         }
 
-        private void OnStatusChanged()
+        private void OnStatusChanged(LobbyPlayerController lobbyPlayerController)
         {
             cursor.enabled = lobbyPlayerController.Status != LobbyPlayerController.PlayerStatus.NotLoadedIn;
         }

@@ -1,24 +1,16 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using Hawaiian.Inventory;
 using Hawaiian.UI.Game;
-using Hawaiian.Unit;
 using TMPro;
 using UI.Core;
 using UnityEngine;
-using UnityEngine.InputSystem;
-using UnityEngine.SocialPlatforms.Impl;
 using UnityEngine.UI;
 
 public class TreasurePointIndicator : DialogueComponent<GameDialogue>
 {
     [SerializeField] private TextMeshProUGUI _points;
     [SerializeField] private Image _backgroundColour;
-    [SerializeField] private UnitPlayer unitPlayer;
-
-    public Inventory inventory;
-
+    [SerializeField] private PlayerTreasure playerTreasure;
 
     Coroutine textCoroutine;
     int currentScore;
@@ -26,42 +18,30 @@ public class TreasurePointIndicator : DialogueComponent<GameDialogue>
 
     float fontSize;
 
-    public void Initialise(UnitPlayer unitPlayer)
+    private void OnDestroy()
     {
-        this.unitPlayer = unitPlayer;
-        _backgroundColour.color = unitPlayer.PlayerColour;
+        if (playerTreasure != null)
+            playerTreasure.pointsChanged.RemoveListener(OnPointsChanged);
     }
 
-    public void UpdatePointIndicator(Tuple<IUnit,int> data)
+    public void Initialise(PlayerTreasure playerTreasure)
     {
-
-        if (unitPlayer.GetComponent<IUnit>() != data.Item1)
-            return;
-
-        targetScore = data.Item2;
+        this.playerTreasure = playerTreasure;
+        // TODO: Work out how to get this 
+        // _backgroundColour.color = playerTreasure.PlayerColour;
         
-        // for (int i = 0; i < playerReference.transform.childCount; i++)
-        // {
-        //     InventoryController temp = playerReference.transform.GetChild(i)
-        //         .GetComponent<InventoryController>();
-        //
-        //     if (temp == null) continue;
-        //
-        //     inventory = temp._inv;
-        //
-        // }
-        //
-        UpdateText();
+        playerTreasure.pointsChanged.AddListener(OnPointsChanged);
     }
 
-    public void UpdatePoints(Tuple<IUnit,int> data)
+    private void OnPointsChanged()
     {
+        UpdatePoints(playerTreasure.CurrentPoints);
+    }
+
+    public void UpdatePoints(int points)
+    {
+        targetScore = points;
         
-        if (unitPlayer.GetComponent<IUnit>() != data.Item1)
-            return;
-
-        targetScore = data.Item2;
-
         UpdateText();
     }
 
@@ -74,44 +54,8 @@ public class TreasurePointIndicator : DialogueComponent<GameDialogue>
         UpdateText();
     }
 
-
     private void UpdateText()
     {
-        //
-        // if (inventory == null)
-        // {
-        //     _points.text = "0";
-        //     return;
-        // }
-
-        // List<int> indexes = new List<int>();
-        //
-        // for (var index = 0; index < inventory.inv.Length; index++)
-        // {
-        //     Item item = inventory.inv[index];
-        //
-        //     if (item != null)
-        //     {
-        //         if (item.Type == ItemType.Objective)
-        //         {
-        //             indexes.Add(index);
-        //             targetScore += (int) item.Points;
-        //         }
-        //
-        //     }
-        // }
-        //
-        
-        
-        // for (var i = 0; i < inventory.inv.Length; i++)
-        // {
-        //     foreach (var t in indexes)
-        //     {
-        //         if (t == i)
-        //             inventory.RemoveItemAt(i);
-        //     }
-        // }
-
         if (textCoroutine != null)
         {
             StopCoroutine(textCoroutine);
@@ -158,11 +102,7 @@ public class TreasurePointIndicator : DialogueComponent<GameDialogue>
         textCoroutine = null;
     }
 
-    protected override void Subscribe()
-    {
-    }
+    protected override void Subscribe() { }
 
-    protected override void Unsubscribe()
-    {
-    }
+    protected override void Unsubscribe() { }
 }

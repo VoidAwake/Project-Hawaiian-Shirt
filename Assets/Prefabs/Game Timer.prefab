@@ -10,8 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 3920133195234102887}
   - component: {fileID: 3920133195234102888}
-  - component: {fileID: 3920133195234102886}
   - component: {fileID: 5594761253786116055}
+  - component: {fileID: 4467139633910696778}
   m_Layer: 0
   m_Name: Game Timer
   m_TagString: Untagged
@@ -93,34 +93,6 @@ MonoBehaviour:
       m_Flags: 8
     m_Flags: 0
   GameEndedOccured: {fileID: 11400000, guid: 3f110c950f25a164b8bce56a2f06f376, type: 2}
---- !u!114 &3920133195234102886
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3920133195234102889}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e8beaaee945cf0844ad0f79ee7108362, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Event: {fileID: 11400000, guid: d5c9e20f87d81084da0f7a6327a76a25, type: 2}
-  Response:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 3920133195234102888}
-        m_TargetAssemblyTypeName: Hawaiian.Game.GameTimer, Game
-        m_MethodName: OnPhaseChanged
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!82 &5594761253786116055
 AudioSource:
   m_ObjectHideFlags: 0
@@ -217,3 +189,31 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &4467139633910696778
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3920133195234102889}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8beaaee945cf0844ad0f79ee7108362, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Event: {fileID: 11400000, guid: e4c536f8917779747896d7451a944c3b, type: 2}
+  Response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 3920133195234102888}
+        m_TargetAssemblyTypeName: Hawaiian.Game.GameTimer, Hawaiian.Game
+        m_MethodName: StartTimer
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2

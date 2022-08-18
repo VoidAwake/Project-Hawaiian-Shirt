@@ -4,6 +4,7 @@ using System.Linq;
 using Hawaiian.Game;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.InputSystem;
 
 namespace Hawaiian.UI.CharacterSelect
@@ -27,7 +28,8 @@ namespace Hawaiian.UI.CharacterSelect
         public readonly List<LobbyPlayerController> lobbyPlayerControllers = new();
         
         private bool isExiting;
-        
+
+        public UnityEvent<LobbyPlayerController> playerJoined = new();
         
         private Coroutine transitionCoroutine;
 
@@ -37,6 +39,12 @@ namespace Hawaiian.UI.CharacterSelect
             lobbyManager.mainMenuRequested.AddListener(OnMainMenuRequested);
             
             modeLobbyManager.mainMenuRequested.AddListener(OnModeMainMenuRequested);
+            modeLobbyManager.startGameRequested.AddListener(OnModeStartGameRequested);
+        }
+
+        private void OnModeStartGameRequested()
+        {
+            StartGame();
         }
 
         private void OnModeMainMenuRequested()
@@ -51,6 +59,7 @@ namespace Hawaiian.UI.CharacterSelect
             lobbyManager.mainMenuRequested.RemoveListener(OnMainMenuRequested);
             
             modeLobbyManager.mainMenuRequested.RemoveListener(OnModeMainMenuRequested);
+            modeLobbyManager.startGameRequested.RemoveListener(OnModeStartGameRequested);
         }
 
         private void Start()
@@ -82,6 +91,8 @@ namespace Hawaiian.UI.CharacterSelect
             lobbyPlayerController.Initialise(this, lobbyManager, modeLobbyManager, playerConfig);
 
             lobbyManager.JoinPlayer(playerConfig, lobbyPlayerController);
+            
+            playerJoined.Invoke(lobbyPlayerController);
         }
 
         #endregion
@@ -111,7 +122,7 @@ namespace Hawaiian.UI.CharacterSelect
                 // Destroy(GetComponent<LobbyManager>());
                 // Destroy(GetComponent<PlayerInputManager>());
                 
-                gameManager.LoadRandomLevel();
+                gameManager.CurrentGameMode.LoadRandomLevel();
                 
                 isExiting = true;
             }
@@ -226,11 +237,6 @@ namespace Hawaiian.UI.CharacterSelect
                 if (player.Status == LobbyPlayerController.PlayerStatus.SelectingMode && !toGameModeSelect)
                     player.Status = LobbyPlayerController.PlayerStatus.LoadedIn;
             }
-        }
-
-        public void SetGameMode(GameModeSO gameMode)
-        {
-            modeLobbyManager.CurrentGameMode = gameMode;
         }
     }
 }

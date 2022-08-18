@@ -1,4 +1,4 @@
-﻿using System;
+﻿using Hawaiian.Unit;
 using UnityEngine;
 
 namespace Hawaiian.Inventory
@@ -6,8 +6,16 @@ namespace Hawaiian.Inventory
     public class ItemHolder : MonoBehaviour
     {
         [SerializeField] private InventoryController inventoryController;
+        
+        // TODO: Need to reconsider these references
+        [SerializeField] public UnitPlayer unitPlayer;
+        [SerializeField] public Cursor cursor;
+        [SerializeField] public Transform firePoint;
+        [SerializeField] public SpriteRenderer heldItemSpriteRenderer;
 
-        private HeldItem heldItem;
+        public Item Item => inventoryController.CurrentItem;
+
+        private GameObject heldItemObject;
 
         private void OnEnable()
         {
@@ -21,49 +29,49 @@ namespace Hawaiian.Inventory
 
         private void OnItemUpdated()
         {
-            if (heldItem != null)
+            if (heldItemObject != null)
             {
                 DestroyHeldItem();
             }
             
-            var currentItem = inventoryController.CurrentItem;
+            // TODO: Is should just be part of the held item
+            heldItemSpriteRenderer.sprite = Item != null ? Item.ItemSprite : null;
 
-            if (currentItem == null) return;
+            if (Item == null) return;
 
-            if (currentItem.heldItemPrefab == null) return;
+            if (Item.heldItemPrefab == null) return;
             
-            CreateHeldItem(currentItem);
+            CreateHeldItem(Item);
         }
 
         private void CreateHeldItem(Item currentItem)
         {
-            var heldItemObject = Instantiate(currentItem.heldItemPrefab, transform);
+            heldItemObject = Instantiate(currentItem.heldItemPrefab, transform);
+            
+            // TODO: Two way dependency.
+            var heldItemBehaviours = heldItemObject.GetComponents<HeldItemBehaviour>();
 
-            heldItem = heldItemObject.GetComponent<HeldItem>();
+            foreach (var heldItemBehaviour in heldItemBehaviours)
+            {
+                heldItemBehaviour.Initialise(this);
+            }
 
-            heldItem.destroyed.AddListener(OnHeldItemDestroyed);
+            // TODO: Come back to this
+            // heldItem.destroyed.AddListener(OnHeldItemDestroyed);
         }
 
         private void DestroyHeldItem()
         {
-            heldItem.destroyed.RemoveListener(OnHeldItemDestroyed);
+            // heldItem.destroyed.RemoveListener(OnHeldItemDestroyed);
 
-            Destroy(heldItem.gameObject);
+            Destroy(heldItemObject);
 
-            heldItem = null;
+            heldItemObject = null;
         }
 
         private void OnHeldItemDestroyed()
         {
             inventoryController.RemoveCurrentItem();
-        }
-
-        // Message from Player Input
-        private void OnAttack()
-        {
-            if (heldItem == null) return;
-            
-            heldItem.Use();
         }
     }
 }

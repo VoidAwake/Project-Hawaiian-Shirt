@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9bff379495f4ab29a854e6bf4031d04, type: 3}
+  m_Name: Francisco's Hoard Level (Treasure Hoard)
+  m_EditorClassIdentifier: 
+  sceneReference:
+    sceneAsset: {fileID: 102900000, guid: 33d5af66925ac9f4582c514f34f6593f, type: 3}
+    scenePath: Assets/Scenes/Francisco's Treasure Hoard Level One.unity
+  treasureSpawnPoints:
+  - {x: -12, y: 16.5}
+  - {x: 18, y: 16.5}
+  - {x: -13.5, y: -12}
+  - {x: 20, y: -12}

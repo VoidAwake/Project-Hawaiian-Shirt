@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using Hawaiian.Inventory;
 using Hawaiian.Unit;
@@ -7,6 +8,7 @@ using Hawaiian.Utilities;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.Utilities;
 
 namespace Hawaiian.Game
 {
@@ -16,23 +18,18 @@ namespace Hawaiian.Game
         [SerializeField] private GameEvent playersJoined;
         [SerializeField] private List<SpawnPoint> spawnPoints;
         [SerializeField] private PlayerConfigManager playerConfigManager;
-        [SerializeField] private GameManager gameManager;
         [SerializeField] private BaseGameEvent<Inventory.Inventory> addedInventory;
-        
-        [SerializeField] private Item _depositor;
-        [SerializeField] private Item _detonator;
-        [SerializeField] private GameObject _playerTreasurePrefab;
-        [SerializeField] private Transform[] _playerTreasureSpawnPoint;
-        [SerializeField] private PlayerColors playerColors;
 
         public UnityEvent winningPlayersChanged = new();
+        public UnityEvent<PlayerConfig> playerJoined = new();
         
         private Dictionary<PlayerConfig, InventoryController> inventoryControllers = new();
 
         private PlayerInputManager inputManager;
-        
+
+        public ReadOnlyDictionary<PlayerConfig, InventoryController> InventoryControllers => new (inventoryControllers);
+
         private List<PlayerInput> _allPlayers = new List<PlayerInput>();
-        public List<PlayerTreasure> _treasures = new List<PlayerTreasure>();
         
         public UnitPlayer LastPlayerJoined { get; private set; }
 
@@ -82,36 +79,7 @@ namespace Hawaiian.Game
                 playerConfig.deviceIds.Select(InputSystem.GetDeviceById).ToArray()
             );
 
-            if (gameManager.CurrentGameMode.gameMode == GameMode.TreasureHoard)
-            {
-                GameObject reference = Instantiate(_playerTreasurePrefab, _playerTreasureSpawnPoint[playerConfig.playerNumber].position, Quaternion.identity);
-                reference.GetComponent<PlayerTreasure>().PlayerReference = playerInput.GetComponent<IUnit>();
-                _treasures.Add( reference.GetComponent<PlayerTreasure>());
-                reference.GetComponent<SpriteRenderer>().color = playerColors.GetColor(playerConfig.playerNumber);
-            }
-
             OnPlayerJoined(playerInput, playerConfig);
-        }
-
-        public void SaveScores()
-        {
-            if (gameManager.CurrentGameMode.gameMode == GameMode.TreasureHoard)
-            {
-                int i = 0;
-                
-                foreach (var (playerConfig, inventoryController) in inventoryControllers)
-                {
-                    playerConfig.score = _treasures[i].CurrentPoints;
-                    i++;
-                }
-            }
-            else
-            {
-                foreach (var (playerConfig, inventoryController) in inventoryControllers)
-                {
-                    playerConfig.score = inventoryController.Score;
-                }
-            }
         }
 
         // Message from Player Input Manager
@@ -142,12 +110,6 @@ namespace Hawaiian.Game
                     inventoryController.currentItemChanged.AddListener(UpdateWinningPlayers);
 
                     addedInventory.Raise(inventoryController.inv);
-
-                    if (gameManager.CurrentGameMode.gameMode == GameMode.TreasureHoard)
-                    {
-                        inventoryController.inv.inv[0] = _depositor;
-                        inventoryController.inv.inv[1] = _detonator;
-                    }
                 }
 
                 LastPlayerJoined = playerInput.GetComponent<UnitPlayer>();
@@ -156,6 +118,8 @@ namespace Hawaiian.Game
             {
                 Debug.LogWarning($"Unable to fully initialise player. No {nameof(PlayerConfig)}.");
             }
+            
+            playerJoined.Invoke(playerConfig);
 
             playersJoined.Raise();
         }

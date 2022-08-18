@@ -12,10 +12,8 @@ GameObject:
   - component: {fileID: 1490539758335178819}
   - component: {fileID: 2043199626}
   - component: {fileID: 207243568}
-  - component: {fileID: 2043199627}
   - component: {fileID: 325671414515858575}
   - component: {fileID: -1459330492128246816}
-  - component: {fileID: -3866718875166674959}
   m_Layer: 0
   m_Name: PlayerManager
   m_TagString: Untagged
@@ -98,17 +96,13 @@ MonoBehaviour:
   playersJoined: {fileID: 11400000, guid: 2a2ac177cfbc4ee44a6355e7378dddb1, type: 2}
   spawnPoints: []
   playerConfigManager: {fileID: 11400000, guid: 424474a542819c946b03786b7421e196, type: 2}
-  gameManager: {fileID: 11400000, guid: c305914e6d352644190ef7ee43a51bbd, type: 2}
   addedInventory: {fileID: 11400000, guid: 2220e64b52956274a8ac1a529699a2d4, type: 2}
-  _depositor: {fileID: 11400000, guid: 9018dd0de1a0b244eb69ec5986781a73, type: 2}
-  _detonator: {fileID: 11400000, guid: efa01176e9a02a744a26b7bd744fdb1e, type: 2}
-  _playerTreasurePrefab: {fileID: 4821606711847234976, guid: 8a61579873297c8408bd79f4cbcf486d, type: 3}
-  _playerTreasureSpawnPoint: []
-  playerColors: {fileID: 11400000, guid: c18c22b93a97a954ca8ab46031e350bd, type: 2}
   winningPlayersChanged:
     m_PersistentCalls:
       m_Calls: []
-  _treasures: []
+  playerJoined:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!210 &207243568
 SortingGroup:
   m_ObjectHideFlags: 0
@@ -120,34 +114,6 @@ SortingGroup:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
---- !u!114 &2043199627
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1490539758335178818}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e8beaaee945cf0844ad0f79ee7108362, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Event: {fileID: 11400000, guid: 3f166778320e3064188ff102927875f8, type: 2}
-  Response:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 2043199626}
-        m_TargetAssemblyTypeName: Hawaiian.UI.CharacterSelect.SpawnPlayers, Hawaiian.UI
-        m_MethodName: SaveScores
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!114 &325671414515858575
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -199,34 +165,6 @@ MonoBehaviour:
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
---- !u!114 &-3866718875166674959
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1490539758335178818}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e8beaaee945cf0844ad0f79ee7108362, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Event: {fileID: 11400000, guid: 6d9a3f134d0d26c42af0fd5e5b91f941, type: 2}
-  Response:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 2043199626}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: 
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 

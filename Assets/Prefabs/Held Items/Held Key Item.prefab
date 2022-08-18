@@ -9,9 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4116213948295590521}
-  - component: {fileID: 6791643762267471416}
-  - component: {fileID: -2464536164248510210}
+  - component: {fileID: 5493799569757754525}
   - component: {fileID: 1953824851175411999}
+  - component: {fileID: -2464536164248510210}
   m_Layer: 0
   m_Name: Held Key Item
   m_TagString: Untagged
@@ -34,7 +34,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6791643762267471416
+--- !u!114 &5493799569757754525
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -43,15 +43,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 8131276854549329855}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 23796b4f53be4d1fa9e91794a4a01900, type: 3}
+  m_Script: {fileID: 11500000, guid: 0921f9df0efe4b0fabfa6e93799c9231, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemUsed:
+  unityEvent:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1953824851175411999}
         m_TargetAssemblyTypeName: Hawaiian.PositionalEvents.PositionalEventCaller,
-          PositionalEvents
+          Hawaiian.PositionalEvents
         m_MethodName: Raise
         m_Mode: 1
         m_Arguments:
@@ -62,25 +62,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  destroyed:
-    m_PersistentCalls:
-      m_Calls: []
---- !u!58 &-2464536164248510210
-CircleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8131276854549329855}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  serializedVersion: 2
-  m_Radius: 0.5
 --- !u!114 &1953824851175411999
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -100,7 +81,7 @@ MonoBehaviour:
   raisedOnTarget:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 6791643762267471416}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: Hawaiian.Inventory.HeldItem, Hawaiian.Inventory
         m_MethodName: Destroy
         m_Mode: 1
@@ -112,3 +93,19 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!58 &-2464536164248510210
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8131276854549329855}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.5

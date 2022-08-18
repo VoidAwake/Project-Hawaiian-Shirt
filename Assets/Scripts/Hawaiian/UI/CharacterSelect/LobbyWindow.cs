@@ -28,7 +28,7 @@ namespace Hawaiian.UI.CharacterSelect
             lobbyPlayerController.statusChanged.AddListener(OnStatusChanged);
             lobbyPlayerController.characterUpdated.AddListener(OnCharacterUpdated);
             
-            OnStatusChanged();
+            OnStatusChanged(lobbyPlayerController);
             OnCharacterUpdated();
         }
 
@@ -37,7 +37,7 @@ namespace Hawaiian.UI.CharacterSelect
             UpdateHead(lobbyPlayerController.playerConfig.characterNumber);
         }
 
-        private void OnStatusChanged()
+        private void OnStatusChanged(LobbyPlayerController lobbyPlayerController)
         {
             switch (lobbyPlayerController.Status)
             {

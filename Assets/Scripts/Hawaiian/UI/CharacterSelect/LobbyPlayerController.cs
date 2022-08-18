@@ -11,12 +11,10 @@ namespace Hawaiian.UI.CharacterSelect
 {
     public class LobbyPlayerController : MonoBehaviour
     {
-        public UnityEvent statusChanged = new();
+        public UnityEvent<LobbyPlayerController> statusChanged = new();
         public UnityEvent characterUpdated = new();
         
-        private float move;
         public bool inputEnabled;
-        int moveBuffer;
         private SuperLobbyManager superLobbyManager;
         private LobbyManager lobbyManager;
         private ModeLobbyManager modeLobbyManager;
@@ -46,35 +44,6 @@ namespace Hawaiian.UI.CharacterSelect
 
         #region MonoBehaviour Functions
 
-        void Update()
-        {
-            if (moveBuffer != 0) // Reset stick input
-            {
-                if (move > -0.1f && move < 0.1f) moveBuffer = 0;
-            }
-            else //  Send stick input
-            {
-                if (move > 0.15f)
-                {
-                    moveBuffer = 1;
-
-                    if (Status == PlayerStatus.SelectingMode)
-                        modeLobbyManager.menuController.move = move;
-                    else
-                        OnPlayerCharacterSelect(1);
-                }
-                if (move < -0.15f)
-                {
-                    moveBuffer = -1;
-
-                    if (Status == PlayerStatus.SelectingMode)
-                        modeLobbyManager.menuController.move = move;
-                    else
-                        OnPlayerCharacterSelect(-1);
-                }
-            }
-        }
-
         private void OnEnable()
         {
             InputSystem.onEvent += OnAnyButtonPressed;
@@ -95,16 +64,7 @@ namespace Hawaiian.UI.CharacterSelect
 
             if (Status != PlayerStatus.LoadedIn) return;
             
-            move = value.Get<float>();
-        }
-
-        public void OnMenuSelect(InputValue value)
-        {
-            if (!inputEnabled) return;
-
-            if (Status != PlayerStatus.SelectingMode) return;
-
-            move = value.Get<float>();
+            OnPlayerCharacterSelect((int) value.Get<float>());;
         }
 
         public void OnActionA(InputValue value)
@@ -125,7 +85,6 @@ namespace Hawaiian.UI.CharacterSelect
                     lobbyManager.RequestStartGame();
                     break;
                 case PlayerStatus.SelectingMode:
-                    modeLobbyManager.menuController.OnActionA(value);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
@@ -179,7 +138,6 @@ namespace Hawaiian.UI.CharacterSelect
                     StartCoroutine(EnableInput());
                     break;
                 case PlayerStatus.Ready:
-                    AudioManager.audioManager.Confirm();
                     Portrait.alpha = 0.2f;
                     StartCoroutine(EnableInput());
                     break;
@@ -191,7 +149,7 @@ namespace Hawaiian.UI.CharacterSelect
             
             lobbyManager.UpdateReadyToStart();
             
-            statusChanged.Invoke();
+            statusChanged.Invoke(this);
         }
 
         // TODO: We shouldn't need all these references, this can definitely be simplified
@@ -201,8 +159,6 @@ namespace Hawaiian.UI.CharacterSelect
             this.lobbyManager = lobbyManager;
             this.modeLobbyManager = modeLobbyManager;
             this.playerConfig = playerConfig;
-
-            moveBuffer = 1;
             
             StartCoroutine(EnableInput());
             
@@ -223,7 +179,7 @@ namespace Hawaiian.UI.CharacterSelect
             playerConfig.characterNumber = charNumber;
             
             if (charNumber == -1) return;
-            AudioManager.audioManager.Swap();
+            
             Portrait = lobbyManager.GetPortrait(charNumber);
             
             characterUpdated.Invoke();

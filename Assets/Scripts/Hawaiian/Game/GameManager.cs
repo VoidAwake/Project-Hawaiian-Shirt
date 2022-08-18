@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Threading.Tasks;
+using Hawaiian.Game.GameModes;
 using Hawaiian.Utilities;
 using UnityEngine;
 
@@ -9,45 +11,20 @@ namespace Hawaiian.Game
     {
         [SerializeField] private SceneChanger sceneChanger;
         [SerializeField] private SceneReference resultsScene;
-        [SerializeField] private List<SceneReference> roundRobbinlevels;
-        [SerializeField] private List<SceneReference> treasureHoardLevels;
+        [SerializeField] private GameEvent gameOver;
+        
+        public event Func<object, EventArgs, Task> GameOverAsync;
 
-        public enum GamePhase { Stealth, GameOver }
+        public ModeManager CurrentGameMode { get; set; }
 
-        public GameModeSO CurrentGameMode { get; set; }
-
-        private GamePhase phase;
-
-        public GamePhase Phase
-        {
-            get => phase;
-            set
-            {
-                phase = value;
-                phaseChanged.Raise();
-                
-                if (Phase == GamePhase.GameOver)
-                    GameOver();
-            }
-        }
-
-        private void GameOver()
+        public async void GameOver()
         {
             gameOver.Raise();
+
+            // TODO: Not great to have to bypass the GameEvent system like this
+            await GameOverAsync?.Invoke(this, EventArgs.Empty);
             
-            sceneChanger.ChangeScene(resultsScene);
-        }
-
-        public GameEvent phaseChanged;
-        public GameEvent gameOver;
-
-        public void LoadRandomLevel()
-        {
-            var levelSet = CurrentGameMode.sceneReferences;
-            
-            if (levelSet.Count == 0) return;
-
-            sceneChanger.ChangeScene(levelSet[Random.Range(0, levelSet.Count)]);
+            await sceneChanger.ChangeScene(resultsScene);
         }
     }
 }
