@@ -22,7 +22,7 @@ namespace Hawaiian.Game.GameModes.TreasureHoard
             
             foreach (var (playerConfig, playerTreasure) in playerTreasures)
             {
-                playerConfig.score = playerTreasure.CurrentPoints;
+               playerConfig.score = playerTreasure.CurrentPoints;
             }
         }
 
@@ -34,14 +34,18 @@ namespace Hawaiian.Game.GameModes.TreasureHoard
 
             var playerInventoryController = playerManager.InventoryControllers[playerConfig];
 
-            playerTreasure.Initialise(playerConfig.playerNumber, playerInventoryController);
+          //  playerTreasure.Initialise(playerConfig.playerNumber, playerInventoryController);
             
             playerTreasures.Add(playerConfig, playerTreasure);
         
             playerInventoryController.inv.inv[0] = _depositor;
             playerInventoryController.inv.inv[1] = _detonator;
-            
+
+
             base.OnPlayerJoined(playerConfig);
+            
+            playerTreasure.Owner = playerManager.LastPlayerJoined;
+
         }
     }
 }

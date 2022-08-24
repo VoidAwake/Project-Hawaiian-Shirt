@@ -18,25 +18,25 @@ public class TreasurePointIndicator : DialogueComponent<GameDialogue>
 
     float fontSize;
 
-    private void OnDestroy()
-    {
-        if (playerTreasure != null)
-            playerTreasure.pointsChanged.RemoveListener(OnPointsChanged);
-    }
+    // private void OnDestroy()
+    // {
+    //     if (playerTreasure != null)
+    //         playerTreasure.pointsChanged.RemoveListener(OnPointsChanged);
+    // }
+    //
+    // public void Initialise(PlayerTreasure playerTreasure)
+    // {
+    //     this.playerTreasure = playerTreasure;
+    //     // TODO: Work out how to get this 
+    //     // _backgroundColour.color = playerTreasure.PlayerColour;
+    //     
+    //     playerTreasure.pointsChanged.AddListener(OnPointsChanged);
+    // }
 
-    public void Initialise(PlayerTreasure playerTreasure)
-    {
-        this.playerTreasure = playerTreasure;
-        // TODO: Work out how to get this 
-        // _backgroundColour.color = playerTreasure.PlayerColour;
-        
-        playerTreasure.pointsChanged.AddListener(OnPointsChanged);
-    }
-
-    private void OnPointsChanged()
-    {
-        UpdatePoints(playerTreasure.CurrentPoints);
-    }
+    // private void OnPointsChanged()
+    // {
+    //     UpdatePoints(playerTreasure.CurrentPoints);
+    // }
 
     public void UpdatePoints(int points)
     {

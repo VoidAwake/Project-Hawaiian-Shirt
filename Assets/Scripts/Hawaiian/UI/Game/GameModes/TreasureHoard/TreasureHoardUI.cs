@@ -29,7 +29,7 @@ namespace Hawaiian.UI.Game
 
             var treasurePointIndicator = treasurePointIndicatorObject.GetComponent<TreasurePointIndicator>();
             
-            treasurePointIndicator.Initialise(modeController.PlayerTreasures[playerConfig]);
+         //   treasurePointIndicator.Initialise(modeController.PlayerTreasures[playerConfig]);
         }
     }
 }

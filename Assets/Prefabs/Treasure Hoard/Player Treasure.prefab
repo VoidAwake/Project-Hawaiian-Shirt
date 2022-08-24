@@ -292,11 +292,10 @@ GameObject:
   - component: {fileID: 4821606711847234983}
   - component: {fileID: 4821606711847234980}
   - component: {fileID: 4821606711847234981}
-  - component: {fileID: 4821606711847234982}
   - component: {fileID: 4821606711847235003}
-  - component: {fileID: 6044853708255425988}
-  - component: {fileID: 2653948153596301405}
   - component: {fileID: -5345530330210007769}
+  - component: {fileID: 105149635006304122}
+  - component: {fileID: 105149635006304123}
   m_Layer: 0
   m_Name: Player Treasure
   m_TagString: Untagged
@@ -387,35 +386,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 2
---- !u!114 &4821606711847234982
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4821606711847234976}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 58347750f21c4542987e523e82cb91b7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  token: {fileID: 11400000, guid: 24a9efbfd5f4c554e94003eaecc3de95, type: 2}
-  response:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 4821606711847235003}
-        m_TargetAssemblyTypeName: Hawaiian.Unit.PlayerTreasure, Hawaiian.Unit
-        m_MethodName: AddTreasure
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+  m_Radius: 3
 --- !u!114 &4821606711847235003
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -428,21 +399,48 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 39cce75394df1ee4fb01cc98e5fef868, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _bombEffectPrefab: {fileID: 6794444399603612895, guid: 60834add47d18444cb39e75208f79c9c, type: 3}
-  _defuserIndicator: {fileID: 2067656818798930539}
-  _defuserSlider: {fileID: 248960936639406416}
-  defuseTarget: 0
-  defuseTimer: 0
-  DroppedItemPrefab: {fileID: 3056942884218095950, guid: 37132a09f5d1c4046a4bb460892afc47, type: 3}
-  playerColors: {fileID: 11400000, guid: c18c22b93a97a954ca8ab46031e350bd, type: 2}
-  spriteRenderer: {fileID: 4821606711847234980}
-  _items: []
-  DetonatorReference: {fileID: 0}
-  IsBeingDetonated: 0
-  pointsChanged:
+  _currentPoints: 0
+--- !u!114 &-5345530330210007769
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4821606711847234976}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6af930e3a4326804390fe0990d0ed5be, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &105149635006304122
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4821606711847234976}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 58347750f21c4542987e523e82cb91b7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  token: {fileID: 11400000, guid: 846bd6d67193bdb49a97ab3fc16617ad, type: 2}
+  response:
     m_PersistentCalls:
-      m_Calls: []
---- !u!114 &6044853708255425988
+      m_Calls:
+      - m_Target: {fileID: 4821606711847235003}
+        m_TargetAssemblyTypeName: Hawaiian.Inventory.PlayerTreasure, Hawaiian.Inventory
+        m_MethodName: OnDetonatorCompleted
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &105149635006304123
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -457,27 +455,11 @@ MonoBehaviour:
   token: {fileID: 11400000, guid: e8b2231db87fad546af457281ce33b93, type: 2}
   response:
     m_PersistentCalls:
-      m_Calls: []
---- !u!114 &2653948153596301405
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4821606711847234976}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8f2ef5259e66dde4fac43d26224a88b0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Event: {fileID: 11400000, guid: 354a4ecdb6ca21a439deb8e9a3263ce0, type: 2}
-  Response:
-    m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 4821606711847235003}
-        m_TargetAssemblyTypeName: Hawaiian.Unit.PlayerTreasure, Hawaiian.Inventory
-        m_MethodName: GetDetonatorReference
-        m_Mode: 0
+        m_TargetAssemblyTypeName: Hawaiian.Inventory.PlayerTreasure, Hawaiian.Inventory
+        m_MethodName: OnDetonatorStarted
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -486,18 +468,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!114 &-5345530330210007769
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4821606711847234976}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6af930e3a4326804390fe0990d0ed5be, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &5499244656064920606
 GameObject:
   m_ObjectHideFlags: 0

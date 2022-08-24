@@ -76,7 +76,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   token: {fileID: 11400000, guid: e8b2231db87fad546af457281ce33b93, type: 2}
-  radius: 2
+  radius: 3
   interactionTarget: 1
   targetsChanged: {fileID: 11400000, guid: 37e77cbc288b0bb408597b25a3a84f7e, type: 2}
   raisedOnTarget:
@@ -110,7 +110,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 2
+  m_Radius: 3
 --- !u!114 &449300770897478651
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -124,7 +124,3 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _detonatorPrefab: {fileID: 245282319073416818, guid: 783076032353d5f44824f5878070abf8, type: 3}
-  DetonateBase: {fileID: 11400000, guid: e8b2231db87fad546af457281ce33b93, type: 2}
-  destroyed:
-    m_PersistentCalls:
-      m_Calls: []

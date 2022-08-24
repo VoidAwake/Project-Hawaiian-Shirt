@@ -1,6 +1,5 @@
 {
   "dependencies": {
-    "com.cysharp.unitask": "https://github.com/Cysharp/UniTask.git?path=src/UniTask/Assets/Plugins/UniTask",
     "com.johannesmp.unityscenereference": "1.1.1",
     "com.unity.2d.animation": "7.0.5",
     "com.unity.2d.psdimporter": "6.0.3",

@@ -1,111 +1,66 @@
-﻿using Hawaiian.PositionalEvents;
+﻿using System;
+using Hawaiian.PositionalEvents;
 using Hawaiian.Unit;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.InputSystem;
 
 namespace Hawaiian.Inventory.HeldItemBehaviours
 {
     public class DetonatorHeldItem : HeldItemBehaviour
     {
         [SerializeField] private GameObject _detonatorPrefab;
-        public PositionalEventToken DetonateBase;
 
-        public UnityEvent destroyed = new UnityEvent();
+        private bool _canPlaceDetonator = true;
 
-        private bool CanPlaceDetonator = true;
-
-        public void Destroy()
+        public void OnEnable()
         {
-            destroyed.Invoke();
-        }
-
-        public void DestroyDetonator()
-        {
-            destroyed.Invoke();
+            _canPlaceDetonator = false;
         }
 
         public void BeginDetonation()
         {
-            if (!CanPlaceDetonator)
+            if (!_canPlaceDetonator)
                 return;
 
-            GameObject detonator = Instantiate(_detonatorPrefab, transform.position, Quaternion.identity);
-            detonator.GetComponent<Detonator>().PlayerReference = this.GetComponentInParent<IUnit>();
-            DestroyDetonator();
+            Instantiate(_detonatorPrefab, transform.position, Quaternion.identity);
             
+        }
+
+     
+        protected override void UseItemActionPerformed(InputAction.CallbackContext value)
+        {
+
+            if (!_canPlaceDetonator)
+                return;
+            
+            base.UseItemActionPerformed(value);
+            
+            BeginDetonation();
+            Debug.Log("Detonation began");
         }
 
         private void OnTriggerEnter2D(Collider2D col)
         {
-            var listeners = col.GetComponents<PositionalEventListener>();
+            
+            PlayerTreasure treasure = col.gameObject.GetComponent<PlayerTreasure>();
 
-            foreach (var listener in listeners)
-            {
-                if (listener == null) continue;
+            if (treasure == null)
+                return;
+            
+            UnitPlayer owner = treasure.Owner;
 
-                if (listener.token != DetonateBase) continue;
-
-                if (listener.gameObject.GetComponent<PlayerTreasure>().playerInventoryController !=
-                    gameObject.GetComponentInParent<IUnit>())
-                {
-                    if (listener.gameObject.GetComponent<PlayerTreasure>().DetonatorReference != null)
-                        CanPlaceDetonator = false;
-                    else
-                        CanPlaceDetonator = true;
-
-                }  else
-                    CanPlaceDetonator = false;
+            if ( owner == null)
+                return;
+                
+            _canPlaceDetonator = owner != itemHolder.unitPlayer && treasure.CanBeDetonated() ;
+            Debug.Log(_canPlaceDetonator);
            
-             
-            }
-        }
-
-        private void OnTriggerStay2D(Collider2D col)
-        {
-            var listeners = col.GetComponents<PositionalEventListener>();
-
-            foreach (var listener in listeners)
-            {
-                if (listener == null) continue;
-
-                if (listener.token != DetonateBase) continue;
-
-                if (listener.gameObject.GetComponent<PlayerTreasure>().playerInventoryController !=
-                    gameObject.GetComponentInParent<IUnit>())
-                {
-                    if (listener.gameObject.GetComponent<PlayerTreasure>().DetonatorReference != null)
-                        CanPlaceDetonator = false;
-                    else
-                        CanPlaceDetonator = true;
-
-                }  else
-                    CanPlaceDetonator = false;
-            }
-        }
-
-
+        }   
+        
         private void OnTriggerExit2D(Collider2D col)
         {
-            var listeners = col.GetComponents<PositionalEventListener>();
-
-            foreach (var listener in listeners)
-            {
-                if (listener == null) continue;
-
-                if (listener.token != DetonateBase) continue;
-
-                if (listener.gameObject.GetComponent<PlayerTreasure>().playerInventoryController !=
-                    gameObject.GetComponentInParent<IUnit>())
-                {
-                    if (listener.gameObject.GetComponent<PlayerTreasure>().DetonatorReference != null)
-                        CanPlaceDetonator = false;
-                    else
-                        CanPlaceDetonator = true;
-
-                }
-                else
-                    CanPlaceDetonator = false;
-            }
+            _canPlaceDetonator = false;
         }
     }
 }
