@@ -20,8 +20,8 @@ MonoBehaviour:
     playerInput: {fileID: 0}
     playerIndex: 0
     splitScreenIndex: 0
-    controlScheme: Gamepad
-    deviceIds: 0f000000
+    controlScheme: Keyboard1
+    deviceIds: 01000000
     isPlayer: 1
   - playerNumber: 1
     characterNumber: 1
@@ -29,8 +29,8 @@ MonoBehaviour:
     playerInput: {fileID: 0}
     playerIndex: 1
     splitScreenIndex: 1
-    controlScheme: Keyboard1
-    deviceIds: 01000000
+    controlScheme: Gamepad
+    deviceIds: 0f000000
     isPlayer: 1
   - playerNumber: 2
     characterNumber: -1

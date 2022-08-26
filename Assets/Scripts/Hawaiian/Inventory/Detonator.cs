@@ -7,6 +7,7 @@ using Hawaiian.PositionalEvents;
 using Hawaiian.Unit;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 namespace Hawaiian.Inventory
 {
@@ -14,13 +15,13 @@ namespace Hawaiian.Inventory
     {
         [SerializeField] private GameObject _detonationCallerReference;
         [SerializeField] private int _countdownDuration;
-        
+
         private CancellationTokenSource _cts;
         private PositionalEventCaller _caller;
 
         public float CurrentDetonationTime { get; set; }
-        
-        private  void OnEnable()
+
+        private void OnEnable()
         {
             _caller = GetComponent<PositionalEventCaller>();
             BeginCountdown();
@@ -47,11 +48,11 @@ namespace Hawaiian.Inventory
 
         [ContextMenu("Cancel Detonation")]
         public void CancelDetonation() => _cts?.Cancel();
-        
-        
+
+
         private async UniTask CountdownDetonation(int duration, CancellationToken token = default)
         {
-            duration /=  1000; //Converts to seconds
+            duration /= 1000; //Converts to seconds
 
             float startTime = duration;
             CurrentDetonationTime = startTime;
@@ -62,17 +63,26 @@ namespace Hawaiian.Inventory
                 CurrentDetonationTime -= Time.deltaTime;
                 await UniTask.Yield(token);
             }
-            
+
             OnDetonation();
         }
 
-     
 
         private void OnDetonation()
         {
-            Instantiate(_detonationCallerReference);
-            Destroy(gameObject);
+            var _completedDetonator = Instantiate(_detonationCallerReference);
+            PositionalEventCaller caller = _completedDetonator.GetComponent<PositionalEventCaller>();
+
+            if (caller != null)
+                caller.OnRegisterTarget += (listener =>
+                {
+                    if (!listener.gameObject.GetComponent<PlayerTreasure>())
+                        return;
+                    
+                    caller.Raise();
+                    Destroy(_completedDetonator.gameObject);
+                    Destroy(gameObject);
+                });
         }
-        
     }
 }

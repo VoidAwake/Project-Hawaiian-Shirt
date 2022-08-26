@@ -11,9 +11,7 @@ namespace Hawaiian.PositionalEvents
     [RequireComponent(typeof(CircleCollider2D))]
     public class PositionalEventCaller : MonoBehaviour
     {
-
-       
-        public delegate void RegisteredTarget();
+        public delegate void RegisteredTarget(PositionalEventListener target);
 
         public RegisteredTarget OnRegisterTarget;
         
@@ -141,13 +139,16 @@ namespace Hawaiian.PositionalEvents
                     if (nearest == null)
                         Targets = new List<PositionalEventListener>();
                     else
+                    {
                         Targets = new List<PositionalEventListener> { nearest };
+                        OnRegisterTarget?.Invoke(nearest);
+                    }
+
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
             }
             
-            OnRegisterTarget?.Invoke();
 
         }
     }
