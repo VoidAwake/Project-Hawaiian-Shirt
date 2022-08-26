@@ -40,6 +40,9 @@ namespace Hawaiian.Inventory.ItemBehaviours
         public void Initialise(Vector3 target)
         {
             _targetLocation = target;
+            totalDistance = Vector3.Distance(transform.position, _targetLocation);
+            Direction = _targetLocation - (Vector2) transform.position;
+            maxSpeed = _speed;
         }
 
         public override void Initialise(IUnit user, Vector3 target, bool canStickOnWalls = false,
@@ -175,6 +178,7 @@ namespace Hawaiian.Inventory.ItemBehaviours
             if (other.gameObject.GetComponent<ItemUnit>()) return;
             // if (other.gameObject.GetComponent<ShieldCollider>()) return;
             if (other.gameObject.GetComponent<AvoidHit>()) return;
+            if (other.gameObject.tag == "Inventory") return;
 
             Debug.Log(!other.gameObject.GetComponent<UnitPlayer>() + " state of the unit player");
             Debug.Log(!other.gameObject.GetComponent<Projectile>() + " state of the projectile");

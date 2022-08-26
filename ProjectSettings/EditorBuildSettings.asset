@@ -26,4 +26,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Francisco's Treasure Hoard Level One.unity
     guid: 33d5af66925ac9f4582c514f34f6593f
+  - enabled: 1
+    path: Assets/Scenes/Habibs illegitimate child.unity
+    guid: e7b469fa2b1e1b94080c8fb2185844b2
   m_configObjects: {}

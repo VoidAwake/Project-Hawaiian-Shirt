@@ -1,4 +1,4 @@
-using System;
+    using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,6 +26,7 @@ namespace Hawaiian.Inventory
         public InventoryController playerInventoryController { get; set; }
 
         public bool IsBeingDetonated;
+       
 
         private float _currentDetonationTime;
 
@@ -267,7 +268,7 @@ namespace Hawaiian.Inventory
             
             DetonatorReference = reference.Item2;
             DetonatorReference.Treasure = this;
-            IsBeingDetonated = true;
+            IsBeingDetonated = true;   
 
         }
     }
