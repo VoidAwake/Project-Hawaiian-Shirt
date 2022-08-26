@@ -44,24 +44,27 @@ namespace Hawaiian.Inventory
             _currentState = TreasureState.Neutral;
         }
 
-        public async void OnDetonatorStarted()
+        public  void OnDetonatorStarted()
         {
-            _currentState = TreasureState.Vulnerable;
-            
+            if (_currentState == TreasureState.Neutral)
+                _currentState = TreasureState.Vulnerable;
         }
         
         public async void OnDetonatorCompleted()
-        {
+        { 
             _currentState = TreasureState.Detonated;
-            TreasureUtil.BeginDetonatorTimer(1000);
+            Debug.Log($"Player {_owner.PlayerNumber}'s treasure has been detonated!");
+           await  TreasureUtil.BeginDetonatorTimer(1000);
+           _currentState = TreasureState.Neutral;
+
         }
 
-        public void Initialise(IUnit owner)
+       
+        public bool CanBeDetonated()
         {
-            
+            Debug.Log($"Can {_owner.name} be detonated: {_currentState == TreasureState.Neutral}");
+            return _currentState == TreasureState.Neutral; 
         }
-        
-        public bool CanBeDetonated() => _currentState == TreasureState.Neutral;
 
         
     }

@@ -12,8 +12,8 @@ GameObject:
   - component: {fileID: 245282319073416591}
   - component: {fileID: 245282319073416816}
   - component: {fileID: -4219696115448603590}
-  - component: {fileID: 4533690607354285021}
-  m_Layer: 9
+  - component: {fileID: 655449102454480935}
+  m_Layer: 0
   m_Name: DetonatorPrefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -49,6 +49,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _detonationCallerReference: {fileID: 4347698382082109379, guid: 59e05727b7f6c6f4ab7d1f165e60a5b2, type: 3}
+  _countdownDuration: 5000
 --- !u!212 &245282319073416816
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -116,8 +117,8 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 3
---- !u!114 &4533690607354285021
+  m_Radius: 0.0001
+--- !u!114 &655449102454480935
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -129,26 +130,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d501fde7b11b4f8f997651bcc9cf4c51, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  token: {fileID: 11400000, guid: e8b2231db87fad546af457281ce33b93, type: 2}
-  radius: 3
+  token: {fileID: 11400000, guid: 0adc6d9c7f35b7d4b8e64653b5d63808, type: 2}
+  radius: 0
   interactionTarget: 1
   targetsChanged: {fileID: 11400000, guid: 37e77cbc288b0bb408597b25a3a84f7e, type: 2}
   raisedOnTarget:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: Hawaiian.Inventory.HeldItemBehaviours.DetonatorHeldItem,
-          Hawaiian.Inventory
-        m_MethodName: BeginDetonation
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!1 &245282319237723278
 GameObject:
   m_ObjectHideFlags: 0
@@ -160,8 +148,8 @@ GameObject:
   - component: {fileID: 245282319237723277}
   - component: {fileID: 245282319237723275}
   - component: {fileID: 245282319237723276}
-  m_Layer: 9
-  m_Name: Text (TMP)
+  m_Layer: 0
+  m_Name: DetonatorTimer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -296,7 +284,9 @@ GameObject:
   - component: {fileID: 245282320138570286}
   - component: {fileID: 245282320138570287}
   - component: {fileID: 245282320138570256}
-  m_Layer: 9
+  - component: {fileID: 9018793978094432797}
+  - component: {fileID: 5357582793798238576}
+  m_Layer: 0
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -385,3 +375,31 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!225 &9018793978094432797
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 245282320138570258}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
+--- !u!114 &5357582793798238576
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 245282320138570258}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 69f1b7aa834ed26439ac3003656dd193, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  manager: {fileID: 11400000, guid: b205461929d08b7439e72030dc234753, type: 2}
+  _timerText: {fileID: 245282319237723276}
+  _detonatorReference: {fileID: 0}
+  _countdownDuration: 5000

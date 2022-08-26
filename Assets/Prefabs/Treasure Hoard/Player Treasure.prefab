@@ -296,6 +296,8 @@ GameObject:
   - component: {fileID: -5345530330210007769}
   - component: {fileID: 105149635006304122}
   - component: {fileID: 105149635006304123}
+  - component: {fileID: -7248612278143319341}
+  - component: {fileID: 674176738170137700}
   m_Layer: 0
   m_Name: Player Treasure
   m_TagString: Untagged
@@ -400,6 +402,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _currentPoints: 0
+  _owner: {fileID: 0}
+  _currentState: 0
 --- !u!114 &-5345530330210007769
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -440,6 +444,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  removeHighlighting: 1
 --- !u!114 &105149635006304123
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -455,6 +460,23 @@ MonoBehaviour:
   token: {fileID: 11400000, guid: e8b2231db87fad546af457281ce33b93, type: 2}
   response:
     m_PersistentCalls:
+      m_Calls: []
+  removeHighlighting: 0
+--- !u!114 &-7248612278143319341
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4821606711847234976}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 58347750f21c4542987e523e82cb91b7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  token: {fileID: 11400000, guid: 0adc6d9c7f35b7d4b8e64653b5d63808, type: 2}
+  response:
+    m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 4821606711847235003}
         m_TargetAssemblyTypeName: Hawaiian.Inventory.PlayerTreasure, Hawaiian.Inventory
@@ -468,6 +490,28 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  removeHighlighting: 1
+--- !u!50 &674176738170137700
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4821606711847234976}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 7
 --- !u!1 &5499244656064920606
 GameObject:
   m_ObjectHideFlags: 0

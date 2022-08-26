@@ -13,6 +13,7 @@ namespace Hawaiian.PositionalEvents
 
         public void OnTargetsChanged(PositionalEventCaller caller)
         {
+
             if (!callerCurrentTargets.ContainsKey(caller))
                 callerCurrentTargets.Add(caller, new List<PositionalEventListener>());
             
@@ -21,6 +22,9 @@ namespace Hawaiian.PositionalEvents
             
             foreach (var currentTarget in currentTargets)
             {
+                if (currentTarget.removeHighlighting)
+                    continue;
+                
                 if (!newTargets.Contains(currentTarget)) {
                     RemoveCallerFromHighlighter(caller, currentTarget);
                 }
@@ -28,7 +32,7 @@ namespace Hawaiian.PositionalEvents
 
             foreach (var newTarget in newTargets)
             {
-                if (!currentTargets.Contains(newTarget))
+                if (!currentTargets.Contains(newTarget) && !newTarget.removeHighlighting)
                 {
                     AddCallerToHighlighter(caller, newTarget);
                 }
@@ -40,6 +44,9 @@ namespace Hawaiian.PositionalEvents
 
         private void AddCallerToHighlighter(PositionalEventCaller caller, PositionalEventListener target)
         {
+
+            
+            
             Highlighter highlighter;
             
             if (!highlighters.ContainsKey(target))
@@ -60,6 +67,8 @@ namespace Hawaiian.PositionalEvents
 
         private void RemoveCallerFromHighlighter(PositionalEventCaller caller, PositionalEventListener target)
         {
+           
+            
             var highlighter = highlighters[target];
             
             highlighter.RemoveCaller(caller);

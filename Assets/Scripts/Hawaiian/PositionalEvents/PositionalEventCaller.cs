@@ -11,6 +11,12 @@ namespace Hawaiian.PositionalEvents
     [RequireComponent(typeof(CircleCollider2D))]
     public class PositionalEventCaller : MonoBehaviour
     {
+
+       
+        public delegate void RegisteredTarget();
+
+        public RegisteredTarget OnRegisterTarget;
+        
         public enum InteractionTarget { All, Closest }
 
         [SerializeField] private PositionalEventToken token;
@@ -24,6 +30,7 @@ namespace Hawaiian.PositionalEvents
         public PositionalEventToken Token => token;
 
         [SerializeField] private UnityEvent raisedOnTarget = new UnityEvent();
+        
 
         public List<PositionalEventListener> Targets
         {
@@ -88,7 +95,6 @@ namespace Hawaiian.PositionalEvents
         private void RegisterListener(PositionalEventListener listener)
         {
             interactablesInRange.Add(listener);
-
             UpdateTargets();
         }
 
@@ -140,6 +146,9 @@ namespace Hawaiian.PositionalEvents
                 default:
                     throw new ArgumentOutOfRangeException();
             }
+            
+            OnRegisterTarget?.Invoke();
+
         }
     }
 }

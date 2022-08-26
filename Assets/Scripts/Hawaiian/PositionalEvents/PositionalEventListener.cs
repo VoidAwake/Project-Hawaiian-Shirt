@@ -8,5 +8,8 @@ namespace Hawaiian.PositionalEvents
     {
         public PositionalEventToken token;
         public UnityEvent response;
+
+        public bool removeHighlighting = false;
+    
     }
 }
