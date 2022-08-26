@@ -1,7 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
-using Hawaiian.Unit;
-using Unity.Mathematics;
+using Hawaiian.Inventory.ItemBehaviours;
 using UnityEngine;
 
 public class ArrowTrap : TrapController
