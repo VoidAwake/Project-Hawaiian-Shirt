@@ -700,7 +700,7 @@ MonoBehaviour:
   - {x: 0.118057966, y: -0.40654606, z: 0}
   m_ShapePathHash: 2100695749
   m_Mesh: {fileID: 0}
-  m_InstanceId: 46168
+  m_InstanceId: 176320
 --- !u!1 &5340646574246565565
 GameObject:
   m_ObjectHideFlags: 0
@@ -1627,14 +1627,6 @@ PrefabInstance:
     - target: {fileID: 6843977065014001900, guid: f795caf11fb524343819e598d275f997, type: 3}
       propertyPath: m_Name
       value: Hit Effect
-      objectReference: {fileID: 0}
-    - target: {fileID: 6843977065332554288, guid: f795caf11fb524343819e598d275f997, type: 3}
-      propertyPath: InitialModule.startSize.scalar
-      value: 1.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 6843977066152774425, guid: f795caf11fb524343819e598d275f997, type: 3}
-      propertyPath: InitialModule.startSize.scalar
-      value: 2.5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f795caf11fb524343819e598d275f997, type: 3}
