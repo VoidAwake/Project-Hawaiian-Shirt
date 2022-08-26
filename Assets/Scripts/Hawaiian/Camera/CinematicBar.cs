@@ -29,11 +29,6 @@ namespace Hawaiian.Camera
             Show(300, 2f);
         }
 
-        private void Start()
-        {
-            
-        }
-
         private void GenerateTopBar()
         {
             GameObject gameObject = new GameObject("Top_cinBar", typeof(Image));

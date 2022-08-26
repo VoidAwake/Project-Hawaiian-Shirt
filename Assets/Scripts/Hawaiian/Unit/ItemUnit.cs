@@ -39,8 +39,6 @@ public class ItemUnit : UnitPhysics
                 //im reset to 0
                 if (velocity.x > 0f != epic)
                 {
-                    //velocity = Vector2.zero;
-                    Debug.Log("owie suffering");
                     velocity = Vector2.zero;
                     //  Destroy(this);
                 }

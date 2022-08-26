@@ -1,27 +1,30 @@
 ﻿using System;
+using System.Threading.Tasks;
+using Hawaiian.Game.GameModes;
 using Hawaiian.Utilities;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 namespace Hawaiian.Game
 {
-    [CreateAssetMenu(menuName = "Hawaiian/Managers/GameManager", fileName = "NewGameManager")]
+    [CreateAssetMenu(menuName = "Hawaiian/Managers/GameManager")]
     public class GameManager : ScriptableObject
     {
-        public enum GamePhase { Stealth, HighAlert, GameOver }
+        [SerializeField] private SceneChanger sceneChanger;
+        [SerializeField] private SceneReference resultsScene;
+        [SerializeField] private GameEvent gameOver;
+        
+        public event Func<object, EventArgs, Task> GameOverAsync;
 
-        private GamePhase phase;
+        public ModeManager CurrentGameMode { get; set; }
 
-        public GamePhase Phase
+        public async void GameOver()
         {
-            get => phase;
-            set
-            {
-                phase = value;
-                phaseChanged.Raise();
-            }
-        }
+            gameOver.Raise();
 
-        public GameEvent phaseChanged;
+            // TODO: Not great to have to bypass the GameEvent system like this
+            await GameOverAsync?.Invoke(this, EventArgs.Empty);
+            
+            await sceneChanger.ChangeScene(resultsScene);
+        }
     }
 }

@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections;
+using System.Threading.Tasks;
+using Cysharp.Threading.Tasks;
 using Hawaiian.Game;
 using Hawaiian.Utilities;
 using TMPro;
@@ -16,9 +18,6 @@ namespace Hawaiian.UI.Game
         [SerializeField] private float displayTime;
         [SerializeField] private float transitionTime;
         [SerializeField] private float offset;
-        [SerializeField] private GameObject restartButton;
-
-        public GameEvent EndingCinematicCompleted;
         
         private RectTransform rectTransform;
         private Vector3 initialPosition;
@@ -32,33 +31,21 @@ namespace Hawaiian.UI.Game
             initialPosition = rectTransform.anchoredPosition;
 
             text.text = "";
-            
-            restartButton.SetActive(false);
         }
 
-        protected override void Subscribe() { }
-
-        protected override void Unsubscribe() { }
-
-        public void OnPhaseChanged()
+        protected override void Subscribe()
         {
-            var newPhase = gameManager.Phase;
+            gameManager.GameOverAsync += OnGameOverAsync;
+        }
 
-            switch (newPhase)
-            {
-                // case GameManager.GamePhase.Stealth:
-                //     StartCoroutine(ShowPrompt("Begin Stealth"));
-                //     break;
-                // case GameManager.GamePhase.HighAlert:
-                //     StartCoroutine(ShowPrompt("Begin High Alert"));
-                //     break;
-                case GameManager.GamePhase.GameOver:
-                    StartCoroutine(ShowPrompt("Time's Up"));
-                    break;
-                default:
-                    return;
-                    //throw new ArgumentOutOfRangeException();
-            }
+        protected override void Unsubscribe()
+        {
+            gameManager.GameOverAsync -= OnGameOverAsync;
+        }
+
+        private async Task OnGameOverAsync(object arg1, EventArgs arg2)
+        {
+            await ShowPrompt("Time's Up");
         }
 
         private IEnumerator ShowPrompt(string promptText)
@@ -79,7 +66,6 @@ namespace Hawaiian.UI.Game
 
             // rectTransform.position = initialPosition;
             yield return new WaitForSeconds(displayTime);
-            EndingCinematicCompleted.Raise();
             // transitionTimer = 0;
             //
             // while (transitionTimer < transitionTime)
@@ -88,8 +74,6 @@ namespace Hawaiian.UI.Game
             //
             //     rectTransform.position = initialPosition + new Vector3((1 - transitionTimer / transitionTime) * offset, 0);
             // }
-            
-            restartButton.SetActive(true);
 
             // TODO: This will be the default, but for the gameover screen, there's no point
             // text.text = "";

@@ -5,11 +5,11 @@
         "UniTask",
         "Unity.Mathematics",
         "Hawaiian.Utilities",
-        "Hawaiian.Unit",
-        "PositionalEvents",
         "Unity.InputSystem",
         "Hawaiian.Input",
-        "Unity.TextMeshPro"
+        "Unity.TextMeshPro",
+        "Hawaiian.PositionalEvents",
+        "Hawaiian.Unit"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

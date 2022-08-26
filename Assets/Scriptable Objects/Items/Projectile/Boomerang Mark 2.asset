@@ -21,7 +21,7 @@ MonoBehaviour:
   ProjectileInstance: {fileID: 8484802503941745754, guid: 6ccdae3489326844c9b49b012c477987, type: 3}
   Rarity: 0
   ItemWeight: 60
-  heldItemPrefab: {fileID: 0}
+  heldItemPrefab: {fileID: 7291259026507672787, guid: 74bb02f1a4b4c714386f159d97b46e43, type: 3}
   ProbabilityRangeFrom: 170
   ProbabilityRangeTo: 230
   ItemDamage: 10
@@ -33,6 +33,12 @@ MonoBehaviour:
   ProjectileAmount: 0
   IsRicochet: 0
   MaximumBounces: 0
+  ParryWindow: 0
+  ParryPercentageUpperLimit: 0
+  ParryPercentageLowerLimit: 0
+  TimeTillParry: 0
+  ShieldUp: {fileID: 0}
+  ShieldDown: {fileID: 0}
   AttackRate: 0
   KnockbackDistance: 0
   IsMainObjective: 0
@@ -42,3 +48,5 @@ MonoBehaviour:
   PlacementIcon: {fileID: 0}
   TrapInstance: {fileID: 0}
   IsKey: 0
+  IsDetonator: 0
+  IsDepositor: 0

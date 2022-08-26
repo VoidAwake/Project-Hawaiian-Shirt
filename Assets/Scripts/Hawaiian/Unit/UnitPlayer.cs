@@ -1,6 +1,7 @@
 using Hawaiian.Input;
 using Hawaiian.Utilities;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.InputSystem;
 
 namespace Hawaiian.Unit
@@ -21,6 +22,7 @@ namespace Hawaiian.Unit
         public PlayerAction GetPlayerAction() => _input;
         public PlayerInput GetPlayerInput() => _playerInput;
 
+        public UnityEvent tripped = new();
         
         protected override void Awake()
         {
@@ -91,11 +93,19 @@ namespace Hawaiian.Unit
 
         public void TripUnit(Vector2 direction, float distance)
         {
-            AudioManager.audioManager.PlayerTrip();
             KnockBack(direction,distance);
+            tripped.Invoke();
         }
 
         public UnitPlayer GetUnit() => this;
+
+
+        public override void Initialise(int characterNumber, int playerNumber)
+        {
+            PlayerNumber = playerNumber;
+            
+            base.Initialise(characterNumber, playerNumber);
+        }
         
         public Color32 PlayerColour { get; set; }
     }

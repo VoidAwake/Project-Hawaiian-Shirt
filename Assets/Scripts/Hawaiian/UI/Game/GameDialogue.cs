@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using Hawaiian.UI.CharacterSelect;
-using Hawaiian.UI.MainMenu;
+﻿using System.Collections.Generic;
+using Hawaiian.Game;
 using UI.Core;
 using UnityEngine;
 
@@ -12,15 +10,9 @@ namespace Hawaiian.UI.Game
         [SerializeField] private GameObject inventoryUIPrefab;
         [SerializeField] private Transform uiParent;
         [SerializeField] private Transform uiParentForFourPlayers;
-        [SerializeField] private GameObject tutorialDialoguePrefab;
-        [SerializeField] private GameObject _treasureHoardTutorialDialoguePrefab;
-        [SerializeField] private GameObject _treasureHoardControlInstructionsPrefab;
-
-        [SerializeField] private GameObject controlsInstructionsDialoguePrefab;
-        [SerializeField] private MainMenuController mainMenuController;
-        [SerializeField] private MainMenuButtonFunctions pauseMenuController;
         [SerializeField] private GameObject tutorialBackground;
-       
+        [SerializeField] private GameManager gameManager;
+        [SerializeField] private GameObject pauseMenuDialoguePrefab;
 
         private int _inventoryCount = 0;
         private List<GameObject> inventoryGameObjects = new();
@@ -30,9 +22,6 @@ namespace Hawaiian.UI.Game
         protected override void OnPromote()
         {
             tutorialBackground.SetActive(false);
-            
-            if (mainMenuController.enabled)
-                mainMenuController.CursorToStartingState();
         }
 
         protected override void OnDemote() { }
@@ -54,30 +43,22 @@ namespace Hawaiian.UI.Game
             DisplayControls();
         }
 
-        private void OnEnable()
-        {
-            pauseMenuController.displayControlsSelected.AddListener(DisplayControls);
-        }
-
-        private void OnDisable()
-        {
-            pauseMenuController.displayControlsSelected.RemoveListener(DisplayControls);
-        }
-
         private void DisplayControls()
         {
-       
             tutorialBackground.SetActive(true);
+
+            var gameMode = gameManager.CurrentGameMode;
             
-            if (FindObjectOfType<LobbyGameManager>().CurrentGameMode == GameMode.TreasureHoard)
-            {
-                Instantiate(_treasureHoardControlInstructionsPrefab, transform.parent);
-                Instantiate(_treasureHoardTutorialDialoguePrefab, transform.parent);
-                return;
-            }
+            Instantiate(gameMode.ControlsInstructionsDialoguePrefab, transform.parent);
+            Instantiate(gameMode.TutorialDialoguePrefab, transform.parent);
+        }
+
+        public void Pause()
+        {
+            // TODO: Just create an isPromoted variable
+            if (!canvasGroup.interactable) return;
             
-            Instantiate(controlsInstructionsDialoguePrefab, transform.parent);
-            Instantiate(tutorialDialoguePrefab, transform.parent);
+            Instantiate(pauseMenuDialoguePrefab, transform.parent);
         }
     }
 }

@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Hawaiian.Game;
 using Hawaiian.UI.CharacterSelect;
+using Hawaiian.Unit;
 using UnityEngine;
 
 namespace Hawaiian.UI.Game
@@ -9,7 +11,7 @@ namespace Hawaiian.UI.Game
     // TODO: Or better still, set up a game space canvas for control prompts and this
     public class WinningPlayerMarker : MonoBehaviour
     {
-        [SerializeField] private SpawnPlayers playerManager;
+        [SerializeField] private PlayerManager playerManager;
         [SerializeField] private GameObject markerPrefab;
         [SerializeField] private Vector3 offset;
 

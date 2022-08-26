@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 47cb01e13b904cd0aa7ce387869183cd, type: 3}
+  m_Name: Round Robbin Mode Manager
+  m_EditorClassIdentifier: 
+  displayName: Round Robbin
+  description: Race to nab the most treasure before the timer runs out! Attack other
+    players to steal their treasures.
+  controlsInstructionsDialoguePrefab: {fileID: 6701680597941144673, guid: ad9da8ae28d5a1446a50507627be2e64, type: 3}
+  tutorialDialoguePrefab: {fileID: 4814276844058300917, guid: 45769a02522b0c84da70d092cf10c2dc, type: 3}
+  sceneChanger: {fileID: 11400000, guid: 3d32adecca106ad4a8e92d019d2654af, type: 2}
+  gameOverEvent: {fileID: 11400000, guid: 3f166778320e3064188ff102927875f8, type: 2}
+  playerJoined:
+    m_PersistentCalls:
+      m_Calls: []
+  sceneReferences:
+  - {fileID: 11400000, guid: ad1852f60b1701d42b82206d34034a33, type: 2}

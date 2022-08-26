@@ -2,46 +2,28 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Hawaiian.Inventory;
+using Hawaiian.Unit;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
-namespace Hawaiian.Unit
+namespace Hawaiian.Inventory
 {
     public class PlayerTreasure : MonoBehaviour
     {
         [SerializeField] private GameObject _bombEffectPrefab;
         [SerializeField] private GameObject _defuserIndicator;
-        [SerializeField] private Slider _defuserSlider;     
-
+        [SerializeField] private Slider _defuserSlider;
         [SerializeField] private float defuseTarget;
         [SerializeField] private float defuseTimer;
-
-
         [SerializeField] private GameObject DroppedItemPrefab;
+        [SerializeField] private PlayerColors playerColors;
+        [SerializeField] private SpriteRenderer spriteRenderer;
+        
         public List<Item> _items = new List<Item>();
 
-
-        private Detonator _detonatorReference;
-        public Detonator DetonatorReference
-        {
-            get => _detonatorReference;
-            set
-            {
-                _detonatorReference = value;
-
-                if (_detonatorReference == null)
-                    IsBeingDetonated = false;
-                    
-            }
-        }
-        public IUnit PlayerReference { get; set; }
-        [SerializeField] private IUnitIntGameEvent UpdatePoint;
-
-        public IUnitIntGameEvent AddPoints;
-
-
-
+        public Detonator DetonatorReference;
+        public InventoryController playerInventoryController { get; set; }
 
         public bool IsBeingDetonated;
        
@@ -50,17 +32,36 @@ namespace Hawaiian.Unit
 
         private float _detonationTime;
 
-        public int CurrentPoints;
+        public UnityEvent pointsChanged = new();
+
+        public int CurrentPoints
+        {
+            get => currentPoints;
+            set
+            {
+                currentPoints = value;
+                pointsChanged.Invoke();
+            }
+        }
 
         public Coroutine DefuserCoroutine;
 
 
         private bool flag = false;
+
+        private int currentPoints;
         //   public GameEvent 
+
+        public void Initialise(int playerNumber, InventoryController playerInventoryController)
+        {
+            spriteRenderer.color = playerColors.GetColor(playerNumber);
+
+            this.playerInventoryController = playerInventoryController;
+        }
 
         public void OnTriggerEnter2D(Collider2D col)
         {
-            if (col.gameObject.GetComponent<IUnit>() != PlayerReference)
+            if (col.gameObject.GetComponentInChildren<InventoryController>() != playerInventoryController)
                 return;
 
             if (!IsBeingDetonated)
@@ -84,7 +85,7 @@ namespace Hawaiian.Unit
 
         public void OnTriggerStay2D(Collider2D other)
         {
-            if (other.gameObject.GetComponent<IUnit>() != PlayerReference)
+            if (other.gameObject.GetComponentInChildren<InventoryController>() != playerInventoryController)
                 return;
 
             if (!IsBeingDetonated)
@@ -114,7 +115,7 @@ namespace Hawaiian.Unit
 
         private void OnTriggerExit2D(Collider2D other)
         {
-            if (other.gameObject.GetComponent<IUnit>() != PlayerReference)
+            if (other.gameObject.GetComponentInChildren<InventoryController>() != playerInventoryController)
                 return;
 
             if (!IsBeingDetonated)
@@ -173,17 +174,9 @@ namespace Hawaiian.Unit
 
         public void AddTreasure()
         {
-            Inventory.Inventory inventory = ScriptableObject.CreateInstance<Inventory.Inventory>();
+            Hawaiian.Inventory.Inventory inventory = ScriptableObject.CreateInstance<Hawaiian.Inventory.Inventory>();
 
-            for (int i = 0; i < PlayerReference.GetUnit().transform.childCount; i++)
-            {
-                InventoryController temp = PlayerReference.GetUnit().transform.GetChild(i)
-                    .GetComponent<InventoryController>();
-
-                if (temp == null) continue;
-
-                inventory = temp._inv;
-            }
+            inventory = playerInventoryController.inv;
 
             int newPoints = 0;
             List<int> newItemsIndexes = new List<int>();
@@ -215,8 +208,6 @@ namespace Hawaiian.Unit
 
 
             CurrentPoints += newPoints;
-            Tuple<IUnit, int> reference = new Tuple<IUnit, int>(PlayerReference, CurrentPoints);
-            AddPoints.Raise(reference);
         }
 
         public void SetIsBeingDetonated()
@@ -245,7 +236,7 @@ namespace Hawaiian.Unit
                 temp.Add(item);
                 pointsToRemove += (int) item.Points;
                 GameObject droppedItem = Instantiate(DroppedItemPrefab, transform.position, Quaternion.identity);
-                droppedItem.GetComponent<DroppedItem>().item = item;
+                droppedItem.GetComponent<DroppedItem>().Item = item;
 
                 var randomX = UnityEngine.Random.Range(-1f, 1f);
                 var randomY = UnityEngine.Random.Range(-1f, 1f);
@@ -261,14 +252,12 @@ namespace Hawaiian.Unit
 
 
             _items = _items.Except(temp).ToList();
-            Tuple<IUnit, int> reference = new Tuple<IUnit, int>(PlayerReference, CurrentPoints);
-            UpdatePoint.Raise(reference);
             IsBeingDetonated = false;
         }
 
         public void GetDetonatorReference(Tuple<IUnit, Detonator> reference)
         {
-            if (reference.Item1 == PlayerReference)
+            if (reference.Item1 == playerInventoryController)
                 return;
 
             if (DetonatorReference != null)

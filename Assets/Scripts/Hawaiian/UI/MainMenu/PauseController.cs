@@ -1,66 +1,43 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Hawaiian.Utilities;
-using Hawaiian.Unit;
 
 namespace Hawaiian.UI.MainMenu
 {
     public class PauseController : MonoBehaviour
     {
         [SerializeField] ScriptableFloat gameTime;
-        MainMenuController menuController;
-
-        public void OnMenuSelect(InputValue value)
-        {
-            if (menuController != null) menuController.OnMenuSelect(value);
-        }
-        public void OnActionA(InputValue value)
-        {
-            if (menuController != null) menuController.OnActionA(value);
-        }
+        [SerializeField] private GameEvent pauseGameEvent;
+        
+        public static PauseController pausePlayer;
+        
         public void OnActionB(InputValue value)
         {
-            if (menuController != null) menuController.OnActionB(value);
+            if (pausePlayer == this)
+            {
+                ResumeGame();
+            }
         }
         public void OnMenu(InputValue value)
         {
-            if (menuController == null)
+            if (!(value.Get<float>() > 0.5f)) return;
+
+            if (pausePlayer == this)
             {
-                if (value.Get<float>() > 0.5f)
-                {
-                    menuController = FindObjectOfType<MainMenuController>();
-                    if (menuController != null)
-                    {
-                        if (!menuController.enabled && menuController.pausePlayer == null)
-                        {
-                            PauseGame();
-                        }
-                        else
-                        {
-                            menuController = null;
-                        }
-                    }
-                }
+                OnActionB(value);
+                return;
             }
-            else
-            {
-                menuController.OnActionB(value);
-            }
+
+            if (pausePlayer != null) return;
+            
+            pauseGameEvent.Raise();
+                    
+            PauseGame();
         }
 
         public void PauseGame()
         {
-            //menuController.gameObject.SetActive(true);
-            for (int i = 0; i < menuController.transform.childCount; i++)
-            {
-                menuController.transform.GetChild(i).gameObject.SetActive(true);
-            }
-
-            menuController.enabled = true;
-            menuController.pausePlayer = this;
-            menuController.CursorToStartingState();
+            pausePlayer = this;
 
             gameTime.Value = 0.0f;
             Unit.Unit[] units = FindObjectsOfType<Unit.Unit>();
@@ -79,15 +56,7 @@ namespace Hawaiian.UI.MainMenu
                 unit.enabled = true;
             }
 
-            //menuController.gameObject.SetActive(false);
-            for (int i = 0; i < menuController.transform.childCount; i++)
-            {
-                menuController.transform.GetChild(i).gameObject.SetActive(false);
-            }
-
-            menuController.enabled = false;
-            menuController.pausePlayer = null;
-            menuController = null;
+            pausePlayer = null;
         }
     }
 }

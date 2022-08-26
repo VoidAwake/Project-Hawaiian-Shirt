@@ -1,5 +1,7 @@
 using System.Collections.Generic;
 using System.Collections;
+using Hawaiian.Game;
+using Hawaiian.UI.CharacterSelect;
 using Hawaiian.Unit;
 using Hawaiian.Utilities;
 using Unity.Mathematics;
@@ -51,6 +53,8 @@ namespace Hawaiian.UI.Game
 
             highlight = Instantiate(highlightPrefab, invSlots[0].transform.position, quaternion.identity, invSlots[0].transform);
             inv.currentItemChanged.AddListener(UpdateInv);
+            
+            SetCharacterPortrait();
         }
         
 
@@ -128,10 +132,22 @@ namespace Hawaiian.UI.Game
             highlightCoroutine = null;
         }
 
-        public void SetCharacterPortrait(int characterNo, int playerNo)
+        private void SetCharacterPortrait()
         {
-            head.sprite = playerSprites.GetSprite(characterNo);
-            backdrop.color = playerColors.GetColor(playerNo);
+            var playerManager = FindObjectOfType<PlayerManager>();
+
+            if (playerManager == null) return;
+
+            var playerConfig = playerManager.GetPlayerConfig(inv);
+
+            if (playerConfig == null)
+            {
+                Debug.LogWarning($"Could not find the {nameof(PlayerConfig)}.");
+                return;
+            }
+            
+            head.sprite = playerSprites.GetSprite(playerConfig.characterNumber);
+            backdrop.color = playerColors.GetColor(playerConfig.playerNumber);
         }
     }
 }

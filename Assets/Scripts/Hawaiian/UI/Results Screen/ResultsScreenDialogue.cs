@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using Hawaiian.Game;
 using Hawaiian.UI.CharacterSelect;
 using Hawaiian.Unit;
 using UI.Core;
@@ -12,12 +13,13 @@ namespace Hawaiian.UI.Results_Screen
         [SerializeField] private Animator animator;
         [SerializeField] private float startDelayDuration;
         [SerializeField] private PlayerConfig[] defaultPlayerConfigs;
+        [SerializeField] private PlayerConfigManager playerConfigManager;
 
-        private void Start()
+        protected override void Start()
         {
-            LobbyGameManager lobbyGameManager = FindObjectOfType<LobbyGameManager>();
-
-            var playerConfigs = lobbyGameManager != null ? lobbyGameManager.playerConfigs : defaultPlayerConfigs;
+            base.Start();
+            
+            var playerConfigs = playerConfigManager != null ? playerConfigManager.playerConfigs : defaultPlayerConfigs;
 
             barChart.Initialise(playerConfigs);
             

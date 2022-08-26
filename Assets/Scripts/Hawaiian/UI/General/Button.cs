@@ -1,10 +1,13 @@
 ﻿using UI.Core;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 namespace Hawaiian.UI.General
 {
     public abstract class Button<T> : DialogueComponent<T> where T : Dialogue
     {
+        public UnityEvent<Button<T>> clicked = new();
+        
         protected Button button;
 
         protected override void OnComponentAwake()
@@ -22,6 +25,9 @@ namespace Hawaiian.UI.General
             button.onClick.RemoveListener(OnClick);
         }
 
-        public virtual void OnClick() { }
+        public virtual void OnClick()
+        {
+            clicked.Invoke(this);
+        }
     }
 }

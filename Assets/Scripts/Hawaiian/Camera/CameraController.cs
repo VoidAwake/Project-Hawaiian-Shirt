@@ -1,7 +1,5 @@
 using System.Collections.Generic;
-using System.Linq;
 using Hawaiian.Unit;
-using MoreLinq;
 using UnityEngine;
 
 
@@ -82,6 +80,7 @@ public class CameraController : MonoBehaviour
 
     public void UpdateCameraForEndCinematic()
     {
+        // TODO: Does not appear to have any effect
         _minZoom += _minZoom / 2 + 20;
     }
 
@@ -92,8 +91,6 @@ public class CameraController : MonoBehaviour
         
         _center = GetCenterPoint(players.ToArray());
 
-        //Debug.Log(_center);
-      
         var newPosition = _center;
         transform.position = Vector2.SmoothDamp(transform.position, newPosition, ref velocity, _smoothTime);
 
