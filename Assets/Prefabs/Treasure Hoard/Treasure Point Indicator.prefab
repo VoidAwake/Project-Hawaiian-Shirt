@@ -199,8 +199,8 @@ MonoBehaviour:
   manager: {fileID: 11400000, guid: b205461929d08b7439e72030dc234753, type: 2}
   _points: {fileID: 4347883411881057946}
   _backgroundColour: {fileID: 2635105238416992476}
-  playerReference: {fileID: 0}
-  inventory: {fileID: 0}
+  playerTreasure: {fileID: 0}
+  _playerColors: {fileID: 11400000, guid: c18c22b93a97a954ca8ab46031e350bd, type: 2}
 --- !u!114 &3012881388243578115
 MonoBehaviour:
   m_ObjectHideFlags: 0

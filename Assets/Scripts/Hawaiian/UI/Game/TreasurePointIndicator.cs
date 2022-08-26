@@ -1,6 +1,7 @@
 using System.Collections;
 using Hawaiian.Inventory;
 using Hawaiian.UI.Game;
+using Hawaiian.Unit;
 using TMPro;
 using UI.Core;
 using UnityEngine;
@@ -8,40 +9,44 @@ using UnityEngine.UI;
 
 public class TreasurePointIndicator : DialogueComponent<GameDialogue>
 {
-    [SerializeField] private TextMeshProUGUI _points;
+    [Header("Components")] [SerializeField]
+    private TextMeshProUGUI _points;
+
     [SerializeField] private Image _backgroundColour;
     [SerializeField] private PlayerTreasure playerTreasure;
 
-    Coroutine textCoroutine;
-    int currentScore;
-    int targetScore;
+    [Header("Player Colours")] [SerializeField]
+    private PlayerColors _playerColors;
 
-    float fontSize;
 
-    // private void OnDestroy()
-    // {
-    //     if (playerTreasure != null)
-    //         playerTreasure.pointsChanged.RemoveListener(OnPointsChanged);
-    // }
-    //
-    // public void Initialise(PlayerTreasure playerTreasure)
-    // {
-    //     this.playerTreasure = playerTreasure;
-    //     // TODO: Work out how to get this 
-    //     // _backgroundColour.color = playerTreasure.PlayerColour;
-    //     
-    //     playerTreasure.pointsChanged.AddListener(OnPointsChanged);
-    // }
+    private Coroutine textCoroutine;
+    private int currentScore;
+    private int targetScore;
 
-    // private void OnPointsChanged()
-    // {
-    //     UpdatePoints(playerTreasure.CurrentPoints);
-    // }
+    private float fontSize;
+
+    private void OnDestroy()
+    {
+        if (playerTreasure != null)
+            playerTreasure.OnPointsChanged -= OnPointsChanged;
+    }
+
+    public void Initialise(PlayerTreasure playerTreasure)
+    {
+        this.playerTreasure = playerTreasure;
+        _backgroundColour.color = _playerColors.GetColor(playerTreasure.Owner.PlayerNumber);
+        playerTreasure.OnPointsChanged += OnPointsChanged;
+    }
+
+
+    private void OnPointsChanged()
+    {
+        UpdatePoints(playerTreasure.CurrentPoints);
+    }
 
     public void UpdatePoints(int points)
     {
         targetScore = points;
-        
         UpdateText();
     }
 
@@ -102,7 +107,7 @@ public class TreasurePointIndicator : DialogueComponent<GameDialogue>
         textCoroutine = null;
     }
 
-    protected override void Subscribe() { }
+    protected override void Subscribe(){}
 
     protected override void Unsubscribe() { }
 }

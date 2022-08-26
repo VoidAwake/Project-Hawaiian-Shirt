@@ -7,6 +7,9 @@ namespace Hawaiian.Game.GameModes.TreasureHoard
     [CreateAssetMenu(order = 0, menuName = "Hawaiian/Managers/GameModeManager/TreasureHoardModeManager")]
     public class TreasureHoardModeManager : ModeManager<TreasureHoardSceneReference>
     {
+        public delegate void TreasureInitalised(PlayerConfig config);
+        public TreasureInitalised OnTreasureInitialised;
+        
         [Header("Treasure Hoard Mode Manager")]
         [SerializeField] private Item _depositor;
         [SerializeField] private Item _detonator;
@@ -41,11 +44,10 @@ namespace Hawaiian.Game.GameModes.TreasureHoard
             playerInventoryController.inv.inv[0] = _depositor;
             playerInventoryController.inv.inv[1] = _detonator;
 
-
             base.OnPlayerJoined(playerConfig);
             
             playerTreasure.Owner = playerManager.LastPlayerJoined;
-
+            OnTreasureInitialised.Invoke(playerConfig);
         }
     }
 }

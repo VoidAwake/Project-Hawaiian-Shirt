@@ -12,24 +12,20 @@ namespace Hawaiian.UI.Game
         protected override void Subscribe()
         {
             base.Subscribe();
-
-            modeController.playerJoined.AddListener(GenerateTreasurePointUI);
+            modeController.OnTreasureInitialised += GenerateTreasurePointUI;
         }
 
         protected override void Unsubscribe()
         {
             base.Unsubscribe();
-            
-            modeController.playerJoined.RemoveListener(GenerateTreasurePointUI);
+            modeController.OnTreasureInitialised -= GenerateTreasurePointUI;
         }
 
         private void GenerateTreasurePointUI(PlayerConfig playerConfig)
         {
             GameObject treasurePointIndicatorObject = Instantiate(TreasureHoardUIPrefab, TreasureHoardUIParent);
-
             var treasurePointIndicator = treasurePointIndicatorObject.GetComponent<TreasurePointIndicator>();
-            
-         //   treasurePointIndicator.Initialise(modeController.PlayerTreasures[playerConfig]);
+            treasurePointIndicator.Initialise(modeController.PlayerTreasures[playerConfig]);
         }
     }
 }
