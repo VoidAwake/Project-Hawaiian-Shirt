@@ -44,8 +44,12 @@ namespace Hawaiian.PositionalEvents
             
             if (!highlighters.ContainsKey(target))
             {
-                var highlighterObject = Instantiate(highlighterPrefab, target.transform);
+                var targetSpriteRenderer = target.GetComponentInChildren<SpriteRenderer>();
 
+                // highlighter = targetSpriteRenderer.gameObject.AddComponent<Highlighter>();
+                //
+                var highlighterObject = Instantiate(highlighterPrefab, target.transform);
+                
                 highlighter = highlighterObject.GetComponent<Highlighter>();
                 
                 highlighters.Add(target, highlighter);

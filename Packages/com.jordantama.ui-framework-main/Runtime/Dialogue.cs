@@ -68,5 +68,11 @@ namespace UI.Core
         protected abstract void OnDemote();
         
         #endregion
+
+        // TODO: Needs revisiting.
+        public void Disable()
+        {
+            canvasGroup.interactable = false;
+        }
     }
 }
