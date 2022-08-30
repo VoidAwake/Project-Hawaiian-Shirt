@@ -28,6 +28,11 @@ namespace Hawaiian.Unit
         private float itemUseTimer;
         private Vector2 itemUseDirection;
 
+        private const float struckAnimationSpeed = 12.0f;
+        private const float struckAnimationRange = 0.25f;
+        private Vector2 currentStruckVector = new Vector2();
+        [SerializeField] private ParticleSystem hitEffect;
+
         [SerializeField] private Animator _animator;
         private Unit _unit;
         private bool _isLookingLeft;
@@ -45,6 +50,7 @@ namespace Hawaiian.Unit
             //_animator = GetComponent<Animator>();
             _unit = GetComponent<Unit>();
             _isLookingLeft = true;
+            hitEffect.Stop();
         }
 
         private void Update()
@@ -58,8 +64,10 @@ namespace Hawaiian.Unit
                     // Transition
                     if (_playerState != Unit.PlayerState.Walking)
                     {
+
                         _animator.SetTrigger("walk");
                         _playerState = _unit.playerState;
+                        _renderers[0].transform.parent.localPosition = Vector2.zero;
                     }
 
                     // Set animator parameters
@@ -105,6 +113,7 @@ namespace Hawaiian.Unit
                         _animator.SetTrigger("trip");
                         _animator.speed = 1.0f;
                         _playerState = _unit.playerState;
+                        _renderers[0].transform.parent.localPosition = Vector2.zero;
 
                         if (_unit.isBeingHitRight())
                         {
@@ -122,45 +131,71 @@ namespace Hawaiian.Unit
                         }
                     }
                 }
+                else if (_unit.playerState == Unit.PlayerState.Struck)
+                {
+                    // Transition
+                    if (_playerState != Unit.PlayerState.Struck)
+                    {
+                        _playerState = Unit.PlayerState.Struck;
+                        _renderers[0].transform.parent.localPosition = Vector2.zero;
+                        currentStruckVector = GetRandomVector2();
+                        hitEffect.Play();
+                    }
+
+                    // Animate shaking
+                    Vector2 newPosition = (Vector2)_renderers[0].transform.parent.localPosition + currentStruckVector * Time.deltaTime * gameTimeScale.Value * struckAnimationSpeed;
+                    if (newPosition.magnitude > struckAnimationRange)
+                    {
+                        _renderers[0].transform.parent.localPosition = newPosition.normalized * struckAnimationRange;
+                        currentStruckVector = -currentStruckVector;
+                    }
+                    else
+                    {
+                        _renderers[0].transform.parent.localPosition = newPosition;
+                    }
+                }
             }
 
             #endregion
 
             #region Invincibility Flashing
 
-            if (_unit.isInvincible)
+            if (_unit.playerState != Unit.PlayerState.Struck)
             {
-                _invincibilityTimer += Time.deltaTime * gameTimeScale.Value;
-                _wasInvincible = true;
-
-                if (_invincibilityTimer > 0.1f)
+                if (_unit.isInvincible)
                 {
-                    _invincibilityTimer %= 0.1f;
+                    _invincibilityTimer += Time.deltaTime * gameTimeScale.Value;
+                    _wasInvincible = true;
 
-                    // Loop through children and enable/disable any sprites
+                    if (_invincibilityTimer > 0.1f)
+                    {
+                        _invincibilityTimer %= 0.1f;
+
+                        // Loop through children and enable/disable any sprites
+                        for (int i = 0; i < _animator.transform.childCount; i++)
+                        {
+                            SpriteRenderer child = _animator.transform.GetChild(i).GetComponent<SpriteRenderer>();
+                            if (child != null)
+                            {
+                                if (child.enabled) child.enabled = false;
+                                else child.enabled = true;
+                            }
+                        }
+                    }
+                }
+                else if (_wasInvincible)
+                {
+                    _invincibilityTimer = 0.0f;
+                    _wasInvincible = false;
+
+                    // Loop through children and enable any sprites
                     for (int i = 0; i < _animator.transform.childCount; i++)
                     {
                         SpriteRenderer child = _animator.transform.GetChild(i).GetComponent<SpriteRenderer>();
                         if (child != null)
                         {
-                            if (child.enabled) child.enabled = false;
-                            else child.enabled = true;
+                            child.enabled = true;
                         }
-                    }
-                }
-            }
-            else if (_wasInvincible)
-            {
-                _invincibilityTimer = 0.0f;
-                _wasInvincible = false;
-
-                // Loop through children and enable any sprites
-                for (int i = 0; i < _animator.transform.childCount; i++)
-                {
-                    SpriteRenderer child = _animator.transform.GetChild(i).GetComponent<SpriteRenderer>();
-                    if (child != null)
-                    {
-                        child.enabled = true;
                     }
                 }
             }
@@ -293,6 +328,12 @@ namespace Hawaiian.Unit
                 FlipCharacter(false);
             }
             // Is melee slash childed to this player? Flipping the player be kinda funky.
+        }
+
+        private Vector2 GetRandomVector2()
+        {
+            float radians = UnityEngine.Random.Range(0.0f, Mathf.PI * 2.0f);
+            return new Vector2(Mathf.Cos(radians), Mathf.Sin(radians));
         }
     }
 }

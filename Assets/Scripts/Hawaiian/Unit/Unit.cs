@@ -18,7 +18,7 @@ namespace Hawaiian.Unit
         enum TorsoLabels { Red, Blue, Yellow, Green }
         public enum HeadLabels { Fox, Robin, Monkey, Cat, Goose, Soup, Gambit, Bert }
 
-        public enum PlayerState { Walking, Tripped }
+        public enum PlayerState { Walking, Tripped, Struck }
         public PlayerState playerState = PlayerState.Walking;
         public bool OverrideDamage = false;
 
@@ -36,6 +36,9 @@ namespace Hawaiian.Unit
         internal Coroutine invincibilityCoroutine;
         internal float remainingTripTime;
         internal Vector2 knockBackForce;
+        private float remainingStruckTime;
+        private const float struckTime = 0.2f;
+        private bool wereControlsEnabledBeforeStruck = false;
 
         // Movement variables
         [Header("Movement Speed")]
@@ -64,6 +67,16 @@ namespace Hawaiian.Unit
                 GetComponent<UnitAnimator>().UseItem(UnitAnimationState.Throw, testVector, false);
             }
 
+            if (playerState == PlayerState.Struck)
+            {
+                remainingStruckTime -= Time.deltaTime;
+                if (remainingStruckTime <= 0.0f)
+                {
+                    remainingStruckTime = 0.0f;
+                    playerState = PlayerState.Tripped;
+                    controlsEnabled = wereControlsEnabledBeforeStruck;
+                }
+            }
             if (playerState == PlayerState.Walking && !knockbackOverride)
             {
                 // Update inputs and velocity
@@ -91,6 +104,13 @@ namespace Hawaiian.Unit
                 velocity = Vector2.Lerp(velocity, Vector2.zero, Mathf.Clamp(Time.deltaTime * gameTimeScale.Value * tweenRate, 0.0f, 1.0f));
             }
         }
+        private void GetStruck()
+        {
+            playerState = PlayerState.Struck;
+            remainingStruckTime = struckTime;
+            wereControlsEnabledBeforeStruck = controlsEnabled;
+            controlsEnabled = false;
+        }
 
         public void KnockBack(Vector2 direction, float distance)
         {
@@ -98,7 +118,8 @@ namespace Hawaiian.Unit
             knockBackForce = direction.normalized * distance;
 
             // Get hit
-            playerState = PlayerState.Tripped;
+            //playerState = PlayerState.Tripped;
+            GetStruck();
             remainingTripTime = tripTime;
             BecomeInvincible(invincibilityTime);
         }
