@@ -46,7 +46,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cc2945ab51b4b0c88c54a3177efb799, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startTime: 10
+  startTime: 120
   gameTimeScale: {fileID: 11400000, guid: a7999ebb747644c42b10ad44fd3b305b, type: 2}
   gameTime: {fileID: 11400000, guid: 0c73cc340ca261c4fb0bb0fd9ce5302f, type: 2}
   startOnAwake: 0
@@ -92,7 +92,6 @@ MonoBehaviour:
       m_Action: Debug End Game
       m_Flags: 8
     m_Flags: 0
-  GameEndedOccured: {fileID: 11400000, guid: 3f110c950f25a164b8bce56a2f06f376, type: 2}
 --- !u!82 &5594761253786116055
 AudioSource:
   m_ObjectHideFlags: 0
