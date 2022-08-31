@@ -5,6 +5,7 @@ using UnityEngine;
 
 namespace Hawaiian.Inventory.ItemBehaviours
 {
+    // TODO: Duplicate code. See SmokeBomb.
     public class Bomb : Throwable
     {
     
