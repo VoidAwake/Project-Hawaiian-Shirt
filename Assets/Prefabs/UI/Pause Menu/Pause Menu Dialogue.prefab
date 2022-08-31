@@ -116,6 +116,7 @@ GameObject:
   - component: {fileID: 7235329791846759587}
   - component: {fileID: 2706012777655187942}
   - component: {fileID: 5901058860651370438}
+  - component: {fileID: -8951497987797047283}
   m_Layer: 0
   m_Name: Pause Menu Dialogue
   m_TagString: Untagged
@@ -165,6 +166,34 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   manager: {fileID: 11400000, guid: b205461929d08b7439e72030dc234753, type: 2}
   firstSelectable: {fileID: 7723277854092045662}
+--- !u!114 &-8951497987797047283
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7240885647395388176}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8beaaee945cf0844ad0f79ee7108362, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Event: {fileID: 11400000, guid: a2c4c9ef8ad733f4bb3b69c9894b9755, type: 2}
+  Response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 5901058860651370438}
+        m_TargetAssemblyTypeName: Hawaiian.UI.PauseMenu.PauseMenuDialogue, Hawaiian.UI
+        m_MethodName: ResumeGame
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &7289789936763692736
 GameObject:
   m_ObjectHideFlags: 0
