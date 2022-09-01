@@ -46,7 +46,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0921f9df0efe4b0fabfa6e93799c9231, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  unityEvent:
+  OnItemPerformed:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1953824851175411999}
@@ -62,6 +62,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  OnItemCancelled:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &1953824851175411999
 MonoBehaviour:
   m_ObjectHideFlags: 0

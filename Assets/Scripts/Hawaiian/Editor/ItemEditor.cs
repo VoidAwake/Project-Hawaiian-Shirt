@@ -1,9 +1,7 @@
 using System;
-using Codice.Client.BaseCommands;
 using Hawaiian.Inventory;
 using UnityEditor;
 using UnityEngine;
-using UnityEngine.U2D.Animation;
 
 #if UNITY_EDITOR
 
@@ -46,7 +44,7 @@ namespace Hawaiian.Editor
         SerializedProperty ShieldUp;
         SerializedProperty ShieldDown;
         SerializedProperty IsDetonator;
-        private SerializedProperty IsDepositor;
+        private SerializedProperty IsDefuser;
 
 
         private void OnEnable()
@@ -84,7 +82,7 @@ namespace Hawaiian.Editor
             ShieldUp = serializedObject.FindProperty("ShieldUp");
             ShieldDown = serializedObject.FindProperty("ShieldDown");
             IsDetonator = serializedObject.FindProperty("IsDetonator");
-            IsDepositor = serializedObject.FindProperty("IsDepositor");;
+            IsDefuser = serializedObject.FindProperty("IsDefuser");;
         }
 
         public override void OnInspectorGUI()
@@ -272,7 +270,7 @@ namespace Hawaiian.Editor
             GUILayout.Label("Other Stats", EditorStyles.boldLabel);
             EditorGUILayout.PropertyField(isKey, new GUIContent("Key"));
             EditorGUILayout.PropertyField(IsDetonator, new GUIContent("Detonator"));
-            EditorGUILayout.PropertyField(IsDepositor, new GUIContent("Depositor"));
+            EditorGUILayout.PropertyField(IsDefuser, new GUIContent("Depositor"));
         }
     }
 }

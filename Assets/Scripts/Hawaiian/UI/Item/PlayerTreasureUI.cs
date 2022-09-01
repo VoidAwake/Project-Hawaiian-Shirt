@@ -1,18 +1,22 @@
 using System.Collections;
 using System.Collections.Generic;
+using Hawaiian.Inventory;
+using UI.Core;
 using UnityEngine;
 
-public class PlayerTreasureUI : MonoBehaviour
+public class PlayerTreasureUI : Dialogue
 {
-    // Start is called before the first frame update
-    void Start()
+
+    [SerializeField] internal PlayerTreasure _playerTreasure;
+    
+    protected override void OnClose() { }
+
+    protected override void OnPromote()
     {
-        
+        _playerTreasure = GetComponentInParent<PlayerTreasure>();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    protected override void OnDemote() { }
+
+  
 }

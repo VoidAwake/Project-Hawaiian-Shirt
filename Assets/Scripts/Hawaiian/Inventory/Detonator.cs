@@ -1,13 +1,9 @@
 using System;
 using System.Collections;
-using System.Globalization;
 using System.Threading;
 using Cysharp.Threading.Tasks;
 using Hawaiian.PositionalEvents;
-using Hawaiian.Unit;
-using TMPro;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 namespace Hawaiian.Inventory
 {
@@ -18,9 +14,12 @@ namespace Hawaiian.Inventory
 
         private CancellationTokenSource _cts;
         private PositionalEventCaller _caller;
+        private PlayerTreasure _treasure;
 
         public float CurrentDetonationTime { get; set; }
 
+        private bool flag = false;
+        
         private void OnEnable()
         {
             _caller = GetComponent<PositionalEventCaller>();
@@ -29,7 +28,34 @@ namespace Hawaiian.Inventory
 
         private void Start()
         {
-            _caller.OnRegisterTarget += _caller.Raise;
+            _caller.OnRegisterTarget += (listener =>
+            {
+                if (!flag)
+                {
+                    _caller.Raise();
+                    flag = true;
+                }
+                
+                if (!listener.gameObject.GetComponent<PlayerTreasure>())
+                    return;
+
+                _treasure = listener.GetComponent<PlayerTreasure>();
+                _treasure.OnDefuseCompleted += CancelDetonation;
+            });
+        }
+
+        private void OnDisable()
+        {
+            _caller.OnRegisterTarget -= (listener =>
+            {
+                _caller.Raise();
+
+                if (!listener.gameObject.GetComponent<PlayerTreasure>())
+                    return;
+
+                _treasure = listener.GetComponent<PlayerTreasure>();
+                _treasure.OnDefuseCompleted -= CancelDetonation;
+            });
         }
 
         private async void BeginCountdown()
@@ -43,6 +69,7 @@ namespace Hawaiian.Inventory
             catch (OperationCanceledException ex)
             {
                 Debug.Log($"The detonation was cancelled: {ex} ");
+                Destroy(gameObject);
             }
         }
 
@@ -70,7 +97,7 @@ namespace Hawaiian.Inventory
 
         private void OnDetonation()
         {
-            var _completedDetonator = Instantiate(_detonationCallerReference);
+            var _completedDetonator = Instantiate(_detonationCallerReference, this.transform);
             PositionalEventCaller caller = _completedDetonator.GetComponent<PositionalEventCaller>();
 
             if (caller != null)
@@ -78,7 +105,7 @@ namespace Hawaiian.Inventory
                 {
                     if (!listener.gameObject.GetComponent<PlayerTreasure>())
                         return;
-                    
+
                     caller.Raise();
                     Destroy(_completedDetonator.gameObject);
                     Destroy(gameObject);

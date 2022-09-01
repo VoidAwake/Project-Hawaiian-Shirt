@@ -47,7 +47,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0921f9df0efe4b0fabfa6e93799c9231, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  unityEvent:
+  OnItemPerformed:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1883228229812148934}
@@ -63,6 +63,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  OnItemCancelled:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!58 &979334200053766057
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -91,8 +94,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0786e768ca794aaaa90ce6dd72977657, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _detonatorPrefab: {fileID: 245282319073416818, guid: 783076032353d5f44824f5878070abf8, type: 3}
   _lastInteractedTreasure: {fileID: 0}
+  _detonatorPrefab: {fileID: 245282319073416818, guid: 783076032353d5f44824f5878070abf8, type: 3}
 --- !u!114 &1883228229812148934
 MonoBehaviour:
   m_ObjectHideFlags: 0

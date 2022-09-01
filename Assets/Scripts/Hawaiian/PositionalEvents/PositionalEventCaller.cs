@@ -28,7 +28,8 @@ namespace Hawaiian.PositionalEvents
         public PositionalEventToken Token => token;
 
         [SerializeField] private UnityEvent raisedOnTarget = new UnityEvent();
-        
+        [SerializeField] private UnityEvent raisedOnRemoveTarget = new UnityEvent();
+
 
         public List<PositionalEventListener> Targets
         {
@@ -98,8 +99,8 @@ namespace Hawaiian.PositionalEvents
 
         private void UnregisterListener(PositionalEventListener listener)
         {
+            listener.onTargetRemoved.Invoke();
             interactablesInRange.Remove(listener);
-
             UpdateTargets();
         }
 

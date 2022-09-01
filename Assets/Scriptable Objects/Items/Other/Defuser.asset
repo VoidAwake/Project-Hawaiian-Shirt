@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b80aed388cd62a5479b406e914eb6b8d, type: 3}
-  m_Name: Depositor
+  m_Name: Defuser
   m_EditorClassIdentifier: 
   Type: 4
   ItemSprite: {fileID: 2091612633, guid: 717017d027b22a44ea5761a56d7d615d, type: 3}
   DroppedItemSprite: {fileID: 2091612633, guid: 717017d027b22a44ea5761a56d7d615d, type: 3}
-  ItemName: Depositor
+  ItemName: Defuser
   MaxStack: 1
   DroppedItemBase: {fileID: 3056942884218095950, guid: 37132a09f5d1c4046a4bb460892afc47, type: 3}
   ProjectileInstance: {fileID: 0}
@@ -49,4 +49,4 @@ MonoBehaviour:
   TrapInstance: {fileID: 0}
   IsKey: 0
   IsDetonator: 0
-  IsDepositor: 1
+  IsDefuser: 0
