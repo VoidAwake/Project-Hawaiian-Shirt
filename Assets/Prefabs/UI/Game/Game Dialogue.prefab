@@ -438,8 +438,8 @@ MonoBehaviour:
   tutorialBackground: {fileID: 6418810255081669784}
   gameManager: {fileID: 11400000, guid: c305914e6d352644190ef7ee43a51bbd, type: 2}
   pauseMenuDialoguePrefab: {fileID: 7240885647395388176, guid: 0d47d8cade5e85e40989b1b20185198d, type: 3}
-  startGameEvent: {fileID: 0}
-  startPlayerSpawnsEvent: {fileID: 0}
+  startGameEvent: {fileID: 11400000, guid: e4c536f8917779747896d7451a944c3b, type: 2}
+  startPlayerSpawnsEvent: {fileID: 11400000, guid: 1382dd088fa19364096849dc373d148c, type: 2}
 --- !u!114 &2135048521545393823
 MonoBehaviour:
   m_ObjectHideFlags: 0

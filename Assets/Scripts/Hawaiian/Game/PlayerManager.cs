@@ -27,13 +27,15 @@ namespace Hawaiian.Game
 
         private PlayerInputManager inputManager;
 
+        private bool playerInputEnabled;
+
         public ReadOnlyDictionary<PlayerConfig, InventoryController> InventoryControllers => new (inventoryControllers);
 
         private List<PlayerInput> _allPlayers = new List<PlayerInput>();
         
         public UnitPlayer LastPlayerJoined { get; private set; }
 
-        private void Start()
+        private void Awake()
         {
             inputManager = GetComponent<PlayerInputManager>();
 
@@ -93,7 +95,9 @@ namespace Hawaiian.Game
         {
             // TODO: No idea if this is where this is meant to go
             _allPlayers.Add(playerInput);
-            playerInput.DeactivateInput();
+            
+            if (!playerInputEnabled)
+                playerInput.DeactivateInput();
             
             if (playerConfig != null)
             {
@@ -166,6 +170,8 @@ namespace Hawaiian.Game
         public void AllowAllInputs()
         {
             _allPlayers.ForEach(input => { input.ActivateInput(); });
+
+            playerInputEnabled = true;
         }   
     }
 }
