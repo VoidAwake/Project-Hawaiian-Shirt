@@ -76,8 +76,11 @@ namespace Hawaiian.UI.Results_Screen
             var maxBarHeight = maxHeight - playerHeadImage.rectTransform.rect.height - spacing;
             
             score = player.score;
-            
-            targetHeight = score / maxScore * maxBarHeight;
+
+            if (maxScore == 0)
+                targetHeight = 0;
+            else
+                targetHeight = score / maxScore * maxBarHeight;
 
             barImage.color = playerColors.GetColor(player.playerNumber);
             playerHeadImage.sprite = playerSprites.GetSprite(player.characterNumber);

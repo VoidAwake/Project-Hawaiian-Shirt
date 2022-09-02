@@ -1,5 +1,4 @@
 using Hawaiian.Unit;
-using Hawaiian.Utilities;
 using UnityEngine;
 
 namespace Hawaiian.Inventory.ItemBehaviours
@@ -10,7 +9,6 @@ namespace Hawaiian.Inventory.ItemBehaviours
         private static readonly int _alternateSlash = Animator.StringToHash("AlternateSlash");
         private static readonly int _slash = Animator.StringToHash("Slash");
 
-        [SerializeField] private GameEvent OnTakeDamage;
         [SerializeField] private Vector2 _knockbackDirection;
 
         private Animator _animator;

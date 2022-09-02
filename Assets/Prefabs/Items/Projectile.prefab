@@ -222,6 +222,8 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  spriteRenderer: {fileID: 9195330741462771491}
+  WasParried: 0
 --- !u!210 &2669586785488496362
 SortingGroup:
   m_ObjectHideFlags: 0

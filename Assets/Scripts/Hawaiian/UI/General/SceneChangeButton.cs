@@ -13,6 +13,10 @@ namespace Hawaiian.UI.General
         {
             base.OnClick();
             
+            // TODO: Needs revisiting. Prevents issues when spamming button presses.
+            // TODO: Maybe this should be part of the SceneChanger instead?
+            dialogue.Disable();
+            
             sceneChanger.ChangeScene(sceneReference);
         }
     }

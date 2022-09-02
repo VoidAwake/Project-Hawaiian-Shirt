@@ -21,7 +21,7 @@ namespace Hawaiian.Level
         public override void SpawnItem()
         {
             _currentItem = _pool.RetrieveRandomItem();
-            _currentItemInstance = Instantiate(DroppedItem, transform.localPosition, Quaternion.identity);
+            _currentItemInstance = Instantiate(DroppedItem, transform);
             DroppedItem droppedItem = _currentItemInstance.GetComponent<DroppedItem>();
             droppedItem.Item = _currentItem;
         }
