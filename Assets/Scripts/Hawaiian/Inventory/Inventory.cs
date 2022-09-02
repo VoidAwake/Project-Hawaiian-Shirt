@@ -1,3 +1,5 @@
+using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
@@ -42,6 +44,14 @@ namespace Hawaiian.Inventory
             }
 
             return false;
+        }
+
+        
+        //TODO: Remove upon inventory refactor
+        public IEnumerable<Item> GetAllTreasures()
+        {
+            IEnumerable<Item> treasures = inv.Where(i => i.Type == ItemType.Objective);
+            return treasures;
         }
 
         public void RemoveItemAt(int invPosition)

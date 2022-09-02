@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Cysharp.Threading.Tasks;
 using Hawaiian.Unit;
 using Hawaiian.Utilities;
 using PlasticGui.WorkspaceWindow;
@@ -119,16 +120,35 @@ namespace Hawaiian.Inventory
         public void OnDefuseAchieved()
         {
             OnDefuseCompleted.Invoke();
-
             _currentState = TreasureState.Neutral;
             _currentDefuseTimer = 0;
         }
+
+        // public UniTask BeginDepositing()
+        // {
+        //     
+        // }
 
 
         public bool CanBeDetonated()
         {
             Debug.Log($"Can {_owner.name} be detonated: {_currentState == TreasureState.Neutral}");
             return _currentState == TreasureState.Neutral;
+        }
+        
+        private bool CanDeposit(IUnit collidedUnit)
+        {
+            UnitPlayer unit = collidedUnit.GetUnit();
+
+            if (unit != Owner)
+                return false;
+
+            InventoryController playerInventory = unit.GetComponentInChildren<InventoryController>();
+
+            if (playerInventory == null)
+                return false;
+
+            return playerInventory.inv.GetAllTreasures().ToList().Count <= 0;
         }
     }
 }
