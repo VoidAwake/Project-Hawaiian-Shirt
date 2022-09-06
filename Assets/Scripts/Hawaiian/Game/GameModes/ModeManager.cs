@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Hawaiian.Inventory;
 using Hawaiian.Utilities;
 using UnityEngine;
 using UnityEngine.Events;
@@ -30,21 +29,21 @@ namespace Hawaiian.Game.GameModes
         protected UnityEvent gameOver = new();
 
         protected PlayerManager playerManager;
-        protected Dictionary<PlayerConfig, InventoryController> inventoryControllers = new();
+        protected readonly List<PlayerConfig> playerConfigs = new();
         
         public virtual void LoadRandomLevel() { }
-        public virtual void SaveScores() { }
+        
+        private void SaveScores()
+        {
+            foreach (var playerConfig in playerConfigs)
+            {
+                playerConfig.score = PlayerConfigScore(playerConfig);
+            }
+        }
 
         protected virtual void OnPlayerJoined(PlayerConfig playerConfig)
         {
-            // TODO: Duplicate code. See GameDialogue.OnPlayerJoined.
-            var inventoryController = playerConfig.playerInput.GetComponentInChildren<InventoryController>();
-            
-            inventoryControllers.Add(playerConfig, inventoryController);
-
-            // TODO: Remove listener
-            // TODO: Are we sure this is the right event?
-            inventoryController.inv.currentItemChanged.AddListener(UpdateWinningPlayers);
+            playerConfigs.Add(playerConfig);
             
             playerJoined.Invoke(playerConfig);
         }
@@ -66,38 +65,37 @@ namespace Hawaiian.Game.GameModes
         
         public List<Transform> WinningPlayers { get; private set; }
 
-        // TODO: Hand off this logic to the specific mode managers
-        private void UpdateWinningPlayers()
+        // TODO: Could cache results for better performance
+        protected void UpdateWinningPlayers()
         {
-            var inventoryScores = new Dictionary<InventoryController, float>();
+            var playerConfigScores = new Dictionary<PlayerConfig, float>();
 
             var maxScore = 0f;
 
-            foreach (var (_, inventoryController) in inventoryControllers)
+            foreach (var playerConfig in playerConfigs)
             {
-                var score = InventoryScore(inventoryController);
+                var score = PlayerConfigScore(playerConfig);
 
-                inventoryScores.Add(inventoryController, score);
+                playerConfigScores.Add(playerConfig, score);
 
                 if (maxScore < score)
                     maxScore = score;
             }
 
-            WinningPlayers = inventoryScores
+            WinningPlayers = playerConfigScores
                 .Where(o => o.Value == maxScore)
-                .Select(o => o.Key.transform)
+                .Select(o => o.Key.playerInput.transform)
                 .ToList();
             
-            if (WinningPlayers.Count == inventoryControllers.Count)
+            if (WinningPlayers.Count == playerConfigs.Count)
                 WinningPlayers.Clear();
             
             winningPlayersChanged.Invoke();
         }
 
-        private static float InventoryScore(InventoryController inventoryController)
+        protected virtual float PlayerConfigScore(PlayerConfig playerConfig)
         {
-            return inventoryController.inv.inv.Where(i => i != null).Sum(i => i.Points);
+            return 0;
         }
-
     }
 }

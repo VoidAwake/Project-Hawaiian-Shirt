@@ -12,36 +12,38 @@ namespace Hawaiian.Game.GameModes.TreasureHoard
         [SerializeField] private Item _detonator;
         [SerializeField] private GameObject _playerTreasurePrefab;
         
-        private Dictionary<PlayerConfig, PlayerTreasure> playerTreasures = new();
-
+        private readonly Dictionary<PlayerConfig, PlayerTreasure> playerTreasures = new();
+        private readonly Dictionary<PlayerConfig, InventoryController> inventoryControllers = new();
+        
         public Dictionary<PlayerConfig, PlayerTreasure> PlayerTreasures => new(playerTreasures);
-
-        public override void SaveScores()
-        {
-            base.SaveScores();
-            
-            foreach (var (playerConfig, playerTreasure) in playerTreasures)
-            {
-                playerConfig.score = playerTreasure.CurrentPoints;
-            }
-        }
 
         protected override void OnPlayerJoined(PlayerConfig playerConfig)
         {
+            // TODO: Duplicate code. See GameDialogue.OnPlayerJoined.
+            var inventoryController = playerConfig.playerInput.GetComponentInChildren<InventoryController>();
+            
+            inventoryControllers.Add(playerConfig, inventoryController);
+
             GameObject playerTreasureObject = Instantiate(_playerTreasurePrefab, sceneReference.treasureSpawnPoints[playerConfig.playerNumber], Quaternion.identity);
 
             var playerTreasure = playerTreasureObject.GetComponent<PlayerTreasure>();
+            
+            // TODO: Remove listener
+            playerTreasure.pointsChanged.AddListener(UpdateWinningPlayers);
 
-            var playerInventoryController = inventoryControllers[playerConfig];
-
-            playerTreasure.Initialise(playerConfig.playerNumber, playerInventoryController);
+            playerTreasure.Initialise(playerConfig.playerNumber, inventoryController);
             
             playerTreasures.Add(playerConfig, playerTreasure);
         
-            playerInventoryController.inv.inv[0] = _depositor;
-            playerInventoryController.inv.inv[1] = _detonator;
+            inventoryController.inv.inv[0] = _depositor;
+            inventoryController.inv.inv[1] = _detonator;
             
             base.OnPlayerJoined(playerConfig);
+        }
+
+        protected override float PlayerConfigScore(PlayerConfig playerConfig)
+        {
+            return playerTreasures[playerConfig].CurrentPoints;
         }
     }
 }
