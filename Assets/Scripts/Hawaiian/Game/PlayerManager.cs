@@ -1,8 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
-using Hawaiian.Inventory;
 using Hawaiian.Unit;
 using Hawaiian.Utilities;
 using UnityEngine;
@@ -17,24 +15,15 @@ namespace Hawaiian.Game
         [SerializeField] private GameEvent playersJoined;
         [SerializeField] private List<SpawnPoint> spawnPoints;
         [SerializeField] private PlayerConfigManager playerConfigManager;
-        [SerializeField] private BaseGameEvent<Inventory.Inventory> addedInventory;
 
         public UnityEvent<PlayerConfig> playerJoined = new();
         
-        // TODO: Remove the dependency on InventoryController
-        private Dictionary<PlayerConfig, InventoryController> inventoryControllers = new();
-
         private PlayerInputManager inputManager;
 
         private bool playerInputEnabled;
 
-        public ReadOnlyDictionary<PlayerConfig, InventoryController> InventoryControllers => new (inventoryControllers);
-
         private List<PlayerInput> _allPlayers = new List<PlayerInput>();
         
-        // TODO: Unused. Remove.
-        public UnitPlayer LastPlayerJoined { get; private set; }
-
         private void Awake()
         {
             inputManager = GetComponent<PlayerInputManager>();
@@ -101,20 +90,11 @@ namespace Hawaiian.Game
             
             if (playerConfig != null)
             {
+                playerConfig.playerInput = playerInput;
+                
                 playerInput.GetComponent<UnitPlayer>().Initialise(playerConfig.characterNumber, playerConfig.playerNumber);
 
                 playerInput.transform.position = spawnPoints[playerInput.playerIndex].GetSpawnPosition();
-
-                var inventoryController = playerInput.GetComponentInChildren<InventoryController>();
-
-                if (inventoryController != null)
-                {
-                    inventoryControllers.Add(playerConfig, inventoryController);
-
-                    addedInventory.Raise(inventoryController.inv);
-                }
-
-                LastPlayerJoined = playerInput.GetComponent<UnitPlayer>();
             }
             else
             {
@@ -124,11 +104,6 @@ namespace Hawaiian.Game
             playerJoined.Invoke(playerConfig);
 
             playersJoined.Raise();
-        }
-
-        public PlayerConfig GetPlayerConfig(Inventory.Inventory inv)
-        {
-            return inventoryControllers.FirstOrDefault(a => a.Value.inv == inv).Key;
         }
 
         public void AllowAllInputs()

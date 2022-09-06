@@ -30,15 +30,21 @@ namespace Hawaiian.Game.GameModes
         protected UnityEvent gameOver = new();
 
         protected PlayerManager playerManager;
+        protected Dictionary<PlayerConfig, InventoryController> inventoryControllers = new();
         
         public virtual void LoadRandomLevel() { }
         public virtual void SaveScores() { }
 
         protected virtual void OnPlayerJoined(PlayerConfig playerConfig)
         {
+            // TODO: Duplicate code. See GameDialogue.OnPlayerJoined.
+            var inventoryController = playerConfig.playerInput.GetComponentInChildren<InventoryController>();
+            
+            inventoryControllers.Add(playerConfig, inventoryController);
+
             // TODO: Remove listener
             // TODO: Are we sure this is the right event?
-            playerManager.InventoryControllers[playerConfig].currentItemChanged.AddListener(UpdateWinningPlayers);
+            inventoryController.inv.currentItemChanged.AddListener(UpdateWinningPlayers);
             
             playerJoined.Invoke(playerConfig);
         }
@@ -60,13 +66,14 @@ namespace Hawaiian.Game.GameModes
         
         public List<Transform> WinningPlayers { get; private set; }
 
+        // TODO: Hand off this logic to the specific mode managers
         private void UpdateWinningPlayers()
         {
             var inventoryScores = new Dictionary<InventoryController, float>();
 
             var maxScore = 0f;
 
-            foreach (var (_, inventoryController) in playerManager.InventoryControllers)
+            foreach (var (_, inventoryController) in inventoryControllers)
             {
                 var score = InventoryScore(inventoryController);
 
@@ -81,7 +88,7 @@ namespace Hawaiian.Game.GameModes
                 .Select(o => o.Key.transform)
                 .ToList();
             
-            if (WinningPlayers.Count == playerManager.InventoryControllers.Count)
+            if (WinningPlayers.Count == inventoryControllers.Count)
                 WinningPlayers.Clear();
             
             winningPlayersChanged.Invoke();

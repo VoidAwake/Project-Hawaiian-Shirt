@@ -32,7 +32,7 @@ namespace Hawaiian.Game.GameModes.TreasureHoard
 
             var playerTreasure = playerTreasureObject.GetComponent<PlayerTreasure>();
 
-            var playerInventoryController = playerManager.InventoryControllers[playerConfig];
+            var playerInventoryController = inventoryControllers[playerConfig];
 
             playerTreasure.Initialise(playerConfig.playerNumber, playerInventoryController);
             

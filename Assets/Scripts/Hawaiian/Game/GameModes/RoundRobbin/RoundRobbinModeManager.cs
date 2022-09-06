@@ -9,7 +9,7 @@ namespace Hawaiian.Game.GameModes.RoundRobbin
         {
             base.SaveScores();
             
-            foreach (var (playerConfig, inventoryController) in playerManager.InventoryControllers)
+            foreach (var (playerConfig, inventoryController) in inventoryControllers)
             {
                 playerConfig.score = inventoryController.Score;
             }

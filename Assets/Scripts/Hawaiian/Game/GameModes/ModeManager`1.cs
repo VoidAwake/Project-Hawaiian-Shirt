@@ -18,6 +18,7 @@ namespace Hawaiian.Game.GameModes
             
             await sceneChanger.ChangeScene(sceneReference.sceneReference);
             
+            // TODO: Duplicate code. See GameDialogue.OnEnable.
             // TODO: Come back to this
             playerManager = FindObjectOfType<PlayerManager>();
 
