@@ -1,4 +1,7 @@
-﻿using Hawaiian.Utilities;
+﻿using System.Collections.Generic;
+using System.Linq;
+using Hawaiian.Inventory;
+using Hawaiian.Utilities;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -16,6 +19,7 @@ namespace Hawaiian.Game.GameModes
 
         public static ModeManager CurrentModeManager { get; set; }
         public static UnityEvent<ModeManager> Initialised { get; } = new();
+        public UnityEvent winningPlayersChanged = new();
         
         public virtual GameObject ControlsInstructionsDialoguePrefab => controlsInstructionsDialoguePrefab;
         public virtual GameObject TutorialDialoguePrefab => tutorialDialoguePrefab;
@@ -32,6 +36,10 @@ namespace Hawaiian.Game.GameModes
 
         protected virtual void OnPlayerJoined(PlayerConfig playerConfig)
         {
+            // TODO: Remove listener
+            // TODO: Are we sure this is the right event?
+            playerManager.InventoryControllers[playerConfig].currentItemChanged.AddListener(UpdateWinningPlayers);
+            
             playerJoined.Invoke(playerConfig);
         }
 
@@ -49,5 +57,40 @@ namespace Hawaiian.Game.GameModes
         {
             SaveScores();
         }
+        
+        public List<Transform> WinningPlayers { get; private set; }
+
+        private void UpdateWinningPlayers()
+        {
+            var inventoryScores = new Dictionary<InventoryController, float>();
+
+            var maxScore = 0f;
+
+            foreach (var (_, inventoryController) in playerManager.InventoryControllers)
+            {
+                var score = InventoryScore(inventoryController);
+
+                inventoryScores.Add(inventoryController, score);
+
+                if (maxScore < score)
+                    maxScore = score;
+            }
+
+            WinningPlayers = inventoryScores
+                .Where(o => o.Value == maxScore)
+                .Select(o => o.Key.transform)
+                .ToList();
+            
+            if (WinningPlayers.Count == playerManager.InventoryControllers.Count)
+                WinningPlayers.Clear();
+            
+            winningPlayersChanged.Invoke();
+        }
+
+        private static float InventoryScore(InventoryController inventoryController)
+        {
+            return inventoryController.inv.inv.Where(i => i != null).Sum(i => i.Points);
+        }
+
     }
 }

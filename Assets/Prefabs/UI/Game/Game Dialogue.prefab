@@ -718,6 +718,8 @@ MonoBehaviour:
   uiBindings:
   - modeManagerTypeName: Hawaiian.Game.GameModes.TreasureHoard.TreasureHoardModeManager
     modeUIPrefab: {fileID: 378428827036738159, guid: 1d50fbe35eab87342a6ea22ddca9ed68, type: 3}
+  - modeManagerTypeName: Hawaiian.Game.GameModes.RoundRobbin.RoundRobbinModeManager
+    modeUIPrefab: {fileID: 4390130735888112405, guid: e282aa386238ce44fb729ad642579c38, type: 3}
 --- !u!1001 &2068501823
 PrefabInstance:
   m_ObjectHideFlags: 0

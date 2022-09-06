@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Hawaiian.Game;
+using Hawaiian.Game.GameModes;
 using Hawaiian.UI.CharacterSelect;
 using Hawaiian.Unit;
 using UnityEngine;
@@ -11,7 +12,7 @@ namespace Hawaiian.UI.Game
     // TODO: Or better still, set up a game space canvas for control prompts and this
     public class WinningPlayerMarker : MonoBehaviour
     {
-        [SerializeField] private PlayerManager playerManager;
+        [SerializeField] private ModeManager modeManager;
         [SerializeField] private GameObject markerPrefab;
         [SerializeField] private Vector3 offset;
 
@@ -19,12 +20,12 @@ namespace Hawaiian.UI.Game
 
         private void OnEnable()
         {
-            playerManager.winningPlayersChanged.AddListener(OnWinningPlayersChanged);
+            modeManager.winningPlayersChanged.AddListener(OnWinningPlayersChanged);
         }
 
         private void OnDisable()
         {
-            playerManager.winningPlayersChanged.RemoveListener(OnWinningPlayersChanged);
+            modeManager.winningPlayersChanged.RemoveListener(OnWinningPlayersChanged);
         }
 
         private void Update()
@@ -38,7 +39,7 @@ namespace Hawaiian.UI.Game
         private void OnWinningPlayersChanged()
         {
             var oldWinningPlayers = markers.Keys.ToList();
-            var newWinningPlayers = playerManager.WinningPlayers;
+            var newWinningPlayers = modeManager.WinningPlayers;
 
             foreach (var newWinningPlayer in newWinningPlayers)
             {

@@ -8,7 +8,6 @@ using Hawaiian.Utilities;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
-using UnityEngine.InputSystem.Utilities;
 
 namespace Hawaiian.Game
 {
@@ -20,9 +19,9 @@ namespace Hawaiian.Game
         [SerializeField] private PlayerConfigManager playerConfigManager;
         [SerializeField] private BaseGameEvent<Inventory.Inventory> addedInventory;
 
-        public UnityEvent winningPlayersChanged = new();
         public UnityEvent<PlayerConfig> playerJoined = new();
         
+        // TODO: Remove the dependency on InventoryController
         private Dictionary<PlayerConfig, InventoryController> inventoryControllers = new();
 
         private PlayerInputManager inputManager;
@@ -33,6 +32,7 @@ namespace Hawaiian.Game
 
         private List<PlayerInput> _allPlayers = new List<PlayerInput>();
         
+        // TODO: Unused. Remove.
         public UnitPlayer LastPlayerJoined { get; private set; }
 
         private void Awake()
@@ -110,8 +110,6 @@ namespace Hawaiian.Game
                 if (inventoryController != null)
                 {
                     inventoryControllers.Add(playerConfig, inventoryController);
-                    
-                    inventoryController.currentItemChanged.AddListener(UpdateWinningPlayers);
 
                     addedInventory.Raise(inventoryController.inv);
                 }
@@ -126,40 +124,6 @@ namespace Hawaiian.Game
             playerJoined.Invoke(playerConfig);
 
             playersJoined.Raise();
-        }
-
-        public List<Transform> WinningPlayers { get; private set; }
-
-        private void UpdateWinningPlayers()
-        {
-            var inventoryScores = new Dictionary<InventoryController, float>();
-
-            var maxScore = 0f;
-
-            foreach (var (_, inventoryController) in inventoryControllers)
-            {
-                var score = InventoryScore(inventoryController);
-
-                inventoryScores.Add(inventoryController, score);
-
-                if (maxScore < score)
-                    maxScore = score;
-            }
-
-            WinningPlayers = inventoryScores
-                .Where(o => o.Value == maxScore)
-                .Select(o => o.Key.transform)
-                .ToList();
-            
-            if (WinningPlayers.Count == inventoryControllers.Count)
-                WinningPlayers.Clear();
-            
-            winningPlayersChanged.Invoke();
-        }
-
-        private static float InventoryScore(InventoryController inventoryController)
-        {
-            return inventoryController.inv.inv.Where(i => i != null).Sum(i => i.Points);
         }
 
         public PlayerConfig GetPlayerConfig(Inventory.Inventory inv)
