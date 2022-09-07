@@ -17,8 +17,7 @@ namespace Hawaiian.Game.GameModes.RoundRobbin
             inventoryControllers.Add(playerConfig, inventoryController);
 
             // TODO: Remove listener
-            // TODO: Are we sure this is the right event?
-            inventoryController.inv.currentItemChanged.AddListener(UpdateWinningPlayers);
+            inventoryController.inv.inventoryChanged.AddListener(UpdateWinningPlayers);
             
             base.OnPlayerJoined(playerConfig);
         }

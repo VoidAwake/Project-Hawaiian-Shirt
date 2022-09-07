@@ -35,8 +35,8 @@ namespace Hawaiian.Game.GameModes.TreasureHoard
             
             playerTreasures.Add(playerConfig, playerTreasure);
         
-            inventoryController.inv.inv[0] = _depositor;
-            inventoryController.inv.inv[1] = _detonator;
+            inventoryController.inv.AddItem(_depositor);
+            inventoryController.inv.AddItem(_detonator);
             
             base.OnPlayerJoined(playerConfig);
         }

@@ -19,7 +19,7 @@ namespace Hawaiian.Inventory
         [SerializeField] private GameObject droppedItemPrefab;
         [SerializeField] private Cursor cursor;
 
-        public UnityEvent currentItemChanged = new UnityEvent();
+        public UnityEvent inventoryChanged = new UnityEvent();
         public Inventory inv;
 
         private int tempPos;
@@ -32,18 +32,18 @@ namespace Hawaiian.Inventory
         private void Awake()
         {
             inv = ScriptableObject.CreateInstance<Inventory>();
-            inv.SetInventory(size.Value);
-            inv.currentItemChanged.AddListener(OnCurrentItemChanged);
-            inv.currentItemChanged.AddListener(CreateScorePopUp);
+            inv.SetInventorySize(size.Value);
+            inv.inventoryChanged.AddListener(OnInventoryChanged);
+            inv.inventoryChanged.AddListener(CreateScorePopUp);
 
             player = GetComponentInParent<UnitPlayer>();
 
             positionalEventCaller = GetComponent<PositionalEventCaller>();
         }
 
-        private void OnCurrentItemChanged()
+        private void OnInventoryChanged()
         {
-            currentItemChanged.Invoke();
+            inventoryChanged.Invoke();
         }
 
         // TODO: Replace with messages
@@ -150,7 +150,7 @@ namespace Hawaiian.Inventory
 
             hand.sprite = inv.inv[inv.InvPosition]?.ItemSprite;
 
-            currentItemChanged.Invoke();
+            inventoryChanged.Invoke();
 
             parse.Raise();
         }

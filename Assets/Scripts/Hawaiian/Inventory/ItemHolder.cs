@@ -23,12 +23,12 @@ namespace Hawaiian.Inventory
 
         private void OnEnable()
         {
-            inventoryController.currentItemChanged.AddListener(OnItemUpdated);
+            inventoryController.inventoryChanged.AddListener(OnItemUpdated);
         }
 
         private void OnDisable()
         {
-            inventoryController.currentItemChanged.AddListener(OnItemUpdated);
+            inventoryController.inventoryChanged.AddListener(OnItemUpdated);
         }
 
         private void OnItemUpdated()

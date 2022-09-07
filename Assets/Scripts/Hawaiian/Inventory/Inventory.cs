@@ -9,7 +9,7 @@ namespace Hawaiian.Inventory
     {
         [SerializeField] public Item[] inv;
         [SerializeField] public int size;
-        public UnityEvent currentItemChanged = new();
+        public UnityEvent inventoryChanged = new();
         public int invPosition = 0;
 
         public int InvPosition
@@ -22,7 +22,7 @@ namespace Hawaiian.Inventory
         
         public float Score => inv.Where(i => i != null).Sum(i => i.Points);
 
-        public void SetInventory(int invSize)
+        public void SetInventorySize(int invSize)
         {
             size = invSize;
             inv = new Item[size];
@@ -37,7 +37,7 @@ namespace Hawaiian.Inventory
                 inv[i] = item;
 
 
-                currentItemChanged.Invoke();
+                inventoryChanged.Invoke();
                 return true;
             }
 
@@ -47,7 +47,7 @@ namespace Hawaiian.Inventory
         public void RemoveItemAt(int invPosition)
         {
             inv[invPosition] = null;
-            currentItemChanged.Invoke();
+            inventoryChanged.Invoke();
         }
     }
 }

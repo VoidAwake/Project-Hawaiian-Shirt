@@ -55,13 +55,13 @@ namespace Hawaiian.UI.Game
             transform.GetChild(0).GetComponent<RectTransform>().localPosition = new Vector2(70.0f - (70.0f + length) / 2.0f, 0.0f);
 
             highlight = Instantiate(highlightPrefab, invSlots[0].transform.position, quaternion.identity, invSlots[0].transform);
-            inventory.currentItemChanged.AddListener(UpdateInv);
+            inventory.inventoryChanged.AddListener(OnInventoryChanged);
             
             SetCharacterPortrait();
         }
         
 
-        private void UpdateInv()
+        private void OnInventoryChanged()
         {
             for (int i = 0; i < size.Value; i++)
             {
@@ -83,7 +83,7 @@ namespace Hawaiian.UI.Game
 
         private void OnDestroy()
         {
-            inventory.currentItemChanged.RemoveListener(UpdateInv);
+            inventory.inventoryChanged.RemoveListener(OnInventoryChanged);
         }
         
         
