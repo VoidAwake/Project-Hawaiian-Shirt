@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Hawaiian.Utilities;
 using UnityEngine;
 using UnityEngine.InputSystem.Utilities;
@@ -10,43 +9,22 @@ namespace Hawaiian.PositionalEvents
     public class Highlighter : MonoBehaviour
     {
         [SerializeField] private Material material;
+        [SerializeField] private SpriteRenderer spriteRenderer;
+        [SerializeField] private SpriteRenderer targetSpriteRenderer;
         
-        private SpriteRenderer spriteRenderer;
-        private SpriteRenderer targetSpriteRenderer;
         private List<PositionalEventCaller> callers = new List<PositionalEventCaller>();
 
         public ReadOnlyArray<PositionalEventCaller> Callers => callers.ToArray();
 
-        private void Awake()
+        // Will not update sprite if an item changes at runtime
+        private void Start()
         {
-            spriteRenderer = GetComponent<SpriteRenderer>();
-            
-            targetSpriteRenderer = transform.parent.GetComponent<SpriteRenderer>();
-
-            if (!targetSpriteRenderer)
-            {
-                for (int i = 0; i < transform.parent.childCount; i++)
-                {
-                    // TODO: Ew, searching by name.
-                    if (transform.parent.GetChild(i).name == "Item Sprite")
-                    {
-                        targetSpriteRenderer = transform.parent.GetChild(i).GetComponent<SpriteRenderer>();
-                    }
-                }
-            }
-
-            if (!targetSpriteRenderer)
-            {
-                enabled = false;
-                
-                throw new Exception($"Could not highlight. Parent object does not have a {nameof(SpriteRenderer)}");
-            }
-
             // Copy all sprite renderer properties
             spriteRenderer.GetCopyOf(targetSpriteRenderer);
             
             spriteRenderer.sortingOrder = targetSpriteRenderer.sortingOrder + 1;
             spriteRenderer.material = material;
+            spriteRenderer.enabled = false;
         }
 
         private void UpdateShader()
@@ -69,6 +47,11 @@ namespace Hawaiian.PositionalEvents
             callers.Add(caller);
             
             UpdateShader();
+
+            if (callers.Count > 0)
+            {
+                spriteRenderer.enabled = true;
+            }
         }
 
         public void RemoveCaller(PositionalEventCaller caller)
@@ -76,6 +59,11 @@ namespace Hawaiian.PositionalEvents
             callers.Remove(caller);
             
             UpdateShader();
+
+            if (callers.Count == 0)
+            {
+                spriteRenderer.enabled = false;
+            }
         }
     }
 }

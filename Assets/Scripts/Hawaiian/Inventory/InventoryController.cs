@@ -203,7 +203,7 @@ namespace Hawaiian.Inventory
             
             GameObject droppedItemObject = Instantiate(droppedItemPrefab, transform.position + Vector3.up * 0.5f, quaternion.identity);
             
-            droppedItemObject.GetComponent<DroppedItem>().Item = inv.inv[invPosition];
+            droppedItemObject.GetComponent<DroppedItem>().Initialise(inv.inv[invPosition]);
             
             // I'm so sorry
             for (int i = 0; i < droppedItemObject.transform.childCount; i++)

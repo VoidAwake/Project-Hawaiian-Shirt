@@ -6,10 +6,8 @@ namespace Hawaiian.PositionalEvents
 {
     public class TargetHighlighter : MonoBehaviour
     {
-        [SerializeField] private GameObject highlighterPrefab;
-        
         private readonly Dictionary<PositionalEventCaller, List<PositionalEventListener>> callerCurrentTargets = new();
-        private readonly Dictionary<PositionalEventListener, Highlighter> highlighters = new();
+        private readonly Dictionary<PositionalEventListener, List<Highlighter>> targetHighlighters = new();
 
         public void OnTargetsChanged(PositionalEventCaller caller)
         {
@@ -21,8 +19,9 @@ namespace Hawaiian.PositionalEvents
             
             foreach (var currentTarget in currentTargets)
             {
-                if (!newTargets.Contains(currentTarget)) {
-                    RemoveCallerFromHighlighter(caller, currentTarget);
+                if (!newTargets.Contains(currentTarget))
+                {
+                    RemoveCallerFromHighlighters(caller, currentTarget);
                 }
             }
 
@@ -30,7 +29,7 @@ namespace Hawaiian.PositionalEvents
             {
                 if (!currentTargets.Contains(newTarget))
                 {
-                    AddCallerToHighlighter(caller, newTarget);
+                    AddCallerToHighlighters(caller, newTarget);
                 }
             }
 
@@ -38,38 +37,38 @@ namespace Hawaiian.PositionalEvents
             callerCurrentTargets[caller] = newTargets.ToList();
         }
 
-        private void AddCallerToHighlighter(PositionalEventCaller caller, PositionalEventListener target)
+        private void AddCallerToHighlighters(PositionalEventCaller caller, PositionalEventListener target)
         {
-            Highlighter highlighter;
+            List<Highlighter> highlighters;
             
-            if (!highlighters.ContainsKey(target))
+            if (!targetHighlighters.ContainsKey(target))
             {
-                var highlighterObject = Instantiate(highlighterPrefab, target.transform);
+                highlighters = target.GetComponentsInChildren<Highlighter>().ToList();
 
-                highlighter = highlighterObject.GetComponent<Highlighter>();
-                
-                highlighters.Add(target, highlighter);
+                targetHighlighters.Add(target, highlighters);
             }
             else
             {
-                highlighter = highlighters[target];
+                highlighters = targetHighlighters[target];
             }
-            
-            highlighter.AddCaller(caller);
+
+            foreach (var highlighter in highlighters)
+            {
+                highlighter.AddCaller(caller);
+            }
         }
 
-        private void RemoveCallerFromHighlighter(PositionalEventCaller caller, PositionalEventListener target)
+        private void RemoveCallerFromHighlighters(PositionalEventCaller caller, PositionalEventListener target)
         {
-            var highlighter = highlighters[target];
-            
-            highlighter.RemoveCaller(caller);
+            var highlighters = targetHighlighters[target];
 
-            if (highlighter.Callers.Count == 0)
+            foreach (var highlighter in highlighters)
             {
-                Destroy(highlighter.gameObject);
-
-                highlighters.Remove(target);
+                highlighter.RemoveCaller(caller);
             }
+            
+            // TODO: I'm not sure if we should clear this. A cache without an expiration policy is a memory leak.
+            // targetHighlighters.Remove(target);
         }
     }
 }
