@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -7,29 +6,18 @@ namespace Hawaiian.PositionalEvents
 {
     public class TargetControlPrompt : MonoBehaviour
     {
+        [SerializeField] private PositionalEventCaller caller;
         [SerializeField] private GameObject controlPromptPrefab;
-        [SerializeField] private PositionalEventToken token;
         [SerializeField] private string actionName;
 
-        private readonly Dictionary<PositionalEventCaller, ControlPrompt> controlPrompts = new();
+        private GameObject controlPromptObject;
+        private ControlPrompt controlPrompt;
 
-        public void OnTargetsChanged(PositionalEventCaller caller)
+        private void Awake()
         {
-            if (caller.Token != token) return;
-            
-            if (!controlPrompts.ContainsKey(caller) && caller.Targets.Count > 0)
-                AddControlPrompt(caller);
-            else if (controlPrompts.ContainsKey(caller) && caller.Targets.Count > 0)
-                UpdateControlPrompt(caller);
-            else if (controlPrompts.ContainsKey(caller) && caller.Targets.Count == 0)
-                RemoveControlPrompt(caller);
-        }
+            controlPromptObject = Instantiate(controlPromptPrefab, transform);
 
-        private void AddControlPrompt(PositionalEventCaller caller)
-        {
-            var highlighterObject = Instantiate(controlPromptPrefab, transform);
-
-            var controlPrompt = highlighterObject.GetComponent<ControlPrompt>();
+            controlPrompt = controlPromptObject.GetComponent<ControlPrompt>();
 
             // TODO: Deserves another look...
             var playerInput = caller.GetComponentInParent<PlayerInput>();
@@ -38,26 +26,35 @@ namespace Hawaiian.PositionalEvents
 
             controlPrompt.Initialise(playerInput, actionName);
 
-            controlPrompts.Add(caller, controlPrompt);
+            controlPromptObject.SetActive(false);
+        }
+
+        private void OnEnable()
+        {
+            caller.targetsChanged.AddListener(OnTargetsChanged);
+        }
+
+        private void OnDisable()
+        {
+            caller.targetsChanged.RemoveListener(OnTargetsChanged);
+        }
+
+        private void OnTargetsChanged()
+        {
+            if (caller.Targets.Count > 0)
+                UpdateControlPrompt();
+            else
+                controlPromptObject.SetActive(false);
+        }
+
+        private void UpdateControlPrompt()
+        {
+            controlPromptObject.transform.position = AverageTargetPosition();
             
-            UpdateControlPrompt(caller);
+            controlPromptObject.SetActive(true);
         }
 
-        private void UpdateControlPrompt(PositionalEventCaller caller)
-        {
-            var highlighterObject = controlPrompts[caller].gameObject;
-
-            highlighterObject.transform.position = AverageTargetPosition(caller);
-        }
-
-        private void RemoveControlPrompt(PositionalEventCaller caller)
-        {
-            Destroy(controlPrompts[caller].gameObject);
-
-            controlPrompts.Remove(caller);
-        }
-
-        private Vector3 AverageTargetPosition(PositionalEventCaller caller)
+        private Vector3 AverageTargetPosition()
         {
             var average = Vector3.zero;
             

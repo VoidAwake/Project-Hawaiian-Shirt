@@ -12,6 +12,8 @@ GameObject:
   - component: {fileID: 5493799569757754525}
   - component: {fileID: 1953824851175411999}
   - component: {fileID: -2464536164248510210}
+  - component: {fileID: 4127504238183671457}
+  - component: {fileID: 3938331144055535129}
   m_Layer: 0
   m_Name: Held Key Item
   m_TagString: Untagged
@@ -77,7 +79,6 @@ MonoBehaviour:
   token: {fileID: 11400000, guid: 9f1d3cb3ed1f98a428d06c27ad583779, type: 2}
   radius: 2
   interactionTarget: 1
-  targetsChanged: {fileID: 11400000, guid: 37e77cbc288b0bb408597b25a3a84f7e, type: 2}
   raisedOnTarget:
     m_PersistentCalls:
       m_Calls:
@@ -109,3 +110,31 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.5
+--- !u!114 &4127504238183671457
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8131276854549329855}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a6e6f2770f3c42a7b77a24e8e3778f33, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  caller: {fileID: 1953824851175411999}
+--- !u!114 &3938331144055535129
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8131276854549329855}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f5e1e2a3f40e425ebdc706f1cf406276, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  caller: {fileID: 1953824851175411999}
+  controlPromptPrefab: {fileID: 863757022267649085, guid: dfed0489b330811449510e739f1f6872, type: 3}
+  actionName: Attack

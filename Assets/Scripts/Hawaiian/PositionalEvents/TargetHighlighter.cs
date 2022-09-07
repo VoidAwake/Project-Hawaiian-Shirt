@@ -6,59 +6,59 @@ namespace Hawaiian.PositionalEvents
 {
     public class TargetHighlighter : MonoBehaviour
     {
-        private readonly Dictionary<PositionalEventCaller, List<PositionalEventListener>> callerCurrentTargets = new();
+        [SerializeField] private PositionalEventCaller caller;
+        
+        private List<PositionalEventListener> oldTargets = new();
+        
         private readonly Dictionary<PositionalEventListener, List<Highlighter>> targetHighlighters = new();
 
-        public void OnTargetsChanged(PositionalEventCaller caller)
+        private void OnEnable()
         {
-            if (!callerCurrentTargets.ContainsKey(caller))
-                callerCurrentTargets.Add(caller, new List<PositionalEventListener>());
-            
-            var currentTargets = callerCurrentTargets[caller];
+            caller.targetsChanged.AddListener(OnTargetsChanged);
+        }
+
+        private void OnDisable()
+        {
+            caller.targetsChanged.RemoveListener(OnTargetsChanged);
+        }
+
+        private void OnTargetsChanged()
+        {
             var newTargets = caller.Targets;
             
-            foreach (var currentTarget in currentTargets)
+            foreach (var oldTarget in oldTargets)
             {
-                if (!newTargets.Contains(currentTarget))
+                if (!newTargets.Contains(oldTarget))
                 {
-                    RemoveCallerFromHighlighters(caller, currentTarget);
+                    RemoveCallerFromHighlighters(oldTarget);
                 }
             }
 
             foreach (var newTarget in newTargets)
             {
-                if (!currentTargets.Contains(newTarget))
+                if (!oldTargets.Contains(newTarget))
                 {
-                    AddCallerToHighlighters(caller, newTarget);
+                    AddCallerToHighlighters(newTarget);
                 }
             }
 
             // Soft copy to prevent issues
-            callerCurrentTargets[caller] = newTargets.ToList();
+            oldTargets = newTargets.ToList();
         }
 
-        private void AddCallerToHighlighters(PositionalEventCaller caller, PositionalEventListener target)
+        private void AddCallerToHighlighters(PositionalEventListener target)
         {
-            List<Highlighter> highlighters;
-            
-            if (!targetHighlighters.ContainsKey(target))
-            {
-                highlighters = target.GetComponentsInChildren<Highlighter>().ToList();
-
-                targetHighlighters.Add(target, highlighters);
-            }
-            else
-            {
-                highlighters = targetHighlighters[target];
-            }
+            var highlighters = target.GetComponentsInChildren<Highlighter>().ToList();
 
             foreach (var highlighter in highlighters)
             {
                 highlighter.AddCaller(caller);
             }
+
+            targetHighlighters.Add(target, highlighters);
         }
 
-        private void RemoveCallerFromHighlighters(PositionalEventCaller caller, PositionalEventListener target)
+        private void RemoveCallerFromHighlighters(PositionalEventListener target)
         {
             var highlighters = targetHighlighters[target];
 
@@ -67,8 +67,7 @@ namespace Hawaiian.PositionalEvents
                 highlighter.RemoveCaller(caller);
             }
             
-            // TODO: I'm not sure if we should clear this. A cache without an expiration policy is a memory leak.
-            // targetHighlighters.Remove(target);
+            targetHighlighters.Remove(target);
         }
     }
 }

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Hawaiian.Utilities;
 using MoreLinq;
 using UnityEngine;
 using UnityEngine.Events;
@@ -16,12 +15,13 @@ namespace Hawaiian.PositionalEvents
         [SerializeField] private PositionalEventToken token;
         [SerializeField] private float radius;
         [SerializeField] private InteractionTarget interactionTarget;
-        [SerializeField] private BaseGameEvent<PositionalEventCaller> targetsChanged; 
 
         private List<PositionalEventListener> interactablesInRange = new();
         private List<PositionalEventListener> targets = new();
 
         public PositionalEventToken Token => token;
+
+        [NonSerialized] public UnityEvent targetsChanged = new();
 
         [SerializeField] private UnityEvent raisedOnTarget = new UnityEvent();
 
@@ -31,7 +31,7 @@ namespace Hawaiian.PositionalEvents
             set
             {
                 targets = value;
-                targetsChanged.Raise(this);
+                targetsChanged.Invoke();
             }
         }
 
