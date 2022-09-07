@@ -1,7 +1,6 @@
 ﻿using Hawaiian.PositionalEvents;
 using Hawaiian.Unit;
 using UnityEngine;
-using UnityEngine.Events;
 
 namespace Hawaiian.Inventory.HeldItemBehaviours
 {
@@ -10,19 +9,7 @@ namespace Hawaiian.Inventory.HeldItemBehaviours
         [SerializeField] private GameObject _detonatorPrefab;
         public PositionalEventToken DetonateBase;
 
-        public UnityEvent destroyed = new UnityEvent();
-
         private bool CanPlaceDetonator = true;
-
-        public void Destroy()
-        {
-            destroyed.Invoke();
-        }
-
-        public void DestroyDetonator()
-        {
-            destroyed.Invoke();
-        }
 
         public void BeginDetonation()
         {
@@ -31,8 +18,7 @@ namespace Hawaiian.Inventory.HeldItemBehaviours
 
             GameObject detonator = Instantiate(_detonatorPrefab, transform.position, Quaternion.identity);
             detonator.GetComponent<Detonator>().PlayerReference = this.GetComponentInParent<IUnit>();
-            DestroyDetonator();
-            
+            DestroyHeldItem();
         }
 
         private void OnTriggerEnter2D(Collider2D col)

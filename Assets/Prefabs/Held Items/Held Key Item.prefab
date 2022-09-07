@@ -81,9 +81,9 @@ MonoBehaviour:
   raisedOnTarget:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: Hawaiian.Inventory.HeldItem, Hawaiian.Inventory
-        m_MethodName: Destroy
+      - m_Target: {fileID: 5493799569757754525}
+        m_TargetAssemblyTypeName: Hawaiian.Inventory.HeldItemBehaviour, Hawaiian.Inventory
+        m_MethodName: DestroyHeldItem
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

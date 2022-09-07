@@ -9,8 +9,6 @@ namespace Hawaiian.Inventory.HeldItemBehaviours
 {
     public class ItemThrow : ItemInstantiate
     {
-        [SerializeField] private IUnitGameEvent _removeItem;
-        
         public UnityEvent throwableArcPositionsUpdated = new();
         
         public List<Vector2> throwableArcPositions = new List<Vector2>();
@@ -60,7 +58,7 @@ namespace Hawaiian.Inventory.HeldItemBehaviours
                         case Throwable:
                             p.GetComponent<T>().Initialise(throwableArcPositions.ToArray(), Item.ItemSprite,
                                 Item.SticksOnWall);
-                            _removeItem.Raise(UnitPlayer);
+                            DestroyHeldItem();
                             
                             threw.Invoke();
                             break;
