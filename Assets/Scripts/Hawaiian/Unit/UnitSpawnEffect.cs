@@ -22,7 +22,7 @@ namespace Hawaiian.Unit
         private void OnInitialised()
         {
             //Generate SpawnEffect on player spawn location
-            GameObject spawnEffect = Instantiate(_spawnEffectPrefab, transform.position, Quaternion.identity);
+            GameObject spawnEffect = Instantiate(_spawnEffectPrefab, unit.transform);
             spawnEffect.GetComponent<AttachGameObjectsToParticles>().LightColour = playerColors.GetColor(unit.PlayerNumber);
             
             ParticleSystem.MainModule settings = spawnEffect.GetComponent<ParticleSystem>().main;

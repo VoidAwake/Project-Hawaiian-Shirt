@@ -18,8 +18,8 @@ TagManager:
   - Projectile
   - Inventory
   - Wall
-  - 
-  - 
+  - DroppedItem
+  - Treasure
   - 
   - 
   - 

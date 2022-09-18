@@ -1,5 +1,3 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using Hawaiian.Unit;
 using UnityEngine;
@@ -9,19 +7,19 @@ namespace Hawaiian.Inventory
 {
     public abstract class ColliderGameObject : MonoBehaviour
     {
-        internal UnityEvent<IUnit> OnTrigger;
-        internal UnityEvent<IUnit> OnTriggerExit;
-        internal UnityEvent<IUnit> OnCollision;
-        internal UnityEvent<IUnit> OnCollisionExit;
+        internal readonly UnityEvent<IUnit> OnTrigger = new();
+        internal readonly UnityEvent<IUnit> OnTriggerExit  = new();
+        internal readonly UnityEvent<IUnit> OnCollision = new();
+        internal readonly UnityEvent<IUnit> OnCollisionExit  = new();
 
-        protected IList<IUnit> OnCollidedPlayers;
-        protected IList<IUnit> OnTriggeredPlayers;
+        protected IList<IUnit> OnCollidedPlayers = new List<IUnit>();
+        protected IList<IUnit> OnTriggeredPlayers = new List<IUnit>();
 
         protected virtual void OnEnable()
         {
             RegisterCollisions();
         }
-        
+
         protected virtual void OnDisable()
         {
             UnRegisterCollisions();
@@ -46,8 +44,8 @@ namespace Hawaiian.Inventory
             if (col.gameObject.TryGetComponent<IUnit>(out collidedUnit))
             {
                 if (OnTriggeredPlayers.Contains(collidedUnit))
-                     OnTriggeredPlayers.Remove(collidedUnit);
-                
+                    OnTriggeredPlayers.Remove(collidedUnit);
+
                 OnTriggerExit.Invoke(collidedUnit);
             }
         }
@@ -60,7 +58,6 @@ namespace Hawaiian.Inventory
             {
                 OnCollidedPlayers.Add(collidedUnit);
                 OnCollision.Invoke(collidedUnit);
-
             }
         }
 
@@ -72,7 +69,7 @@ namespace Hawaiian.Inventory
             {
                 if (OnCollidedPlayers.Contains(collidedUnit))
                     OnCollidedPlayers.Remove(collidedUnit);
-                
+
                 OnCollisionExit.Invoke(collidedUnit);
             }
         }
@@ -80,6 +77,5 @@ namespace Hawaiian.Inventory
         protected abstract void RegisterCollisions();
 
         protected abstract void UnRegisterCollisions();
-
     }
 }

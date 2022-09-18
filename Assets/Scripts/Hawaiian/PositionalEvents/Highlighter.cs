@@ -18,7 +18,9 @@ namespace Hawaiian.PositionalEvents
         {
             spriteRenderer = GetComponent<SpriteRenderer>();
             
-            targetSpriteRenderer = transform.parent.GetComponent<SpriteRenderer>();
+            if (spriteRenderer == null)
+                
+                targetSpriteRenderer = transform.parent.GetComponent<SpriteRenderer>();
 
             if (!targetSpriteRenderer)
             {

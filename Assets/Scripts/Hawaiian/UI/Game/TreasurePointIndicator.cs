@@ -39,9 +39,10 @@ public class TreasurePointIndicator : DialogueComponent<GameDialogue>
     }
 
 
-    private void OnPointsChanged()
+    private int OnPointsChanged(int updatedPoints)
     {
-        UpdatePoints(playerTreasure.CurrentPoints);
+        UpdatePoints(updatedPoints);
+        return updatedPoints;
     }
 
     public void UpdatePoints(int points)

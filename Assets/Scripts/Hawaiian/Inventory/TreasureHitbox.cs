@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading;
@@ -8,40 +9,51 @@ using UnityEngine.Events;
 
 namespace Hawaiian.Inventory
 {
+    [RequireComponent(typeof(Collider2D))]
     public class TreasureHitbox : ColliderGameObject
     {
+        public event UnityAction DepositStarted;
+        public event UnityAction<IUnit> CollidedUnit;
+        
+        public UnityEvent ItemDesposited;
+        
 
-        protected CancellationTokenSource _depositToken;
+        public CancellationTokenSource DepositToken;
 
-        protected bool _withinRadius;
+        private bool _withinRadius;
         protected bool _isDepositing;
+        
+        
+
 
         protected override void RegisterCollisions()
         {
-            OnTrigger.AddListener(unit => { _withinRadius = true; });
-            OnTriggerExit.AddListener(unit => { _withinRadius = false; });
+            OnTrigger.AddListener(_ => { _withinRadius = true; });
+            OnTriggerExit.AddListener(_ => { _withinRadius = false; CancelDeposit();});
             OnCollision.AddListener(StartDeposit);
+            OnCollisionExit.AddListener(_ => { CollidedUnit?.Invoke(null); });
         }
 
         protected override void UnRegisterCollisions()
         {
-            OnTrigger.RemoveListener(unit => { _withinRadius = true; });
-            OnTriggerExit.RemoveListener(unit => { _withinRadius = false; });
+            OnTrigger.RemoveListener(_ => { _withinRadius = true; });
+            OnTriggerExit.RemoveListener(_ =>
+            {
+                _withinRadius = false;
+                CancelDeposit();
+            });
             OnCollision.RemoveListener(StartDeposit);
+            OnCollisionExit.RemoveListener(_ => { CollidedUnit?.Invoke(null); });
         }
 
+        private void CancelDeposit() => DepositToken?.Cancel();
 
-        private async void StartDeposit(IUnit unit)
+
+        private void StartDeposit(IUnit unit)
         {
-            _depositToken = new CancellationTokenSource();
-
-         //   if (!CanDeposit(unit))
-           //     return;
-
+            CollidedUnit?.Invoke(unit);
+            DepositToken = new CancellationTokenSource();
+            DepositStarted?.Invoke();
         }
-
-   
-
-      
     }
 }

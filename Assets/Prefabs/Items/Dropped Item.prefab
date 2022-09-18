@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8641308678150702771}
   - component: {fileID: 7740104089399653555}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Shadow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -99,7 +99,7 @@ GameObject:
   - component: {fileID: 3429498943903044509}
   - component: {fileID: -3301818405598661927}
   - component: {fileID: -3662267645802054264}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Dropped Item
   m_TagString: Item
   m_Icon: {fileID: 0}
@@ -137,7 +137,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spriteRenderer: {fileID: 9063181329469258904}
-  _item: {fileID: 0}
+  item: {fileID: 0}
 --- !u!61 &7695339905545475047
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -192,6 +192,10 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  onTargetRemoved:
+    m_PersistentCalls:
+      m_Calls: []
+  removeHighlighting: 0
 --- !u!210 &3429498943903044509
 SortingGroup:
   m_ObjectHideFlags: 0
@@ -257,7 +261,7 @@ GameObject:
   - component: {fileID: 1792255037595789897}
   - component: {fileID: 9063181329469258904}
   - component: {fileID: 4809719518076384285}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Item Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -361,7 +365,7 @@ GameObject:
   - component: {fileID: 2255831384587830954}
   - component: {fileID: 8708529930285168645}
   - component: {fileID: 8935294768153088322}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Lighting
   m_TagString: Untagged
   m_Icon: {fileID: 0}

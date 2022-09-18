@@ -36,6 +36,11 @@ namespace Hawaiian.Inventory.HeldItemBehaviours
 
         private void OnTriggerEnter2D(Collider2D col)
         {
+           CanPlaceDetonator(col);
+        }
+
+        public void CanPlaceDetonator(Collider2D col)
+        {
             PlayerTreasure treasure = col.gameObject.GetComponent<PlayerTreasure>();
 
             if (treasure == null)
@@ -49,6 +54,11 @@ namespace Hawaiian.Inventory.HeldItemBehaviours
 
             _canPlaceDetonator = owner != itemHolder.unitPlayer && _lastInteractedTreasure.CanBeDetonated();
             Debug.Log(_canPlaceDetonator);
+        }
+        
+        private void OnTriggerStay2D(Collider2D col)
+        {
+            CanPlaceDetonator(col);
         }
 
 
