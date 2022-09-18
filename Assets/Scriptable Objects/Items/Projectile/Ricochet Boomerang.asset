@@ -18,7 +18,7 @@ MonoBehaviour:
   ItemName: Ricochet Boomerang
   MaxStack: 0
   DroppedItemBase: {fileID: 3056942884218095950, guid: 37132a09f5d1c4046a4bb460892afc47, type: 3}
-  ProjectileInstance: {fileID: 1167162177695253913, guid: dd4704869697acc41a4c02aabc957926, type: 3}
+  ProjectileInstance: {fileID: 8484802503941745754, guid: 6ccdae3489326844c9b49b012c477987, type: 3}
   Rarity: 0
   ItemWeight: 60
   heldItemPrefab: {fileID: 7291259026507672787, guid: 74bb02f1a4b4c714386f159d97b46e43, type: 3}

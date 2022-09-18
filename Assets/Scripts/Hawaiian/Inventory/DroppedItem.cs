@@ -20,25 +20,28 @@ namespace Hawaiian.Inventory
             }
         }
 
+        private void Start()
+        {
+            OnItemChanged();
+        }
+
         public void OnPickUp()
         {
             Destroy(gameObject);
         }
 
-#if UNITY_EDITOR
-        
-        private void OnValidate()
+        public void OnItemChanged()
         {
-            if (Application.isPlaying) return;
-
-            OnItemChanged();
-        }
-
-#endif
-        
-        private void OnItemChanged()
-        {
-            if (Item == null) return;
+            if (Item == null)
+            {
+                if (!Application.isPlaying) return;
+                
+                Debug.LogWarning($"{nameof(DroppedItem)} has not been assigned an {nameof(Item)}. Disabling.");
+                
+                gameObject.SetActive(false);
+                
+                return;
+            }
 
             name = Item.name + " Item";
 

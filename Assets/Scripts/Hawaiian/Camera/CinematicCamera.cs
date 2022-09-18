@@ -53,14 +53,9 @@ namespace Hawaiian.Camera
             _action = new PlayerAction();
         }
 
-        private void OnEnable()
+        private void OnDestroy()
         {
-            _action.Enable();
-            _action.Player.Skip.performed += OnSkip;
-        }
-
-        private void OnDisable()
-        {
+            _action.Player.Skip.performed -= OnSkip;
             _action.Disable();
         }
 
@@ -74,17 +69,23 @@ namespace Hawaiian.Camera
         {
             if (!hasStartedCinematic) return;
 
-            if (!hasStartedCountdown)
-            {
-                if (currentCoroutine != null)
-                    StopCoroutine(currentCoroutine);
-                StartCoroutine(LerpCameraSize(_sizeStep));
-            }
+            if (hasStartedCountdown) return;
+            
+            if (currentCoroutine != null)
+                StopCoroutine(currentCoroutine);
+            
+            StartCoroutine(LerpCameraSize(_sizeStep));
         }
 
 
         IEnumerator RunLevelPreviewCinematic()
         {
+            // Wait one frame to prevent the intro from skipping if the tutorial was closed with the skip button
+            yield return null;
+            
+            _action.Enable();
+            _action.Player.Skip.performed += OnSkip;
+            
             foreach (WaypointPair _pair in waypointPairs)
             {
                 currentCoroutine = LerpCameraToWaypointPairs(_pair, _step);

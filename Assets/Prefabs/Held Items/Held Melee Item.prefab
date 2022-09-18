@@ -49,7 +49,7 @@ MonoBehaviour:
   _projectileReference: {fileID: 1546100782826642891, guid: 6916ca4131234a941b3eb78d5ca707fe, type: 3}
   AttackRate: 0.3
   DrawSpeed: 0
-  KnockbackDistance: 2
+  KnockbackDistance: 4
   attacked:
     m_PersistentCalls:
       m_Calls:

@@ -55,7 +55,7 @@ namespace Hawaiian.Inventory.HeldItemBehaviours
             Vector3 prevInput = (Cursor.transform.localPosition - Vector3.up * 0.5f);
             playerInput = prevInput.magnitude == 0 ? Vector2.right.normalized : prevInput.normalized;
 
-            _lastAttackPosition = position + playerInput * _offset;
+            _lastAttackPosition = position + playerInput * _offset + Vector3.down * 0.5f;
             return playerInput;
         }
 

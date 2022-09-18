@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Hawaiian.Utilities;
 using UnityEngine;
 using UnityEngine.InputSystem.Utilities;
 
@@ -8,6 +9,8 @@ namespace Hawaiian.PositionalEvents
     [RequireComponent(typeof(SpriteRenderer))]
     public class Highlighter : MonoBehaviour
     {
+        [SerializeField] private Material material;
+        
         private SpriteRenderer spriteRenderer;
         private SpriteRenderer targetSpriteRenderer;
         private List<PositionalEventCaller> callers = new List<PositionalEventCaller>();
@@ -26,6 +29,7 @@ namespace Hawaiian.PositionalEvents
             {
                 for (int i = 0; i < transform.parent.childCount; i++)
                 {
+                    // TODO: Ew, searching by name.
                     if (transform.parent.GetChild(i).name == "Item Sprite")
                     {
                         targetSpriteRenderer = transform.parent.GetChild(i).GetComponent<SpriteRenderer>();
@@ -40,8 +44,11 @@ namespace Hawaiian.PositionalEvents
                 throw new Exception($"Could not highlight. Parent object does not have a {nameof(SpriteRenderer)}");
             }
 
-            spriteRenderer.sprite = targetSpriteRenderer.sprite;
+            // Copy all sprite renderer properties
+            spriteRenderer.GetCopyOf(targetSpriteRenderer);
+            
             spriteRenderer.sortingOrder = targetSpriteRenderer.sortingOrder + 1;
+            spriteRenderer.material = material;
         }
 
         private void UpdateShader()

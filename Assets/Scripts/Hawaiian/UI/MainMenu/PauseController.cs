@@ -1,6 +1,8 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Hawaiian.Utilities;
+using UnityEngine.EventSystems;
+using UnityEngine.InputSystem.UI;
 
 namespace Hawaiian.UI.MainMenu
 {
@@ -8,6 +10,8 @@ namespace Hawaiian.UI.MainMenu
     {
         [SerializeField] ScriptableFloat gameTime;
         [SerializeField] private GameEvent pauseGameEvent;
+        [SerializeField] private GameEvent resumeGameEvent;
+        [SerializeField] private PlayerInput playerInput;
         
         public static PauseController pausePlayer;
         
@@ -18,19 +22,18 @@ namespace Hawaiian.UI.MainMenu
                 ResumeGame();
             }
         }
-        public void OnMenu(InputValue value)
+        
+        public void OnPause(InputValue value)
         {
-            if (!(value.Get<float>() > 0.5f)) return;
+            if (value.Get<float>() < 0.5f) return;
 
             if (pausePlayer == this)
             {
-                OnActionB(value);
+                ResumeGame();
                 return;
             }
 
             if (pausePlayer != null) return;
-            
-            pauseGameEvent.Raise();
                     
             PauseGame();
         }
@@ -38,6 +41,8 @@ namespace Hawaiian.UI.MainMenu
         public void PauseGame()
         {
             pausePlayer = this;
+            
+            ((InputSystemUIInputModule) EventSystem.current.currentInputModule).actionsAsset = playerInput.actions;
 
             gameTime.Value = 0.0f;
             Unit.Unit[] units = FindObjectsOfType<Unit.Unit>();
@@ -45,6 +50,8 @@ namespace Hawaiian.UI.MainMenu
             {
                 unit.enabled = false;
             }
+
+            pauseGameEvent.Raise();
         }
 
         public void ResumeGame()
@@ -57,6 +64,8 @@ namespace Hawaiian.UI.MainMenu
             }
 
             pausePlayer = null;
+            
+            resumeGameEvent.Raise();
         }
     }
 }

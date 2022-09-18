@@ -25,8 +25,6 @@ namespace Hawaiian.UI.Results_Screen
 
         public void AnimateBars()
         {
-            if (bars.Count == 0) return;
-
             currentBarIndex = -1;
 
             StartNextAnimation();
@@ -73,6 +71,8 @@ namespace Hawaiian.UI.Results_Screen
             if (playerBar == null) throw new Exception($"{playerBarPrefab.name} prefab does not have a {nameof(PlayerBar)} component.");
 
             playerBar.Initialise(player, maxScore);
+
+            if (player.score == 0) return;
 
             bars.Add(playerBar);
         }

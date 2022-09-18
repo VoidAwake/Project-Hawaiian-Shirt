@@ -996,6 +996,10 @@ PrefabInstance:
       propertyPath: m_RootOrder
       value: 4
       objectReference: {fileID: 0}
+    - target: {fileID: 5481627802791588473, guid: fe93fd4b04ca3d340865789a7d27cade, type: 3}
+      propertyPath: m_RootOrder
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 5825339213562619571, guid: fe93fd4b04ca3d340865789a7d27cade, type: 3}
       propertyPath: m_IsTrigger
       value: 0
@@ -1034,7 +1038,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6638286123732195131, guid: fe93fd4b04ca3d340865789a7d27cade, type: 3}
       propertyPath: m_InstanceId
-      value: -51904
+      value: -274234
       objectReference: {fileID: 0}
     - target: {fileID: 6924075283435537384, guid: fe93fd4b04ca3d340865789a7d27cade, type: 3}
       propertyPath: m_Name
@@ -1181,6 +1185,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gameTime: {fileID: 11400000, guid: a7999ebb747644c42b10ad44fd3b305b, type: 2}
   pauseGameEvent: {fileID: 11400000, guid: f581a12f799236641bfda7a19488a6ba, type: 2}
+  resumeGameEvent: {fileID: 11400000, guid: a2c4c9ef8ad733f4bb3b69c9894b9755, type: 2}
+  playerInput: {fileID: 6432945937749252037}
 --- !u!114 &5588978955059791629
 MonoBehaviour:
   m_ObjectHideFlags: 0

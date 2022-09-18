@@ -9,7 +9,7 @@ namespace Hawaiian.UI.PauseMenu
         {
             base.OnClick();
             
-            dialogue.ResumeGame();
+            PauseController.pausePlayer.ResumeGame();
         }
     }
 }

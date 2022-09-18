@@ -14,6 +14,7 @@ namespace Hawaiian.Inventory.ItemBehaviours
         [SerializeField] private int _maximumBounces;
         [SerializeField] private AnimationCurve _speedCurve;
         [SerializeField] private AnimationCurve _returnToPlayerCurve;
+        [SerializeField] private SpriteRenderer spriteRenderer;
 
 
         private bool hasReachedDestination;
@@ -40,24 +41,28 @@ namespace Hawaiian.Inventory.ItemBehaviours
         public void Initialise(Vector3 target)
         {
             _targetLocation = target;
+            totalDistance = Vector3.Distance(transform.position, _targetLocation);
+            Direction = _targetLocation - (Vector2) transform.position;
+            maxSpeed = _speed;
         }
 
-        public override void Initialise(IUnit user, Vector3 target, bool canStickOnWalls = false,
-            bool returnsToPlayer = false, bool ricochet = false, int maximumBounce = 0)
+        public override void Initialise(IUnit user, Vector3 target, Item item)
         {
             WasParried = false;
             stuckOnWall = false;
             isOnWall = false;
             _targetLocation = target;
             maxSpeed = _speed;
-            _canStickOnWalls = canStickOnWalls;
-            _returnsToPlayer = returnsToPlayer;
+            _canStickOnWalls = item.SticksOnWall;
+            _returnsToPlayer = item.ReturnsToPlayer;
             _user = user;
             hasReachedDestination = false;
-            _isRicochet = ricochet;
-            _maximumBounces = maximumBounce;
+            _isRicochet = item.IsRicochet;
+            _maximumBounces = item.MaximumBounces;
             totalDistance = Vector3.Distance(transform.position, _targetLocation);
             Direction = _targetLocation - (Vector2) transform.position;
+
+            spriteRenderer.sprite = item.ItemSprite;
         }
 
         public void UpdateTarget(Vector2 newDirection, float distance)
@@ -175,6 +180,7 @@ namespace Hawaiian.Inventory.ItemBehaviours
             if (other.gameObject.GetComponent<ItemUnit>()) return;
             // if (other.gameObject.GetComponent<ShieldCollider>()) return;
             if (other.gameObject.GetComponent<AvoidHit>()) return;
+            if (other.gameObject.tag == "Inventory") return;
 
             Debug.Log(!other.gameObject.GetComponent<UnitPlayer>() + " state of the unit player");
             Debug.Log(!other.gameObject.GetComponent<Projectile>() + " state of the projectile");
