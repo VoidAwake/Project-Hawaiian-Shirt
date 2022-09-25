@@ -11,6 +11,7 @@ namespace Hawaiian.Inventory
         [SerializeField] public int size;
         public UnityEvent currentItemChanged = new();
         public int invPosition = 0;
+        public int score = 0;
 
         public int InvPosition
         {
@@ -30,15 +31,23 @@ namespace Hawaiian.Inventory
         
         public bool AddItem(Item item)
         {
-            for (int i = 0; i < inv.Length; i++)
+            if (item.Type == ItemType.Objective)
             {
-                if (inv[i] != null) continue;
-                
-                inv[i] = item;
-
-
-                currentItemChanged.Invoke();
+                score += (int)item.Points;
                 return true;
+            }
+            else
+            {
+                for (int i = 0; i < inv.Length; i++)
+                {
+                    if (inv[i] != null) continue;
+
+                    inv[i] = item;
+
+
+                    currentItemChanged.Invoke();
+                    return true;
+                }
             }
 
             return false;
