@@ -973,7 +973,6 @@ GameObject:
   - component: {fileID: 6102377926319628895}
   - component: {fileID: 5825339213562619571}
   - component: {fileID: 1711890925485543680}
-  - component: {fileID: 2062520254}
   - component: {fileID: 2062520255}
   - component: {fileID: 1993500985619104882}
   - component: {fileID: 8605504068950511464}
@@ -1077,34 +1076,6 @@ SortingGroup:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
---- !u!114 &2062520254
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6924075283435537384}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e8beaaee945cf0844ad0f79ee7108362, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Event: {fileID: 11400000, guid: 36d2877f5e90d4a4c968de30d42c3b82, type: 2}
-  Response:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: Hawaiian.Unit.UnitPlayer, Hawaiian.Unit
-        m_MethodName: TakeDamage
-        m_Mode: 4
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 5
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!114 &2062520255
 MonoBehaviour:
   m_ObjectHideFlags: 0

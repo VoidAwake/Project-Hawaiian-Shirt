@@ -101,9 +101,7 @@ namespace Hawaiian.Inventory.HeldItemBehaviours
                     switch (p.GetComponent<T>())
                     {
                         case Projectile:
-                            p.GetComponent<T>().Initialise(UnitPlayer, _multiShotTargets[index],
-                                Item.SticksOnWall, Item.ReturnsToPlayer, Item.IsRicochet,
-                                Item.MaximumBounces);
+                            p.GetComponent<T>().Initialise(UnitPlayer, _multiShotTargets[index], Item);
                             
                             shot.Invoke();
                             break;
