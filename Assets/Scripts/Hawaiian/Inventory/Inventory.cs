@@ -21,7 +21,8 @@ namespace Hawaiian.Inventory
 
         public Item CurrentItem => inv[InvPosition];
         
-        public float Score => inv.Where(i => i != null).Sum(i => i.Points);
+        //public float Score => inv.Where(i => i != null).Sum(i => i.Points);
+        public float Score => score;
 
         public void SetInventory(int invSize)
         {
@@ -34,7 +35,10 @@ namespace Hawaiian.Inventory
             if (item.Type == ItemType.Objective)
             {
                 score += (int)item.Points;
+                currentItemChanged.Invoke();
+                Debug.Log("score is " + score);
                 return true;
+                
             }
             else
             {

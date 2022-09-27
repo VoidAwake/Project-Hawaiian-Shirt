@@ -7,6 +7,7 @@ using UnityEngine.InputSystem;
 using System.Collections.Generic;
 using UnityEngine.Events;
 using System.Linq;
+using Random = UnityEngine.Random;
 
 namespace Hawaiian.Inventory
 {
@@ -18,6 +19,9 @@ namespace Hawaiian.Inventory
         [SerializeField] private SpriteRenderer hand;
         [SerializeField] private GameObject droppedItemPrefab;
         [SerializeField] private Cursor cursor;
+        [SerializeField] private int[] bitValues = new int[]{1,2,4,8,16,32,64,128};
+        [SerializeField] private GameObject[] treasure;
+        
 
         public UnityEvent currentItemChanged = new UnityEvent();
         public Inventory inv;
@@ -170,6 +174,34 @@ namespace Hawaiian.Inventory
 
             RemoveItemFromIndex(inv.InvPosition);
         }
+
+
+        public void DropCash()
+        {
+            List<int> toSpawn = new List<int>();
+            toSpawn = GetTreasuresToDrop((int)Mathf.Floor(inv.score * (30 + (inv.score/200 * 50))/100));
+            for (int i = 0; i < toSpawn.Count; i++)
+            {
+                //instantiate it ig lmaoo
+            }
+        }
+
+
+        private List<int> GetTreasuresToDrop(int amountToDrop)
+        {
+            List<int> toSpawn = new List<int>();
+            inv.score -= amountToDrop;
+            int x = bitValues.Length - 1;
+            while (amountToDrop > 0)
+            {
+                while (bitValues[x] > amountToDrop) {x--;}
+                int treasurePiece = (int)Mathf.Floor(Random.Range(0, x+1));
+                amountToDrop -= bitValues[treasurePiece];
+                toSpawn.Add(treasurePiece);
+            }
+            return toSpawn;
+        }
+        
 
         public void RemoveCurrentItem()
         {
