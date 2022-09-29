@@ -156,7 +156,7 @@ namespace Hawaiian.Input
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Menu"",
+                    ""name"": ""Pause"",
                     ""type"": ""Button"",
                     ""id"": ""eae77aa8-94c9-4a1d-aa15-7e7778d5cb6e"",
                     ""expectedControlType"": ""Button"",
@@ -887,7 +887,7 @@ namespace Hawaiian.Input
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Menu"",
+                    ""action"": ""Pause"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -898,7 +898,7 @@ namespace Hawaiian.Input
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Menu"",
+                    ""action"": ""Pause"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -909,7 +909,7 @@ namespace Hawaiian.Input
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Menu"",
+                    ""action"": ""Pause"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -1582,7 +1582,7 @@ namespace Hawaiian.Input
             m_Player_Parse = m_Player.FindAction("Parse", throwIfNotFound: true);
             m_Player_MoveCursor = m_Player.FindAction("MoveCursor", throwIfNotFound: true);
             m_Player_Drop = m_Player.FindAction("Drop", throwIfNotFound: true);
-            m_Player_Menu = m_Player.FindAction("Menu", throwIfNotFound: true);
+            m_Player_Pause = m_Player.FindAction("Pause", throwIfNotFound: true);
             m_Player_ParseOne = m_Player.FindAction("ParseOne", throwIfNotFound: true);
             m_Player_ParseTwo = m_Player.FindAction("ParseTwo", throwIfNotFound: true);
             m_Player_ParseThree = m_Player.FindAction("ParseThree", throwIfNotFound: true);
@@ -1669,7 +1669,7 @@ namespace Hawaiian.Input
         private readonly InputAction m_Player_Parse;
         private readonly InputAction m_Player_MoveCursor;
         private readonly InputAction m_Player_Drop;
-        private readonly InputAction m_Player_Menu;
+        private readonly InputAction m_Player_Pause;
         private readonly InputAction m_Player_ParseOne;
         private readonly InputAction m_Player_ParseTwo;
         private readonly InputAction m_Player_ParseThree;
@@ -1694,7 +1694,7 @@ namespace Hawaiian.Input
             public InputAction @Parse => m_Wrapper.m_Player_Parse;
             public InputAction @MoveCursor => m_Wrapper.m_Player_MoveCursor;
             public InputAction @Drop => m_Wrapper.m_Player_Drop;
-            public InputAction @Menu => m_Wrapper.m_Player_Menu;
+            public InputAction @Pause => m_Wrapper.m_Player_Pause;
             public InputAction @ParseOne => m_Wrapper.m_Player_ParseOne;
             public InputAction @ParseTwo => m_Wrapper.m_Player_ParseTwo;
             public InputAction @ParseThree => m_Wrapper.m_Player_ParseThree;
@@ -1752,9 +1752,9 @@ namespace Hawaiian.Input
                     @Drop.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDrop;
                     @Drop.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDrop;
                     @Drop.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDrop;
-                    @Menu.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMenu;
-                    @Menu.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMenu;
-                    @Menu.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMenu;
+                    @Pause.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPause;
+                    @Pause.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPause;
+                    @Pause.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPause;
                     @ParseOne.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnParseOne;
                     @ParseOne.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnParseOne;
                     @ParseOne.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnParseOne;
@@ -1819,9 +1819,9 @@ namespace Hawaiian.Input
                     @Drop.started += instance.OnDrop;
                     @Drop.performed += instance.OnDrop;
                     @Drop.canceled += instance.OnDrop;
-                    @Menu.started += instance.OnMenu;
-                    @Menu.performed += instance.OnMenu;
-                    @Menu.canceled += instance.OnMenu;
+                    @Pause.started += instance.OnPause;
+                    @Pause.performed += instance.OnPause;
+                    @Pause.canceled += instance.OnPause;
                     @ParseOne.started += instance.OnParseOne;
                     @ParseOne.performed += instance.OnParseOne;
                     @ParseOne.canceled += instance.OnParseOne;
@@ -1997,7 +1997,7 @@ namespace Hawaiian.Input
             void OnParse(InputAction.CallbackContext context);
             void OnMoveCursor(InputAction.CallbackContext context);
             void OnDrop(InputAction.CallbackContext context);
-            void OnMenu(InputAction.CallbackContext context);
+            void OnPause(InputAction.CallbackContext context);
             void OnParseOne(InputAction.CallbackContext context);
             void OnParseTwo(InputAction.CallbackContext context);
             void OnParseThree(InputAction.CallbackContext context);

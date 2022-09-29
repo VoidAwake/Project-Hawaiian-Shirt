@@ -11,7 +11,6 @@ namespace Hawaiian.Utilities
 
         public virtual void Raise()
         {
-            // TODO: Does this prevent loop failure due to array modification? 
             for (int i = _listeners.Count - 1; i >= 0; i--)
                 _listeners[i].Invoke();
         }

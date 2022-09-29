@@ -25,8 +25,6 @@ namespace Hawaiian.UI.PauseMenu
 
         public void ResumeGame()
         {
-            PauseController.pausePlayer.ResumeGame();
-            
             // TODO: Dialogues shouldn't destroy themselves
             manager.Pop();
         }

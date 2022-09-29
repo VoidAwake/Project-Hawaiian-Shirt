@@ -26,7 +26,7 @@ namespace Hawaiian.Inventory
 
         public virtual void Initialise(Vector2[] targets, Sprite newSprite, bool canStickOnWalls = false) {}
 
-        public virtual void Initialise(IUnit user, Vector3 target, bool canStickOnWalls = false, bool returnsToPlayer = false, bool ricochet = false, int maximumBounce = 0){}
+        public virtual void Initialise(IUnit user, Vector3 target, Item item){}
         
         public virtual void Initialise(float speed, int knockbackDistance,  bool flag, IUnit user, Vector2 knockbackDirection) {}
 

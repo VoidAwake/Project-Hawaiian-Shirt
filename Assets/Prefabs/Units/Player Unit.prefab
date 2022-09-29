@@ -82,7 +82,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2635515794497460195}
-  m_RootOrder: 1
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2583645872938131686
 MonoBehaviour:
@@ -427,6 +427,8 @@ MonoBehaviour:
   hand: {fileID: 937560079924309396}
   droppedItemPrefab: {fileID: 3056942884218095950, guid: 37132a09f5d1c4046a4bb460892afc47, type: 3}
   cursor: {fileID: 4461786547461907839}
+  bitValues: 0100000002000000040000000800000010000000200000004000000080000000
+  dictionary: {fileID: 11400000, guid: 49143a0bfbce50b4eb874e8393d5abd4, type: 2}
   currentItemChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -628,7 +630,7 @@ Transform:
   - {fileID: 4378854607048063294}
   - {fileID: 7334777816072758168}
   m_Father: {fileID: 2635515794497460195}
-  m_RootOrder: 3
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!210 &7113678172964905682
 SortingGroup:
@@ -996,6 +998,10 @@ PrefabInstance:
       propertyPath: m_RootOrder
       value: 4
       objectReference: {fileID: 0}
+    - target: {fileID: 5481627802791588473, guid: fe93fd4b04ca3d340865789a7d27cade, type: 3}
+      propertyPath: m_RootOrder
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 5825339213562619571, guid: fe93fd4b04ca3d340865789a7d27cade, type: 3}
       propertyPath: m_IsTrigger
       value: 0
@@ -1034,7 +1040,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6638286123732195131, guid: fe93fd4b04ca3d340865789a7d27cade, type: 3}
       propertyPath: m_InstanceId
-      value: -51904
+      value: -21144
       objectReference: {fileID: 0}
     - target: {fileID: 6924075283435537384, guid: fe93fd4b04ca3d340865789a7d27cade, type: 3}
       propertyPath: m_Name
@@ -1181,6 +1187,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gameTime: {fileID: 11400000, guid: a7999ebb747644c42b10ad44fd3b305b, type: 2}
   pauseGameEvent: {fileID: 11400000, guid: f581a12f799236641bfda7a19488a6ba, type: 2}
+  resumeGameEvent: {fileID: 11400000, guid: a2c4c9ef8ad733f4bb3b69c9894b9755, type: 2}
+  playerInput: {fileID: 6432945937749252037}
 --- !u!114 &5588978955059791629
 MonoBehaviour:
   m_ObjectHideFlags: 0
