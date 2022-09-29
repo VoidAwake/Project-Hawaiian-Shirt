@@ -29,6 +29,12 @@ namespace Hawaiian.Inventory
             size = invSize;
             inv = new Item[size];
         }
+
+        public void LoseTreasure(int dropped)
+        {
+            score -= dropped;
+            currentItemChanged.Invoke();
+        }
         
         public bool AddItem(Item item)
         {

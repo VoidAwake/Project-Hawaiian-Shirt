@@ -427,6 +427,8 @@ MonoBehaviour:
   hand: {fileID: 937560079924309396}
   droppedItemPrefab: {fileID: 3056942884218095950, guid: 37132a09f5d1c4046a4bb460892afc47, type: 3}
   cursor: {fileID: 4461786547461907839}
+  bitValues: 0100000002000000040000000800000010000000200000004000000080000000
+  dictionary: {fileID: 11400000, guid: 49143a0bfbce50b4eb874e8393d5abd4, type: 2}
   currentItemChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -1038,7 +1040,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6638286123732195131, guid: fe93fd4b04ca3d340865789a7d27cade, type: 3}
       propertyPath: m_InstanceId
-      value: -3268
+      value: -21144
       objectReference: {fileID: 0}
     - target: {fileID: 6924075283435537384, guid: fe93fd4b04ca3d340865789a7d27cade, type: 3}
       propertyPath: m_Name

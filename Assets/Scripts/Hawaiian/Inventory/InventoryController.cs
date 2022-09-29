@@ -20,7 +20,7 @@ namespace Hawaiian.Inventory
         [SerializeField] private GameObject droppedItemPrefab;
         [SerializeField] private Cursor cursor;
         [SerializeField] private int[] bitValues = new int[]{1,2,4,8,16,32,64,128};
-        [SerializeField] private GameObject[] treasure;
+        [SerializeField] private TreasureDic dictionary;
         
 
         public UnityEvent currentItemChanged = new UnityEvent();
@@ -178,28 +178,42 @@ namespace Hawaiian.Inventory
 
         public void DropCash()
         {
-            List<int> toSpawn = new List<int>();
-            toSpawn = GetTreasuresToDrop((int)Mathf.Floor(inv.score * (30 + (inv.score/200 * 50))/100));
-            for (int i = 0; i < toSpawn.Count; i++)
+            //List<int> toSpawn = new List<int>();
+            //toSpawn = GetTreasuresToDrop((int)Mathf.Floor(inv.score * (30 + (inv.score/200 * 50))/100));
+            int amountToDrop = ((int) Mathf.Floor(inv.score * (30 + (inv.score / 200 * 50)) / 100));
+            Item[] toSpawn = dictionary.GetTreasuresToDrop(amountToDrop);
+            foreach (Item reference in toSpawn)
             {
-                //instantiate it ig lmaoo
+                Item treasure = ScriptableObject.CreateInstance<Item>();
+                treasure.ItemName = reference.ItemName;
+                treasure.ItemSprite = reference.ItemSprite;
+                treasure.DroppedItemSprite = reference.DroppedItemSprite;
+                treasure.Type = ItemType.Objective;
+                treasure.Points = reference.Points;
+                treasure.DroppedItemBase = reference.DroppedItemBase;
+
+                GameObject droppedTreasure = Instantiate(reference.DroppedItemBase,transform.position, Quaternion.identity);
+                droppedTreasure.GetComponent<DroppedItem>().Item = treasure;
+
+                for (int i = 0; i < droppedTreasure.transform.childCount; i++)
+                {
+                    if (droppedTreasure.transform.GetChild(i).name == "Item Sprite")
+                    {
+                        droppedTreasure.transform.GetChild(i).GetComponent<SpriteRenderer>().sprite =
+                            treasure.ItemSprite;
+                    }
+                }
+                
+                droppedTreasure.GetComponent<ItemUnit>().OnThrow(Random.insideUnitCircle);
             }
+
+            inv.LoseTreasure(amountToDrop);
         }
 
 
-        private List<int> GetTreasuresToDrop(int amountToDrop)
+        private void DropTreasure(Item[] toSpawn)
         {
-            List<int> toSpawn = new List<int>();
-            inv.score -= amountToDrop;
-            int x = bitValues.Length - 1;
-            while (amountToDrop > 0)
-            {
-                while (bitValues[x] > amountToDrop) {x--;}
-                int treasurePiece = (int)Mathf.Floor(Random.Range(0, x+1));
-                amountToDrop -= bitValues[treasurePiece];
-                toSpawn.Add(treasurePiece);
-            }
-            return toSpawn;
+            
         }
         
 
