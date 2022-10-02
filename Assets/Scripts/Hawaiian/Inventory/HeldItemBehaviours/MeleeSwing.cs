@@ -61,15 +61,13 @@ namespace Hawaiian.Inventory.HeldItemBehaviours
 
         private void InstantiateMeleeIndicator(float angle, Vector3 direction)
         {
-            FirePoint.position = _lastAttackPosition;
-
             UnitPlayer.transform.GetComponent<UnitAnimator>()
                 .UseItem(UnitAnimationState.MeleeSwing,
                     new Vector2(Mathf.Sin(angle * Mathf.Deg2Rad + Mathf.PI / 2),
                         -Mathf.Cos(angle * Mathf.Deg2Rad + Mathf.PI / 2)), _attackFlag);
 
             GameObject indicator = Instantiate(_projectileReference, _lastAttackPosition,
-                Quaternion.Euler(new Vector3(0, 0, angle + _meleeSlashRotationOffset)), FirePoint);
+                Quaternion.Euler(new Vector3(0, 0, angle + _meleeSlashRotationOffset)), transform);
 
             indicator.GetComponent<DamageIndicator>().Initialise(DrawSpeed, KnockbackDistance,
                 _attackFlag, UnitPlayer, direction);
