@@ -6,7 +6,7 @@ using UnityEngine.Events;
 
 namespace Hawaiian.Inventory.HeldItemBehaviours
 {
-    public class ItemThrow : ItemInstantiate<Throwable>
+    public class InstantiateThrowableHeldItemBehaviour : InstantiateHeldItemBehaviour<Throwable>
     {
         [SerializeField] private IUnitGameEvent _removeItem;
         

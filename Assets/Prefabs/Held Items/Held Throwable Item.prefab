@@ -81,7 +81,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8d74b77e37b649faa77c1ae16c2ddd3b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemThrow: {fileID: 8242769012971264707}
+  instantiateThrowableHeldItemBehaviour: {fileID: 8242769012971264707}
   throwableLineRenderer: {fileID: 7888202671740746222}
 --- !u!120 &7888202671740746222
 LineRenderer:

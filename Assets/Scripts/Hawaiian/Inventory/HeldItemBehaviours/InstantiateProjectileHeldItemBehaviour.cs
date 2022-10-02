@@ -4,7 +4,7 @@ using UnityEngine.Events;
 
 namespace Hawaiian.Inventory.HeldItemBehaviours
 {
-    public class ItemShoot : ItemInstantiate<Projectile>
+    public class InstantiateProjectileHeldItemBehaviour : InstantiateHeldItemBehaviour<Projectile>
     {
         public UnityEvent targetCountChanged = new();
         public UnityEvent multiShotTargetsUpdated = new();

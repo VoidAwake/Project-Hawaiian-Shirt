@@ -8,20 +8,20 @@ namespace Hawaiian.Inventory.HeldItemBehaviours
     {
         private static readonly int Rate = Shader.PropertyToID("_Rate");
         
-        [SerializeField] private ItemShoot itemShoot;
+        [SerializeField] private InstantiateProjectileHeldItemBehaviour instantiateProjectileHeldItemBehaviour;
 
         private readonly List<LineRenderer> lineRenderers = new();
 
         private void OnEnable()
         {
-            itemShoot.targetCountChanged.AddListener(OnTargetCountChanged);
-            itemShoot.multiShotTargetsUpdated.AddListener(OnMultiShotTargetsUpdated);
+            instantiateProjectileHeldItemBehaviour.targetCountChanged.AddListener(OnTargetCountChanged);
+            instantiateProjectileHeldItemBehaviour.multiShotTargetsUpdated.AddListener(OnMultiShotTargetsUpdated);
         }
 
         private void OnDisable()
         {
-            itemShoot.targetCountChanged.RemoveListener(OnTargetCountChanged);
-            itemShoot.multiShotTargetsUpdated.RemoveListener(OnMultiShotTargetsUpdated);
+            instantiateProjectileHeldItemBehaviour.targetCountChanged.RemoveListener(OnTargetCountChanged);
+            instantiateProjectileHeldItemBehaviour.multiShotTargetsUpdated.RemoveListener(OnMultiShotTargetsUpdated);
         }
 
         private void OnTargetCountChanged()
@@ -38,7 +38,7 @@ namespace Hawaiian.Inventory.HeldItemBehaviours
         {
             DestroyLineRenderers();
 
-            for (int i = 0; i < (itemShoot.Item.ProjectileAmount == 0 ? 1 : itemShoot.Item.ProjectileAmount); i++)
+            for (int i = 0; i < (instantiateProjectileHeldItemBehaviour.Item.ProjectileAmount == 0 ? 1 : instantiateProjectileHeldItemBehaviour.Item.ProjectileAmount); i++)
             {
                 GameObject instance = new GameObject();
 
@@ -59,8 +59,8 @@ namespace Hawaiian.Inventory.HeldItemBehaviours
                 gradient.SetKeys(
                     new GradientColorKey[]
                     {
-                        new GradientColorKey(itemShoot.UnitPlayer.PlayerColour, 0.0f),
-                        new GradientColorKey(itemShoot.UnitPlayer.PlayerColour, 1.0f)
+                        new GradientColorKey(instantiateProjectileHeldItemBehaviour.UnitPlayer.PlayerColour, 0.0f),
+                        new GradientColorKey(instantiateProjectileHeldItemBehaviour.UnitPlayer.PlayerColour, 1.0f)
                     }, new GradientAlphaKey[] {new GradientAlphaKey(1, 0.0f), new GradientAlphaKey(1, 1.0f)});
 
                 renderer.colorGradient = gradient;
@@ -83,12 +83,12 @@ namespace Hawaiian.Inventory.HeldItemBehaviours
         private void UpdateLineRenderers()
         {
             GenerateLineRenderers();
-            for (var i = 0; i < itemShoot._multiShotTargets.Length; i++)
+            for (var i = 0; i < instantiateProjectileHeldItemBehaviour._multiShotTargets.Length; i++)
             {
                 LineRenderer lr = lineRenderers[i];
                 lr.transform.localPosition = Vector3.zero;
 
-                Vector3[] otherPositions = {itemShoot._multiShotTargets[i], itemShoot.UnitPlayer.transform.position + Vector3.up * 0.5f};
+                Vector3[] otherPositions = {instantiateProjectileHeldItemBehaviour._multiShotTargets[i], instantiateProjectileHeldItemBehaviour.UnitPlayer.transform.position + Vector3.up * 0.5f};
 
                 lr.positionCount = 2;
                 lr.SetPositions(otherPositions);
@@ -99,7 +99,7 @@ namespace Hawaiian.Inventory.HeldItemBehaviours
         {
             foreach (var lineRenderer in lineRenderers)
             {
-                lineRenderer.enabled = itemShoot.UseItemActionHeld;
+                lineRenderer.enabled = instantiateProjectileHeldItemBehaviour.UseItemActionHeld;
             }
         }
 

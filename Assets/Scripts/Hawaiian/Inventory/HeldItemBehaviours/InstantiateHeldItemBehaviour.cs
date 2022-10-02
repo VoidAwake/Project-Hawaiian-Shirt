@@ -6,7 +6,7 @@ using UnityEngine.InputSystem;
 
 namespace Hawaiian.Inventory.HeldItemBehaviours
 {
-    public class ItemInstantiate<T> : HeldItemBehaviour where T : ItemBehaviour
+    public abstract class InstantiateHeldItemBehaviour<T> : HeldItemBehaviour where T : ItemBehaviour
     {
         private GameObject _projectileInstance;
 
