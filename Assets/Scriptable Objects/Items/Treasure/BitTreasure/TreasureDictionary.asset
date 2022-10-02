@@ -12,5 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 697477234f2cc6140873848c2c8baa09, type: 3}
   m_Name: TreasureDictionary
   m_EditorClassIdentifier: 
-  itemReference: []
-  baseItemReference: {fileID: 0}
+  itemReference:
+  - {fileID: 11400000, guid: 294d701fc40d9964f963202a5c936bcb, type: 2}
+  - {fileID: 11400000, guid: dd2ca09b8b10b5f4d95b9a4d27a55cc3, type: 2}
+  - {fileID: 11400000, guid: 22425424f011a914eb5433278f21a6a1, type: 2}
+  - {fileID: 11400000, guid: c756a381fbf2389409fdde8bfd6e213b, type: 2}
+  - {fileID: 11400000, guid: 33dffbfbeb1a6334ea64c6d19b1c4b39, type: 2}
+  - {fileID: 11400000, guid: ea50d12e611bcef4b8377953872267f3, type: 2}
+  - {fileID: 11400000, guid: d125e0d99e210b84dbf1ecdfb8d2cb15, type: 2}
+  - {fileID: 11400000, guid: aa91367a3e039614fa027d3624005b03, type: 2}
