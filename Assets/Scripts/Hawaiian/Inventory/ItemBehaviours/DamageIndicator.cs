@@ -24,7 +24,7 @@ namespace Hawaiian.Inventory.ItemBehaviours
             transform.localPosition = Vector3.zero;
         }
 
-        public override void Initialise(float speed, int knockbackDistance,  bool flag, IUnit user, Vector2 knockbackDirection) 
+        public void Initialise(float speed, int knockbackDistance,  bool flag, IUnit user, Vector2 knockbackDirection) 
         {
             BaseInitialise(user,speed,knockbackDistance);
             _animator = GetComponent<Animator>();
