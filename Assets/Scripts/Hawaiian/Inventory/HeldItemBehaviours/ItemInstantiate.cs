@@ -1,11 +1,12 @@
 ﻿using System.Collections.Generic;
 using Hawaiian.Inventory.ItemBehaviours;
+using Hawaiian.Unit;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 namespace Hawaiian.Inventory.HeldItemBehaviours
 {
-    public class ItemInstantiate : HeldItemBehaviour
+    public class ItemInstantiate<T> : HeldItemBehaviour where T : ItemBehaviour
     {
         private GameObject _projectileInstance;
 
@@ -34,6 +35,7 @@ namespace Hawaiian.Inventory.HeldItemBehaviours
             Cursor.LerpToReset();
         }
         
+        // TODO: Should not depend on Projectile
         protected virtual bool CanUseProjectile()
         {
             if (_projectileInstance == null) return true;
@@ -43,10 +45,29 @@ namespace Hawaiian.Inventory.HeldItemBehaviours
             return false;
         }
         
-        // TODO: Still need to have another look at these generics
-        // private void UseItem<T>(List<GameObject> projectiles = null) where T : ItemBehaviour
         protected virtual void UseItem(List<GameObject> projectiles = null)
         {
+            if (projectiles == null) return;
+
+            for (var i = 0; i < projectiles.Count; i++)
+            {
+                var p = projectiles[i];
+
+                var itemBehaviour = p.GetComponent<T>();
+                
+                itemBehaviour.BaseInitialise(UnitPlayer, Item.DrawSpeed, Item.KnockbackDistance);
+                
+                InitialiseInstantiatedItemBehaviour(itemBehaviour, i);
+                
+                if (p.GetComponent<HitUnit>())
+                    p.GetComponent<HitUnit>()
+                        .Initialise(UnitPlayer, Cursor.transform.position - transform.position);
+
+                UnitPlayer.transform.GetComponent<UnitAnimator>()
+                    .UseItem(UnitAnimationState.Throw, Cursor.transform.localPosition, false);
+            }
         }
+        
+        protected virtual void InitialiseInstantiatedItemBehaviour(T itemBehaviour, int i) { }
     }
 }

@@ -1,13 +1,12 @@
 ﻿using System.Collections.Generic;
 using Hawaiian.Inventory.ItemBehaviours;
-using Hawaiian.Unit;
 using Hawaiian.Utilities;
 using UnityEngine;
 using UnityEngine.Events;
 
 namespace Hawaiian.Inventory.HeldItemBehaviours
 {
-    public class ItemThrow : ItemInstantiate
+    public class ItemThrow : ItemInstantiate<Throwable>
     {
         [SerializeField] private IUnitGameEvent _removeItem;
         
@@ -15,6 +14,7 @@ namespace Hawaiian.Inventory.HeldItemBehaviours
         
         public List<Vector2> throwableArcPositions = new List<Vector2>();
 
+        // TODO: Move up
         public UnityEvent threw = new();
         
         private void FixedUpdate()
@@ -37,46 +37,15 @@ namespace Hawaiian.Inventory.HeldItemBehaviours
             throwableArcPositionsUpdated.Invoke();
         }
 
-        protected override void UseItem(List<GameObject> projectiles = null)
+        protected override void InitialiseInstantiatedItemBehaviour(Throwable throwable, int i)
         {
-            base.UseItem(projectiles);
+            base.InitialiseInstantiatedItemBehaviour(throwable, i);
             
-            UseItem<Throwable>(projectiles);
-        }
-
-        private void UseItem<T>(List<GameObject> projectiles = null) where T : ItemBehaviour
-        {
-            int index = 0;
-
-            if (projectiles != null)
-            {
-                projectiles.ForEach(p =>
-                {
-                    p.GetComponent<T>()
-                        .BaseInitialise(UnitPlayer, Item.DrawSpeed, Item.KnockbackDistance);
-
-                    switch (p.GetComponent<T>())
-                    {
-                        case Throwable:
-                            p.GetComponent<T>().Initialise(throwableArcPositions.ToArray(), Item.ItemSprite,
-                                Item.SticksOnWall);
-                            _removeItem.Raise(UnitPlayer);
-                            
-                            threw.Invoke();
-                            break;
-                    }
-
-                    if (p.GetComponent<HitUnit>())
-                        p.GetComponent<HitUnit>()
-                            .Initialise(UnitPlayer, Cursor.transform.position - transform.position);
-
-
-                    UnitPlayer.transform.GetComponent<UnitAnimator>()
-                        .UseItem(UnitAnimationState.Throw, Cursor.transform.localPosition, false);
-
-                    index++;
-                });
-            }
+            throwable.Initialise(throwableArcPositions.ToArray(), Item.ItemSprite, Item.SticksOnWall);
+            
+            _removeItem.Raise(UnitPlayer);
+            
+            threw.Invoke();
         }
     }
 }

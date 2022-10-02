@@ -1,13 +1,10 @@
-﻿using System.Collections.Generic;
-using Hawaiian.Inventory.ItemBehaviours;
-using Hawaiian.Unit;
-using Hawaiian.Utilities;
+﻿using Hawaiian.Inventory.ItemBehaviours;
 using UnityEngine;
 using UnityEngine.Events;
 
 namespace Hawaiian.Inventory.HeldItemBehaviours
 {
-    public class ItemShoot : ItemInstantiate
+    public class ItemShoot : ItemInstantiate<Projectile>
     {
         public UnityEvent targetCountChanged = new();
         public UnityEvent multiShotTargetsUpdated = new();
@@ -78,46 +75,13 @@ namespace Hawaiian.Inventory.HeldItemBehaviours
             multiShotTargetsUpdated.Invoke();
         }
 
-        protected override void UseItem(List<GameObject> projectiles = null)
+        protected override void InitialiseInstantiatedItemBehaviour(Projectile projectile, int i)
         {
-            base.UseItem(projectiles);
+            base.InitialiseInstantiatedItemBehaviour(projectile, i);
             
-            UseItem<Projectile>(projectiles);
-        }
-        
-        private void UseItem<T>(List<GameObject> projectiles = null) where T : ItemBehaviour
-        {
-            collisionFlag = false;
-
-            int index = 0;
-
-            if (projectiles != null)
-            {
-                projectiles.ForEach(p =>
-                {
-                    p.GetComponent<T>()
-                        .BaseInitialise(UnitPlayer, Item.DrawSpeed, Item.KnockbackDistance);
-
-                    switch (p.GetComponent<T>())
-                    {
-                        case Projectile:
-                            p.GetComponent<T>().Initialise(UnitPlayer, _multiShotTargets[index], Item);
-                            
-                            shot.Invoke();
-                            break;
-                    }
-
-                    if (p.GetComponent<HitUnit>())
-                        p.GetComponent<HitUnit>()
-                            .Initialise(UnitPlayer, Cursor.transform.position - transform.position);
-
-
-                    UnitPlayer.transform.GetComponent<UnitAnimator>()
-                        .UseItem(UnitAnimationState.Throw, Cursor.transform.localPosition, false);
-
-                    index++;
-                });
-            }
+            projectile.Initialise(UnitPlayer, _multiShotTargets[i], Item);
+                
+            shot.Invoke();
         }
 
         protected override bool CanUseProjectile()
