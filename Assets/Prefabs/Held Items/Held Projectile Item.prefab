@@ -48,14 +48,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6283159ac30a4798b0f9477cbafadbdb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetCountChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  multiShotTargetsUpdated:
-    m_PersistentCalls:
-      m_Calls: []
-  _multiShotTargets: []
-  shot:
+  itemUsed:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 4323576048635687990}
@@ -70,6 +63,13 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  targetCountChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  multiShotTargetsUpdated:
+    m_PersistentCalls:
+      m_Calls: []
+  _multiShotTargets: []
 --- !u!114 &9138440934089525135
 MonoBehaviour:
   m_ObjectHideFlags: 0

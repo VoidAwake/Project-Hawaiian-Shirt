@@ -13,9 +13,6 @@ namespace Hawaiian.Inventory.HeldItemBehaviours
         public UnityEvent throwableArcPositionsUpdated = new();
         
         public List<Vector2> throwableArcPositions = new List<Vector2>();
-
-        // TODO: Move up
-        public UnityEvent threw = new();
         
         private void FixedUpdate()
         {
@@ -44,8 +41,6 @@ namespace Hawaiian.Inventory.HeldItemBehaviours
             throwable.Initialise(throwableArcPositions.ToArray(), Item.ItemSprite, Item.SticksOnWall);
             
             _removeItem.Raise(UnitPlayer);
-            
-            threw.Invoke();
         }
     }
 }

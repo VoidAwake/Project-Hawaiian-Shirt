@@ -2,12 +2,15 @@
 using Hawaiian.Inventory.ItemBehaviours;
 using Hawaiian.Unit;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.InputSystem;
 
 namespace Hawaiian.Inventory.HeldItemBehaviours
 {
     public abstract class InstantiateHeldItemBehaviour<T> : HeldItemBehaviour where T : ItemBehaviour
     {
+        [SerializeField] private UnityEvent itemUsed;
+        
         private GameObject _projectileInstance;
 
         protected override void UseItemActionCancelled(InputAction.CallbackContext value)
@@ -66,6 +69,8 @@ namespace Hawaiian.Inventory.HeldItemBehaviours
                 UnitPlayer.transform.GetComponent<UnitAnimator>()
                     .UseItem(UnitAnimationState.Throw, Cursor.transform.localPosition, false);
             }
+            
+            itemUsed.Invoke();
         }
         
         protected virtual void InitialiseInstantiatedItemBehaviour(T itemBehaviour, int i) { }

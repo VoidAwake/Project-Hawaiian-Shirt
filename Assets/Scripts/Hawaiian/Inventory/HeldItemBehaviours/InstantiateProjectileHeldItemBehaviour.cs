@@ -14,8 +14,6 @@ namespace Hawaiian.Inventory.HeldItemBehaviours
         public Vector3[] _multiShotTargets;
         private int targetCount;
 
-        public UnityEvent shot = new();
-
         public override void Initialise(ItemHolder itemHolder)
         {
             base.Initialise(itemHolder);
@@ -80,8 +78,6 @@ namespace Hawaiian.Inventory.HeldItemBehaviours
             base.InitialiseInstantiatedItemBehaviour(projectile, i);
             
             projectile.Initialise(UnitPlayer, _multiShotTargets[i], Item);
-                
-            shot.Invoke();
         }
 
         protected override bool CanUseProjectile()
