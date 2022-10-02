@@ -30,7 +30,7 @@ namespace Hawaiian.UI.Game
 
         private void UpdateText()
         {
-            targetScore = (int)inventory.inv.Where(i => i != null).Sum(i => i.Points);
+            targetScore = (int)inventory.score;
 
             if (textCoroutine != null)
             {

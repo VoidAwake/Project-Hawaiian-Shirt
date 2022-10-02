@@ -12,7 +12,8 @@ namespace Hawaiian.Inventory.ItemBehaviours.HitEffects
             if (inventoryController != null)
             {
           
-                inventoryController.DropRandom(direction);
+                //inventoryController.DropRandom(direction);
+                inventoryController.DropCash();
             }
         }
     }
