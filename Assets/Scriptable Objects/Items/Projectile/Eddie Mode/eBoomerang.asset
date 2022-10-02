@@ -31,7 +31,7 @@ MonoBehaviour:
   ReturnsToPlayer: 1
   IsMultiShot: 0
   ProjectileAmount: 0
-  IsRicochet: 0
+  IsRicochet: 1
   MaximumBounces: 2
   ParryWindow: 0
   ParryPercentageUpperLimit: 0
