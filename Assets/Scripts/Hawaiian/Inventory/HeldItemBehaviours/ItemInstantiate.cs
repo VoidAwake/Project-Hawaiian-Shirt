@@ -12,7 +12,8 @@ namespace Hawaiian.Inventory.HeldItemBehaviours
         protected override void UseItemActionCancelled(InputAction.CallbackContext value)
         {
             base.UseItemActionCancelled(value);
-            
+            UnitPlayer.IsSlowed = false;
+
             if (!CanUseProjectile()) return;
 
             var projectiles = new List<GameObject>();
@@ -33,7 +34,14 @@ namespace Hawaiian.Inventory.HeldItemBehaviours
 
             Cursor.LerpToReset();
         }
-        
+
+        protected override void UseItemActionPerformed(InputAction.CallbackContext value)
+        {
+            base.UseItemActionPerformed(value);
+            UnitPlayer.IsSlowed = true;
+        }
+
+
         protected virtual bool CanUseProjectile()
         {
             if (_projectileInstance == null) return true;

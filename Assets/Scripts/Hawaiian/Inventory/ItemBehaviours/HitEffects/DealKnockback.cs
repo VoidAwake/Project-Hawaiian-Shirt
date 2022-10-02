@@ -9,6 +9,7 @@ namespace Hawaiian.Inventory.ItemBehaviours.HitEffects
         [SerializeField] private int knockbackDistance;
         
         private IUnit user;
+        public bool induceInvincibility = true;
 
         public override void OnHit(Unit.Unit unit, Vector2 direction)
         {
@@ -19,7 +20,9 @@ namespace Hawaiian.Inventory.ItemBehaviours.HitEffects
                 unit.GetComponentInChildren<ItemShield>().IsHit = true;
             
             // TODO: Move knockback to IUnit
-            unit.GetComponent<UnitPlayer>().KnockBack(direction, knockbackDistance);
+            unit.GetComponent<UnitPlayer>().KnockBack(direction, knockbackDistance, induceInvincibility);
+            //print("On hit! Induce invincibility? " + induceInvincibility);
+            // :-(
         }
     }
 }

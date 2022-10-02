@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b80aed388cd62a5479b406e914eb6b8d, type: 3}
   m_Name: eBoomerang+
   m_EditorClassIdentifier: 
-  Type: 1
+  Type: 6
   ItemSprite: {fileID: 21300000, guid: 17092cb1514b25c4898b6d91aa9b0a22, type: 3}
   DroppedItemSprite: {fileID: 21300000, guid: 17092cb1514b25c4898b6d91aa9b0a22, type: 3}
   ItemName: Boomerang+

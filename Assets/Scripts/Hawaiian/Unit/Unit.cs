@@ -50,12 +50,41 @@ namespace Hawaiian.Unit
         protected Vector2 move = new Vector2(); // for directional input
         protected bool controlsEnabled = true;
         protected bool isRunning = false;
+        internal bool isSlowed = false;
+        public bool IsSlowed
+        {
+            get
+            {
+                return isSlowed;
+            }
+            set
+            {
+                isSlowed = value;
+                if (temporarySlowCoroutine != null)
+                    StopCoroutine(temporarySlowCoroutine);
+            }
+        }
+        Coroutine temporarySlowCoroutine;
+
+        bool isBurstActive;
+        float burstTimer;
+        float burstDuration;
+        Vector2 burstForce;
 
         public UnityEvent initialised = new();
+        public UnityEvent getStruckEvent = new();
 
         protected virtual void Start()
         {
             _health = _maxHealth;
+        }
+
+        public void BeginVelocityBurst(Vector2 direction, float distance, float duration) // Overrides walking velocity, used for melee slashes
+        {
+            isBurstActive = true;
+            burstTimer = 0.0f;
+            burstDuration = duration;
+            burstForce = direction.normalized * distance / duration * 2.0f; // Burst force diminishses at a linear rate over the duration, hence area under curve is half and we times by 2
         }
 
         protected override void SetTargetVelocity()
@@ -63,12 +92,16 @@ namespace Hawaiian.Unit
             // Debug update code
             if (testBool)
             {
+                //print(name + "... " + "Test?! State: " + playerState + ". isBurstActive: " + isBurstActive + ". knockBackOverride: " + knockbackOverride + ".");
+
                 testBool = false;
                 GetComponent<UnitAnimator>().UseItem(UnitAnimationState.Throw, testVector, false);
             }
 
             if (playerState == PlayerState.Struck)
             {
+                //print(name + "... " + "Struck. State: " + playerState + ". isBurstActive: " + isBurstActive + ". knockBackOverride: " + knockbackOverride + ".");
+
                 remainingStruckTime -= Time.deltaTime;
                 if (remainingStruckTime <= 0.0f)
                 {
@@ -76,19 +109,33 @@ namespace Hawaiian.Unit
                     playerState = PlayerState.Tripped;
                     controlsEnabled = wereControlsEnabledBeforeStruck;
                 }
+
+                ModifyVelocityBasedOnBurst();
             }
             if (playerState == PlayerState.Walking && !knockbackOverride)
             {
+                //print(name + "... " + "Walkin' n' fine. State: " + playerState + ". isBurstActive: " + isBurstActive + ". knockBackOverride: " + knockbackOverride + ".");
+
+                bool debug = (move.magnitude > 0.1f);
+
+                if (debug) print("Walking and fine. isBurstActive: " + isBurstActive + ". Velocity: " + velocity + ". Move input: " + move + ". isSlowed: " + isSlowed + ". Control enabled: " + controlsEnabled);
+
                 // Update inputs and velocity
                 Vector2 modifiedMove = move.magnitude * 1.2f > 1.0f ? move.normalized : move.magnitude < 0.05f ? Vector2.zero : move * 1.2f;
+                if (isSlowed)
+                    modifiedMove *= 0.2f;
                 if (controlsEnabled) velocity = Vector2.Lerp(velocity, maxSpeed * (isRunning ? runMultiplier * modifiedMove : modifiedMove), Mathf.Clamp(Time.deltaTime * gameTimeScale.Value * tweenRate, 0.0f, 1.0f));
                 else velocity = Vector2.Lerp(velocity, Vector2.zero, Mathf.Clamp(Time.deltaTime * gameTimeScale.Value * tweenRate, 0.0f, 1.0f));
+
+                ModifyVelocityBasedOnBurst();
             }
             else if (playerState == PlayerState.Tripped || knockbackOverride)
             {
+                //print(name + "... " + "Tripped or knocked. State: " + playerState + ". isBurstActive: " + isBurstActive + ". knockBackOverride: " + knockbackOverride + ".");
+
                 // Set velocity based on knockback curve
                 velocity = knockBackForce * 2 * (remainingTripTime / tripTime);
-                Debug.Log("Knockback!");
+                //Debug.Log("Knockback!");
 
                 // Update timer, and stand back up if trip time has expired
                 remainingTripTime -= Time.deltaTime;
@@ -101,37 +148,72 @@ namespace Hawaiian.Unit
             }
             else
             {
+                //print(name + "... " + "End of the line. State: " + playerState + ". isBurstActive: " + isBurstActive + ". knockBackOverride: " + knockbackOverride + ".");
                 velocity = Vector2.Lerp(velocity, Vector2.zero, Mathf.Clamp(Time.deltaTime * gameTimeScale.Value * tweenRate, 0.0f, 1.0f));
             }
         }
-        private void GetStruck()
+
+        private void ModifyVelocityBasedOnBurst()
         {
-            playerState = PlayerState.Struck;
-            remainingStruckTime = struckTime;
-            wereControlsEnabledBeforeStruck = controlsEnabled;
-            controlsEnabled = false;
+            if (isBurstActive)
+            {
+                velocity = Vector2.Lerp(burstForce, velocity, burstTimer / burstDuration);
+                burstTimer += Time.deltaTime;
+                if (burstTimer > burstDuration)
+                    isBurstActive = false;
+            }
         }
 
-        public void KnockBack(Vector2 direction, float distance)
+        public void SlowMovementTemporarily(float duration)
         {
+            IsSlowed = true;
+            temporarySlowCoroutine = StartCoroutine(ResetIsSlowed(duration));
+        }
+
+        IEnumerator ResetIsSlowed(float duration)
+        {
+            yield return new WaitForSeconds(duration);
+            IsSlowed = false;
+        }
+
+        private void GetStruck(float newStruckTime)
+        {
+            //print("Get struck! Struck time is " + newStruckTime + "usually is " + struckTime);
+            getStruckEvent.Invoke();
+
+            if (playerState != PlayerState.Struck)
+                wereControlsEnabledBeforeStruck = controlsEnabled;
+            controlsEnabled = false;
+
+            playerState = PlayerState.Struck;
+            remainingStruckTime = newStruckTime;
+        }
+
+        public void KnockBack(Vector2 direction, float distance, bool induceInvincibility = true)
+        {
+            if (isInvincible) return;
+
             // Talk shit
             knockBackForce = direction.normalized * distance;
 
             // Get hit
-            //playerState = PlayerState.Tripped;
-            GetStruck();
+            GetStruck(induceInvincibility ? struckTime : struckTime * 1.65f); // Greater delay if hit by a weapon that can combo 
+            BeginVelocityBurst(direction, 0.3f, 0.05f);
             remainingTripTime = tripTime;
-            BecomeInvincible(invincibilityTime);
+
+            if (induceInvincibility)
+                BecomeInvincible(invincibilityTime);
         }
 
-        public void ApplyKnockbackOnly(Vector2 direction, float distance)
+        public void ApplyKnockbackOnly(Vector2 direction, float distance, float duration = 0.5f)
         {
+            print("Apply knockback only!");
             // Talk shit
             knockBackForce = direction.normalized * distance;
 
             // Get hit
             knockbackOverride = true;
-            remainingTripTime = 0.5f;   
+            remainingTripTime = duration;   
         }
 
         public void BecomeInvincible(float duration)
@@ -187,5 +269,7 @@ namespace Hawaiian.Unit
             
             initialised.Invoke();
         }
+
+
     }
 }
