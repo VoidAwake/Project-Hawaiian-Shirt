@@ -116,9 +116,8 @@ namespace Hawaiian.Unit
             {
                 //print(name + "... " + "Walkin' n' fine. State: " + playerState + ". isBurstActive: " + isBurstActive + ". knockBackOverride: " + knockbackOverride + ".");
 
-                bool debug = (move.magnitude > 0.1f);
-
-                if (debug) print("Walking and fine. isBurstActive: " + isBurstActive + ". Velocity: " + velocity + ". Move input: " + move + ". isSlowed: " + isSlowed + ". Control enabled: " + controlsEnabled);
+                //bool debug = (move.magnitude > 0.1f);
+                //if (debug) print("Walking and fine. isBurstActive: " + isBurstActive + ". Velocity: " + velocity + ". Move input: " + move + ". isSlowed: " + isSlowed + ". Control enabled: " + controlsEnabled);
 
                 // Update inputs and velocity
                 Vector2 modifiedMove = move.magnitude * 1.2f > 1.0f ? move.normalized : move.magnitude < 0.05f ? Vector2.zero : move * 1.2f;
