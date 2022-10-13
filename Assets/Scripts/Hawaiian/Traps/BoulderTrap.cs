@@ -23,7 +23,7 @@ public class BoulderTrap : TrapController
     bool isRolling = false;
     float speedPercent;
     float timeToMaxSpeed = 1;
-    float timeToBeginRolling = 1.15f;
+    float timeToBeginRolling = 2.35f; // Magic magic numbers
 
     public override void TriggerTrap()
     {
