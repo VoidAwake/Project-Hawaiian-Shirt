@@ -21,14 +21,7 @@ namespace Hawaiian.Inventory.ItemBehaviours
 
         public int KnockbackDistance => _knockbackDistance;
         
-        void Update()
-        {
-            if (_isDead) return;
-
-            transform.localPosition = Vector3.zero;
-        }
-
-        public override void Initialise(float speed, int knockbackDistance,  bool flag, IUnit user, Vector2 knockbackDirection) 
+        public void Initialise(float speed, int knockbackDistance,  bool flag, IUnit user, Vector2 knockbackDirection) 
         {
             BaseInitialise(user,speed,knockbackDistance);
             _animator = GetComponent<Animator>();

@@ -26,8 +26,7 @@ namespace Hawaiian.Inventory.ItemBehaviours
             set => _positions[^1] = value;
         }
 
-
-        public override void Initialise(Vector2 [] targets, Sprite newSprite,bool canStickOnWalls = false)
+        public void Initialise(Vector2 [] targets, Sprite newSprite,bool canStickOnWalls = false)
         {
             hasCollided = false;
             _positions = targets;

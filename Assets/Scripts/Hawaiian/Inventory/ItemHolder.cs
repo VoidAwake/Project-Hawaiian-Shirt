@@ -10,7 +10,6 @@ namespace Hawaiian.Inventory
         // TODO: Need to reconsider these references
         [SerializeField] public UnitPlayer unitPlayer;
         [SerializeField] public Cursor cursor;
-        [SerializeField] public Transform firePoint;
         [SerializeField] public SpriteRenderer heldItemSpriteRenderer;
 
         public Item Item => inventoryController.CurrentItem;

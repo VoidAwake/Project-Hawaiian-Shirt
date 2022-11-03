@@ -46,7 +46,7 @@ namespace Hawaiian.Inventory.ItemBehaviours
             maxSpeed = _speed;
         }
 
-        public override void Initialise(IUnit user, Vector3 target, Item item)
+        public void Initialise(IUnit user, Vector3 target, Item item)
         {
             WasParried = false;
             stuckOnWall = false;
