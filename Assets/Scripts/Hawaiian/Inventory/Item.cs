@@ -54,7 +54,6 @@ namespace Hawaiian.Inventory
         [HideInInspector] public float DrawDistance;
         [HideInInspector] public bool SticksOnWall;
         [HideInInspector] public bool ReturnsToPlayer;
-        [HideInInspector] public bool IsMultiShot;
         [HideInInspector] public int ProjectileAmount;
         [HideInInspector] public bool IsRicochet;
         [HideInInspector] public int MaximumBounces;

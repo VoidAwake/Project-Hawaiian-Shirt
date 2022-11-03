@@ -10,60 +10,51 @@ namespace Hawaiian.Inventory.HeldItemBehaviours
     public abstract class InstantiateHeldItemBehaviour<T> : HeldItemBehaviour where T : ItemBehaviour
     {
         [SerializeField] private UnityEvent itemUsed;
-        
-        private GameObject _projectileInstance;
+
+        protected readonly List<T> InstantiatedItemBehaviours = new();
 
         protected override void UseItemActionCancelled(InputAction.CallbackContext value)
         {
             base.UseItemActionCancelled(value);
             
-            if (!CanUseProjectile()) return;
+            if (!CanUseItem()) return;
 
-            var projectiles = new List<GameObject>();
+            InstantiatedItemBehaviours.Clear();
 
-            for (int i = Item.ProjectileAmount == 0 ? -1 : 0;
-                 i < Item.ProjectileAmount;
-                 i++)
+            for (int i = 0; i < NumberOfObjectsToInstantiate(); i++)
             {
-                _projectileInstance = Instantiate(Item.ProjectileInstance,
-                    transform.position + 0.1f * (Cursor.transform.position - transform.position), Quaternion.identity);
-                projectiles.Add(_projectileInstance);
+                // TODO: what
+                var instantiationPosition = transform.position + 0.1f * (Cursor.transform.position - transform.position);
+                
+                var itemBehaviourObject = Instantiate(Item.ProjectileInstance, instantiationPosition, Quaternion.identity);
 
-                if (i == -1)
-                    break;
+                var itemBehaviour = itemBehaviourObject.GetComponent<T>();
+                
+                InstantiatedItemBehaviours.Add(itemBehaviour);
             }
 
-            UseItem(projectiles);
+            UseItem(InstantiatedItemBehaviours);
 
             Cursor.LerpToReset();
         }
         
-        // TODO: Should not depend on Projectile
-        protected virtual bool CanUseProjectile()
+        protected virtual bool CanUseItem()
         {
-            if (_projectileInstance == null) return true;
-            if (!_projectileInstance.GetComponent<Projectile>()) return true;
-            if (_projectileInstance.GetComponent<Projectile>().IsOnWall()) return true;
-
-            return false;
+            return true;
         }
         
-        protected virtual void UseItem(List<GameObject> projectiles = null)
+        protected virtual void UseItem(List<T> itemBehaviours)
         {
-            if (projectiles == null) return;
-
-            for (var i = 0; i < projectiles.Count; i++)
+            for (var i = 0; i < itemBehaviours.Count; i++)
             {
-                var p = projectiles[i];
-
-                var itemBehaviour = p.GetComponent<T>();
+                var itemBehaviour = itemBehaviours[i];
                 
                 itemBehaviour.BaseInitialise(UnitPlayer, Item.DrawSpeed, Item.KnockbackDistance);
                 
                 InitialiseInstantiatedItemBehaviour(itemBehaviour, i);
                 
-                if (p.GetComponent<HitUnit>())
-                    p.GetComponent<HitUnit>()
+                if (itemBehaviour.GetComponent<HitUnit>())
+                    itemBehaviour.GetComponent<HitUnit>()
                         .Initialise(UnitPlayer, Cursor.transform.position - transform.position);
 
                 UnitPlayer.transform.GetComponent<UnitAnimator>()
@@ -74,5 +65,10 @@ namespace Hawaiian.Inventory.HeldItemBehaviours
         }
         
         protected virtual void InitialiseInstantiatedItemBehaviour(T itemBehaviour, int i) { }
+
+        protected virtual int NumberOfObjectsToInstantiate()
+        {
+            return 1;
+        }
     }
 }

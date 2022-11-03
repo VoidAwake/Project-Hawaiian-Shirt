@@ -59,9 +59,9 @@ namespace Hawaiian.Inventory.HeldItemBehaviours
                 gradient.SetKeys(
                     new GradientColorKey[]
                     {
-                        new GradientColorKey(instantiateProjectileHeldItemBehaviour.UnitPlayer.PlayerColour, 0.0f),
-                        new GradientColorKey(instantiateProjectileHeldItemBehaviour.UnitPlayer.PlayerColour, 1.0f)
-                    }, new GradientAlphaKey[] {new GradientAlphaKey(1, 0.0f), new GradientAlphaKey(1, 1.0f)});
+                        new(instantiateProjectileHeldItemBehaviour.UnitPlayer.PlayerColour, 0.0f),
+                        new(instantiateProjectileHeldItemBehaviour.UnitPlayer.PlayerColour, 1.0f)
+                    }, new GradientAlphaKey[] {new(1, 0.0f), new(1, 1.0f)});
 
                 renderer.colorGradient = gradient;
             }

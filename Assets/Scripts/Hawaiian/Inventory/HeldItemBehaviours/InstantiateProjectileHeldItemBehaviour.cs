@@ -1,4 +1,5 @@
-﻿using Hawaiian.Inventory.ItemBehaviours;
+﻿using System.Linq;
+using Hawaiian.Inventory.ItemBehaviours;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -12,26 +13,20 @@ namespace Hawaiian.Inventory.HeldItemBehaviours
         private bool collisionFlag = false;
         
         public Vector3[] _multiShotTargets;
-        private int targetCount;
 
         public override void Initialise(ItemHolder itemHolder)
         {
             base.Initialise(itemHolder);
             
-            TargetCount = Item.ProjectileAmount == 0 ? 1 : Item.ProjectileAmount;
+            targetCount = Item.ProjectileAmount;
+            
+            targetCountChanged.Invoke();
+            
+            UpdateMultiShotTargets();
         }
 
-        public int TargetCount
-        {
-            get => targetCount;
-            private set
-            {
-                targetCount = value;
-                targetCountChanged.Invoke();
-                UpdateMultiShotTargets();
-            }
-        } 
-        
+        private int targetCount;
+
         private void FixedUpdate()
         {
             if (UseItemActionHeld)
@@ -56,10 +51,10 @@ namespace Hawaiian.Inventory.HeldItemBehaviours
 
             if (angle < 0) angle = 360 - angle * -1;
 
-            for (var i = 0; i < TargetCount; i++)
+            for (var i = 0; i < targetCount; i++)
             {
                 // Increment the angle for each target
-                var currentAngle = angle + 20f * i - (TargetCount - 1) / (float) 2 * 20f;
+                var currentAngle = angle + 20f * i - (targetCount - 1) / (float) 2 * 20f;
 
                 var radians = currentAngle * Mathf.Deg2Rad;
 
@@ -80,11 +75,20 @@ namespace Hawaiian.Inventory.HeldItemBehaviours
             projectile.Initialise(UnitPlayer, _multiShotTargets[i], Item);
         }
 
-        protected override bool CanUseProjectile()
+        protected override bool CanUseItem()
         {
             if (targetCount <= 0) return false;
 
-            return base.CanUseProjectile();
+            if (InstantiatedItemBehaviours.Any(projectile => projectile != null && !projectile.IsOnWall())) return false;
+            
+            if (Item.ProjectileAmount == 0) return false;
+
+            return base.CanUseItem();
+        }
+
+        protected override int NumberOfObjectsToInstantiate()
+        {
+            return Item.ProjectileAmount;
         }
     }
 }

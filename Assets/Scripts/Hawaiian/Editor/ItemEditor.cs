@@ -27,7 +27,6 @@ namespace Hawaiian.Editor
         SerializedProperty droppedItemBase;
         SerializedProperty projectileInstance;
         SerializedProperty returnToPlayer;
-        SerializedProperty multishot;
         SerializedProperty multishotAmount;
         SerializedProperty trapPlacementRadius;
         SerializedProperty trapPlacementIcon;
@@ -67,7 +66,6 @@ namespace Hawaiian.Editor
             projectileInstance = serializedObject.FindProperty("ProjectileInstance");
             isKey = serializedObject.FindProperty("IsKey");
             returnToPlayer = serializedObject.FindProperty("ReturnsToPlayer");
-            multishot = serializedObject.FindProperty("IsMultiShot");
             multishotAmount = serializedObject.FindProperty("ProjectileAmount");
             trapPlacementIcon = serializedObject.FindProperty("PlacementIcon");
             trapPlacementRadius = serializedObject.FindProperty("PlacementRadius");
@@ -213,26 +211,13 @@ namespace Hawaiian.Editor
                     "If the projectile does not hit a unit or obstacle in its initial throw, the projectile will return to the player"));
 
             EditorGUILayout.Space();
-            EditorGUILayout.PropertyField(multishot,
-                new GUIContent("Is A Multishot", "Refers to if the item will produce multiple shots at once"));
-
-            EditorGUILayout.Space();
             EditorGUILayout.PropertyField(IsRicochet,
                 new GUIContent("Is Ricochet", "Refers to if the item will bounce of wall"));
             EditorGUILayout.Space();
             EditorGUILayout.PropertyField(KnockbackDistance, new GUIContent("Knockback Distance"));
             
-
-            if (item.IsMultiShot)
-            {
-                GUILayout.Label("Multishot Stats", EditorStyles.boldLabel);
-                EditorGUILayout.IntSlider(multishotAmount, 2, 20,
-                    new GUIContent("Number of Projectiles", "The amount of projectiles spawned by the item when used"));
-            }
-            else
-            {
-                item.ProjectileAmount = 0;
-            }
+            EditorGUILayout.IntSlider(multishotAmount, 1, 20,
+                new GUIContent("Number of Projectiles", "The amount of projectiles spawned by the item when used"));
 
             if (item.IsRicochet)
             {
