@@ -48,6 +48,7 @@ namespace Hawaiian.Inventory
         private void OnCurrentItemChanged()
         {
             currentItemChanged.Invoke();
+            player.IsSlowed = false;
         }
 
         // TODO: Replace with messages

@@ -13,14 +13,14 @@ MonoBehaviour:
   m_Name: 32
   m_EditorClassIdentifier: 
   Type: 3
-  ItemSprite: {fileID: 21300000, guid: 153c4f1ef675efc48ae1266be89262ad, type: 3}
-  DroppedItemSprite: {fileID: 21300000, guid: 153c4f1ef675efc48ae1266be89262ad, type: 3}
-  ItemName: Hawaiian Shirt
+  ItemSprite: {fileID: 21300000, guid: 5ede04c185891f34a919091d1dea9531, type: 3}
+  DroppedItemSprite: {fileID: 21300000, guid: 5ede04c185891f34a919091d1dea9531, type: 3}
+  ItemName: Gold Bar
   MaxStack: 0
   DroppedItemBase: {fileID: 3056942884218095950, guid: 37132a09f5d1c4046a4bb460892afc47, type: 3}
   ProjectileInstance: {fileID: 0}
-  Rarity: 3
-  ItemWeight: 10
+  Rarity: 2
+  ItemWeight: 30
   heldItemPrefab: {fileID: 0}
   ProbabilityRangeFrom: 0
   ProbabilityRangeTo: 0
@@ -34,14 +34,19 @@ MonoBehaviour:
   IsRicochet: 0
   MaximumBounces: 0
   ParryWindow: 0
-  ParryPercentage: 0
+  ParryPercentageUpperLimit: 0
+  ParryPercentageLowerLimit: 0
   TimeTillParry: 0
+  ShieldUp: {fileID: 0}
+  ShieldDown: {fileID: 0}
   AttackRate: 0
   KnockbackDistance: 0
   IsMainObjective: 0
   CanBeHeldByEnemies: 0
-  Points: 100
+  Points: 32
   PlacementRadius: 0
   PlacementIcon: {fileID: 0}
   TrapInstance: {fileID: 0}
   IsKey: 0
+  IsDetonator: 0
+  IsDepositor: 0

@@ -1,8 +1,10 @@
 ﻿using Hawaiian.Inventory.ItemBehaviours;
+using Hawaiian.Inventory.ItemBehaviours.HitEffects;
 using Hawaiian.Unit;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
+using System.Collections;
 
 namespace Hawaiian.Inventory.HeldItemBehaviours
 {
@@ -22,6 +24,12 @@ namespace Hawaiian.Inventory.HeldItemBehaviours
         private bool _attackFlag;
         private float _offset = 1.1f;
 
+        private float _minComboCooldown;
+        private float _maxComboCooldown;
+        private static int _maxCombo = 3;
+        private int _currentCombo = 0;
+        Coroutine resetComboCoroutine;
+
         public bool CanMeleeAttack() => _slashCooldown <= 0;
 
         public void Update()
@@ -36,13 +44,39 @@ namespace Hawaiian.Inventory.HeldItemBehaviours
             
             if (!CanMeleeAttack()) return;
 
+            if (_currentCombo >= _maxCombo) return;
+
+            _minComboCooldown = AttackRate * 1.65f;
+            _maxComboCooldown = _minComboCooldown * 1.65f;
+
             //Begin melee 
             Vector3 input = GetPlayerInput();
             var angle = Mathf.Atan2(input.y, input.x) * Mathf.Rad2Deg;
             var direction = input;
-            InstantiateMeleeIndicator(angle, direction);
-            
+            bool isFinalSwingOfCombo = _currentCombo >= _maxCombo - 1;
+            InstantiateMeleeIndicator(angle, direction, isFinalSwingOfCombo);
+
+            // Track combo of swings
+            _currentCombo++;
+            if (resetComboCoroutine != null)
+                StopCoroutine(resetComboCoroutine);
+            resetComboCoroutine = StartCoroutine(ResetCurrentCombo(isFinalSwingOfCombo ? _maxComboCooldown : _minComboCooldown));
+
+            // Modify player's velocity
+            UnitPlayer.SlowMovementTemporarily(AttackRate * 1.75f);
+            UnitPlayer.BeginVelocityBurst((Vector2)direction, 0.3f, 0.075f); // I sure love magic numbers
+
+            //print("Combo! " + currentCombo);
+
             attacked.Invoke();
+        }
+
+        private IEnumerator ResetCurrentCombo(float resetTime)
+        {
+            yield return new WaitForSeconds(resetTime);
+            _currentCombo = 0;
+
+            //print("Combo reset! " + currentCombo);
         }
 
         private Vector3 GetPlayerInput()
@@ -59,7 +93,7 @@ namespace Hawaiian.Inventory.HeldItemBehaviours
             return playerInput;
         }
 
-        private void InstantiateMeleeIndicator(float angle, Vector3 direction)
+        private void InstantiateMeleeIndicator(float angle, Vector3 direction, bool induceInvincibility = true)
         {
             UnitPlayer.transform.GetComponent<UnitAnimator>()
                 .UseItem(UnitAnimationState.MeleeSwing,
@@ -73,6 +107,7 @@ namespace Hawaiian.Inventory.HeldItemBehaviours
                 _attackFlag, UnitPlayer, direction);
             indicator.GetComponent<HitUnit>().Initialise(UnitPlayer, Cursor.transform.position - transform.position);
             _attackFlag = !_attackFlag;
+            indicator.GetComponent<DealKnockback>().induceInvincibility = induceInvincibility;
         }
     }
 }

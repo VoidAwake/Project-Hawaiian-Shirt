@@ -12,10 +12,18 @@ namespace Hawaiian.Inventory.HeldItemBehaviours
         [SerializeField] private UnityEvent itemUsed;
 
         protected readonly List<T> InstantiatedItemBehaviours = new();
+        
+        protected override void UseItemActionPerformed(InputAction.CallbackContext value)
+        {
+            base.UseItemActionPerformed(value);
+            UnitPlayer.IsSlowed = true;
+        }
 
         protected override void UseItemActionCancelled(InputAction.CallbackContext value)
         {
             base.UseItemActionCancelled(value);
+            
+            UnitPlayer.IsSlowed = false;
             
             if (!CanUseItem()) return;
 

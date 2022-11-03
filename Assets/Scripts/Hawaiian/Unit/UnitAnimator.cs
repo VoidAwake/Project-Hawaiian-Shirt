@@ -49,6 +49,8 @@ namespace Hawaiian.Unit
         {
             //_animator = GetComponent<Animator>();
             _unit = GetComponent<Unit>();
+            if (_unit)
+                _unit.getStruckEvent.AddListener(PlayStruckEffect);
             _isLookingLeft = true;
             hitEffect.Stop();
         }
@@ -137,9 +139,9 @@ namespace Hawaiian.Unit
                     if (_playerState != Unit.PlayerState.Struck)
                     {
                         _playerState = Unit.PlayerState.Struck;
-                        _renderers[0].transform.parent.localPosition = Vector2.zero;
-                        currentStruckVector = GetRandomVector2();
-                        hitEffect.Play();
+                        //_renderers[0].transform.parent.localPosition = Vector2.zero; // Been duped and moved to a function called by GetStruck()
+                        //currentStruckVector = GetRandomVector2();
+                        //hitEffect.Play();
                     }
 
                     // Animate shaking
@@ -268,6 +270,13 @@ namespace Hawaiian.Unit
             }
 
             #endregion
+        }
+
+        public void PlayStruckEffect()
+        {
+            _renderers[0].transform.parent.localPosition = Vector2.zero;
+            currentStruckVector = GetRandomVector2();
+            hitEffect.Play();
         }
 
         private void FlipCharacter(bool faceRightwards)
