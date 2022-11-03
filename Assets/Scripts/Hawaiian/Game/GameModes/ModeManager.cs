@@ -15,6 +15,7 @@ namespace Hawaiian.Game.GameModes
         [SerializeField] protected GameEvent gameOverEvent;
 
         public static ModeManager CurrentModeManager { get; set; }
+        // TODO: Never invoked?
         public static UnityEvent<ModeManager> Initialised { get; } = new();
         
         public virtual GameObject ControlsInstructionsDialoguePrefab => controlsInstructionsDialoguePrefab;
@@ -48,6 +49,23 @@ namespace Hawaiian.Game.GameModes
         private void OnGameOver()
         {
             SaveScores();
+        }
+
+        public void SetModeAsCurrent()
+        {
+            CurrentModeManager = this;
+        }
+
+        public void ListenToLevel()
+        {
+            // TODO: Come back to this
+            playerManager = FindObjectOfType<PlayerManager>();
+
+            // TODO: Unlisten?
+            playerManager.playerJoined.AddListener(OnPlayerJoined);
+            
+            // TODO: Unlisten?
+            gameOverEvent.RegisterListener(gameOver);
         }
     }
 }

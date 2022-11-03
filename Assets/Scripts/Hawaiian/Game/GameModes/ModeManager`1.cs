@@ -10,7 +10,7 @@ namespace Hawaiian.Game.GameModes
 
         public override async void LoadRandomLevel()
         {
-            CurrentModeManager = this;
+            SetModeAsCurrent();
             
             if (sceneReferences.Count == 0) return;
 
@@ -18,14 +18,7 @@ namespace Hawaiian.Game.GameModes
             
             await sceneChanger.ChangeScene(sceneReference.sceneReference);
             
-            // TODO: Come back to this
-            playerManager = FindObjectOfType<PlayerManager>();
-
-            // TODO: Unlisten?
-            playerManager.playerJoined.AddListener(OnPlayerJoined);
-            
-            // TODO: Unlisten?
-            gameOverEvent.RegisterListener(gameOver);
+            ListenToLevel();
         }
     }
 }
