@@ -12,7 +12,6 @@ namespace Hawaiian.Inventory
         protected ItemHolder itemHolder;
         public UnitPlayer UnitPlayer => itemHolder.unitPlayer;
         protected Cursor Cursor => itemHolder.cursor;
-        protected Transform FirePoint => itemHolder.firePoint;
         
         public bool UseItemActionHeld { get; private set; }
 

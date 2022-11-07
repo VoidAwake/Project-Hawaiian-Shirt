@@ -17,6 +17,7 @@ namespace Hawaiian.Game.GameModes
         [SerializeField] protected GameEvent gameOverEvent;
 
         public static ModeManager CurrentModeManager { get; set; }
+        // TODO: Never invoked?
         public static UnityEvent<ModeManager> Initialised { get; } = new();
         public UnityEvent winningPlayersChanged = new();
         
@@ -96,6 +97,23 @@ namespace Hawaiian.Game.GameModes
         protected virtual float PlayerConfigScore(PlayerConfig playerConfig)
         {
             return 0;
+        }
+
+        public void SetModeAsCurrent()
+        {
+            CurrentModeManager = this;
+        }
+
+        public void ListenToLevel()
+        {
+            // TODO: Come back to this
+            playerManager = FindObjectOfType<PlayerManager>();
+
+            // TODO: Unlisten?
+            playerManager.playerJoined.AddListener(OnPlayerJoined);
+            
+            // TODO: Unlisten?
+            gameOverEvent.RegisterListener(gameOver);
         }
     }
 }

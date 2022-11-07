@@ -35,7 +35,7 @@ public class ItemText : MonoBehaviour
                 text.text = _controller.inv.inv[_controller.inv.invPosition].ItemName;
                 text.color = color;
                 timer = duration;
-                Debug.Log(_controller.inv.inv[_controller.inv.invPosition].ItemName);
+                //Debug.Log(_controller.inv.inv[_controller.inv.invPosition].ItemName);
             }
         }
         else

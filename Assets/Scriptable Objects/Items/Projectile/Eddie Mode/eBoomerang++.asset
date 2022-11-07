@@ -22,16 +22,15 @@ MonoBehaviour:
   Rarity: 2
   ItemWeight: 30
   heldItemPrefab: {fileID: 7291259026507672787, guid: 74bb02f1a4b4c714386f159d97b46e43, type: 3}
-  ProbabilityRangeFrom: 210
-  ProbabilityRangeTo: 240
+  ProbabilityRangeFrom: 30
+  ProbabilityRangeTo: 60
   ItemDamage: 10
   DrawSpeed: 16
   DrawDistance: 12
   SticksOnWall: 0
   ReturnsToPlayer: 1
-  IsMultiShot: 0
-  ProjectileAmount: 0
-  IsRicochet: 0
+  ProjectileAmount: 1
+  IsRicochet: 1
   MaximumBounces: 2
   ParryWindow: 0
   ParryPercentageUpperLimit: 0

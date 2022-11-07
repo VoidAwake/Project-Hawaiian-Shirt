@@ -29,7 +29,7 @@ namespace Hawaiian.Unit
             base.Awake();
             _input = new PlayerAction();
             _playerInput = GetComponent<PlayerInput>();
-            Debug.Log(_playerInput.playerIndex + "Current player index");
+            //Debug.Log(_playerInput.playerIndex + "Current player index");
            // _playerJoined.Raise();
         }
 
@@ -86,9 +86,9 @@ namespace Hawaiian.Unit
         
         public void Use() { }
         
-        public void ApplyKnockback(Vector2 direction, float distance)
+        public void ApplyKnockback(Vector2 direction, float distance, float duration = 0.5f)
         {
-            ApplyKnockbackOnly(direction, distance);
+            ApplyKnockbackOnly(direction, distance, duration);
         }
 
         public void TripUnit(Vector2 direction, float distance)

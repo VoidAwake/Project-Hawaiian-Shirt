@@ -39,7 +39,7 @@ MonoBehaviour:
   TimeTillParry: 0
   ShieldUp: {fileID: 0}
   ShieldDown: {fileID: 0}
-  AttackRate: 0.3
+  AttackRate: 0.18
   KnockbackDistance: 2
   IsMainObjective: 0
   CanBeHeldByEnemies: 0

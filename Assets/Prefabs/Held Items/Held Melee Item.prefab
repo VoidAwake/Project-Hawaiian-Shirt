@@ -47,9 +47,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _meleeSlashRotationOffset: -90
   _projectileReference: {fileID: 1546100782826642891, guid: 6916ca4131234a941b3eb78d5ca707fe, type: 3}
-  AttackRate: 0.3
+  AttackRate: 0.18
   DrawSpeed: 0
-  KnockbackDistance: 4
+  KnockbackDistance: 6
+  _offset: 1.5
   attacked:
     m_PersistentCalls:
       m_Calls:

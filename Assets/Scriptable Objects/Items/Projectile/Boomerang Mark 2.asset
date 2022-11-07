@@ -29,8 +29,7 @@ MonoBehaviour:
   DrawDistance: 6
   SticksOnWall: 0
   ReturnsToPlayer: 1
-  IsMultiShot: 0
-  ProjectileAmount: 0
+  ProjectileAmount: 1
   IsRicochet: 0
   MaximumBounces: 0
   ParryWindow: 0
