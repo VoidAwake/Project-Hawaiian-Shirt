@@ -1,6 +1,4 @@
-using System;
 using UnityEngine;
-using Application = UnityEngine.Device.Application;
 
 namespace Hawaiian.Inventory
 {
@@ -23,19 +21,18 @@ namespace Hawaiian.Inventory
 
         private void Awake()
         {
-            // Must be called in awake to update static items before highlighters
             OnItemChanged();
         }
 
         public void Initialise(Item item)
         {
-            // Must be called in initialise to update dynamic items before highlighters
             Item = item;
         }
         
         private void Start()
         {
-            // Must be called in start to validate all items 
+            // Must be called in start to validate all items after they are initialised
+            // TODO: Might be possible to refactor now that highlighter has been refactored
             ValidateItem();
         }
 
