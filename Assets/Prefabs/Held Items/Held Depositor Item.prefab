@@ -12,6 +12,9 @@ GameObject:
   - component: {fileID: 4353815354721307366}
   - component: {fileID: 5424057397593351752}
   - component: {fileID: 979334200053766057}
+  - component: {fileID: -5286487988208545043}
+  - component: {fileID: 2670927936114176849}
+  - component: {fileID: -1075383165040165859}
   m_Layer: 9
   m_Name: Held Depositor Item
   m_TagString: Untagged
@@ -77,7 +80,6 @@ MonoBehaviour:
   token: {fileID: 11400000, guid: 24a9efbfd5f4c554e94003eaecc3de95, type: 2}
   radius: 3
   interactionTarget: 1
-  targetsChanged: {fileID: 11400000, guid: 37e77cbc288b0bb408597b25a3a84f7e, type: 2}
   raisedOnTarget:
     m_PersistentCalls:
       m_Calls: []
@@ -97,3 +99,83 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.5
+--- !u!212 &-5286487988208545043
+SpriteRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2342829590155690216}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_Sprite: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_FlipX: 0
+  m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 1, y: 1}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 0
+  m_MaskInteraction: 0
+  m_SpriteSortPoint: 0
+--- !u!114 &2670927936114176849
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2342829590155690216}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a6e6f2770f3c42a7b77a24e8e3778f33, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  caller: {fileID: 5424057397593351752}
+--- !u!114 &-1075383165040165859
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2342829590155690216}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f5e1e2a3f40e425ebdc706f1cf406276, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  caller: {fileID: 5424057397593351752}
+  controlPromptPrefab: {fileID: 863757022267649085, guid: dfed0489b330811449510e739f1f6872, type: 3}
+  actionName: Attack

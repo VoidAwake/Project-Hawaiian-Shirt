@@ -23,7 +23,7 @@ namespace Hawaiian.Inventory
         [SerializeField] private TreasureDic dictionary;
         
 
-        public UnityEvent currentItemChanged = new UnityEvent();
+        public UnityEvent inventoryChanged = new UnityEvent();
         public Inventory inv;
 
         private int tempPos;
@@ -36,18 +36,18 @@ namespace Hawaiian.Inventory
         private void Awake()
         {
             inv = ScriptableObject.CreateInstance<Inventory>();
-            inv.SetInventory(size.Value);
-            inv.currentItemChanged.AddListener(OnCurrentItemChanged);
-            inv.currentItemChanged.AddListener(CreateScorePopUp);
+            inv.SetInventorySize(size.Value);
+            inv.inventoryChanged.AddListener(OnInventoryChanged);
+            inv.inventoryChanged.AddListener(CreateScorePopUp);
 
             player = GetComponentInParent<UnitPlayer>();
 
             positionalEventCaller = GetComponent<PositionalEventCaller>();
         }
 
-        private void OnCurrentItemChanged()
+        private void OnInventoryChanged()
         {
-            currentItemChanged.Invoke();
+            inventoryChanged.Invoke();
             player.IsSlowed = false;
         }
 
@@ -155,7 +155,7 @@ namespace Hawaiian.Inventory
 
             hand.sprite = inv.inv[inv.InvPosition]?.ItemSprite;
 
-            currentItemChanged.Invoke();
+            inventoryChanged.Invoke();
 
             parse.Raise();
         }
@@ -250,7 +250,7 @@ namespace Hawaiian.Inventory
             
             GameObject droppedItemObject = Instantiate(droppedItemPrefab, transform.position + Vector3.up * 0.5f, quaternion.identity);
             
-            droppedItemObject.GetComponent<DroppedItem>().Item = inv.inv[invPosition];
+            droppedItemObject.GetComponent<DroppedItem>().Initialise(inv.inv[invPosition]);
             
             // I'm so sorry
             for (int i = 0; i < droppedItemObject.transform.childCount; i++)

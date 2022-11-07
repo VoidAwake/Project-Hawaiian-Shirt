@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using System.Collections;
 using Hawaiian.Game;
-using Hawaiian.UI.CharacterSelect;
 using Hawaiian.Unit;
 using Hawaiian.Utilities;
 using Unity.Mathematics;
@@ -12,8 +11,6 @@ namespace Hawaiian.UI.Game
 {
     public class InventoryUI : MonoBehaviour
     {
-        //[SerializeField] private GameEvent parsed;
-        [SerializeField] public Inventory.Inventory inv;
         [SerializeField] private ScriptableInt size;
         [SerializeField] private GameObject horizontalGroup;
         [SerializeField] private RectTransform inventoryBackdrop;
@@ -30,15 +27,21 @@ namespace Hawaiian.UI.Game
         [SerializeField] private PlayerSprites playerSprites;
         [SerializeField] private PlayerColors playerColors;
 
-        private void Start()
+        private PlayerConfig playerConfig;
+        private Inventory.Inventory inventory;
+
+        public void Initialise(PlayerConfig playerConfig, Inventory.Inventory inventory)
         {
+            this.playerConfig = playerConfig;
+            this.inventory = inventory;
+            
             for (int i = 0; i < size.Value; i++)
             {
                 invSlots.Add(Instantiate(slot, transform.position, quaternion.identity, horizontalGroup.transform));
                 //Instantiate this gamer inventory ui
-                if (inv.inv[i] != null)
+                if (inventory.inv[i] != null)
                 {
-                    invSlots[i].GetComponent<SlotUI>().UpdateSprite(inv.inv[i].ItemSprite);
+                    invSlots[i].GetComponent<SlotUI>().UpdateSprite(inventory.inv[i].ItemSprite);
                 }
                 else
                 {
@@ -52,21 +55,21 @@ namespace Hawaiian.UI.Game
             transform.GetChild(0).GetComponent<RectTransform>().localPosition = new Vector2(70.0f - (70.0f + length) / 2.0f, 0.0f);
 
             highlight = Instantiate(highlightPrefab, invSlots[0].transform.position, quaternion.identity, invSlots[0].transform);
-            inv.currentItemChanged.AddListener(UpdateInv);
+            inventory.inventoryChanged.AddListener(OnInventoryChanged);
             
             SetCharacterPortrait();
         }
         
 
-        private void UpdateInv()
+        private void OnInventoryChanged()
         {
             for (int i = 0; i < size.Value; i++)
             {
             
                 //invSlots[i].refer to inv
-                if (inv.inv[i] != null)
+                if (inventory.inv[i] != null)
                 {
-                    invSlots[i].GetComponent<SlotUI>().UpdateSprite(inv.inv[i].ItemSprite);
+                    invSlots[i].GetComponent<SlotUI>().UpdateSprite(inventory.inv[i].ItemSprite);
                 }
                 else
                 {
@@ -80,14 +83,14 @@ namespace Hawaiian.UI.Game
 
         private void OnDestroy()
         {
-            inv.currentItemChanged.RemoveListener(UpdateInv);
+            inventory.inventoryChanged.RemoveListener(OnInventoryChanged);
         }
         
         
 
         public void OnParsed()
         {
-            highlight.transform.position = invSlots[inv.InvPosition].transform.position;
+            highlight.transform.position = invSlots[inventory.InvPosition].transform.position;
             
             // Animate highlight
             if (highlightCoroutine != null)
@@ -134,18 +137,6 @@ namespace Hawaiian.UI.Game
 
         private void SetCharacterPortrait()
         {
-            var playerManager = FindObjectOfType<PlayerManager>();
-
-            if (playerManager == null) return;
-
-            var playerConfig = playerManager.GetPlayerConfig(inv);
-
-            if (playerConfig == null)
-            {
-                Debug.LogWarning($"Could not find the {nameof(PlayerConfig)}.");
-                return;
-            }
-            
             head.sprite = playerSprites.GetSprite(playerConfig.characterNumber);
             backdrop.color = playerColors.GetColor(playerConfig.playerNumber);
         }

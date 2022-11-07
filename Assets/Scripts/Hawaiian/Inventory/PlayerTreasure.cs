@@ -236,7 +236,7 @@ namespace Hawaiian.Inventory
                 temp.Add(item);
                 pointsToRemove += (int) item.Points;
                 GameObject droppedItem = Instantiate(DroppedItemPrefab, transform.position, Quaternion.identity);
-                droppedItem.GetComponent<DroppedItem>().Item = item;
+                droppedItem.GetComponent<DroppedItem>().Initialise(item);
 
                 var randomX = UnityEngine.Random.Range(-1f, 1f);
                 var randomY = UnityEngine.Random.Range(-1f, 1f);
