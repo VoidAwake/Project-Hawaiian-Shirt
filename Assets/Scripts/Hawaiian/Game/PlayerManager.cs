@@ -13,7 +13,7 @@ namespace Hawaiian.Game
     {
         [SerializeField] private GameObject playerPrefab;
         [SerializeField] private GameEvent playersJoined;
-        [SerializeField] private List<SpawnPoint> spawnPoints;
+        [SerializeField] public List<SpawnPoint> spawnPoints;
         [SerializeField] private PlayerConfigManager playerConfigManager;
 
         public UnityEvent<PlayerConfig> playerJoined = new();

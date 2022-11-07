@@ -18,8 +18,14 @@ MonoBehaviour:
   tutorialDialoguePrefab: {fileID: 0}
   sceneChanger: {fileID: 11400000, guid: 3d32adecca106ad4a8e92d019d2654af, type: 2}
   gameOverEvent: {fileID: 11400000, guid: 3f166778320e3064188ff102927875f8, type: 2}
+  winningPlayersChanged:
+    m_PersistentCalls:
+      m_Calls: []
   playerJoined:
     m_PersistentCalls:
       m_Calls: []
   sceneReferences:
   - {fileID: 11400000, guid: abbe2af740498a644b376040abc814ed, type: 2}
+  treasureSpawners: []
+  treasureItem: {fileID: 11400000, guid: 2a43d401eef62634dbde32d0eac93dd0, type: 2}
+  droppedItemPrefab: {fileID: 3056942884218095950, guid: 37132a09f5d1c4046a4bb460892afc47, type: 3}
