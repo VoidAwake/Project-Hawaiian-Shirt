@@ -48,7 +48,6 @@ namespace Hawaiian.Inventory
         private void OnInventoryChanged()
         {
             inventoryChanged.Invoke();
-            currentItemChanged.Invoke();
             player.IsSlowed = false;
         }
 

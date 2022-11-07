@@ -13,7 +13,7 @@ namespace Hawaiian.Inventory
         public Item Item
         {
             get => item;
-            private set
+            set
             {
                 item = value;
 

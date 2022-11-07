@@ -1,4 +1,3 @@
-using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -33,7 +32,7 @@ namespace Hawaiian.Inventory
         public void LoseTreasure(int dropped)
         {
             score -= dropped;
-            currentItemChanged.Invoke();
+            inventoryChanged.Invoke();
         }
         
         public bool AddItem(Item item)
@@ -41,7 +40,7 @@ namespace Hawaiian.Inventory
             if (item.Type == ItemType.Objective)
             {
                 score += (int)item.Points;
-                currentItemChanged.Invoke();
+                inventoryChanged.Invoke();
                 Debug.Log("score is " + score);
                 return true;
                 
@@ -56,7 +55,7 @@ namespace Hawaiian.Inventory
 
                 inventoryChanged.Invoke();
 
-                    currentItemChanged.Invoke();
+                    inventoryChanged.Invoke();
                     return true;
                 }
             }
