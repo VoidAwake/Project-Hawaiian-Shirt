@@ -11,7 +11,9 @@ namespace Hawaiian.Inventory.ItemBehaviours
     
         [SerializeField] internal bool _canStickOnWalls;
 
-        private SpriteRenderer _renderer;
+        [SerializeField] private SpriteRenderer _renderer;
+        private Animator animator;
+        private BombPhysics physics;
         private float _currentDistance;
         private Vector2[] _positions;
         private int positionIndex;
@@ -26,18 +28,29 @@ namespace Hawaiian.Inventory.ItemBehaviours
             set => _positions[^1] = value;
         }
 
-        public void Initialise(Vector2 [] targets, Sprite newSprite,bool canStickOnWalls = false)
+        public void Initialise(Vector2 [] targets, Sprite newSprite,bool canStickOnWalls = false) // Am making assumptions here that all throwables are bombs
         {
             hasCollided = false;
             _positions = targets;
             _canStickOnWalls = canStickOnWalls;
             positionIndex = 0;
             _renderer.sprite = newSprite;
+
+            physics.velocity = (_positions.Last<Vector2>() - (Vector2)transform.position).normalized * 6.0f; // Magic number for throw/travel speed
+
+            Invoke("SetAnimatorBoutaBlast", 3.0f);
+            Invoke("OnTargetReached", 4.0f);
+        }
+
+        void SetAnimatorBoutaBlast()
+        {
+            if (animator)
+                animator.SetTrigger("BoutaBlast");
         }
 
         public void UpdateTargetToFinalDestination(Vector2 direction)
         {
-            _positions = _positions.Where((position, index) => index < positionIndex).ToArray();
+            _positions = _positions.Where((position, index) => index < positionIndex).ToArray(); // TODO: Check behaviour when a throwable is parried
             _positions = _positions.Reverse().ToArray();
             positionIndex = 0;
         }
@@ -50,7 +63,7 @@ namespace Hawaiian.Inventory.ItemBehaviours
 
             while (!startingPosition.Equals(endPosition))
             {
-                startingPosition = Vector2.Lerp(startingPosition, endPosition,_speed);
+                startingPosition = Vector2.Lerp(startingPosition, endPosition, _speed);
                 positions.Add(startingPosition);
                 yield return null;
             }
@@ -61,33 +74,34 @@ namespace Hawaiian.Inventory.ItemBehaviours
         private void Awake()
         {
             positionIndex = 0;
-            _renderer = GetComponent<SpriteRenderer>();
+            physics = GetComponent<BombPhysics>();
+            animator = GetComponent<Animator>();
+            //_renderer = GetComponent<SpriteRenderer>();
         }
 
-        public virtual void Update()
-        {
-            if (hasCollided)
-            {
-                LastPosition = transform.position;
-                OnTargetReached();
-                return;
-            }
-        
-            if (_positions == null)
-                return;
+        //public virtual void Update()
+        //{
+        //    if (hasCollided)
+        //    {
+        //        LastPosition = transform.position;
+        //        OnTargetReached();
+        //        return;
+        //    }
 
-            if (positionIndex >= _positions.Length - 1)
-                OnTargetReached();
-        
-            var step = _speed;
+        //    if (_positions == null)
+        //        return;
 
-            transform.position = Vector3.MoveTowards(transform.position, _positions[positionIndex], step);
-        
-            if (Vector3.Distance(transform.position, _positions[positionIndex]) < 0.01f)
-                positionIndex++;
-        
-        }
-    
+        //    if (positionIndex >= _positions.Length - 1) // TODO: Update for new logic
+        //        OnTargetReached();
+
+        //    var step = _speed;
+
+        //    transform.position = Vector3.MoveTowards(transform.position, _positions[positionIndex], step);
+
+        //    if (Vector3.Distance(transform.position, _positions[positionIndex]) < 0.01f)
+        //        positionIndex++;
+        //}
+
         private void OnTriggerEnter2D(Collider2D other)
         {
             // TODO: LAYERS ARE A THING

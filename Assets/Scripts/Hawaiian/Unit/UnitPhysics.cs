@@ -12,7 +12,7 @@ namespace Hawaiian.Unit
         [SerializeField] protected Collider2D physicsCollider;
         [SerializeField] protected ScriptableFloat gameTimeScale;
 
-        protected Vector2 velocity;
+        public Vector2 velocity;
         protected bool isGrounded;
        [SerializeField] protected new Rigidbody2D rigidbody; //shouldnt be serialised but for some reason its having trouble finding it so
         protected ContactFilter2D contactFilter;
@@ -101,6 +101,8 @@ namespace Hawaiian.Unit
             // Cull momentum (and ground, if neccesary) based on normal
             if (hit.collider.gameObject.tag == "Untagged" || (isBoundByCamera && hit.collider.gameObject.tag == "MainCamera"))
             {
+                Debug.Log("Please no.", this);
+
                 switch (direction)
                 {
                     case 0:

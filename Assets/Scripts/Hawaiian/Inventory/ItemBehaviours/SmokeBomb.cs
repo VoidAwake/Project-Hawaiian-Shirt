@@ -11,8 +11,8 @@ namespace Hawaiian.Inventory.ItemBehaviours
 
       public override void OnTargetReached()
       {
-         Instantiate(_smokeEffectPrefab, LastPosition,Quaternion.identity);
-         base.OnTargetReached();
+         Instantiate(_smokeEffectPrefab, transform.position, Quaternion.identity); // LastPosition,Quaternion.identity);
+            base.OnTargetReached();
       
       }
    }

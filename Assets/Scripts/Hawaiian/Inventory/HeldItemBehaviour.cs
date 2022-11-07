@@ -32,11 +32,17 @@ namespace Hawaiian.Inventory
 
         protected virtual void UseItemActionPerformed(InputAction.CallbackContext value)
         {
+            if (!value.performed)
+                return;
+
             UseItemActionHeld = true;
         }
 
         protected virtual void UseItemActionCancelled(InputAction.CallbackContext value)
         {
+            if (value.performed)
+                return;
+
             UseItemActionHeld = false;
         }
 
