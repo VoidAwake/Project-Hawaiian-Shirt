@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Hawaiian.Game;
+using Hawaiian.Game.GameModes;
 using Hawaiian.Inventory;
 using Hawaiian.Utilities;
 using UI.Core;
@@ -73,7 +74,7 @@ namespace Hawaiian.UI.Game
 
         private void DisplayControls()
         {
-            var gameMode = gameManager.CurrentGameMode;
+            var gameMode = ModeManager.CurrentModeManager;
 
             if (gameMode.ControlsInstructionsDialoguePrefab != null || gameMode.TutorialDialoguePrefab != null)
             {

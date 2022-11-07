@@ -15,8 +15,6 @@ namespace Hawaiian.Game
         
         public event Func<object, EventArgs, Task> GameOverAsync;
 
-        public ModeManager CurrentGameMode { get; set; }
-
         public async void GameOver()
         {
             gameOver.Raise();
