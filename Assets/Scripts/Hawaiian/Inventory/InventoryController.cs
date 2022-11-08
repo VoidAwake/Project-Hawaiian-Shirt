@@ -162,7 +162,7 @@ namespace Hawaiian.Inventory
 
         public void DropItLikeItsHot(Vector2 rad)
         {
-            if (CurrentItem != null && CurrentItem.IsDepositor)
+            if (CurrentItem != null && CurrentItem.IsDefuser)
                 return;
 
             DropItem(inv.invPosition, rad);
@@ -231,7 +231,7 @@ namespace Hawaiian.Inventory
             {
                 if (inv.inv[i] != null)
                 {
-                    if (!inv.inv[i].IsDepositor)
+                    if (!inv.inv[i].IsDefuser)
                         itemIndexes.Add(i);
                 }
             }

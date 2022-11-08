@@ -10,11 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 7585404174333838638}
   - component: {fileID: 8766800883188433227}
-  - component: {fileID: 5424057397593351752}
   - component: {fileID: 979334200053766057}
   - component: {fileID: 449300770897478651}
-  - component: {fileID: 2294494590159268617}
-  - component: {fileID: 3331539062808723668}
+  - component: {fileID: 1883228229812148934}
   m_Layer: 0
   m_Name: Held Detonator Item
   m_TagString: Untagged
@@ -49,10 +47,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0921f9df0efe4b0fabfa6e93799c9231, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  unityEvent:
+  OnItemPerformed:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 5424057397593351752}
+      - m_Target: {fileID: 1883228229812148934}
         m_TargetAssemblyTypeName: Hawaiian.PositionalEvents.PositionalEventCaller,
           Hawaiian.PositionalEvents
         m_MethodName: Raise
@@ -65,37 +63,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!114 &5424057397593351752
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2342829590155690216}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d501fde7b11b4f8f997651bcc9cf4c51, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  token: {fileID: 11400000, guid: e8b2231db87fad546af457281ce33b93, type: 2}
-  radius: 2
-  interactionTarget: 1
-  raisedOnTarget:
+  OnItemCancelled:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 449300770897478651}
-        m_TargetAssemblyTypeName: Hawaiian.Inventory.HeldItemBehaviours.DetonatorHeldItem,
-          Hawaiian.Inventory
-        m_MethodName: BeginDetonation
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!58 &979334200053766057
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -111,7 +81,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 2
+  m_Radius: 3
 --- !u!114 &449300770897478651
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -124,9 +94,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0786e768ca794aaaa90ce6dd72977657, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _lastInteractedTreasure: {fileID: 0}
   _detonatorPrefab: {fileID: 245282319073416818, guid: 783076032353d5f44824f5878070abf8, type: 3}
-  DetonateBase: {fileID: 11400000, guid: e8b2231db87fad546af457281ce33b93, type: 2}
---- !u!114 &2294494590159268617
+--- !u!114 &1883228229812148934
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -135,22 +105,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 2342829590155690216}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a6e6f2770f3c42a7b77a24e8e3778f33, type: 3}
+  m_Script: {fileID: 11500000, guid: d501fde7b11b4f8f997651bcc9cf4c51, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  caller: {fileID: 5424057397593351752}
---- !u!114 &3331539062808723668
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2342829590155690216}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f5e1e2a3f40e425ebdc706f1cf406276, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  caller: {fileID: 5424057397593351752}
-  controlPromptPrefab: {fileID: 863757022267649085, guid: dfed0489b330811449510e739f1f6872, type: 3}
-  actionName: Attack
+  token: {fileID: 11400000, guid: e8b2231db87fad546af457281ce33b93, type: 2}
+  radius: 0
+  interactionTarget: 1
+  targetsChanged: {fileID: 11400000, guid: 37e77cbc288b0bb408597b25a3a84f7e, type: 2}
+  raisedOnTarget:
+    m_PersistentCalls:
+      m_Calls: []

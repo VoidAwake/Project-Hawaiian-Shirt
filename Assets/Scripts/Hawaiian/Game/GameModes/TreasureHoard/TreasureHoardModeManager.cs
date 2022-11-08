@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using Hawaiian.Inventory;
 using UnityEngine;
 
@@ -7,43 +7,47 @@ namespace Hawaiian.Game.GameModes.TreasureHoard
     [CreateAssetMenu(order = 0, menuName = "Hawaiian/Managers/GameModeManager/TreasureHoardModeManager")]
     public class TreasureHoardModeManager : ModeManager<TreasureHoardSceneReference>
     {
+        public delegate void TreasureInitalised(PlayerConfig config);
+        public TreasureInitalised OnTreasureInitialised;
+        
         [Header("Treasure Hoard Mode Manager")]
         [SerializeField] private Item _depositor;
         [SerializeField] private Item _detonator;
         [SerializeField] private GameObject _playerTreasurePrefab;
         
-        private readonly Dictionary<PlayerConfig, PlayerTreasure> playerTreasures = new();
-        private readonly Dictionary<PlayerConfig, InventoryController> inventoryControllers = new();
-        
+        private Dictionary<PlayerConfig, PlayerTreasure> playerTreasures = new();
+
         public Dictionary<PlayerConfig, PlayerTreasure> PlayerTreasures => new(playerTreasures);
+
+        public override void SaveScores()
+        {
+            base.SaveScores();
+            
+            foreach (var (playerConfig, playerTreasure) in playerTreasures)
+            {
+               playerConfig.score = playerTreasure.CurrentPoints;
+            }
+        }
 
         protected override void OnPlayerJoined(PlayerConfig playerConfig)
         {
-            // TODO: Duplicate code. See GameDialogue.OnPlayerJoined.
-            var inventoryController = playerConfig.playerInput.GetComponentInChildren<InventoryController>();
-            
-            inventoryControllers.Add(playerConfig, inventoryController);
-
             GameObject playerTreasureObject = Instantiate(_playerTreasurePrefab, sceneReference.treasureSpawnPoints[playerConfig.playerNumber], Quaternion.identity);
 
             var playerTreasure = playerTreasureObject.GetComponent<PlayerTreasure>();
-            
-            // TODO: Remove listener
-            playerTreasure.pointsChanged.AddListener(UpdateWinningPlayers);
 
-            playerTreasure.Initialise(playerConfig.playerNumber, inventoryController);
+            var playerInventoryController = playerManager.InventoryControllers[playerConfig];
+
+          //  playerTreasure.Initialise(playerConfig.playerNumber, playerInventoryController);
             
             playerTreasures.Add(playerConfig, playerTreasure);
         
-            inventoryController.inv.AddItem(_depositor);
-            inventoryController.inv.AddItem(_detonator);
-            
-            base.OnPlayerJoined(playerConfig);
-        }
+            playerInventoryController.inv.inv[0] = _depositor;
+            playerInventoryController.inv.inv[1] = _detonator;
 
-        protected override float PlayerConfigScore(PlayerConfig playerConfig)
-        {
-            return playerTreasures[playerConfig].CurrentPoints;
+            base.OnPlayerJoined(playerConfig);
+            
+            playerTreasure.Owner = playerManager.LastPlayerJoined;
+            OnTreasureInitialised.Invoke(playerConfig);
         }
     }
 }

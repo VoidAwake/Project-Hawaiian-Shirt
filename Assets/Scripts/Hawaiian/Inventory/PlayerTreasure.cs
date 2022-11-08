@@ -1,275 +1,374 @@
-    using System;
-using System.Collections;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
+using Cysharp.Threading.Tasks;
 using Hawaiian.Unit;
 using UnityEngine;
-using UnityEngine.Events;
-using UnityEngine.UI;
+using Random = System.Random;
+using Vector2 = System.Numerics.Vector2;
 
 namespace Hawaiian.Inventory
 {
+    public enum TreasureState
+    {
+        Neutral,
+        Vulnerable,
+        Defusing,
+        Detonated,
+        Depositing
+    }
+
     public class PlayerTreasure : MonoBehaviour
     {
-        [SerializeField] private GameObject _bombEffectPrefab;
-        [SerializeField] private GameObject _defuserIndicator;
-        [SerializeField] private Slider _defuserSlider;
-        [SerializeField] private float defuseTarget;
-        [SerializeField] private float defuseTimer;
-        [SerializeField] private GameObject DroppedItemPrefab;
-        [SerializeField] private PlayerColors playerColors;
-        [SerializeField] private SpriteRenderer spriteRenderer;
-        
-        public List<Item> _items = new List<Item>();
+        #region Events
 
-        public Detonator DetonatorReference;
-        public InventoryController playerInventoryController { get; set; }
+        public delegate int PointsChanged(int points);
 
-        public bool IsBeingDetonated;
-       
+        public PointsChanged OnPointsChanged;
 
-        private float _currentDetonationTime;
+        public delegate void DefuseInitiated();
 
-        private float _detonationTime;
+        public DefuseInitiated OnDefuseInitiated;
 
-        public UnityEvent pointsChanged = new();
+        public delegate void DefuseInterrupted();
 
-        public int CurrentPoints
+        public DefuseInterrupted OnDefusedInterrupted;
+
+        public delegate void DefuseCompleted();
+
+        public DefuseCompleted OnDefuseCompleted;
+
+        public delegate void OnItemDeposited();
+
+        public event DefuseCompleted ItemDeposited;
+
+
+        public delegate void OnItemDepositedStopped();
+
+        public event DefuseCompleted ItemDepositedStopped;
+
+        #endregion
+
+        [Header("Components")] [SerializeField]
+        private TreasureHitbox _hitbox;
+
+        [SerializeField] private TreasureAnimationController _animController;
+
+        [Header("Owner")] [SerializeField] private UnitPlayer _owner;
+
+        [Header("Treasure Stats")] [SerializeField]
+        private TreasureState _currentState;
+
+        [Header("Item References")]
+        [SerializeField] private Item _itemReference;
+        [SerializeField] private GameObject _droppedItemReference;
+
+
+        [SerializeField] private float _defuserTimer;
+        [SerializeField] private float _currentDefuseTimer;
+        [SerializeField] private float _currentPoints;
+
+        private IUnit _currentCollidedUnit;
+
+        public TreasureHitbox Hitbox => _hitbox;
+
+        public float DefuseTimer => _defuserTimer;
+
+        public float CurrentPoints
         {
-            get => currentPoints;
+            get => _currentPoints;
             set
             {
-                currentPoints = value;
-                pointsChanged.Invoke();
+                _currentPoints = value;
+                OnPointsChanged.Invoke((int) _currentPoints); // lol cant be bothered to change it properly
             }
         }
 
-        public Coroutine DefuserCoroutine;
+        public TreasureState CurrentState => _currentState;
 
-
-        private bool flag = false;
-
-        private int currentPoints;
-        //   public GameEvent 
-
-        public void Initialise(int playerNumber, InventoryController playerInventoryController)
+        public UnitPlayer Owner
         {
-            spriteRenderer.color = playerColors.GetColor(playerNumber);
-
-            this.playerInventoryController = playerInventoryController;
-        }
-
-        public void OnTriggerEnter2D(Collider2D col)
-        {
-            if (col.gameObject.GetComponentInChildren<InventoryController>() != playerInventoryController)
-                return;
-
-            if (!IsBeingDetonated)
-            {
-                _defuserIndicator.SetActive(false);
-                return;
-            }
-
-            _defuserIndicator.SetActive(true);
-
-            if (DefuserCoroutine != null)
-            {
-                defuseTarget = 0;
-                StopCoroutine(DefuserCoroutine);
-            }
-            else
-                defuseTarget = 1;
-
-            DefuserCoroutine = StartCoroutine(DefuseBombCoroutine(defuseTarget));
-        }
-
-        public void OnTriggerStay2D(Collider2D other)
-        {
-            if (other.gameObject.GetComponentInChildren<InventoryController>() != playerInventoryController)
-                return;
-
-            if (!IsBeingDetonated)
-            {
-                _defuserIndicator.SetActive(false);
-                return;
-            }
-
-            if (!flag)
-                flag = true;
-            else
-                return;
-
-
-            _defuserIndicator.SetActive(true);
-
-            if (DefuserCoroutine != null)
-            {
-                defuseTarget = 0;
-                StopCoroutine(DefuserCoroutine);
-            }
-            else
-                defuseTarget = 1;
-
-            DefuserCoroutine = StartCoroutine(DefuseBombCoroutine(defuseTarget));
-        }
-
-        private void OnTriggerExit2D(Collider2D other)
-        {
-            if (other.gameObject.GetComponentInChildren<InventoryController>() != playerInventoryController)
-                return;
-
-            if (!IsBeingDetonated)
-            {
-                _defuserIndicator.SetActive(false);
-                return;
-            }
-
-
-            _defuserIndicator.SetActive(true);
-            defuseTarget = 0;
-
-            if (DefuserCoroutine != null)
-                StopCoroutine(DefuserCoroutine);
-
-            DefuserCoroutine = StartCoroutine(DefuseBombCoroutine(defuseTarget));
+            get => _owner;
+            set => _owner = value;
         }
 
 
-        IEnumerator DefuseBombCoroutine(float target)
+        private void Start()
         {
-            float elapsedTime = _defuserSlider.value;
+            _currentState = TreasureState.Neutral;
 
-            if (target > 0)
+
+            _owner.tripped?.AddListener(() =>
             {
-                while (elapsedTime < 1)
+                switch (_currentState)
                 {
-                    elapsedTime += Time.deltaTime;
-                    _defuserSlider.value = (elapsedTime / 1);
-                    yield return null;
+                    case TreasureState.Depositing:
+                        _hitbox.DepositToken?.Cancel();
+                        break;
+                    case TreasureState.Defusing:
+                        OnDefusedInterrupted();
+                        break;
                 }
+            });
+        }
 
-                Destroy(DetonatorReference.gameObject);
-                IsBeingDetonated = false;
-                defuseTimer = 0;
-                _defuserSlider.value = 0;
-            }
-            else
+        private void OnEnable()
+        {
+            if (_hitbox == null)
             {
-                while (elapsedTime > 0)
+                _hitbox = GetComponentInChildren<TreasureHitbox>();
+                if (_hitbox == null)
                 {
-                    elapsedTime -= Time.deltaTime;
-                    _defuserSlider.value = (1 - elapsedTime / 1);
-                    yield return null;
+                    Debug.LogWarning(
+                        "The component Treasure Hitbox was not found the player treasure component may not work as intended");
                 }
-
-                defuseTimer = 0;
-                _defuserSlider.value = 0;
             }
 
-            flag = false;
-            _defuserIndicator.SetActive(false);
-            DefuserCoroutine = null;
+            if (_animController == null)
+            {
+                _animController = GetComponentInChildren<TreasureAnimationController>();
+
+                if (_animController == null)
+                {
+                    Debug.LogWarning(
+                        "The component Animation Controller was not found! the player treasure component may not work as intended");
+                }
+            }
+
+            _hitbox.DepositStarted +=
+                UniTask.UnityAction(async () => await DepositItems(_hitbox.DepositToken.Token));
+
+            _hitbox.CollidedUnit += unit =>
+            {
+                _currentCollidedUnit = unit;
+
+                // if (_currentCollidedUnit == null)
+                // {
+                //     _currentCollidedUnit = unit;
+                //     return;
+                // }
+                //
+                // //If the current collided unit is already the owner, if a new unit tries to deposit on it then it will be ignored
+                // if (_currentCollidedUnit.GetUnit() == _owner && unit != _currentCollidedUnit)
+                //     return;
+                //
+                // _currentCollidedUnit = unit;
+            };
         }
 
 
-        public void AddTreasure()
+        private void OnDisable()
         {
-            Hawaiian.Inventory.Inventory inventory = ScriptableObject.CreateInstance<Hawaiian.Inventory.Inventory>();
+            if (_hitbox == null)
+                return;
 
-            inventory = playerInventoryController.inv;
+            _hitbox.DepositStarted -= UniTask.UnityAction(async () => await DepositItems(_hitbox.DepositToken.Token));
 
-            int newPoints = 0;
-            List<int> newItemsIndexes = new List<int>();
-
-            for (var index = 0; index < inventory.inv.Length; index++)
+            _owner.tripped?.RemoveListener(() =>
             {
-                Item item = inventory.inv[index];
-
-                if (item != null)
+                switch (_currentState)
                 {
-                    if (item.Type == ItemType.Objective)
+                    case TreasureState.Depositing:
+                        _hitbox.DepositToken?.Cancel();
+                        break;
+                    case TreasureState.Defusing:
+                        OnDefusedInterrupted();
+                        break;
+                }
+            });
+        }
+
+        private void Update()
+        {
+            if (_currentState != TreasureState.Defusing)
+                return;
+
+            if (_owner.playerState == Unit.Unit.PlayerState.Tripped)
+            {
+                OnDefusedInterrupted();
+                return;
+            }
+
+            if (_currentDefuseTimer < _defuserTimer)
+                _currentDefuseTimer += Time.deltaTime;
+            else
+                OnDefuseAchieved();
+        }
+
+        private void GenerateAndRemoveDetonatedItems()
+        {
+            ICollection<int> treasurePoints = TreasureUtil.GetDetonatedItemsData((int) CurrentPoints);
+
+            for (int i = 0; i < treasurePoints.Count; i++)
+            {
+                Item treasureItem = ScriptableObject.CreateInstance<Item>();
+                treasureItem.ItemName = _itemReference.ItemName;
+                treasureItem.ItemSprite = _itemReference.ItemSprite;
+                treasureItem.DroppedItemSprite = _itemReference.DroppedItemSprite;
+                treasureItem.Type = ItemType.Objective;
+                treasureItem.Points = treasurePoints.ToList()[i];
+                treasureItem.DroppedItemBase = _droppedItemReference;
+
+             
+                
+
+               GameObject droppedItem = Instantiate(_droppedItemReference, transform.position,Quaternion.identity);
+               droppedItem.GetComponent<DroppedItem>().Item = treasureItem;
+
+               // I'm so sorry too, im not the better man that i thought i was (its a simple fix too)
+               for (int j = 0; j < droppedItem.transform.childCount; j++)
+               {
+                   if (droppedItem.transform.GetChild(j).name == "Item Sprite")
+                   {
+                       droppedItem.transform.GetChild(j).GetComponent<SpriteRenderer>().sprite =
+                           treasureItem.ItemSprite;
+                   }
+               }
+
+               // UnityEngine.Vector2 randomDirection =
+               //     new UnityEngine.Vector2(UnityEngine.Random.Range(-1f, 1f), UnityEngine.Random.Range(-1f, 1f));
+
+               UnityEngine.Vector2 randomDirection = UnityEngine.Random.insideUnitCircle;
+               
+               droppedItem.GetComponent<ItemUnit>().OnThrow(randomDirection, 2f);
+               CurrentPoints -= treasureItem.Points;
+            }
+        }
+
+        public void OnDetonatorStarted()
+        {
+            if (_currentState == TreasureState.Neutral || _currentState == TreasureState.Depositing)
+                _currentState = TreasureState.Vulnerable;
+
+            if (_hitbox != null)
+                _hitbox.DepositToken?.Cancel(); // cancels depositing if detonation has begun
+        }
+
+        public async void OnDetonatorCompleted()
+        {
+            CancellationTokenSource _source = new CancellationTokenSource(); // in case in the future it needs to stop for some reason
+            OnDefuseInterrupted();
+            _currentState = TreasureState.Detonated;
+            GenerateAndRemoveDetonatedItems();
+            Debug.Log($"Player {_owner.PlayerNumber}'s treasure has been detonated!");
+            await _animController.PlayChestDetonationAnimation(_source.Token);
+            await TreasureUtil.BeginDetonatorTimer(5000);
+            await _animController.PlayChestClosingAnim(_source.Token);
+            _currentState = TreasureState.Neutral;
+        }
+
+        public void OnDefuseStarted()
+        {
+            if (_currentState != TreasureState.Vulnerable)
+                return;
+
+            OnDefuseInitiated.Invoke();
+            _currentState = TreasureState.Defusing;
+        }
+
+        public void OnDefuseInterrupted()
+        {
+            if (_currentState != TreasureState.Defusing)
+                return;
+        
+            OnDefusedInterrupted.Invoke();
+            _currentDefuseTimer = 0;
+            _currentState = TreasureState.Vulnerable;
+        }
+
+        public void OnDefuseAchieved()
+        {
+            OnDefuseCompleted.Invoke();
+            _currentState = TreasureState.Neutral;
+            _currentDefuseTimer = 0;
+        }
+
+
+        public bool CanBeDetonated()
+        {
+            Debug.Log(
+                $"Can {_owner.name} be detonated: {_currentState == TreasureState.Neutral || _currentState == TreasureState.Depositing}");
+            return _currentState == TreasureState.Neutral || _currentState == TreasureState.Depositing;
+        }
+
+        public async UniTask DepositItems(CancellationToken token)
+        {
+            //inital check to ensure the owner is depositing and the animations can play as normal
+            if (_currentCollidedUnit.GetUnit() != _owner || _currentCollidedUnit == null || (_currentState != TreasureState.Depositing && _currentState != TreasureState.Neutral))
+                return;
+
+            InventoryController controller = _owner.GetComponentInChildren<InventoryController>();
+            int treasureAmount = controller.inv.GetAllTreasures().ToList().Count;
+
+            if (treasureAmount == 0) // could do a prompt to let the player know they need treasure to deposit
+                return;
+
+            try
+            {
+                await _animController.PlayChestOpeningAnim(token);
+                _currentState = TreasureState.Depositing;
+
+                for (int i = 0; i < treasureAmount; i++)
+                {
+                    if (CanDeposit(_owner))
                     {
-                        newPoints += (int) item.Points;
-                        newItemsIndexes.Add(index);
-                        _items.Add(item);
+                        Debug.Log($"Depositing item: {controller.inv.GetMostLeftItem().Value.ItemName}");
+                        DepositItem(controller.inv.GetMostLeftItem().Value, controller,
+                            controller.inv.GetMostLeftItem().Key);
+                        await _animController
+                            .PlayChestDepositAnim(
+                                token); // minimum time the deposit has to wait before it can deposit again is based on the animation
                     }
+
+                    await UniTask.Delay(250, false, PlayerLoopTiming.Update, token);
                 }
+
+                ItemDepositedStopped?.Invoke();
+                _currentState = TreasureState.Neutral;
+                await _animController.PlayChestClosingAnim(token);
+                
             }
-
-
-            for (var i = 0; i < inventory.inv.Length; i++)
+            catch (OperationCanceledException e)
             {
-                foreach (var t in newItemsIndexes)
-                {
-                    if (t == i)
-                        inventory.RemoveItemAt(i);
-                }
+                ItemDepositedStopped?.Invoke();
+                _currentState = TreasureState.Neutral;
+                await _animController.PlayChestClosingAnim(token);
+                Debug.Log($"Depositing was cancelled {e}");
             }
-
-
-            CurrentPoints += newPoints;
         }
 
-        public void SetIsBeingDetonated()
+        public bool CanDeposit(IUnit collidedUnit)
         {
+            if (collidedUnit == null)
+                return false;
 
-            IsBeingDetonated = true;
+            UnitPlayer unit = collidedUnit.GetUnit();
+
+
+            if (unit != Owner)
+                return false;
+
+            InventoryController playerInventory = unit.GetComponentInChildren<InventoryController>();
+
+            if (playerInventory == null)
+                return false;
+
+            if (playerInventory.inv.GetAllTreasures().ToList().Count <= 0)
+                return false;
+
+            return true;
         }
 
-
-        public void DetonateBase()
+        public void DepositItem(Item item, InventoryController controller = null, int itemPos = 0)
         {
-            if (!IsBeingDetonated)
+            CurrentPoints += item.Points;
+            ItemDeposited?.Invoke();
+
+            if (controller == null)
                 return;
 
-            Instantiate(_bombEffectPrefab, transform.position, Quaternion.identity);
-
-            var temp = new List<Item>();
-            int pointsToRemove = 0;
-
-            for (var index = 0; index < 3; index++)
-            {
-                if (index >= _items.Count)
-                    break;
-
-                Item item = _items[index];
-                temp.Add(item);
-                pointsToRemove += (int) item.Points;
-                GameObject droppedItem = Instantiate(DroppedItemPrefab, transform.position, Quaternion.identity);
-                droppedItem.GetComponent<DroppedItem>().Initialise(item);
-
-                var randomX = UnityEngine.Random.Range(-1f, 1f);
-                var randomY = UnityEngine.Random.Range(-1f, 1f);
-                var randomLength = UnityEngine.Random.Range(2f, 4f);
-
-                var direction = new Vector2(randomX, randomY);
-                direction = direction * randomLength;
-                droppedItem.GetComponent<ItemUnit>().OnThrow(direction);
-            }
-
-
-            CurrentPoints -= pointsToRemove;
-
-
-            _items = _items.Except(temp).ToList();
-            IsBeingDetonated = false;
-        }
-
-        public void GetDetonatorReference(Tuple<IUnit, Detonator> reference)
-        {
-            if (reference.Item1 == playerInventoryController)
-                return;
-
-            if (DetonatorReference != null)
-            {
-                Destroy(reference.Item2);
-                return;
-            }
-            
-            DetonatorReference = reference.Item2;
-            DetonatorReference.Treasure = this;
-            IsBeingDetonated = true;   
-
+            controller.inv.RemoveItemAt(itemPos);
         }
     }
 }

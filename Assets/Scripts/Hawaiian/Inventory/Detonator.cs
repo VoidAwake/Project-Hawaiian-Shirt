@@ -1,63 +1,115 @@
 using System;
 using System.Collections;
-using Hawaiian.Unit;
-using TMPro;
+using System.Threading;
+using Cysharp.Threading.Tasks;
+using Hawaiian.PositionalEvents;
 using UnityEngine;
 
 namespace Hawaiian.Inventory
 {
     public class Detonator : MonoBehaviour
     {
-        [SerializeField] private int _timer;
-        [SerializeField] private TextMeshProUGUI _timerText;
+        [SerializeField] private GameObject _detonationCallerReference;
+        [SerializeField] private int _countdownDuration;
 
+        private CancellationTokenSource _cts;
+        private PositionalEventCaller _caller;
+        private PlayerTreasure _treasure;
 
-        private IUnit _player;
-        public IUnit PlayerReference
+        public float CurrentDetonationTime { get; set; }
+
+        private bool flag = false;
+        
+        private void OnEnable()
         {
-            get => _player;
-            set
+            _caller = GetComponent<PositionalEventCaller>();
+            BeginCountdown();
+        }
+
+        private void Start()
+        {
+            _caller.OnRegisterTarget += (listener =>
             {
-                _player = value;
-                ParseData(_player);
+                if (!flag)
+                {
+                    _caller.Raise();
+                    flag = true;
+                }
+                
+                if (!listener.gameObject.GetComponent<PlayerTreasure>())
+                    return;
+
+                _treasure = listener.GetComponent<PlayerTreasure>();
+                _treasure.OnDefuseCompleted += CancelDetonation;
+            });
+        }
+
+        private void OnDisable()
+        {
+            _caller.OnRegisterTarget -= (listener =>
+            {
+                _caller.Raise();
+
+                if (!listener.gameObject.GetComponent<PlayerTreasure>())
+                    return;
+
+                _treasure = listener.GetComponent<PlayerTreasure>();
+                _treasure.OnDefuseCompleted -= CancelDetonation;
+            });
+        }
+
+        private async void BeginCountdown()
+        {
+            _cts = new CancellationTokenSource();
+
+            try
+            {
+                await CountdownDetonation(_countdownDuration, _cts.Token);
+            }
+            catch (OperationCanceledException ex)
+            {
+                Debug.Log($"The detonation was cancelled: {ex} ");
+                Destroy(gameObject);
             }
         }
-        public DetonatorGameEvent ParseDetantorToTreasure;
 
-        public PlayerTreasure Treasure;
+        [ContextMenu("Cancel Detonation")]
+        public void CancelDetonation() => _cts?.Cancel();
 
-        private void Awake()
+
+        private async UniTask CountdownDetonation(int duration, CancellationToken token = default)
         {
-            StartCoroutine(RunTimerCoroutine());
-        }
+            duration /= 1000; //Converts to seconds
 
+            float startTime = duration;
+            CurrentDetonationTime = startTime;
+            float endTime = 0;
 
- 
-
-        public void ParseData(IUnit player)
-        {
-            Tuple<IUnit, Detonator> data = new Tuple<IUnit, Detonator>(player, this);
-            ParseDetantorToTreasure.Raise(data);
-        }
-
-        public  IEnumerator RunTimerCoroutine()
-        {
-            float elapsedTimer = _timer;
-        
-            while (elapsedTimer > 0)
+            while (CurrentDetonationTime > endTime)
             {
-                elapsedTimer -= Time.deltaTime;
-                _timerText.text = ((int)elapsedTimer).ToString();
-                yield return null;
+                CurrentDetonationTime -= Time.deltaTime;
+                await UniTask.Yield(token);
             }
-        
-            DetonateBase();
+
+            OnDetonation();
         }
 
-        private void DetonateBase() 
+
+        private void OnDetonation()
         {
-            Treasure.DetonateBase();
-            Destroy(gameObject);
+            var _completedDetonator = Instantiate(_detonationCallerReference, this.transform);
+            PositionalEventCaller caller = _completedDetonator.GetComponent<PositionalEventCaller>();
+
+            if (caller != null)
+                caller.OnRegisterTarget += (listener =>
+                {
+                    if (!listener.gameObject.GetComponent<PlayerTreasure>())
+                        return;
+
+                    caller.Raise();
+                    Destroy(_completedDetonator.gameObject);
+                    Destroy(gameObject);
+                });
         }
     }
 }

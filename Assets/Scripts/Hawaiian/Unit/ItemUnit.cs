@@ -25,6 +25,13 @@ public class ItemUnit : UnitPhysics
         moving = true;
         velocity = move*speed;
     }
+    
+    public void OnThrow(Vector2 dir, float speedMultiplier)
+    {
+        move = dir.normalized;
+        moving = true;
+        velocity = move* (speed * speedMultiplier);
+    }
 
     protected override void SetTargetVelocity()
     {

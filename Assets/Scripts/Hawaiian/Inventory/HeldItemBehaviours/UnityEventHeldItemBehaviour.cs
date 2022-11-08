@@ -6,13 +6,21 @@ namespace Hawaiian.Inventory.HeldItemBehaviours
 {
     public class UnityEventHeldItemBehaviour : HeldItemBehaviour
     {
-        [SerializeField] private UnityEvent unityEvent = new();
-        
+        [SerializeField] private UnityEvent OnItemPerformed = new();
+
+        [SerializeField] private UnityEvent OnItemCancelled = new();
+
+
         protected override void UseItemActionPerformed(InputAction.CallbackContext value)
         {
             base.UseItemActionPerformed(value);
-            
-            unityEvent.Invoke();
+            OnItemPerformed.Invoke();
+        }
+
+        protected override void UseItemActionCancelled(InputAction.CallbackContext value)
+        {
+            base.UseItemActionPerformed(value);
+            OnItemCancelled.Invoke();
         }
     }
 }
