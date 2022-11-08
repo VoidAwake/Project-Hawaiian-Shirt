@@ -1,4 +1,6 @@
-﻿using Hawaiian.Unit;
+﻿using System.Collections.Generic;
+using System.Linq;
+using Hawaiian.Unit;
 using UnityEngine;
 
 namespace Hawaiian.Inventory
@@ -16,14 +18,16 @@ namespace Hawaiian.Inventory
 
         private GameObject heldItemObject;
 
+        private List<HeldItemBehaviour> heldItemBehaviours = new();
+
         private void OnEnable()
         {
-            inventoryController.currentItemChanged.AddListener(OnItemUpdated);
+            inventoryController.inventoryChanged.AddListener(OnItemUpdated);
         }
 
         private void OnDisable()
         {
-            inventoryController.currentItemChanged.AddListener(OnItemUpdated);
+            inventoryController.inventoryChanged.AddListener(OnItemUpdated);
         }
 
         private void OnItemUpdated()
@@ -33,7 +37,7 @@ namespace Hawaiian.Inventory
                 DestroyHeldItem();
             }
             
-            // TODO: Is should just be part of the held item
+            // TODO: Should just be part of the held item
             heldItemSpriteRenderer.sprite = Item != null ? Item.ItemSprite : null;
 
             if (Item == null) return;
@@ -48,20 +52,22 @@ namespace Hawaiian.Inventory
             heldItemObject = Instantiate(currentItem.heldItemPrefab, transform);
             
             // TODO: Two way dependency.
-            var heldItemBehaviours = heldItemObject.GetComponents<HeldItemBehaviour>();
+            heldItemBehaviours = heldItemObject.GetComponents<HeldItemBehaviour>().ToList();
 
             foreach (var heldItemBehaviour in heldItemBehaviours)
             {
                 heldItemBehaviour.Initialise(this);
-            }
 
-            // TODO: Come back to this
-            // heldItem.destroyed.AddListener(OnHeldItemDestroyed);
+                heldItemBehaviour.destroyed.AddListener(OnHeldItemDestroyed);
+            }
         }
 
         private void DestroyHeldItem()
         {
-            // heldItem.destroyed.RemoveListener(OnHeldItemDestroyed);
+            foreach (var heldItemBehaviour in heldItemBehaviours)
+            {
+                heldItemBehaviour.destroyed.RemoveListener(OnHeldItemDestroyed);
+            }
 
             Destroy(heldItemObject);
 
@@ -70,6 +76,7 @@ namespace Hawaiian.Inventory
 
         private void OnHeldItemDestroyed()
         {
+            // TODO: Should have a more generic method that takes the item.
             inventoryController.RemoveCurrentItem();
         }
     }

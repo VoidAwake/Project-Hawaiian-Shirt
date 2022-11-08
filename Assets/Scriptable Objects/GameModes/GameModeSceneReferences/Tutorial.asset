@@ -9,6 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 316dcd94d019c9543836dbc81aa11a24, type: 3}
-  m_Name: IntroCinematicCompleted
+  m_Script: {fileID: 11500000, guid: 6722d7ace33f43ca88342c3faf219321, type: 3}
+  m_Name: Tutorial
   m_EditorClassIdentifier: 
+  sceneReference:
+    sceneAsset: {fileID: 102900000, guid: c10377635b667754e9dc7587de8489f0, type: 3}
+    scenePath: Assets/Scenes/Levels/Tutorial.unity

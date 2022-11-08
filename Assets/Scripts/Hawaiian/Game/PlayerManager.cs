@@ -1,14 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
-using Hawaiian.Inventory;
 using Hawaiian.Unit;
 using Hawaiian.Utilities;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
-using UnityEngine.InputSystem.Utilities;
 
 namespace Hawaiian.Game
 {
@@ -16,24 +13,18 @@ namespace Hawaiian.Game
     {
         [SerializeField] private GameObject playerPrefab;
         [SerializeField] private GameEvent playersJoined;
-        [SerializeField] private List<SpawnPoint> spawnPoints;
+        [SerializeField] public List<SpawnPoint> spawnPoints;
         [SerializeField] private PlayerConfigManager playerConfigManager;
-        [SerializeField] private BaseGameEvent<Inventory.Inventory> addedInventory;
 
-        public UnityEvent winningPlayersChanged = new();
         public UnityEvent<PlayerConfig> playerJoined = new();
         
-        private Dictionary<PlayerConfig, InventoryController> inventoryControllers = new();
-
         private PlayerInputManager inputManager;
 
-        public ReadOnlyDictionary<PlayerConfig, InventoryController> InventoryControllers => new (inventoryControllers);
+        private bool playerInputEnabled;
 
         private List<PlayerInput> _allPlayers = new List<PlayerInput>();
         
-        public UnitPlayer LastPlayerJoined { get; private set; }
-
-        private void Start()
+        private void Awake()
         {
             inputManager = GetComponent<PlayerInputManager>();
 
@@ -93,26 +84,17 @@ namespace Hawaiian.Game
         {
             // TODO: No idea if this is where this is meant to go
             _allPlayers.Add(playerInput);
-            playerInput.DeactivateInput();
+            
+            if (!playerInputEnabled)
+                playerInput.DeactivateInput();
             
             if (playerConfig != null)
             {
+                playerConfig.playerInput = playerInput;
+                
                 playerInput.GetComponent<UnitPlayer>().Initialise(playerConfig.characterNumber, playerConfig.playerNumber);
 
                 playerInput.transform.position = spawnPoints[playerInput.playerIndex].GetSpawnPosition();
-
-                var inventoryController = playerInput.GetComponentInChildren<InventoryController>();
-
-                if (inventoryController != null)
-                {
-                    inventoryControllers.Add(playerConfig, inventoryController);
-                    
-                    inventoryController.currentItemChanged.AddListener(UpdateWinningPlayers);
-
-                    addedInventory.Raise(inventoryController.inv);
-                }
-
-                LastPlayerJoined = playerInput.GetComponent<UnitPlayer>();
             }
             else
             {
@@ -124,48 +106,11 @@ namespace Hawaiian.Game
             playersJoined.Raise();
         }
 
-        public List<Transform> WinningPlayers { get; private set; }
-
-        private void UpdateWinningPlayers()
-        {
-            var inventoryScores = new Dictionary<InventoryController, float>();
-
-            var maxScore = 0f;
-
-            foreach (var (_, inventoryController) in inventoryControllers)
-            {
-                var score = InventoryScore(inventoryController);
-
-                inventoryScores.Add(inventoryController, score);
-
-                if (maxScore < score)
-                    maxScore = score;
-            }
-
-            WinningPlayers = inventoryScores
-                .Where(o => o.Value == maxScore)
-                .Select(o => o.Key.transform)
-                .ToList();
-            
-            if (WinningPlayers.Count == inventoryControllers.Count)
-                WinningPlayers.Clear();
-            
-            winningPlayersChanged.Invoke();
-        }
-
-        private static float InventoryScore(InventoryController inventoryController)
-        {
-            return inventoryController.inv.inv.Where(i => i != null).Sum(i => i.Points);
-        }
-
-        public PlayerConfig GetPlayerConfig(Inventory.Inventory inv)
-        {
-            return inventoryControllers.FirstOrDefault(a => a.Value.inv == inv).Key;
-        }
-
         public void AllowAllInputs()
         {
             _allPlayers.ForEach(input => { input.ActivateInput(); });
+
+            playerInputEnabled = true;
         }   
     }
 }
