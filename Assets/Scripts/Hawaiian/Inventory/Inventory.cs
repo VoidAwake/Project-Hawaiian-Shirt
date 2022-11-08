@@ -53,8 +53,6 @@ namespace Hawaiian.Inventory
 
                     inv[i] = item;
 
-                inventoryChanged.Invoke();
-
                     inventoryChanged.Invoke();
                     return true;
                 }

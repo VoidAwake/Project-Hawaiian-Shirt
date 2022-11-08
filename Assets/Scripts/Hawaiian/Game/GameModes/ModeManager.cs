@@ -104,7 +104,7 @@ namespace Hawaiian.Game.GameModes
             CurrentModeManager = this;
         }
 
-        public void ListenToLevel()
+        public virtual void ListenToLevel()
         {
             // TODO: Come back to this
             playerManager = FindObjectOfType<PlayerManager>();

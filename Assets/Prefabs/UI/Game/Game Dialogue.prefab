@@ -692,6 +692,8 @@ MonoBehaviour:
     modeUIPrefab: {fileID: 378428827036738159, guid: 1d50fbe35eab87342a6ea22ddca9ed68, type: 3}
   - modeManagerTypeName: Hawaiian.Game.GameModes.RoundRobbin.RoundRobbinModeManager
     modeUIPrefab: {fileID: 4390130735888112405, guid: e282aa386238ce44fb729ad642579c38, type: 3}
+  - modeManagerTypeName: Hawaiian.Game.GameModes.Tutorial.TutorialModeManager
+    modeUIPrefab: {fileID: 7694646066481360862, guid: 3949cc6c947644142a8ed356ba53c1b8, type: 3}
 --- !u!1001 &2068501823
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -857,6 +859,14 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 9dfc825aed78fcd4ba02077103263b40, type: 2}
+    - target: {fileID: 1310853227510797237, guid: bd388d36bc04da048869455ddd25f3a7, type: 3}
+      propertyPath: maxBoundsX
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1310853227510797237, guid: bd388d36bc04da048869455ddd25f3a7, type: 3}
+      propertyPath: moveSpeedX
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1310853227510797238, guid: bd388d36bc04da048869455ddd25f3a7, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 

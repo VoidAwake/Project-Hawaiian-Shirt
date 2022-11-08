@@ -8,7 +8,7 @@ namespace Hawaiian.Game.GameModes
         public List<T> sceneReferences;
         protected T sceneReference;
 
-        public override async void LoadRandomLevel()
+        public sealed override async void LoadRandomLevel()
         {
             SetModeAsCurrent();
             
