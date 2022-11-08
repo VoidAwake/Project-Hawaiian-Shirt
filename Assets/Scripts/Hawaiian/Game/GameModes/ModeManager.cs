@@ -34,7 +34,7 @@ namespace Hawaiian.Game.GameModes
         
         public virtual void LoadRandomLevel() { }
         
-        private void SaveScores()
+        public virtual void SaveScores()
         {
             foreach (var playerConfig in playerConfigs)
             {
