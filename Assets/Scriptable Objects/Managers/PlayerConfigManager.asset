@@ -15,7 +15,7 @@ MonoBehaviour:
   maxPlayers: 4
   playerConfigs:
   - playerNumber: 0
-    characterNumber: 2
+    characterNumber: 7
     score: 0
     playerInput: {fileID: 0}
     playerIndex: 0
