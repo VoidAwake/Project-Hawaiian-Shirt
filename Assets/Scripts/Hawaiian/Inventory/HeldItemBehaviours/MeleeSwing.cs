@@ -16,13 +16,13 @@ namespace Hawaiian.Inventory.HeldItemBehaviours
         [SerializeField] private float AttackRate;
         [SerializeField] public float DrawSpeed;
         [SerializeField] public int KnockbackDistance;
+        [SerializeField] private float _offset = 1.1f;
 
         public UnityEvent attacked = new();
             
         private float _slashCooldown;
         private Vector3 _lastAttackPosition;
         private bool _attackFlag;
-        private float _offset = 1.1f;
 
         private float _minComboCooldown;
         private float _maxComboCooldown;
@@ -84,27 +84,22 @@ namespace Hawaiian.Inventory.HeldItemBehaviours
             _slashCooldown = AttackRate;
             Vector3 playerInput;
 
-            var position = new Vector3(transform.position.x, transform.position.y + 0.5f, transform.position.z);
-
             Vector3 prevInput = (Cursor.transform.localPosition - Vector3.up * 0.5f);
             playerInput = prevInput.magnitude == 0 ? Vector2.right.normalized : prevInput.normalized;
 
-            _lastAttackPosition = position + playerInput * _offset + Vector3.down * 0.5f;
+            _lastAttackPosition = transform.position + playerInput * _offset;
             return playerInput;
         }
 
         private void InstantiateMeleeIndicator(float angle, Vector3 direction, bool induceInvincibility = true)
         {
-            //print("Creating melee indicator, induce invincibility? " + induceInvincibility);
-            FirePoint.position = _lastAttackPosition;
-
             UnitPlayer.transform.GetComponent<UnitAnimator>()
                 .UseItem(UnitAnimationState.MeleeSwing,
                     new Vector2(Mathf.Sin(angle * Mathf.Deg2Rad + Mathf.PI / 2),
                         -Mathf.Cos(angle * Mathf.Deg2Rad + Mathf.PI / 2)), _attackFlag);
 
             GameObject indicator = Instantiate(_projectileReference, _lastAttackPosition,
-                Quaternion.Euler(new Vector3(0, 0, angle + _meleeSlashRotationOffset)), FirePoint);
+                Quaternion.Euler(new Vector3(0, 0, angle + _meleeSlashRotationOffset)), transform);
 
             indicator.GetComponent<DamageIndicator>().Initialise(DrawSpeed, KnockbackDistance,
                 _attackFlag, UnitPlayer, direction);

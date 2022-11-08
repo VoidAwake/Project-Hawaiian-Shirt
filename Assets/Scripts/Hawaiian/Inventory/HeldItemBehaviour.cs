@@ -1,6 +1,7 @@
 ﻿using System;
 using Hawaiian.Unit;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.InputSystem;
 
 namespace Hawaiian.Inventory
@@ -11,9 +12,10 @@ namespace Hawaiian.Inventory
         protected ItemHolder itemHolder;
         public UnitPlayer UnitPlayer => itemHolder.unitPlayer;
         protected Cursor Cursor => itemHolder.cursor;
-        protected Transform FirePoint => itemHolder.firePoint;
         
         public bool UseItemActionHeld { get; private set; }
+
+        [NonSerialized] public UnityEvent destroyed = new();
         
         protected virtual void OnDestroy()
         {
@@ -47,6 +49,11 @@ namespace Hawaiian.Inventory
             
             UnitPlayer.GetPlayerInput().actions["Attack"].performed += UseItemActionPerformed; 
             UnitPlayer.GetPlayerInput().actions["Attack"].canceled += UseItemActionCancelled; 
+        }
+
+        public void DestroyHeldItem()
+        {
+            destroyed.Invoke();
         }
     }
 }

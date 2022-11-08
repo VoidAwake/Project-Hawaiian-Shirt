@@ -1,4 +1,6 @@
-﻿using Hawaiian.Utilities;
+﻿using System.Collections.Generic;
+using System.Linq;
+using Hawaiian.Utilities;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -15,7 +17,9 @@ namespace Hawaiian.Game.GameModes
         [SerializeField] protected GameEvent gameOverEvent;
 
         public static ModeManager CurrentModeManager { get; set; }
+        // TODO: Never invoked?
         public static UnityEvent<ModeManager> Initialised { get; } = new();
+        public UnityEvent winningPlayersChanged = new();
         
         public virtual GameObject ControlsInstructionsDialoguePrefab => controlsInstructionsDialoguePrefab;
         public virtual GameObject TutorialDialoguePrefab => tutorialDialoguePrefab;
@@ -26,12 +30,22 @@ namespace Hawaiian.Game.GameModes
         protected UnityEvent gameOver = new();
 
         protected PlayerManager playerManager;
+        protected readonly List<PlayerConfig> playerConfigs = new();
         
         public virtual void LoadRandomLevel() { }
-        public virtual void SaveScores() { }
+        
+        private void SaveScores()
+        {
+            foreach (var playerConfig in playerConfigs)
+            {
+                playerConfig.score = PlayerConfigScore(playerConfig);
+            }
+        }
 
         protected virtual void OnPlayerJoined(PlayerConfig playerConfig)
         {
+            playerConfigs.Add(playerConfig);
+            
             playerJoined.Invoke(playerConfig);
         }
 
@@ -48,6 +62,58 @@ namespace Hawaiian.Game.GameModes
         private void OnGameOver()
         {
             SaveScores();
+        }
+        
+        public List<Transform> WinningPlayers { get; private set; }
+
+        // TODO: Could cache results for better performance
+        protected void UpdateWinningPlayers()
+        {
+            var playerConfigScores = new Dictionary<PlayerConfig, float>();
+
+            var maxScore = 0f;
+
+            foreach (var playerConfig in playerConfigs)
+            {
+                var score = PlayerConfigScore(playerConfig);
+
+                playerConfigScores.Add(playerConfig, score);
+
+                if (maxScore < score)
+                    maxScore = score;
+            }
+
+            WinningPlayers = playerConfigScores
+                .Where(o => o.Value == maxScore)
+                .Select(o => o.Key.playerInput.transform)
+                .ToList();
+            
+            if (WinningPlayers.Count == playerConfigs.Count)
+                WinningPlayers.Clear();
+            
+            winningPlayersChanged.Invoke();
+        }
+
+        protected virtual float PlayerConfigScore(PlayerConfig playerConfig)
+        {
+            return 0;
+        }
+
+        public void SetModeAsCurrent()
+        {
+            CurrentModeManager = this;
+        }
+
+        public void ListenToLevel()
+        {
+            // TODO: Come back to this
+            playerManager = FindObjectOfType<PlayerManager>();
+
+            // TODO: Unlisten?
+            playerManager.playerJoined.AddListener(OnPlayerJoined);
+            
+            // TODO: Unlisten?
+            gameOverEvent.RegisterListener(gameOver);
         }
     }
 }

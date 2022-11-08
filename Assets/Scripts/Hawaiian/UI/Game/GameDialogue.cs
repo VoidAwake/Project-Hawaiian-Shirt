@@ -1,5 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Hawaiian.Game;
+using Hawaiian.Inventory;
+using Hawaiian.Utilities;
 using UI.Core;
 using UnityEngine;
 
@@ -13,6 +16,9 @@ namespace Hawaiian.UI.Game
         [SerializeField] private GameObject tutorialBackground;
         [SerializeField] private GameManager gameManager;
         [SerializeField] private GameObject pauseMenuDialoguePrefab;
+        [SerializeField] private GameEvent startGameEvent;
+        [SerializeField] private GameEvent startPlayerSpawnsEvent;
+        [SerializeField] private PlayerManager playerManager;
 
         private int _inventoryCount = 0;
         private List<GameObject> inventoryGameObjects = new();
@@ -26,31 +32,64 @@ namespace Hawaiian.UI.Game
 
         protected override void OnDemote() { }
 
-        public void OnInventoryAdded(Inventory.Inventory inventory)
+        public void OnEnable()
+        {
+            // TODO: Duplicate code. See ModeManager<T>.LoadRandomLevel.
+            // TODO: Come back to this
+            playerManager = FindObjectOfType<PlayerManager>();
+            
+            playerManager.playerJoined.AddListener(OnPlayerJoined);
+        }
+
+        public void OnDisable()
+        {
+            playerManager.playerJoined.RemoveListener(OnPlayerJoined);
+        }
+
+        private void OnPlayerJoined(PlayerConfig playerConfig)
         {
             var inventoryGameObject = Instantiate(inventoryUIPrefab, _inventoryCount >= 2 ? uiParentForFourPlayers : uiParent);
+            
             inventoryGameObjects.Add(inventoryGameObject);
             
-            inventoryGameObject.GetComponent<InventoryUI>().inv = inventory;
+            // TODO: Duplicate code. See ModeManager.OnPlayerJoined.
+            var inventory = playerConfig.playerInput.GetComponentInChildren<InventoryController>().inv;
+            
+            inventoryGameObject.GetComponent<InventoryUI>().Initialise(playerConfig, inventory);
+            
+            // TODO: Set this using an Initialise function, or from InventoryUI
             inventoryGameObject.GetComponentInChildren<ScoreUI>().inventory = inventory;
+            
             _inventoryCount++;
         }
 
-        protected override void Awake()
+        protected override void Start()
         {
-            base.Awake();
+            base.Start();
             
+            // Must be called in Start to give PlayerManager time to find the PlayerInputManager
             DisplayControls();
         }
 
         private void DisplayControls()
         {
-            tutorialBackground.SetActive(true);
-
             var gameMode = gameManager.CurrentGameMode;
-            
-            Instantiate(gameMode.ControlsInstructionsDialoguePrefab, transform.parent);
-            Instantiate(gameMode.TutorialDialoguePrefab, transform.parent);
+
+            if (gameMode.ControlsInstructionsDialoguePrefab != null || gameMode.TutorialDialoguePrefab != null)
+            {
+                tutorialBackground.SetActive(true);
+                
+                if (gameMode.ControlsInstructionsDialoguePrefab != null)
+                    Instantiate(gameMode.ControlsInstructionsDialoguePrefab, transform.parent);
+
+                if (gameMode.TutorialDialoguePrefab != null)
+                    Instantiate(gameMode.TutorialDialoguePrefab, transform.parent);
+            }
+            else
+            {
+                startGameEvent.Raise();
+                startPlayerSpawnsEvent.Raise();
+            }
         }
 
         public void Pause()

@@ -22,7 +22,7 @@ namespace Hawaiian.UI.Game
         {
             base.OnComponentStart();
             
-            inventory.currentItemChanged.AddListener(UpdateText);
+            inventory.inventoryChanged.AddListener(UpdateText);
 
             fontSize = text.fontSize;
             UpdateText();

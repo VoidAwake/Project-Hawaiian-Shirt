@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Hawaiian.Utilities;
 using UnityEngine;
 using UnityEngine.InputSystem.Utilities;
@@ -9,45 +8,11 @@ namespace Hawaiian.PositionalEvents
     [RequireComponent(typeof(SpriteRenderer))]
     public class Highlighter : MonoBehaviour
     {
-        [SerializeField] private Material material;
+        [SerializeField] private SpriteRenderer spriteRenderer;
         
-        private SpriteRenderer spriteRenderer;
-        private SpriteRenderer targetSpriteRenderer;
         private List<PositionalEventCaller> callers = new List<PositionalEventCaller>();
 
         public ReadOnlyArray<PositionalEventCaller> Callers => callers.ToArray();
-
-        private void Awake()
-        {
-            spriteRenderer = GetComponent<SpriteRenderer>();
-            
-            targetSpriteRenderer = transform.parent.GetComponent<SpriteRenderer>();
-
-            if (!targetSpriteRenderer)
-            {
-                for (int i = 0; i < transform.parent.childCount; i++)
-                {
-                    // TODO: Ew, searching by name.
-                    if (transform.parent.GetChild(i).name == "Item Sprite")
-                    {
-                        targetSpriteRenderer = transform.parent.GetChild(i).GetComponent<SpriteRenderer>();
-                    }
-                }
-            }
-
-            if (!targetSpriteRenderer)
-            {
-                enabled = false;
-                
-                throw new Exception($"Could not highlight. Parent object does not have a {nameof(SpriteRenderer)}");
-            }
-
-            // Copy all sprite renderer properties
-            spriteRenderer.GetCopyOf(targetSpriteRenderer);
-            
-            spriteRenderer.sortingOrder = targetSpriteRenderer.sortingOrder + 1;
-            spriteRenderer.material = material;
-        }
 
         private void UpdateShader()
         {
@@ -58,10 +23,6 @@ namespace Hawaiian.PositionalEvents
                 // TODO: Not sure how to get player colour
                 spriteRenderer.material.SetColor("_Color_" + (i + 1), Color.blue);
             }
-
-            spriteRenderer.material.SetTexture("_Texture2D", spriteRenderer.sprite.texture);
-            
-            spriteRenderer.material.SetVector("_SpritePosition", spriteRenderer.sprite.rect.center);
         }
 
         public void AddCaller(PositionalEventCaller caller)

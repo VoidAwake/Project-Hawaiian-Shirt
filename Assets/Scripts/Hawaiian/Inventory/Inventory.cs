@@ -1,4 +1,3 @@
-using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -9,7 +8,7 @@ namespace Hawaiian.Inventory
     {
         [SerializeField] public Item[] inv;
         [SerializeField] public int size;
-        public UnityEvent currentItemChanged = new();
+        public UnityEvent inventoryChanged = new();
         public int invPosition = 0;
         public int score = 0;
 
@@ -24,7 +23,7 @@ namespace Hawaiian.Inventory
         //public float Score => inv.Where(i => i != null).Sum(i => i.Points);
         public float Score => score;
 
-        public void SetInventory(int invSize)
+        public void SetInventorySize(int invSize)
         {
             size = invSize;
             inv = new Item[size];
@@ -33,7 +32,7 @@ namespace Hawaiian.Inventory
         public void LoseTreasure(int dropped)
         {
             score -= dropped;
-            currentItemChanged.Invoke();
+            inventoryChanged.Invoke();
         }
         
         public bool AddItem(Item item)
@@ -41,7 +40,7 @@ namespace Hawaiian.Inventory
             if (item.Type == ItemType.Objective)
             {
                 score += (int)item.Points;
-                currentItemChanged.Invoke();
+                inventoryChanged.Invoke();
                 Debug.Log("score is " + score);
                 return true;
                 
@@ -54,8 +53,9 @@ namespace Hawaiian.Inventory
 
                     inv[i] = item;
 
+                inventoryChanged.Invoke();
 
-                    currentItemChanged.Invoke();
+                    inventoryChanged.Invoke();
                     return true;
                 }
             }
@@ -66,7 +66,7 @@ namespace Hawaiian.Inventory
         public void RemoveItemAt(int invPosition)
         {
             inv[invPosition] = null;
-            currentItemChanged.Invoke();
+            inventoryChanged.Invoke();
         }
     }
 }

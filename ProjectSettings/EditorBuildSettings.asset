@@ -29,4 +29,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Levels/Habibs illegitimate child.unity
     guid: e7b469fa2b1e1b94080c8fb2185844b2
+  - enabled: 1
+    path: Assets/Scenes/Levels/Tutorial.unity
+    guid: c10377635b667754e9dc7587de8489f0
   m_configObjects: {}

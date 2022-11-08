@@ -50,6 +50,7 @@ MonoBehaviour:
   AttackRate: 0.18
   DrawSpeed: 0
   KnockbackDistance: 6
+  _offset: 1.5
   attacked:
     m_PersistentCalls:
       m_Calls:
