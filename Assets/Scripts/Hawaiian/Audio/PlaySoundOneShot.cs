@@ -5,29 +5,15 @@ namespace Hawaiian.Audio
 {
     public class PlaySoundOneShot : AudioBehaviour
     {
-
-        [SerializeField] public AudioManager audioManager;   
-    
-        private void Awake()
-        {
-            if (playOnAwake)
-                PlaySound();
-            
-        }
-    
-        private void OnDestroy()
-        {
-            if (CurrentInstance.isValid())
-                CurrentInstance.stop(STOP_MODE.IMMEDIATE);
-        }
-
-        public void PlaySound()
+        private void PlaySound()
         {
             CurrentInstance = overrideVolume
                 ? audioManager.PlaySoundOneShot(CurrentTrack.Path)
                 : audioManager.PlaySoundOneShot(CurrentTrack.Path, volume);
         }
 
-  
+        public override void TriggerSound() => PlaySound();
+
+        public override void StopSound() => audioManager.StopSound(CurrentInstance);
     }
 }
