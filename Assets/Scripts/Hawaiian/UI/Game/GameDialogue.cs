@@ -55,11 +55,12 @@ namespace Hawaiian.UI.Game
             
             // TODO: Duplicate code. See ModeManager.OnPlayerJoined.
             var inventory = playerConfig.playerInput.GetComponentInChildren<InventoryController>().inv;
+            var score = playerConfig.playerInput.GetComponentInChildren<Score>();
             
             inventoryGameObject.GetComponent<InventoryUI>().Initialise(playerConfig, inventory);
             
             // TODO: Set this using an Initialise function, or from InventoryUI
-            inventoryGameObject.GetComponentInChildren<ScoreUI>().inventory = inventory;
+            inventoryGameObject.GetComponentInChildren<ScoreUI>().score = score;
             
             _inventoryCount++;
         }

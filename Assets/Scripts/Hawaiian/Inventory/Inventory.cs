@@ -10,7 +10,6 @@ namespace Hawaiian.Inventory
         [SerializeField] public int size;
         public UnityEvent inventoryChanged = new();
         public int invPosition = 0;
-        public int score = 0;
 
         public int InvPosition
         {
@@ -21,41 +20,23 @@ namespace Hawaiian.Inventory
         public Item CurrentItem => inv[InvPosition];
         
         //public float Score => inv.Where(i => i != null).Sum(i => i.Points);
-        public float Score => score;
 
         public void SetInventorySize(int invSize)
         {
             size = invSize;
             inv = new Item[size];
         }
-
-        public void LoseTreasure(int dropped)
-        {
-            score -= dropped;
-            inventoryChanged.Invoke();
-        }
         
         public bool AddItem(Item item)
         {
-            if (item.Type == ItemType.Objective)
+            for (int i = 0; i < inv.Length; i++)
             {
-                score += (int)item.Points;
+                if (inv[i] != null) continue;
+
+                inv[i] = item;
+
                 inventoryChanged.Invoke();
-                Debug.Log("score is " + score);
                 return true;
-                
-            }
-            else
-            {
-                for (int i = 0; i < inv.Length; i++)
-                {
-                    if (inv[i] != null) continue;
-
-                    inv[i] = item;
-
-                    inventoryChanged.Invoke();
-                    return true;
-                }
             }
 
             return false;

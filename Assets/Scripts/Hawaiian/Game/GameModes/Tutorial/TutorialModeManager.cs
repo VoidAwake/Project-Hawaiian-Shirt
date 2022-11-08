@@ -20,6 +20,7 @@ namespace Hawaiian.Game.GameModes.Tutorial
         [SerializeField] private GameObject targetDummy;
 
         private readonly Dictionary<PlayerConfig, InventoryController> inventoryControllers = new();
+        private readonly Dictionary<PlayerConfig, Score> scores = new();
 
         [NonSerialized] public UnityEvent textChanged = new();
         private string text;
@@ -36,7 +37,7 @@ namespace Hawaiian.Game.GameModes.Tutorial
 
         protected override void OnPlayerJoined(PlayerConfig playerConfig)
         {
-            // TODO: Duplicate code. See GameDialogue.OnPlayerJoined.
+            // TODO: Duplicate code. See GameDialogue.OnPlayerJoined and RoundRobbinModeManager.
             var inventoryController = playerConfig.playerInput.GetComponentInChildren<InventoryController>();
 
             inventoryControllers.Add(playerConfig, inventoryController);
@@ -44,12 +45,17 @@ namespace Hawaiian.Game.GameModes.Tutorial
             // TODO: Remove listener
             inventoryController.inv.inventoryChanged.AddListener(UpdateWinningPlayers);
             
+            // TODO: Duplicate code. See GameDialogue.OnPlayerJoined.
+            var score = playerConfig.playerInput.GetComponentInChildren<Score>();
+
+            scores.Add(playerConfig, score);
+            
             base.OnPlayerJoined(playerConfig);
         }
         
         protected override float PlayerConfigScore(PlayerConfig playerConfig)
         {
-            return inventoryControllers[playerConfig].Score;
+            return scores[playerConfig].ScoreValue;
         }
 
 
@@ -78,7 +84,7 @@ namespace Hawaiian.Game.GameModes.Tutorial
                 // droppedItem.Item = treasureItem;
             }
 
-            await UniTask.WaitUntil(() => inventoryControllers.All(i => i.Value.Score == 10));
+            await UniTask.WaitUntil(() => scores.All(i => i.Value.ScoreValue == 10));
             
             FindObjectsOfType<Door>().ForEach(door => door.Unlock());
 
@@ -100,7 +106,7 @@ namespace Hawaiian.Game.GameModes.Tutorial
             // TODO: Show the attack control
             
             // TODO: Need the practice dummies to drop treasure
-            await UniTask.WaitUntil(() => inventoryControllers.All(i => i.Value.Score == 20));
+            await UniTask.WaitUntil(() => scores.All(i => i.Value.ScoreValue == 20));
         }
     }
 }

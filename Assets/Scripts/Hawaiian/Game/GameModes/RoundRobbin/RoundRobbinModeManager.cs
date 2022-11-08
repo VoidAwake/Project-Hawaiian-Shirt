@@ -8,6 +8,7 @@ namespace Hawaiian.Game.GameModes.RoundRobbin
     public class RoundRobbinModeManager : ModeManager<RoundRobbinSceneReference>
     {
         private readonly Dictionary<PlayerConfig, InventoryController> inventoryControllers = new();
+        private readonly Dictionary<PlayerConfig, Score> scores = new();
         
         protected override void OnPlayerJoined(PlayerConfig playerConfig)
         {
@@ -19,12 +20,17 @@ namespace Hawaiian.Game.GameModes.RoundRobbin
             // TODO: Remove listener
             inventoryController.inv.inventoryChanged.AddListener(UpdateWinningPlayers);
             
+            // TODO: Duplicate code. See GameDialogue.OnPlayerJoined.
+            var score = playerConfig.playerInput.GetComponentInChildren<Score>();
+
+            scores.Add(playerConfig, score);
+            
             base.OnPlayerJoined(playerConfig);
         }
         
         protected override float PlayerConfigScore(PlayerConfig playerConfig)
         {
-            return inventoryControllers[playerConfig].Score;
+            return scores[playerConfig].ScoreValue;
         }
     }
 }
