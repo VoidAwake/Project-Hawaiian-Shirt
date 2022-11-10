@@ -8,8 +8,6 @@ namespace Hawaiian.Inventory.HeldItemBehaviours
 {
     public class InstantiateThrowableHeldItemBehaviour : InstantiateHeldItemBehaviour<Throwable>
     {
-        [SerializeField] private IUnitGameEvent _removeItem;
-        
         public UnityEvent throwableArcPositionsUpdated = new();
         
         public List<Vector2> throwableArcPositions = new List<Vector2>();
@@ -40,7 +38,7 @@ namespace Hawaiian.Inventory.HeldItemBehaviours
             
             throwable.Initialise(throwableArcPositions.ToArray(), Item.ItemSprite, Item.SticksOnWall);
             
-            _removeItem.Raise(UnitPlayer);
+            DestroyHeldItem();
         }
     }
 }

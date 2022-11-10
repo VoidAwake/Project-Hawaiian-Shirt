@@ -1,5 +1,4 @@
 using UnityEngine;
-using Application = UnityEngine.Device.Application;
 
 namespace Hawaiian.Inventory
 {
@@ -20,9 +19,21 @@ namespace Hawaiian.Inventory
             }
         }
 
-        private void Start()
+        private void Awake()
         {
             OnItemChanged();
+        }
+
+        public void Initialise(Item item)
+        {
+            Item = item;
+        }
+        
+        private void Start()
+        {
+            // Must be called in start to validate all items after they are initialised
+            // TODO: Might be possible to refactor now that highlighter has been refactored
+            ValidateItem();
         }
 
         public void OnPickUp()
@@ -32,17 +43,8 @@ namespace Hawaiian.Inventory
 
         public void OnItemChanged()
         {
-            if (Item == null)
-            {
-                if (!Application.isPlaying) return;
-                
-                Debug.LogWarning($"{nameof(DroppedItem)} has not been assigned an {nameof(Item)}. Disabling.");
-                
-                gameObject.SetActive(false);
-                
-                return;
-            }
-
+            if (Item == null) return;
+            
             name = Item.name + " Item";
 
             if (spriteRenderer == null) return;
@@ -50,6 +52,15 @@ namespace Hawaiian.Inventory
             spriteRenderer.sprite = Item.DroppedItemSprite;
 
             spriteRenderer.color = Item.IsDetonator ? Color.red : Color.white;
+        }
+
+        private void ValidateItem()
+        {
+            if (Item != null) return;
+            
+            Debug.LogWarning($"{nameof(DroppedItem)} has not been assigned an {nameof(Item)}. Disabling.");
+                
+            gameObject.SetActive(false);
         }
     }
 }

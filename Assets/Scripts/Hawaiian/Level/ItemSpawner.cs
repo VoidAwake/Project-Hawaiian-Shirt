@@ -21,7 +21,7 @@ namespace Hawaiian.Level
             _currentItem = _pool.RetrieveRandomItem();
             _currentItemInstance = Instantiate(DroppedItem, transform);
             DroppedItem droppedItem = _currentItemInstance.GetComponent<DroppedItem>();
-            droppedItem.Item = _currentItem;
+            droppedItem.Initialise(_currentItem);
             currentSpawnTime = _spawnRate;
 
         }

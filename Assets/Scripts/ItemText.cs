@@ -18,7 +18,7 @@ public class ItemText : MonoBehaviour
     void Start()
     {
         //_controller = GetComponent<InventoryController>();
-        _controller.currentItemChanged.AddListener(OnCurrentItemChanged);
+        _controller.inventoryChanged.AddListener(OnCurrentItemChanged);
         color = new Color(1,1,1,1); //options.GetColor(_controller._player.PlayerNumber);
         fade = color;
         fade = new Color(color.r, color.g, color.b, 0);

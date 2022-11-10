@@ -341,7 +341,8 @@ GameObject:
   - component: {fileID: 2465565676560978990}
   - component: {fileID: 121433996737073732}
   - component: {fileID: 473664526002343672}
-  - component: {fileID: 6680228674293283482}
+  - component: {fileID: 272202692815790873}
+  - component: {fileID: 2138458354109225706}
   m_Layer: 9
   m_Name: Inventory
   m_TagString: Untagged
@@ -387,6 +388,9 @@ MonoBehaviour:
   currentItemChanged:
     m_PersistentCalls:
       m_Calls: []
+  inventoryChanged:
+    m_PersistentCalls:
+      m_Calls: []
   inv: {fileID: 0}
 --- !u!58 &121433996737073732
 CircleCollider2D:
@@ -419,11 +423,10 @@ MonoBehaviour:
   token: {fileID: 11400000, guid: 3b0ff5f6a462e6044b143ac5460cd59c, type: 2}
   radius: 2
   interactionTarget: 1
-  targetsChanged: {fileID: 11400000, guid: 37e77cbc288b0bb408597b25a3a84f7e, type: 2}
   raisedOnTarget:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &6680228674293283482
+--- !u!114 &272202692815790873
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -432,25 +435,25 @@ MonoBehaviour:
   m_GameObject: {fileID: 6722766841112063685}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7cf258db3a2b91e46925f1ac4ae5cbd7, type: 3}
+  m_Script: {fileID: 11500000, guid: a6e6f2770f3c42a7b77a24e8e3778f33, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Event: {fileID: 11400000, guid: 3e4e531c6a7cb484bae0c31a53757702, type: 2}
-  Response:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 2465565676560978990}
-        m_TargetAssemblyTypeName: Hawaiian.Inventory.InventoryController, Hawaiian.Inventory
-        m_MethodName: RemoveCurrentItem
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+  caller: {fileID: 473664526002343672}
+--- !u!114 &2138458354109225706
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6722766841112063685}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f5e1e2a3f40e425ebdc706f1cf406276, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  caller: {fileID: 473664526002343672}
+  controlPromptPrefab: {fileID: 863757022267649085, guid: dfed0489b330811449510e739f1f6872, type: 3}
+  actionName: PickUp
 --- !u!1 &7111658898038595601
 GameObject:
   m_ObjectHideFlags: 0
