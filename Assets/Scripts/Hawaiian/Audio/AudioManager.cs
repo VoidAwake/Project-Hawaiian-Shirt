@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Hawaiian.Audio
 {
-    public class AudioManager : ScriptableObject
+    public class AudioPlayer : ScriptableObject
     {
         //FMOD instance of the current music track
         public EventInstance MusicInstance;

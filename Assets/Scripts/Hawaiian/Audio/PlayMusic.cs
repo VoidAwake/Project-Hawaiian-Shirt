@@ -7,10 +7,10 @@ namespace Hawaiian.Audio
         public override void TriggerSound()
         {
             CurrentInstance = overrideVolume
-                ? audioManager.PlayMusic(CurrentTrack.Path)
-                : audioManager.PlayMusic(CurrentTrack.Path, volume);
+                ? audioPlayer.PlayMusic(CurrentTrack.Path)
+                : audioPlayer.PlayMusic(CurrentTrack.Path, volume);
         }
 
-        public override void StopSound() => audioManager.StopSound(CurrentInstance);
+        public override void StopSound() => audioPlayer.StopSound(CurrentInstance);
     }
 }

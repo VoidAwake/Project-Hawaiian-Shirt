@@ -6,18 +6,22 @@ namespace Hawaiian.Audio
 {
     public abstract class AudioBehaviour : MonoBehaviour
     {
-    
+
         /// <summary>
         /// TODO: Implement search system from GDS2
         /// </summary>
-        public AudioTrack CurrentTrack { get; set; }
-        public EventInstance CurrentInstance { get; set; }
+        public AudioTrack CurrentTrack = new AudioTrack();
 
-        [SerializeField] public AudioManager audioManager;
-        [SerializeField] internal bool playOnAwake;
-        [SerializeField] internal bool isGlobal;
-        [SerializeField] internal bool overrideVolume;
-        [SerializeField] internal float volume;
+        public EventInstance CurrentInstance;
+        
+        //Reference to the EditorEventRef shown in the inspector
+        [HideInInspector] public ScriptableObject SelectedItem;
+
+        [HideInInspector] public AudioPlayer audioPlayer;
+        [HideInInspector] public bool playOnAwake;
+        [HideInInspector] public bool isGlobal;
+        [HideInInspector] public bool overrideVolume;
+        [HideInInspector] public float volume;
 
 
         protected virtual void Awake()
