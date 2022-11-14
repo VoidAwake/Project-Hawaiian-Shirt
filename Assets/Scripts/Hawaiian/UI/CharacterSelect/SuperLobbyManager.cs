@@ -117,12 +117,10 @@ namespace Hawaiian.UI.CharacterSelect
         {
             if (!isExiting)
             {
-                gameManager.CurrentGameMode = modeLobbyManager.CurrentGameMode;
+                modeLobbyManager.CurrentGameMode.LoadRandomLevel();
 
                 // Destroy(GetComponent<LobbyManager>());
                 // Destroy(GetComponent<PlayerInputManager>());
-                
-                gameManager.CurrentGameMode.LoadRandomLevel();
                 
                 isExiting = true;
             }

@@ -3,6 +3,7 @@ using UI.Core;
 using UnityEngine;
 using System.Collections;
 using System.Linq;
+using Hawaiian.Inventory;
 
 namespace Hawaiian.UI.Game
 {
@@ -16,13 +17,14 @@ namespace Hawaiian.UI.Game
         float fontSize;
         // float timer;
 
-        public Inventory.Inventory inventory;
+        // TODO: Where is this getting set?
+        public Score score;
 
         protected override void OnComponentStart()
         {
             base.OnComponentStart();
             
-            inventory.inventoryChanged.AddListener(UpdateText);
+            score.scoreChanged.AddListener(UpdateText);
 
             fontSize = text.fontSize;
             UpdateText();
@@ -30,7 +32,7 @@ namespace Hawaiian.UI.Game
 
         private void UpdateText()
         {
-            targetScore = (int)inventory.score;
+            targetScore = score.ScoreValue;
 
             if (textCoroutine != null)
             {

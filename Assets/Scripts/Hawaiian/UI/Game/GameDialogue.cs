@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Hawaiian.Game;
+using Hawaiian.Game.GameModes;
 using Hawaiian.Inventory;
 using Hawaiian.Utilities;
 using UI.Core;
@@ -54,11 +55,12 @@ namespace Hawaiian.UI.Game
             
             // TODO: Duplicate code. See ModeManager.OnPlayerJoined.
             var inventory = playerConfig.playerInput.GetComponentInChildren<InventoryController>().inv;
+            var score = playerConfig.playerInput.GetComponentInChildren<Score>();
             
             inventoryGameObject.GetComponent<InventoryUI>().Initialise(playerConfig, inventory);
             
             // TODO: Set this using an Initialise function, or from InventoryUI
-            inventoryGameObject.GetComponentInChildren<ScoreUI>().inventory = inventory;
+            inventoryGameObject.GetComponentInChildren<ScoreUI>().score = score;
             
             _inventoryCount++;
         }
@@ -73,7 +75,7 @@ namespace Hawaiian.UI.Game
 
         private void DisplayControls()
         {
-            var gameMode = gameManager.CurrentGameMode;
+            var gameMode = ModeManager.CurrentModeManager;
 
             if (gameMode.ControlsInstructionsDialoguePrefab != null || gameMode.TutorialDialoguePrefab != null)
             {
