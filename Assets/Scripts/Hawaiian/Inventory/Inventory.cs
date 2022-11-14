@@ -46,40 +46,6 @@ namespace Hawaiian.Inventory
             return false;
         }
 
-        
-        //TODO: Remove upon inventory refactor
-        public Dictionary<int,Item> GetAllTreasuresAndPositions()
-        {
-            Dictionary<int, Item> treasures = new Dictionary<int, Item>();
-            
-            
-
-            for (var i = 0; i < inv.Length; i++)
-            {
-                if (inv[i] == null || inv[i].Type != ItemType.Objective)
-                    continue;
-                
-                Item treasure = inv[i];
-                treasures.Add(i, treasure);
-            }
-
-            return treasures;
-        }
-
-        public KeyValuePair<int, Item> GetMostLeftItem()
-        {
-            
-            Dictionary<int, Item> treasures = GetAllTreasuresAndPositions();
-            return treasures.First();
-        }
-
-
-        //TODO: Remove upon inventory refactor
-        public IEnumerable<Item> GetAllTreasures()
-        {
-            IEnumerable<Item> treasures = inv.Where(i => i != null && i.Type == ItemType.Objective);
-            return treasures.ToList();
-        }
 
         public void RemoveItemAt(int invPosition)
         {

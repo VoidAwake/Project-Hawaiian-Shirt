@@ -153,7 +153,7 @@ namespace Hawaiian.Game
 
         private static float InventoryScore(InventoryController inventoryController)
         {
-            return inventoryController.inv.Score;
+            return inventoryController.CurrentScore.ScoreValue;
         }
 
         public PlayerConfig GetPlayerConfig(Inventory.Inventory inv)

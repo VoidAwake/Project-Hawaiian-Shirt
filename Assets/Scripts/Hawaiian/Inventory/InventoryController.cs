@@ -30,6 +30,8 @@ namespace Hawaiian.Inventory
 
         public Item CurrentItem => inv.CurrentItem;
 
+        public Score CurrentScore => score;
+
         private void Awake()
         {
             inv = ScriptableObject.CreateInstance<Inventory>();

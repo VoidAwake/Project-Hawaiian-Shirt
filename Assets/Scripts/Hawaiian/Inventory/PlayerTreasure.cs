@@ -184,7 +184,7 @@ namespace Hawaiian.Inventory
             for (int i = 0; i < treasurePoints.Count; i++)
             {
                Item treasureItem = ItemUtils.GenerateItem(_itemReference.ItemName, _itemReference.ItemSprite, ItemType.Objective,
-                    _droppedItemReference, treasurePoints.ToList()[1], _itemReference.DroppedItemSprite);
+                    _droppedItemReference, treasurePoints.ToList()[i], _itemReference.DroppedItemSprite);
 
                GameObject droppedItem = Instantiate(_droppedItemReference, transform.position,Quaternion.identity);
                droppedItem.GetComponent<DroppedItem>().Item = treasureItem;
@@ -265,14 +265,15 @@ namespace Hawaiian.Inventory
 
         public async UniTask DepositItems(CancellationToken token)
         {
+            
             //inital check to ensure the owner is depositing and the animations can play as normal
             if (_currentCollidedUnit.GetUnit() != _owner || _currentCollidedUnit == null || (_currentState != TreasureState.Depositing && _currentState != TreasureState.Neutral))
                 return;
 
             InventoryController controller = _owner.GetComponentInChildren<InventoryController>();
-            int treasureAmount = controller.inv.GetAllTreasures().ToList().Count;
+            int depositAmount = TreasureUtil.GetDepositAmount(controller.CurrentScore.ScoreValue);
 
-            if (treasureAmount == 0) // could do a prompt to let the player know they need treasure to deposit
+            if (depositAmount == 0) // could do a prompt to let the player know they need treasure to deposit
                 return;
 
             try
@@ -280,16 +281,13 @@ namespace Hawaiian.Inventory
                 await _animController.PlayChestOpeningAnim(token);
                 _currentState = TreasureState.Depositing;
 
-                for (int i = 0; i < treasureAmount; i++)
+                for (int i = 0; i < depositAmount; i++)
                 {
                     if (CanDeposit(_owner))
                     {
-                        Debug.Log($"Depositing item: {controller.inv.GetMostLeftItem().Value.ItemName}");
-                        DepositItem(controller.inv.GetMostLeftItem().Value, controller,
-                            controller.inv.GetMostLeftItem().Key);
-                        await _animController
-                            .PlayChestDepositAnim(
-                                token); // minimum time the deposit has to wait before it can deposit again is based on the animation
+                       // Debug.Log($"Depositing item: {controller.inv.GetMostLeftItem().Value.ItemName}");
+                        DepositItem(controller);
+                        await _animController.PlayChestDepositAnim(token); // minimum time the deposit has to wait before it can deposit again is based on the animation
                     }
 
                     await UniTask.Delay(250, false, PlayerLoopTiming.Update, token);
@@ -316,7 +314,6 @@ namespace Hawaiian.Inventory
 
             UnitPlayer unit = collidedUnit.GetUnit();
 
-
             if (unit != Owner)
                 return false;
 
@@ -325,30 +322,34 @@ namespace Hawaiian.Inventory
             if (playerInventory == null)
                 return false;
 
-            if (playerInventory.inv.GetAllTreasures().ToList().Count <= 0)
+            if (playerInventory.CurrentScore.ScoreValue <= 0)
                 return false;
 
             return true;
         }
 
-        public void DepositItem(Item item, InventoryController controller = null, int itemPos = 0)
-        {
-            CurrentPoints += item.Points;
-            ItemDeposited?.Invoke();
+        //OLD SYSTEM
+        // public void DepositItem(Item item, InventoryController controller = null, int itemPos = 0)
+        // {
+        //     CurrentPoints += item.Points;
+        //     ItemDeposited?.Invoke();
+        //
+        //     if (controller == null)
+        //         return;
+        //
+        //     controller.inv.RemoveItemAt(itemPos);
+        // }
 
+        public void DepositItem(InventoryController controller)
+        {
             if (controller == null)
                 return;
+            
+            int points = TreasureUtil.GetDepositValue(controller.CurrentScore.ScoreValue);
+            CurrentPoints += points;
+            controller.CurrentScore.ScoreValue -= points;
+            ItemDeposited?.Invoke();
 
-            controller.inv.RemoveItemAt(itemPos);
-        }
-
-        public void DepositItem(InventoryController controller = null, int itemPos = 0)
-        {
-            TreasureUtil.GetDepositAmount(controller.)
-            
-            
-            
-            
         }
     }
 }

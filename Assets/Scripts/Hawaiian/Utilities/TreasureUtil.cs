@@ -72,29 +72,29 @@ public static class TreasureUtil
         //300  45%  treasure amount: 4
     }
 
-    public static float GetDepositAmount(float currentPoints)
+    public static int GetDepositValue(int currentPoints)
     {
         //TODO: These numbers should be adjusted depending on play test
-        float maximumDepositAmount = 25f;
-        float divisibleAmount = 4f;
+        int maximumDepositAmount = 25;
 
         if (currentPoints < maximumDepositAmount)
             return currentPoints;
 
-
-        for (int i = 0; i < (int)(currentPoints / maximumDepositAmount); i++)
-        {
-            
-            
-            
-        }
-        
-        
-        
-
-
+        return maximumDepositAmount;
     }
     
+    
+    public static int GetDepositAmount(int currentPoints)
+    {
+        //TODO: These numbers should be adjusted depending on play test
+        int maximumDepositAmount = 25;
+
+        if (currentPoints < maximumDepositAmount)
+            return 1;
+
+        return Mathf.CeilToInt((float)currentPoints / maximumDepositAmount);
+    }
+
     
     
 
