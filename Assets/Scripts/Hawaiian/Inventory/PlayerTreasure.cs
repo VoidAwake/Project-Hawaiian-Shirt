@@ -5,8 +5,6 @@ using System.Threading;
 using Cysharp.Threading.Tasks;
 using Hawaiian.Unit;
 using UnityEngine;
-using Random = System.Random;
-using Vector2 = System.Numerics.Vector2;
 
 namespace Hawaiian.Inventory
 {
@@ -63,18 +61,12 @@ namespace Hawaiian.Inventory
         [Header("Item References")]
         [SerializeField] private Item _itemReference;
         [SerializeField] private GameObject _droppedItemReference;
-
-
         [SerializeField] private float _defuserTimer;
         [SerializeField] private float _currentDefuseTimer;
         [SerializeField] private float _currentPoints;
 
-        private IUnit _currentCollidedUnit;
-
         public TreasureHitbox Hitbox => _hitbox;
-
         public float DefuseTimer => _defuserTimer;
-
         public float CurrentPoints
         {
             get => _currentPoints;
@@ -92,6 +84,9 @@ namespace Hawaiian.Inventory
             get => _owner;
             set => _owner = value;
         }
+        
+        private IUnit _currentCollidedUnit;
+
 
 
         private void Start()
@@ -120,8 +115,7 @@ namespace Hawaiian.Inventory
                 _hitbox = GetComponentInChildren<TreasureHitbox>();
                 if (_hitbox == null)
                 {
-                    Debug.LogWarning(
-                        "The component Treasure Hitbox was not found the player treasure component may not work as intended");
+                    Debug.LogWarning($"The {nameof(TreasureHitbox)} was not found the player treasure component may not work as intended");
                 }
             }
 
@@ -131,8 +125,7 @@ namespace Hawaiian.Inventory
 
                 if (_animController == null)
                 {
-                    Debug.LogWarning(
-                        "The component Animation Controller was not found! the player treasure component may not work as intended");
+                    Debug.LogWarning($"The {nameof(TreasureAnimationController)} was not found! the player treasure component may not work as intended");
                 }
             }
 
@@ -142,18 +135,6 @@ namespace Hawaiian.Inventory
             _hitbox.CollidedUnit += unit =>
             {
                 _currentCollidedUnit = unit;
-
-                // if (_currentCollidedUnit == null)
-                // {
-                //     _currentCollidedUnit = unit;
-                //     return;
-                // }
-                //
-                // //If the current collided unit is already the owner, if a new unit tries to deposit on it then it will be ignored
-                // if (_currentCollidedUnit.GetUnit() == _owner && unit != _currentCollidedUnit)
-                //     return;
-                //
-                // _currentCollidedUnit = unit;
             };
         }
 
@@ -202,16 +183,8 @@ namespace Hawaiian.Inventory
 
             for (int i = 0; i < treasurePoints.Count; i++)
             {
-                Item treasureItem = ScriptableObject.CreateInstance<Item>();
-                treasureItem.ItemName = _itemReference.ItemName;
-                treasureItem.ItemSprite = _itemReference.ItemSprite;
-                treasureItem.DroppedItemSprite = _itemReference.DroppedItemSprite;
-                treasureItem.Type = ItemType.Objective;
-                treasureItem.Points = treasurePoints.ToList()[i];
-                treasureItem.DroppedItemBase = _droppedItemReference;
-
-             
-                
+               Item treasureItem = ItemUtils.GenerateItem(_itemReference.ItemName, _itemReference.ItemSprite, ItemType.Objective,
+                    _droppedItemReference, treasurePoints.ToList()[1], _itemReference.DroppedItemSprite);
 
                GameObject droppedItem = Instantiate(_droppedItemReference, transform.position,Quaternion.identity);
                droppedItem.GetComponent<DroppedItem>().Item = treasureItem;
@@ -225,11 +198,9 @@ namespace Hawaiian.Inventory
                            treasureItem.ItemSprite;
                    }
                }
-
-               // UnityEngine.Vector2 randomDirection =
-               //     new UnityEngine.Vector2(UnityEngine.Random.Range(-1f, 1f), UnityEngine.Random.Range(-1f, 1f));
-
-               UnityEngine.Vector2 randomDirection = UnityEngine.Random.insideUnitCircle;
+               
+               //There are ways to generate better random generators for this instance but this should be fine for now
+               Vector2 randomDirection = UnityEngine.Random.insideUnitCircle;
                
                droppedItem.GetComponent<ItemUnit>().OnThrow(randomDirection, 2f);
                CurrentPoints -= treasureItem.Points;
@@ -369,6 +340,15 @@ namespace Hawaiian.Inventory
                 return;
 
             controller.inv.RemoveItemAt(itemPos);
+        }
+
+        public void DepositItem(InventoryController controller = null, int itemPos = 0)
+        {
+            TreasureUtil.GetDepositAmount(controller.)
+            
+            
+            
+            
         }
     }
 }

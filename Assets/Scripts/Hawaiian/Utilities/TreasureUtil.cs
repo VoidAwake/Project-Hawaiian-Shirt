@@ -72,6 +72,32 @@ public static class TreasureUtil
         //300  45%  treasure amount: 4
     }
 
+    public static float GetDepositAmount(float currentPoints)
+    {
+        //TODO: These numbers should be adjusted depending on play test
+        float maximumDepositAmount = 25f;
+        float divisibleAmount = 4f;
+
+        if (currentPoints < maximumDepositAmount)
+            return currentPoints;
+
+
+        for (int i = 0; i < (int)(currentPoints / maximumDepositAmount); i++)
+        {
+            
+            
+            
+        }
+        
+        
+        
+
+
+    }
+    
+    
+    
+
 
     private static PointLevel CalculatePointLevel(int points)
     {

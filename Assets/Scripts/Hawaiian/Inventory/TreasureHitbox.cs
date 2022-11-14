@@ -16,16 +16,11 @@ namespace Hawaiian.Inventory
         public event UnityAction<IUnit> CollidedUnit;
         
         public UnityEvent ItemDesposited;
-        
-
         public CancellationTokenSource DepositToken;
 
         private bool _withinRadius;
         protected bool _isDepositing;
         
-        
-
-
         protected override void RegisterCollisions()
         {
             OnTrigger.AddListener(_ => { _withinRadius = true; });
